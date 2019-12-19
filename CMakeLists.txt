@@ -31,7 +31,7 @@ target_include_directories(${PROJECT_NAME}
 # Sources list
 add_subdirectory(src)
 
-# Public headers list
+# Header installation
 add_subdirectory(include)
 
 # C++ standard
@@ -41,5 +41,4 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
 install(TARGETS ${PROJECT_NAME}
 	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-	PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
