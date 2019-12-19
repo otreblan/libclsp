@@ -7,7 +7,7 @@ project(clsp
 	LANGUAGES "CXX"
 )
 
-# Without this paths are not relative in the sources list
+# Without this, paths are not relative in the sources list
 cmake_policy(SET CMP0076 NEW)
 
 include(GNUInstallDirs)
@@ -15,6 +15,11 @@ include(FindPkgConfig)
 
 # The library itself
 add_library(${PROJECT_NAME} SHARED)
+
+# Headers
+target_include_directories(${PROJECT_NAME}
+	PRIVATE ${PROJECT_SOURCE_DIR}/include
+)
 
 # Sources list
 add_subdirectory(src)
