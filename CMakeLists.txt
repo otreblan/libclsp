@@ -16,6 +16,13 @@ include(FindPkgConfig)
 # The library itself
 add_library(${PROJECT_NAME} SHARED)
 
+# Version for the library symlinks
+set_target_properties(${PROJECT_NAME}
+	PROPERTIES
+		VERSION ${PROJECT_VERSION}
+		SOVERSION ${PROJECT_VERSION_MAJOR}
+)
+
 # Headers
 target_include_directories(${PROJECT_NAME}
 	PRIVATE ${PROJECT_SOURCE_DIR}/include
@@ -24,7 +31,15 @@ target_include_directories(${PROJECT_NAME}
 # Sources list
 add_subdirectory(src)
 
+# Public headers list
+add_subdirectory(include)
+
 # C++ standard
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
 #target_link_libraries(${PROJECT_NAME} ${library_LIBRARIES})
+
+install(TARGETS ${PROJECT_NAME}
+	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
