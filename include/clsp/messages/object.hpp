@@ -4,6 +4,16 @@
 namespace clsp
 {
 
+class Object
+{
+private:
+
+
+public:
+	Object();
+	virtual ~Object();
+};
+
 }
 
 #endif /* CLSP_MESSAGES_OBJECT_H */
