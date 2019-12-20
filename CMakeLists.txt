@@ -38,6 +38,16 @@ add_subdirectory(include)
 # C++ standard
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
+# pkg-config file
+configure_file(clsp.pc.in
+	${CMAKE_BINARY_DIR}/clsp.pc
+	@ONLY
+)
+install(FILES
+	${CMAKE_BINARY_DIR}/clsp.pc
+	DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig
+)
+
 #target_link_libraries(${PROJECT_NAME} ${library_LIBRARIES})
 
 install(TARGETS ${PROJECT_NAME}

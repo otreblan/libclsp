@@ -1,1 +1,1 @@
-add_subdirectory(jsonrpc)
+add_subdirectory(messages)
