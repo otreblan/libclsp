@@ -12,7 +12,6 @@ cmake_policy(SET CMP0076 NEW)
 
 include(GNUInstallDirs)
 include(FindPkgConfig)
-include(FindBoost)
 
 # The library itself
 add_library(${PROJECT_NAME} SHARED)
@@ -48,7 +47,29 @@ install(FILES
 	DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig
 )
 
-#target_link_libraries(${PROJECT_NAME} ${library_LIBRARIES})
+# Libraries
+pkg_check_modules(RAPIDJSON REQUIRED RapidJSON)
+include(FindBoost)
+
+# Header path
+target_include_directories(${PROJECT_NAME}
+	PUBLIC
+		${RAPIDJSON_INCLUDE_DIRS}
+		${Boost_INCLUDE_DIRS}
+)
+
+# Linking
+target_link_libraries(${PROJECT_NAME}
+	PUBLIC
+		${RAPIDJSON_LIBRARIES}
+		${Boost_LIBRARIES}
+)
+
+# Other flags
+target_compile_definitions(${PROJECT_NAME}
+	PUBLIC
+		${RAPIDJSON_CFLAGS_OTHER}
+)
 
 install(TARGETS ${PROJECT_NAME}
 	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
