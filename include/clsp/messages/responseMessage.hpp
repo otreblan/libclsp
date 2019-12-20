@@ -20,24 +20,27 @@ private:
 	// Key, value, pair types.
 	// In json-rpc all keys are strings.
 
+	const static String idKey;
 	using idValue = variant<Number, String, Null>;
-	using idPair  = pair<String, idValue>;
+	using idPair  = pair<const String, idValue>;
 
 	/// The request id.
 	idPair id;
 
 
+	const static String resultKey;
 	using resultValue = variant<String, Number, Boolean, Object, Null>;
-	using resultPair  = optional<pair<String, resultValue>>;
+	using resultPair  = optional<pair<const String, resultValue>>;
 
 	/// The result of a request. This member is REQUIRED on success.
 	/// This member MUST NOT exist if there was an error invoking the method.
 	resultPair result;
 
 	//TODO: error
+	const static String errorKey;
 
 public:
-	ResponseMessage();
+	ResponseMessage(idValue _id, resultValue _result);
 	virtual ~ResponseMessage();
 };
 
