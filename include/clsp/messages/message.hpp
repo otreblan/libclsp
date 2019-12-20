@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include <clsp/messages/jsonTypes.hpp>
+
 namespace clsp
 {
 
@@ -11,7 +13,7 @@ using namespace std;
 struct Message
 {
 
-	const static pair<string, string> jsonrpc;
+	const static pair<String, String> jsonrpc;
 
 	Message();
 	virtual ~Message();

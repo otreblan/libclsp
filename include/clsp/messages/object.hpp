@@ -1,9 +1,9 @@
-#ifndef CLSP_MESSAGES_WRITEABLE_H
-#define CLSP_MESSAGES_WRITEABLE_H
+#ifndef CLSP_MESSAGES_OBJECT_H
+#define CLSP_MESSAGES_OBJECT_H
 
 namespace clsp
 {
 
 }
 
-#endif /* CLSP_MESSAGES_WRITEABLE_H */
+#endif /* CLSP_MESSAGES_OBJECT_H */
