@@ -12,6 +12,7 @@ cmake_policy(SET CMP0076 NEW)
 
 include(GNUInstallDirs)
 include(FindPkgConfig)
+include(FindBoost)
 
 # The library itself
 add_library(${PROJECT_NAME} SHARED)
