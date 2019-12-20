@@ -11,8 +11,7 @@ using namespace std;
 struct Message
 {
 
-	const static string jsonrpcKey;
-	const static string jsonrpc;
+	const static pair<string, string> jsonrpc;
 
 	Message();
 	virtual ~Message();

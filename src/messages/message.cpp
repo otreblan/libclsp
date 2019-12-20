@@ -5,7 +5,6 @@ namespace clsp
 
 using namespace std;
 
-const string Message::jsonrpcKey = "jsonrpc";
-const string Message::jsonrpc    = "2.0";
+const pair<string, string> jsonrpc = {"jsonrpc", "2.0"};
 
 }
