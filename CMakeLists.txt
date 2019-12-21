@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13.0)
 
-project(clsp
+project(libclsp
 	VERSION 0.0.0
 	DESCRIPTION "A language server protocol C++ library"
 	HOMEPAGE_URL "https://github.com/otreblan/clsp"
@@ -21,6 +21,8 @@ set_target_properties(${PROJECT_NAME}
 	PROPERTIES
 		VERSION ${PROJECT_VERSION}
 		SOVERSION ${PROJECT_VERSION_MAJOR}
+		PREFIX ""
+		CXX_STANDARD 17
 )
 
 # Headers
@@ -33,9 +35,6 @@ add_subdirectory(src)
 
 # Header installation
 add_subdirectory(include)
-
-# C++ standard
-set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
 # pkg-config file
 configure_file(clsp.pc.in
