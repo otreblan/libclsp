@@ -18,5 +18,6 @@ target_sources(${PROJECT_NAME}
 	PRIVATE
 		message.cpp
 		object.cpp
+		responseError.cpp
 		responseMessage.cpp
 )

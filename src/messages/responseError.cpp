@@ -1,3 +1,4 @@
+
 // A C++17 library for language servers.
 // Copyright © 2019 otreblan
 //
@@ -14,32 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LIBCLSP_MESSAGES_JSONTYPES_H
-#define LIBCLSP_MESSAGES_JSONTYPES_H
-
-#include <string>
-#include <variant>
-#include <vector>
-
-#include <libclsp/messages/object.hpp>
+#include <libclsp/messages/responseError.hpp>
 
 namespace libclsp
 {
 
 using namespace std;
 
-// Primitive json-rpc types
-using String  = string;
-using Number  = int;
-using Boolean = bool;
-using Null    = monostate;
-
-
-// Structured json-rpc types
-using Array = vector<variant<String, Number, Boolean, Null, Object>>;
-// Object is defined in libclsp/messages/object.hpp
-using Any   = variant<String, Number, Boolean, Null, Object, Array>;
 
 }
-
-#endif /* LIBCLSP_MESSAGES_JSONTYPES_H */

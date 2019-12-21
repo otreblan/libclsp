@@ -22,6 +22,7 @@
 
 #include <libclsp/messages/jsonTypes.hpp>
 #include <libclsp/messages/message.hpp>
+#include <libclsp/messages/responseError.hpp>
 #include <libclsp/messages/object.hpp>
 
 namespace libclsp
@@ -52,8 +53,13 @@ private:
 	/// This member MUST NOT exist if there was an error invoking the method.
 	resultPair result;
 
-	//TODO: error
+
 	const static String errorKey;
+	using errorValue = ResponseError;
+	using errorPair = optional<pair<const String, errorValue>>;
+
+	/// The error object in case a request fails.
+	errorPair error;
 
 public:
 	ResponseMessage(idValue _id, resultValue _result);
