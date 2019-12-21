@@ -26,9 +26,14 @@ const String ResponseMessage::resultKey = "result";
 const String ResponseMessage::errorKey  = "error";
 
 
-ResponseMessage::ResponseMessage(idValue _id, resultValue _result):
-	id(idKey, _id),
-	result({resultKey, _result})
+ResponseMessage::ResponseMessage(idValue id, resultValue result):
+	id(idKey, id),
+	result({resultKey, result})
+	{};
+
+ResponseMessage::ResponseMessage(idValue id, errorValue error):
+	id(idKey, id),
+	error({resultKey, error})
 	{};
 
 }

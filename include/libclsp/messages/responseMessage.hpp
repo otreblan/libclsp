@@ -56,13 +56,28 @@ private:
 
 	const static String errorKey;
 	using errorValue = ResponseError;
-	using errorPair = optional<pair<const String, errorValue>>;
+	using errorPair  = optional<pair<const String, errorValue>>;
 
 	/// The error object in case a request fails.
 	errorPair error;
 
 public:
-	ResponseMessage(idValue _id, resultValue _result);
+	/// A Response Message sent as a result of a request.
+	///
+	/// id: Number | String | Null
+	///
+	/// result?: String | Number | Boolean | Object | Null
+	///
+	ResponseMessage(idValue id, resultValue result);
+
+	/// A Response Message sent as a result of a request.
+	///
+	/// id: Number | String | Null
+	///
+	/// error?: ResponseError
+	///
+	ResponseMessage(idValue id, errorValue error);
+
 	virtual ~ResponseMessage();
 };
 
