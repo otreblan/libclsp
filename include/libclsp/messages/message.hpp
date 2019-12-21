@@ -1,11 +1,11 @@
-#ifndef CLSP_MESSAGES_MESSAGE_H
-#define CLSP_MESSAGES_MESSAGE_H
+#ifndef LIBCLSP_MESSAGES_MESSAGE_H
+#define LIBCLSP_MESSAGES_MESSAGE_H
 
 #include <string>
 
-#include <clsp/messages/jsonTypes.hpp>
+#include <libclsp/messages/jsonTypes.hpp>
 
-namespace clsp
+namespace libclsp
 {
 
 using namespace std;
@@ -21,4 +21,4 @@ struct Message
 
 }
 
-#endif /* CLSP_MESSAGES_MESSAGE_H */
+#endif /* LIBCLSP_MESSAGES_MESSAGE_H */

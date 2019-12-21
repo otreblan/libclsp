@@ -1,6 +1,6 @@
-#include <clsp/messages/message.hpp>
+#include <libclsp/messages/message.hpp>
 
-namespace clsp
+namespace libclsp
 {
 
 using namespace std;

@@ -37,12 +37,12 @@ add_subdirectory(src)
 add_subdirectory(include)
 
 # pkg-config file
-configure_file(clsp.pc.in
-	${CMAKE_BINARY_DIR}/clsp.pc
+configure_file(libclsp.pc.in
+	${CMAKE_BINARY_DIR}/libclsp.pc
 	@ONLY
 )
 install(FILES
-	${CMAKE_BINARY_DIR}/clsp.pc
+	${CMAKE_BINARY_DIR}/libclsp.pc
 	DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig
 )
 

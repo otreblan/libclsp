@@ -1,10 +1,10 @@
-#ifndef CLSP_MESSAGES_JSONTYPES_H
-#define CLSP_MESSAGES_JSONTYPES_H
+#ifndef LIBCLSP_MESSAGES_JSONTYPES_H
+#define LIBCLSP_MESSAGES_JSONTYPES_H
 
 #include <string>
 #include <variant>
 
-namespace clsp
+namespace libclsp
 {
 
 using namespace std;
@@ -17,4 +17,4 @@ using Null    = monostate;
 
 }
 
-#endif /* CLSP_MESSAGES_JSONTYPES_H */
+#endif /* LIBCLSP_MESSAGES_JSONTYPES_H */

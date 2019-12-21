@@ -1,14 +1,14 @@
-#ifndef CLSP_MESSAGES_RESPONSEMESSAGE_H
-#define CLSP_MESSAGES_RESPONSEMESSAGE_H
+#ifndef LIBCLSP_MESSAGES_RESPONSEMESSAGE_H
+#define LIBCLSP_MESSAGES_RESPONSEMESSAGE_H
 
 #include <variant>
 #include <optional>
 
-#include <clsp/messages/jsonTypes.hpp>
-#include <clsp/messages/message.hpp>
-#include <clsp/messages/object.hpp>
+#include <libclsp/messages/jsonTypes.hpp>
+#include <libclsp/messages/message.hpp>
+#include <libclsp/messages/object.hpp>
 
-namespace clsp
+namespace libclsp
 {
 
 using namespace std;
@@ -46,4 +46,4 @@ public:
 
 }
 
-#endif /* CLSP_MESSAGES_RESPONSEMESSAGE_H */
+#endif /* LIBCLSP_MESSAGES_RESPONSEMESSAGE_H */

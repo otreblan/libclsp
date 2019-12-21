@@ -1,7 +1,7 @@
-#ifndef CLSP_MESSAGES_OBJECT_H
-#define CLSP_MESSAGES_OBJECT_H
+#ifndef LIBCLSP_MESSAGES_OBJECT_H
+#define LIBCLSP_MESSAGES_OBJECT_H
 
-namespace clsp
+namespace libclsp
 {
 
 class Object
@@ -16,4 +16,4 @@ public:
 
 }
 
-#endif /* CLSP_MESSAGES_OBJECT_H */
+#endif /* LIBCLSP_MESSAGES_OBJECT_H */

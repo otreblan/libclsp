@@ -1,10 +1,10 @@
-#ifndef CLSP_MESSAGES_H
-#define CLSP_MESSAGES_H
+#ifndef LIBCLSP_MESSAGES_H
+#define LIBCLSP_MESSAGES_H
 
-#include <clsp/messages/jsonTypes.hpp>
-#include <clsp/messages/message.hpp>
-#include <clsp/messages/object.hpp>
-#include <clsp/messages/responseMessage.hpp>
+#include <libclsp/messages/jsonTypes.hpp>
+#include <libclsp/messages/message.hpp>
+#include <libclsp/messages/object.hpp>
+#include <libclsp/messages/responseMessage.hpp>
 
 
-#endif /* CLSP_MESSAGES_H */
+#endif /* LIBCLSP_MESSAGES_H */
