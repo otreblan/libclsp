@@ -22,5 +22,4 @@ namespace libclsp
 
 using namespace std;
 
-
 }

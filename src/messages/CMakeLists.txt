@@ -17,7 +17,7 @@
 target_sources(${PROJECT_NAME}
 	PRIVATE
 		message.cpp
-		object.cpp
+		objectT.cpp
 		responseError.cpp
 		responseMessage.cpp
 )

@@ -76,8 +76,9 @@ private:
 	/// information about the error. Can be omitted.
 	dataPair data;
 
-	ResponseError();
 public:
+	ResponseError();
+
 	virtual ~ResponseError();
 };
 

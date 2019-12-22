@@ -14,22 +14,22 @@
 // You should have received a copy of the GNU General Public License
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LIBCLSP_MESSAGES_OBJECT_H
-#define LIBCLSP_MESSAGES_OBJECT_H
+#ifndef LIBCLSP_MESSAGES_OBJECTT_H
+#define LIBCLSP_MESSAGES_OBJECTT_H
 
 namespace libclsp
 {
 
-class Object
+class ObjectT
 {
 private:
 
 
 public:
-	Object();
-	virtual ~Object();
+	ObjectT();
+	virtual ~ObjectT();
 };
 
 }
 
-#endif /* LIBCLSP_MESSAGES_OBJECT_H */
+#endif /* LIBCLSP_MESSAGES_OBJECTT_H */
