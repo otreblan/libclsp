@@ -14,15 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LIBCLSP_MESSAGES_H
-#define LIBCLSP_MESSAGES_H
-
-#include <libclsp/messages/jsonTypes.hpp>
-#include <libclsp/messages/message.hpp>
 #include <libclsp/messages/notificationMessage.hpp>
-#include <libclsp/messages/objectT.hpp>
-#include <libclsp/messages/responseError.hpp>
-#include <libclsp/messages/responseMessage.hpp>
 
+namespace libclsp
+{
 
-#endif /* LIBCLSP_MESSAGES_H */
+using namespace std;
+
+NotificationMessage::NotificationMessage(String method,
+	optional<variant<Array, Object>> params):
+		method(method),
+		params(params)
+{};
+
+NotificationMessage::~NotificationMessage(){};
+
+}

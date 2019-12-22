@@ -1,4 +1,3 @@
-
 // A C++17 library for language servers.
 // Copyright © 2019 otreblan
 //

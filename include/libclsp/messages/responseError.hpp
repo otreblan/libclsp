@@ -1,4 +1,3 @@
-
 // A C++17 library for language servers.
 // Copyright © 2019 otreblan
 //
@@ -56,9 +55,8 @@ enum ErrorCodes
 ///
 /// data?: String | Number | Boolean | Array | Object | Null
 ///
-class ResponseError
+struct ResponseError
 {
-private:
 
 	const static String codeKey;
 
@@ -78,7 +76,6 @@ private:
 	/// information about the error. Can be omitted.
 	optional<variant<String, Number, Boolean, Array, Object, Null>> data;
 
-public:
 	ResponseError(ErrorCodes code, String message,
 		optional<variant<String, Number, Boolean, Array, Object, Null>> data);
 

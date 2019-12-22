@@ -38,10 +38,9 @@ using namespace std;
 ///
 /// error?: ResponseError
 ///
-class ResponseMessage: public Message
+struct ResponseMessage: public Message
 {
 
-private:
 	// Key, value, pair types.
 	// In json-rpc all keys are strings.
 
@@ -63,7 +62,6 @@ private:
 	/// The error object in case a request fails.
 	optional<ResponseError> error;
 
-public:
 	ResponseMessage(variant<Number, String, Null> id,
 		optional<variant<String, Number, Boolean, Object, Null>> result);
 

@@ -14,15 +14,45 @@
 // You should have received a copy of the GNU General Public License
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LIBCLSP_MESSAGES_H
-#define LIBCLSP_MESSAGES_H
+#ifndef LIBCLSP_MESSAGES_NOTIFICATIONMESSAGE_H
+#define LIBCLSP_MESSAGES_NOTIFICATIONMESSAGE_H
 
-#include <libclsp/messages/jsonTypes.hpp>
+#include <variant>
+#include <optional>
+
 #include <libclsp/messages/message.hpp>
-#include <libclsp/messages/notificationMessage.hpp>
-#include <libclsp/messages/objectT.hpp>
-#include <libclsp/messages/responseError.hpp>
-#include <libclsp/messages/responseMessage.hpp>
 
+namespace libclsp
+{
 
-#endif /* LIBCLSP_MESSAGES_H */
+using namespace std;
+
+/// A notification message.
+/// A processed notification message must not send a response back.
+///
+/// method: String
+///
+/// params?: Array | Object
+///
+struct NotificationMessage: public Message
+{
+
+	const static String methodKey;
+
+	/// The method to be invoked.
+	String method;
+
+	const static String paramsKey;
+
+	/// The notification's params.
+	optional<variant<Array, Object>> params;
+
+	NotificationMessage(String method,
+		optional<variant<Array, Object>> params);
+
+	virtual ~NotificationMessage();
+};
+
+}
+
+#endif /* LIBCLSP_MESSAGES_NOTIFICATIONMESSAGE_H */
