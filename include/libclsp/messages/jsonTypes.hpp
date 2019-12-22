@@ -29,17 +29,17 @@ namespace libclsp
 
 using namespace std;
 
-// Primitive json-rpc types
+/// Primitive json-rpc types
 using String  = string;
 using Number  = int;
 using Boolean = bool;
 using Null    = monostate;
 
-// Structured json-rpc types
-using Object = unique_ptr<ObjectT>;
-using Array  = vector<variant<String, Number, Boolean, Null, Object>>;
+/// Structured json-rpc types
+using Object = shared_ptr<ObjectT>; // Types in variant have to be CopyConstructible
+using Array = vector<variant<String, Number, Boolean, Null, Object>>;
 
-// A collection of all json-rpc types
+/// A collection of all json-rpc types
 using Any = variant<String, Number, Boolean, Null, Object, Array>;
 
 }
