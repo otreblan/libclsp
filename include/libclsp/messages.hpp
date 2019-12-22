@@ -19,7 +19,7 @@
 
 #include <libclsp/messages/jsonTypes.hpp>
 #include <libclsp/messages/message.hpp>
-#include <libclsp/messages/object.hpp>
+#include <libclsp/messages/objectT.hpp>
 #include <libclsp/messages/responseMessage.hpp>
 
 
