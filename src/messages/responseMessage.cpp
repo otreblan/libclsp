@@ -30,13 +30,13 @@ ResponseMessage::ResponseMessage(variant<Number, String, Null> id,
 	optional<variant<String, Number, Boolean, Object, Null>> result):
 		id(id),
 		result(result)
-		{};
+{};
 
 ResponseMessage::ResponseMessage(variant<Number, String, Null> id,
 	optional<ResponseError> error):
 		id(id),
 		error(error)
-		{};
+{};
 
 ResponseMessage::~ResponseMessage(){};
 

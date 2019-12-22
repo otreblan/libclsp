@@ -22,6 +22,13 @@ namespace libclsp
 
 using namespace std;
 
+ResponseError::ResponseError(ErrorCodes code, String message,
+	optional<variant<String, Number, Boolean, Array, Object, Null>> data):
+		code(code),
+		message(message),
+		data(data)
+{};
+
 ResponseError::~ResponseError(){};
 
 }

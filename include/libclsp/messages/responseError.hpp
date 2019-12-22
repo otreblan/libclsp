@@ -48,6 +48,14 @@ enum ErrorCodes
 	ContentModified  = -32801
 };
 
+/// An object with the data of the error that ocurred
+///
+/// code: ErrorCodes
+///
+/// message: String
+///
+/// data?: String | Number | Boolean | Array | Object | Null
+///
 class ResponseError
 {
 private:
@@ -71,7 +79,8 @@ private:
 	optional<variant<String, Number, Boolean, Array, Object, Null>> data;
 
 public:
-	ResponseError();
+	ResponseError(ErrorCodes code, String message,
+		optional<variant<String, Number, Boolean, Array, Object, Null>> data);
 
 	virtual ~ResponseError();
 };
