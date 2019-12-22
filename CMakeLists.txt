@@ -86,6 +86,12 @@ target_compile_definitions(${PROJECT_NAME}
 		${RAPIDJSON_CFLAGS_OTHER}
 )
 
+# Default flags
+if(NOT DEFINED ENV{CXXFLAGS})
+	set(CMAKE_CXX_FLAGS "-Wall -Wextra -g")
+endif()
+
+
 install(TARGETS ${PROJECT_NAME}
 	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
