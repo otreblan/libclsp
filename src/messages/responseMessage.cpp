@@ -36,4 +36,6 @@ ResponseMessage::ResponseMessage(idValue id, errorValue error):
 	error({resultKey, error})
 	{};
 
+ResponseMessage::~ResponseMessage(){};
+
 }

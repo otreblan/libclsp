@@ -22,4 +22,6 @@ namespace libclsp
 
 using namespace std;
 
+ResponseError::~ResponseError(){};
+
 }

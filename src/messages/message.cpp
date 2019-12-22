@@ -23,4 +23,7 @@ using namespace std;
 
 const pair<String, String> jsonrpc = {"jsonrpc", "2.0"};
 
+Message::Message(){};
+Message::~Message(){};
+
 }
