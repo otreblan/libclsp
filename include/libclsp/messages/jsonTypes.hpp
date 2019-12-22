@@ -20,8 +20,9 @@
 #include <string>
 #include <variant>
 #include <vector>
+#include <memory>
 
-#include <libclsp/messages/object.hpp>
+#include <libclsp/messages/objectT.hpp>
 
 namespace libclsp
 {
@@ -34,11 +35,12 @@ using Number  = int;
 using Boolean = bool;
 using Null    = monostate;
 
-
 // Structured json-rpc types
-using Array = vector<variant<String, Number, Boolean, Null, Object>>;
-// Object is defined in libclsp/messages/object.hpp
-using Any   = variant<String, Number, Boolean, Null, Object, Array>;
+using Object = unique_ptr<ObjectT>;
+using Array  = vector<variant<String, Number, Boolean, Null, Object>>;
+
+// A collection of all json-rpc types
+using Any = variant<String, Number, Boolean, Null, Object, Array>;
 
 }
 
