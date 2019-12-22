@@ -28,12 +28,12 @@ const String ResponseMessage::errorKey  = "error";
 
 ResponseMessage::ResponseMessage(idValue id, resultValue result):
 	id(idKey, id),
-	result({resultKey, result})
+	result(resultKey, result)
 	{};
 
 ResponseMessage::ResponseMessage(idValue id, errorValue error):
 	id(idKey, id),
-	error({resultKey, error})
+	error(resultKey, error)
 	{};
 
 ResponseMessage::~ResponseMessage(){};

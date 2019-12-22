@@ -30,6 +30,14 @@ namespace libclsp
 
 using namespace std;
 
+/// A Response Message sent as a result of a request.
+///
+/// id: Number | String | Null
+///
+/// result?: String | Number | Boolean | Object | Null
+///
+/// error?: ResponseError
+///
 class ResponseMessage: public Message
 {
 
@@ -46,8 +54,8 @@ private:
 
 
 	const static String resultKey;
-	using resultValue = variant<String, Number, Boolean, Object, Null>;
-	using resultPair  = optional<pair<const String, resultValue>>;
+	using resultValue = optional<variant<String, Number, Boolean, Object, Null>>;
+	using resultPair  = pair<const String, resultValue>;
 
 	/// The result of a request. This member is REQUIRED on success.
 	/// This member MUST NOT exist if there was an error invoking the method.
@@ -55,27 +63,15 @@ private:
 
 
 	const static String errorKey;
-	using errorValue = ResponseError;
-	using errorPair  = optional<pair<const String, errorValue>>;
+	using errorValue = optional<ResponseError>;
+	using errorPair  = pair<const String, errorValue>;
 
 	/// The error object in case a request fails.
 	errorPair error;
 
 public:
-	/// A Response Message sent as a result of a request.
-	///
-	/// id: Number | String | Null
-	///
-	/// result?: String | Number | Boolean | Object | Null
-	///
 	ResponseMessage(idValue id, resultValue result);
 
-	/// A Response Message sent as a result of a request.
-	///
-	/// id: Number | String | Null
-	///
-	/// error?: ResponseError
-	///
 	ResponseMessage(idValue id, errorValue error);
 
 	virtual ~ResponseMessage();
