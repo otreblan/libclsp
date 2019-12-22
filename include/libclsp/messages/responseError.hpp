@@ -53,28 +53,22 @@ class ResponseError
 private:
 
 	const static String codeKey;
-	using codeValue = ErrorCodes;
-	using codePair  = pair<const String, codeValue>;
 
 	/// A number indicating the error type that occurred.
-	codePair code;
+	ErrorCodes code;
 
 
 	const static String messageKey;
-	using messageValue = String;
-	using messagePair  = pair<const String, messageValue>;
 
 	/// A string providing a short description of the error.
-	messagePair message;
+	String message;
 
 
 	const static String dataKey;
-	using dataValue = optional<variant<String, Number, Boolean, Array, Object, Null>>;
-	using dataPair  = pair<const String, dataValue>;
 
 	/// A Primitive or Structured value that contains additional
 	/// information about the error. Can be omitted.
-	dataPair data;
+	optional<variant<String, Number, Boolean, Array, Object, Null>> data;
 
 public:
 	ResponseError();
