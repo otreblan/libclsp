@@ -22,6 +22,10 @@ namespace libclsp
 
 using namespace std;
 
+const String ResponseError::codeKey    = "code";
+const String ResponseError::messageKey = "message";
+const String ResponseError::dataKey    = "data";
+
 ResponseError::ResponseError(ErrorCodes code, String message,
 	optional<variant<String, Number, Boolean, Array, Object, Null>> data):
 		code(code),
