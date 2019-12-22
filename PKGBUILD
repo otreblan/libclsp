@@ -1,7 +1,7 @@
 # Maintainer: Otreblan <otreblain@gmail.com>
 
 pkgname=libclsp-git
-pkgver=r27.a951662
+pkgver=r31.1613c14
 pkgrel=1
 epoch=
 pkgdesc="A C++17 library for language servers"
@@ -15,7 +15,7 @@ checkdepends=()
 optdepends=()
 provides=('libclsp')
 conflicts=('libclsp')
-source=("${pkgname}::git+${url}.git")
+source=("${pkgname}::git+file://$PWD")
 md5sums=('SKIP')
 
 prepare() {
