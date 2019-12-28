@@ -14,8 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LIBCLSP_MESSAGES_RESPONSEMESSAGE_H
-#define LIBCLSP_MESSAGES_RESPONSEMESSAGE_H
+#pragma once
 
 #include <variant>
 #include <optional>
@@ -72,5 +71,3 @@ struct ResponseMessage: public Message
 };
 
 }
-
-#endif /* LIBCLSP_MESSAGES_RESPONSEMESSAGE_H */

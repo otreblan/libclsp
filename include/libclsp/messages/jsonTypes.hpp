@@ -14,8 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LIBCLSP_MESSAGES_JSONTYPES_H
-#define LIBCLSP_MESSAGES_JSONTYPES_H
+#pragma once
 
 #include <string>
 #include <variant>
@@ -43,5 +42,3 @@ using Array = vector<variant<String, Number, Boolean, Null, Object>>;
 using Any = variant<String, Number, Boolean, Null, Object, Array>;
 
 }
-
-#endif /* LIBCLSP_MESSAGES_JSONTYPES_H */

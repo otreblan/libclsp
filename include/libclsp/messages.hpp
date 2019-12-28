@@ -14,8 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LIBCLSP_MESSAGES_H
-#define LIBCLSP_MESSAGES_H
+#pragma once
 
 #include <libclsp/messages/jsonTypes.hpp>
 #include <libclsp/messages/message.hpp>
@@ -23,6 +22,3 @@
 #include <libclsp/messages/objectT.hpp>
 #include <libclsp/messages/responseError.hpp>
 #include <libclsp/messages/responseMessage.hpp>
-
-
-#endif /* LIBCLSP_MESSAGES_H */

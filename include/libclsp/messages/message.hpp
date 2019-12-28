@@ -14,8 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
-#ifndef LIBCLSP_MESSAGES_MESSAGE_H
-#define LIBCLSP_MESSAGES_MESSAGE_H
+#pragma once
 
 #include <string>
 
@@ -36,5 +35,3 @@ struct Message
 };
 
 }
-
-#endif /* LIBCLSP_MESSAGES_MESSAGE_H */
