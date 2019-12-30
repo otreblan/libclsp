@@ -20,5 +20,4 @@
 #include <libclsp/messages/message.hpp>
 #include <libclsp/messages/notificationMessage.hpp>
 #include <libclsp/messages/objectT.hpp>
-#include <libclsp/messages/responseError.hpp>
 #include <libclsp/messages/responseMessage.hpp>

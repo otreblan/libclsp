@@ -40,4 +40,18 @@ ResponseMessage::ResponseMessage(variant<Number, String, Null> id,
 
 ResponseMessage::~ResponseMessage(){};
 
+
+const String ResponseError::codeKey    = "code";
+const String ResponseError::messageKey = "message";
+const String ResponseError::dataKey    = "data";
+
+ResponseError::ResponseError(ErrorCodes code, String message,
+	optional<variant<String, Number, Boolean, Array, Object, Null>> data):
+		code(code),
+		message(message),
+		data(data)
+{};
+
+ResponseError::~ResponseError(){};
+
 }

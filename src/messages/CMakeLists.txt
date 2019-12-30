@@ -19,6 +19,5 @@ target_sources(${PROJECT_NAME}
 		message.cpp
 		notificationMessage.cpp
 		objectT.cpp
-		responseError.cpp
 		responseMessage.cpp
 )

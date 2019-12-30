@@ -21,13 +21,65 @@
 
 #include <libclsp/messages/jsonTypes.hpp>
 #include <libclsp/messages/message.hpp>
-#include <libclsp/messages/responseError.hpp>
 #include <libclsp/messages/objectT.hpp>
 
 namespace libclsp
 {
 
 using namespace std;
+
+enum ErrorCodes
+{
+	// Json-rpc error codes
+	ParseError           = -32700,
+	InvalidRequest       = -32600,
+	MethodNotFound       = -32601,
+	InvalidParams        = -32602,
+	InternalError        = -32603,
+	serverErrorStart     = -32099,
+	serverErrorEnd       = -32000,
+	ServerNotInitialized = -32002,
+	UnknownErrorCode     = -32001,
+
+	// LSP error codes
+	RequestCancelled = -32800,
+	ContentModified  = -32801
+};
+
+/// An object with the data of the error that ocurred
+///
+/// code: ErrorCodes
+///
+/// message: String
+///
+/// data?: String | Number | Boolean | Array | Object | Null
+///
+struct ResponseError
+{
+
+	const static String codeKey;
+
+	/// A number indicating the error type that occurred.
+	ErrorCodes code;
+
+
+	const static String messageKey;
+
+	/// A string providing a short description of the error.
+	String message;
+
+
+	const static String dataKey;
+
+	/// A Primitive or Structured value that contains additional
+	/// information about the error. Can be omitted.
+	optional<variant<String, Number, Boolean, Array, Object, Null>> data;
+
+	ResponseError(ErrorCodes code, String message,
+		optional<variant<String, Number, Boolean, Array, Object, Null>> data);
+
+	virtual ~ResponseError();
+};
 
 /// A Response Message sent as a result of a request.
 ///
