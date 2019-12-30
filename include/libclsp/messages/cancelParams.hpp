@@ -16,9 +16,31 @@
 
 #pragma once
 
-#include <libclsp/messages/cancelParams.hpp>
-#include <libclsp/messages/jsonTypes.hpp>
+#include <variant>
+#include <optional>
+
 #include <libclsp/messages/message.hpp>
-#include <libclsp/messages/notificationMessage.hpp>
-#include <libclsp/messages/objectT.hpp>
-#include <libclsp/messages/responseMessage.hpp>
+
+namespace libclsp
+{
+
+using namespace std;
+
+/// This for request cancelation
+///
+/// id: Number | String
+///
+struct CancelParams: public Message
+{
+
+	const static String idKey;
+
+	/// The request id to cancel.
+	variant<Number, String> id;
+
+	CancelParams(variant<Number, String> id);
+
+	virtual ~CancelParams();
+};
+
+}

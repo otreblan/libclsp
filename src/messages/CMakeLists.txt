@@ -16,6 +16,7 @@
 
 target_sources(${PROJECT_NAME}
 	PRIVATE
+		cancelParams.cpp
 		message.cpp
 		notificationMessage.cpp
 		objectT.cpp
