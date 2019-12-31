@@ -21,5 +21,6 @@ target_sources(${PROJECT_NAME}
 		notificationMessage.cpp
 		objectT.cpp
 		position.cpp
+		range.cpp
 		responseMessage.cpp
 )

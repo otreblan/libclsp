@@ -16,11 +16,39 @@
 
 #pragma once
 
-#include <libclsp/messages/cancelParams.hpp>
-#include <libclsp/messages/jsonTypes.hpp>
-#include <libclsp/messages/message.hpp>
-#include <libclsp/messages/notificationMessage.hpp>
-#include <libclsp/messages/objectT.hpp>
+#include <variant>
+#include <optional>
+
 #include <libclsp/messages/position.hpp>
-#include <libclsp/messages/range.hpp>
-#include <libclsp/messages/responseMessage.hpp>
+
+namespace libclsp
+{
+
+using namespace std;
+
+/// Comparable to a selection in the editor
+///
+/// start: Position
+///
+/// end: Position
+///
+struct Range
+{
+
+	const static String startKey;
+
+	/// The range's start position.
+	Position start;
+
+
+	const static String endKey;
+
+	/// The range's end position.
+	Position end;
+
+	Range(Position start, Position end);
+
+	virtual ~Range();
+};
+
+}
