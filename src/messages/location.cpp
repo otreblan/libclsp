@@ -14,14 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
-
-#include <libclsp/messages/cancelParams.hpp>
-#include <libclsp/messages/jsonTypes.hpp>
 #include <libclsp/messages/location.hpp>
-#include <libclsp/messages/message.hpp>
-#include <libclsp/messages/notificationMessage.hpp>
-#include <libclsp/messages/objectT.hpp>
-#include <libclsp/messages/position.hpp>
-#include <libclsp/messages/range.hpp>
-#include <libclsp/messages/responseMessage.hpp>
+
+namespace libclsp
+{
+
+using namespace std;
+
+const String Location::uriKey   = "uri";
+const String Location::rangeKey = "range";
+
+Location::Location(DocumentUri uri, Range range):
+	uri(uri),
+	range(range){};
+
+Location::~Location(){};
+
+}

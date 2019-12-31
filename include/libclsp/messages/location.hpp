@@ -16,12 +16,35 @@
 
 #pragma once
 
-#include <libclsp/messages/cancelParams.hpp>
-#include <libclsp/messages/jsonTypes.hpp>
-#include <libclsp/messages/location.hpp>
-#include <libclsp/messages/message.hpp>
-#include <libclsp/messages/notificationMessage.hpp>
-#include <libclsp/messages/objectT.hpp>
-#include <libclsp/messages/position.hpp>
+#include <variant>
+#include <optional>
+
 #include <libclsp/messages/range.hpp>
-#include <libclsp/messages/responseMessage.hpp>
+
+namespace libclsp
+{
+
+using namespace std;
+
+/// Represents a location inside a resource, such as a line inside a text file.
+///
+/// uri: DocumentUri
+///
+/// range: Range
+///
+struct Location
+{
+	const static String uriKey;
+
+	DocumentUri uri;
+
+	const static String rangeKey;
+
+	Range range;
+
+	Location(DocumentUri uri, Range range);
+
+	virtual ~Location();
+};
+
+}
