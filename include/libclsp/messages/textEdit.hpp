@@ -16,15 +16,41 @@
 
 #pragma once
 
-#include <libclsp/messages/cancelParams.hpp>
-#include <libclsp/messages/diagnostic.hpp>
-#include <libclsp/messages/jsonTypes.hpp>
-#include <libclsp/messages/location.hpp>
-#include <libclsp/messages/locationLink.hpp>
-#include <libclsp/messages/message.hpp>
-#include <libclsp/messages/notificationMessage.hpp>
-#include <libclsp/messages/objectT.hpp>
-#include <libclsp/messages/position.hpp>
+#include <variant>
+#include <optional>
+
 #include <libclsp/messages/range.hpp>
-#include <libclsp/messages/responseMessage.hpp>
-#include <libclsp/messages/textEdit.hpp>
+
+namespace libclsp
+{
+
+using namespace std;
+
+/// A textual edit applicable to a text document.
+///
+/// range: Range
+///
+/// newText: String
+///
+struct TextEdit
+{
+
+	const static String rangeKey;
+
+	/// The range of the text document to be manipulated. To insert
+	/// text into a document create a range where start == end.
+	Range range;
+
+
+	const static String newTextKey;
+
+	/// The string to be inserted. For delete operations use an
+	/// empty string.
+	String newText;
+
+	TextEdit(Range range, String newText);
+
+	virtual ~TextEdit();
+};
+
+}
