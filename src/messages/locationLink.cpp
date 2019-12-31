@@ -14,15 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
-
-#include <libclsp/messages/cancelParams.hpp>
-#include <libclsp/messages/jsonTypes.hpp>
-#include <libclsp/messages/location.hpp>
 #include <libclsp/messages/locationLink.hpp>
-#include <libclsp/messages/message.hpp>
-#include <libclsp/messages/notificationMessage.hpp>
-#include <libclsp/messages/objectT.hpp>
-#include <libclsp/messages/position.hpp>
-#include <libclsp/messages/range.hpp>
-#include <libclsp/messages/responseMessage.hpp>
+
+namespace libclsp
+{
+
+const String LocationLink::originSelectionRangeKey = "originSelectionRange";
+const String LocationLink::targetUriKey            = "targetUri";
+const String LocationLink::targetRangeKey          = "targetRange";
+const String LocationLink::targetSelectionRangeKey = "targetSelectionRange";
+
+LocationLink::LocationLink(optional<Range> originSelectionRange,
+	DocumentUri targetUri,
+	Range targetRange,
+	Range targetSelectionRange):
+		originSelectionRange(originSelectionRange),
+		targetUri(targetUri),
+		targetRange(targetRange),
+		targetSelectionRange(targetSelectionRange){};
+
+LocationLink::~LocationLink(){};
+
+}

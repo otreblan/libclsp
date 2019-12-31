@@ -18,6 +18,7 @@ target_sources(${PROJECT_NAME}
 	PRIVATE
 		cancelParams.cpp
 		location.cpp
+		locationLink.cpp
 		message.cpp
 		notificationMessage.cpp
 		objectT.cpp
