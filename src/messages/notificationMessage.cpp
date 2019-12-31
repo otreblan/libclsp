@@ -21,6 +21,9 @@ namespace libclsp
 
 using namespace std;
 
+const String NotificationMessage::methodKey = "method";
+const String NotificationMessage::paramsKey = "params";
+
 NotificationMessage::NotificationMessage(String method,
 	optional<variant<Array, Object>> params):
 		method(method),
