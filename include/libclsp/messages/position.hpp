@@ -16,10 +16,43 @@
 
 #pragma once
 
-#include <libclsp/messages/cancelParams.hpp>
+#include <variant>
+#include <optional>
+
 #include <libclsp/messages/jsonTypes.hpp>
-#include <libclsp/messages/message.hpp>
-#include <libclsp/messages/notificationMessage.hpp>
-#include <libclsp/messages/objectT.hpp>
-#include <libclsp/messages/position.hpp>
-#include <libclsp/messages/responseMessage.hpp>
+
+namespace libclsp
+{
+
+using namespace std;
+
+/// A position in a text document
+///
+/// line: Number
+///
+/// character: Number
+///
+struct Position
+{
+
+	const static String lineKey;
+
+	/// Line position in a document (zero-based).
+	Number line;
+
+	const static String characterKey;
+
+	/// Character offset on a line in a document (zero-based). Assuming that the line is
+	/// represented as a string, the `character` value represents the gap between the
+	/// `character` and `character + 1`.
+	///
+	/// If the character value is greater than the line length it defaults back to the
+	/// line length.
+	Number character;
+
+	Position(Number line, Number character);
+
+	virtual ~Position();
+};
+
+}

@@ -19,7 +19,7 @@
 #include <variant>
 #include <optional>
 
-#include <libclsp/messages/message.hpp>
+#include <libclsp/messages/jsonTypes.hpp>
 
 namespace libclsp
 {
@@ -30,7 +30,7 @@ using namespace std;
 ///
 /// id: Number | String
 ///
-struct CancelParams: public Message
+struct CancelParams
 {
 
 	const static String idKey;
