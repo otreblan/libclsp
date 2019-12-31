@@ -41,4 +41,7 @@ using Array = vector<variant<String, Number, Boolean, Null, Object>>;
 /// A collection of all json-rpc types
 using Any = variant<String, Number, Boolean, Null, Object, Array>;
 
+/// Protocol types
+using DocumentUri = String;
+
 }
