@@ -18,6 +18,7 @@
 
 #include <libclsp/messages/cancelParams.hpp>
 #include <libclsp/messages/diagnostic.hpp>
+#include <libclsp/messages/fileResourceChanges.hpp>
 #include <libclsp/messages/jsonTypes.hpp>
 #include <libclsp/messages/location.hpp>
 #include <libclsp/messages/locationLink.hpp>

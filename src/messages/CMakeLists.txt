@@ -18,6 +18,7 @@ target_sources(${PROJECT_NAME}
 	PRIVATE
 		cancelParams.cpp
 		diagnostic.cpp
+		fileResourceChanges.cpp
 		location.cpp
 		locationLink.cpp
 		message.cpp

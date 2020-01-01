@@ -21,7 +21,7 @@ namespace libclsp
 
 using namespace std;
 
-const pair<String, String> jsonrpc = {"jsonrpc", "2.0"};
+const pair<String, String> Message::jsonrpc = {"jsonrpc", "2.0"};
 
 Message::Message(){};
 Message::~Message(){};
