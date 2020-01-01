@@ -27,5 +27,6 @@ target_sources(${PROJECT_NAME}
 		position.cpp
 		range.cpp
 		responseMessage.cpp
+		textDocumentIdentifier.cpp
 		textEdit.cpp
 )

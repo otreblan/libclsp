@@ -16,17 +16,29 @@
 
 #pragma once
 
-#include <libclsp/messages/cancelParams.hpp>
-#include <libclsp/messages/diagnostic.hpp>
-#include <libclsp/messages/fileResourceChanges.hpp>
 #include <libclsp/messages/jsonTypes.hpp>
-#include <libclsp/messages/location.hpp>
-#include <libclsp/messages/locationLink.hpp>
-#include <libclsp/messages/message.hpp>
-#include <libclsp/messages/notificationMessage.hpp>
-#include <libclsp/messages/objectT.hpp>
-#include <libclsp/messages/position.hpp>
-#include <libclsp/messages/range.hpp>
-#include <libclsp/messages/responseMessage.hpp>
-#include <libclsp/messages/textDocumentIdentifier.hpp>
-#include <libclsp/messages/textEdit.hpp>
+
+namespace libclsp
+{
+
+using namespace std;
+
+/// Text documents are identified using a URI.
+///
+/// uri: DocumentUri
+///
+struct TextDocumentIdentifier
+{
+
+	const static String uriKey;
+
+	/// The text document's URI.
+	DocumentUri uri;
+
+
+	TextDocumentIdentifier(DocumentUri uri);
+
+	virtual ~TextDocumentIdentifier();
+};
+
+}
