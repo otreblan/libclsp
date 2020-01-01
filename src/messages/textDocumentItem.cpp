@@ -14,20 +14,27 @@
 // You should have received a copy of the GNU General Public License
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
-
-#include <libclsp/messages/cancelParams.hpp>
-#include <libclsp/messages/diagnostic.hpp>
-#include <libclsp/messages/fileResourceChanges.hpp>
-#include <libclsp/messages/jsonTypes.hpp>
-#include <libclsp/messages/location.hpp>
-#include <libclsp/messages/locationLink.hpp>
-#include <libclsp/messages/message.hpp>
-#include <libclsp/messages/notificationMessage.hpp>
-#include <libclsp/messages/objectT.hpp>
-#include <libclsp/messages/position.hpp>
-#include <libclsp/messages/range.hpp>
-#include <libclsp/messages/responseMessage.hpp>
-#include <libclsp/messages/textDocumentIdentifier.hpp>
 #include <libclsp/messages/textDocumentItem.hpp>
-#include <libclsp/messages/textEdit.hpp>
+
+namespace libclsp
+{
+
+using namespace std;
+
+const String TextDocumentItem::uriKey        = "uri";
+const String TextDocumentItem::languageIdKey = "languageId";
+const String TextDocumentItem::versionKey    = "version";
+const String TextDocumentItem::textKey       = "text";
+
+TextDocumentItem::TextDocumentItem(DocumentUri uri,
+	String languageId,
+	Number version,
+	String text):
+		uri(uri),
+		languageId(languageId),
+		version(version),
+		text(text){};
+
+TextDocumentItem::~TextDocumentItem(){};
+
+}

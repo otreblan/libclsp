@@ -28,5 +28,6 @@ target_sources(${PROJECT_NAME}
 		range.cpp
 		responseMessage.cpp
 		textDocumentIdentifier.cpp
+		textDocumentItem.cpp
 		textEdit.cpp
 )
