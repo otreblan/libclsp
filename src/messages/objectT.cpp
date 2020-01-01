@@ -1,5 +1,5 @@
 // A C++17 library for language servers.
-// Copyright © 2019 otreblan
+// Copyright © 2019-2020 otreblan
 //
 // libclsp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
