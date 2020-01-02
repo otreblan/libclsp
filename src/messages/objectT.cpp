@@ -29,4 +29,14 @@ void ObjectT::write( [[maybe_unused]] Writer<StringBuffer> &ww){};
 ObjectT::ObjectT(){};
 ObjectT::~ObjectT(){};
 
+void ObjectT::NumberWriter::operator()(int n)
+{
+	writer.Int(n);
+}
+
+void ObjectT::NumberWriter::operator()(double n)
+{
+	writer.Double(n);
+}
+
 }

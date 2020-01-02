@@ -30,6 +30,14 @@ protected:
 	/// This is like write() but without the object bounds.
 	virtual void partialWrite(Writer<StringBuffer> &ww);
 
+	/// A visitor for writing numbers
+	struct NumberWriter
+	{
+		Writer<StringBuffer> &writer;
+
+		void operator()(int n);
+		void operator()(double n);
+	};
 public:
 	/// This is for writing the json
 	virtual void write(Writer<StringBuffer> &ww);
