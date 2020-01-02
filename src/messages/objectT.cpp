@@ -15,3 +15,18 @@
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <libclsp/messages/objectT.hpp>
+
+namespace libclsp
+{
+
+using namespace std;
+using namespace rapidjson;
+
+
+void ObjectT::partialWrite( [[maybe_unused]] Writer<StringBuffer> &ww){};
+void ObjectT::write( [[maybe_unused]] Writer<StringBuffer> &ww){};
+
+ObjectT::ObjectT(){};
+ObjectT::~ObjectT(){};
+
+}

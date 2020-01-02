@@ -16,15 +16,24 @@
 
 #pragma once
 
+#include <rapidjson/writer.h>
+
 namespace libclsp
 {
 
+using namespace std;
+using namespace rapidjson;
+
 class ObjectT
 {
-private:
-
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(Writer<StringBuffer> &ww);
 
 public:
+	/// This is for writing the json
+	virtual void write(Writer<StringBuffer> &ww);
+
 	ObjectT();
 	virtual ~ObjectT();
 };

@@ -25,13 +25,20 @@ namespace libclsp
 
 using namespace std;
 
-struct Message
+struct Message: public ObjectT
 {
+	/// This is for writing the json
+	virtual void write(Writer<StringBuffer> &ww);
 
 	const static pair<String, String> jsonrpc;
 
 	Message();
 	virtual ~Message();
+
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(Writer<StringBuffer> &ww);
+
 };
 
 }

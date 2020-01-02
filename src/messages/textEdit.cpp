@@ -28,4 +28,6 @@ TextEdit::TextEdit(Range range, String newText):
 	range(range),
 	newText(newText){};
 
+TextEdit::~TextEdit(){};
+
 }
