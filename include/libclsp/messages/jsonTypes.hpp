@@ -21,10 +21,10 @@
 #include <vector>
 #include <memory>
 
-#include <libclsp/messages/objectT.hpp>
-
 namespace libclsp
 {
+
+class ObjectT;
 
 using namespace std;
 

@@ -16,6 +16,8 @@
 
 #include <libclsp/messages/responseMessage.hpp>
 
+#include <iostream>
+
 namespace libclsp
 {
 
@@ -54,4 +56,64 @@ ResponseError::ResponseError(ErrorCodes code, String message,
 
 ResponseError::~ResponseError(){};
 
+void ResponseError::write(Writer<StringBuffer> &writer)
+{
+	writer.StartObject();
+
+	partialWrite(writer);
+
+	writer.EndObject();
 }
+
+void ResponseError::partialWrite(Writer<StringBuffer> &writer)
+{
+	// code
+	writer.Key(codeKey.c_str());
+	writer.Int(code);
+
+	// message
+	writer.Key(messageKey.c_str());
+	writer.String(message.c_str());
+
+	// data?
+	writeData(writer);
+}
+
+void ResponseError::writeData(Writer<StringBuffer> &writer)
+{
+	if(data.has_value())
+	{
+		writer.Key(dataKey.c_str());
+		visit(overload
+		(
+			[&writer](String ii)
+			{
+				writer.String(ii.c_str());
+			},
+			[&writer](Number ii)
+			{
+				ObjectT::write(writer, ii);
+			},
+			[&writer](Boolean ii)
+			{
+				std::cerr << "Bool\n";
+				writer.Bool(ii);
+			},
+			[&writer](Array &ii)
+			{
+				ObjectT::write(writer, ii);
+			},
+			[&writer](Object ii)
+			{
+				ii->write(writer);
+			},
+			[&writer](Null)
+			{
+				writer.Null();
+			}
+		), data.value());
+	}
+}
+
+}
+

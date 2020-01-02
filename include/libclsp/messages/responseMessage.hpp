@@ -53,9 +53,8 @@ enum ErrorCodes
 ///
 /// data?: String | Number | Boolean | Array | Object | Null
 ///
-struct ResponseError
+struct ResponseError: public ObjectT
 {
-
 	const static String codeKey;
 
 	/// A number indicating the error type that occurred.
@@ -74,10 +73,23 @@ struct ResponseError
 	/// information about the error. Can be omitted.
 	optional<variant<String, Number, Boolean, Array, Object, Null>> data;
 
+	// Initialize variables outside the constructor.
+	// The variant constructor is not very clever.
 	ResponseError(ErrorCodes code, String message,
 		optional<variant<String, Number, Boolean, Array, Object, Null>> data);
 
 	virtual ~ResponseError();
+
+	/// This is for writing the json
+	virtual void write(Writer<StringBuffer> &writer);
+
+private:
+
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(Writer<StringBuffer> &writer);
+
+	/// Writer for the data pair
+	void writeData(Writer<StringBuffer> &writer);
 };
 
 /// A Response Message sent as a result of a request.

@@ -19,6 +19,7 @@
 #include <string>
 
 #include <libclsp/messages/jsonTypes.hpp>
+#include <libclsp/messages/objectT.hpp>
 
 namespace libclsp
 {

@@ -23,20 +23,57 @@ using namespace std;
 using namespace rapidjson;
 
 
-void ObjectT::partialWrite( [[maybe_unused]] Writer<StringBuffer> &ww){};
-void ObjectT::write( [[maybe_unused]] Writer<StringBuffer> &ww){};
+void ObjectT::partialWrite( [[maybe_unused]] Writer<StringBuffer> &writer){};
+void ObjectT::write( [[maybe_unused]] Writer<StringBuffer> &writer){};
 
 ObjectT::ObjectT(){};
 ObjectT::~ObjectT(){};
 
-void ObjectT::NumberWriter::operator()(int n)
+void ObjectT::write(Writer<StringBuffer> &writer, Number n)
 {
-	writer.Int(n);
+	visit(overload
+	(
+		[&writer](int n)
+		{
+			writer.Int(n);
+		},
+		[&writer](double n)
+		{
+			writer.Double(n);
+		}
+	), n);
 }
 
-void ObjectT::NumberWriter::operator()(double n)
+void ObjectT::write(Writer<StringBuffer> &writer, Array &a)
 {
-	writer.Double(n);
+	writer.StartArray();
+	for(const auto &ii:a)
+	{
+		visit(overload
+		(
+			[&writer](String ii)
+			{
+				writer.String(ii.c_str());
+			},
+			[&writer](Number ii)
+			{
+				write(writer, ii);
+			},
+			[&writer](Boolean ii)
+			{
+				writer.Bool(ii);
+			},
+			[&writer](Null)
+			{
+				writer.Null();
+			},
+			[&writer](Object ii)
+			{
+				ii->write(writer);
+			}
+		), ii);
+	}
+	writer.EndArray();
 }
 
 }
