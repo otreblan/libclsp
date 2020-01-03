@@ -23,6 +23,7 @@
 #include <libclsp/messages/jsonTypes.hpp>
 #include <libclsp/messages/location.hpp>
 #include <libclsp/messages/locationLink.hpp>
+#include <libclsp/messages/markupContent.hpp>
 #include <libclsp/messages/message.hpp>
 #include <libclsp/messages/notificationMessage.hpp>
 #include <libclsp/messages/objectT.hpp>

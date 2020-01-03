@@ -16,8 +16,6 @@
 
 #include <libclsp/messages/responseMessage.hpp>
 
-#include <iostream>
-
 namespace libclsp
 {
 
