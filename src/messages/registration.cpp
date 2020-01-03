@@ -42,4 +42,24 @@ RegistrationParams::RegistrationParams(vector<Registration> registrations):
 
 RegistrationParams::~RegistrationParams(){};
 
+
+const String UnRegistration::idKey              = "id";
+const String UnRegistration::methodKey          = "method";
+
+UnRegistration::UnRegistration(String id, String method):
+	id(id),
+	method(method)
+{};
+
+UnRegistration::~UnRegistration(){};
+
+
+const String UnRegistrationParams::unregisterationsKey = "unregisterations";
+
+UnRegistrationParams::UnRegistrationParams(vector<UnRegistration> unregisterations):
+	unregisterations(unregisterations)
+{};
+
+UnRegistrationParams::~UnRegistrationParams(){};
+
 }

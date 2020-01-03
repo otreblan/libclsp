@@ -76,4 +76,50 @@ struct RegistrationParams
 	virtual ~RegistrationParams();
 };
 
+
+/// General parameters to unregister for a capability
+///
+/// id: String
+///
+/// method: String
+///
+struct UnRegistration
+{
+
+	const static String idKey;
+
+	/// The id used to unregister the request or notification. Usually an id
+	/// provided during the register request.
+	String id;
+
+
+	const static String methodKey;
+
+	/// The method / capability to unregister for.
+	String method;
+
+
+	UnRegistration(String id, String method);
+
+	virtual ~UnRegistration();
+};
+
+/// The client/unregisterCapability request is sent from the server
+/// to the client to unregister a previously registered capability.
+///
+/// unregisterations: UnRegistration[]
+///
+struct UnRegistrationParams
+{
+
+	const static String unregisterationsKey;
+
+	/// This should correctly be named `unregistrations`. However changing this
+	/// is a breaking change and needs to wait until we deliver a 4.x version
+	/// of the specification.
+	vector<UnRegistration> unregisterations;
+
+	UnRegistrationParams(vector<UnRegistration> unregisterations);
+	virtual ~UnRegistrationParams();
+};
 }
