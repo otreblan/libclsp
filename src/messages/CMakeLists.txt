@@ -22,6 +22,7 @@ target_sources(${PROJECT_NAME}
 		fileResourceChanges.cpp
 		location.cpp
 		locationLink.cpp
+		logMessage.cpp
 		markupContent.cpp
 		message.cpp
 		notificationMessage.cpp

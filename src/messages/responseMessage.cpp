@@ -140,7 +140,7 @@ void ResponseError::partialWrite(Writer<StringBuffer> &writer)
 {
 	// code
 	writer.Key(codeKey.c_str());
-	writer.Int(code);
+	writer.Int((int)code);
 
 	// message
 	writer.Key(messageKey.c_str());

@@ -25,7 +25,7 @@ namespace libclsp
 
 using namespace std;
 
-enum MessageType
+enum class MessageType
 {
 	/// An error message.
 	Error = 1,

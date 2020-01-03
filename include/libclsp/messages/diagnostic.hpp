@@ -50,7 +50,7 @@ struct DiagnosticRelatedInformation
 	virtual ~DiagnosticRelatedInformation();
 };
 
-enum DiagnosticSeverity
+enum class DiagnosticSeverity
 {
 	/// Reports an error.
 	Error = 1,
@@ -65,7 +65,7 @@ enum DiagnosticSeverity
 	Hint = 4
 };
 
-enum DiagnosticTag
+enum class DiagnosticTag
 {
 	/// Unused or unnecessary code.
 	///

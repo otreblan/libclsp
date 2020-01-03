@@ -27,7 +27,7 @@ namespace libclsp
 
 using namespace std;
 
-enum ErrorCodes
+enum class ErrorCodes
 {
 	// Json-rpc error codes
 	ParseError           = -32700,

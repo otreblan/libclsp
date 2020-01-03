@@ -28,7 +28,7 @@ using namespace std;
 ///
 /// Please note that `MarkupKinds` must not start with a `$`. This kinds
 /// are reserved for internal usage.
-enum MarkupKind
+enum class MarkupKind
 {
 	/// Plain text is supported as a content format
 	PlainText,
