@@ -30,6 +30,7 @@
 #include <libclsp/messages/objectT.hpp>
 #include <libclsp/messages/position.hpp>
 #include <libclsp/messages/range.hpp>
+#include <libclsp/messages/registration.hpp>
 #include <libclsp/messages/responseMessage.hpp>
 #include <libclsp/messages/showMessage.hpp>
 #include <libclsp/messages/staticRegistration.hpp>

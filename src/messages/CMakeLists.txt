@@ -29,6 +29,7 @@ target_sources(${PROJECT_NAME}
 		objectT.cpp
 		position.cpp
 		range.cpp
+		registration.cpp
 		responseMessage.cpp
 		showMessage.cpp
 		staticRegistration.cpp
