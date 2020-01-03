@@ -193,4 +193,22 @@ struct WorkDoneProgressOptions
 	virtual ~WorkDoneProgressOptions();
 };
 
+/// The window/workDoneProgress/create request is sent from the server to
+/// the client to ask the client to create a work done progress.
+///
+/// token: ProgressToken
+///
+struct WorkDoneProgressCreateParams
+{
+
+	const static String tokenKey;
+
+	/// The token to be used to report progress.
+	ProgressToken token;
+
+
+	WorkDoneProgressCreateParams(ProgressToken token);
+	virtual ~WorkDoneProgressCreateParams();
+};
+
 }

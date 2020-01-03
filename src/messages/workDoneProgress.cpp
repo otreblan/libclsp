@@ -88,4 +88,13 @@ WorkDoneProgressOptions::
 
 WorkDoneProgressOptions::~WorkDoneProgressOptions(){};
 
+
+const String WorkDoneProgressCreateParams::tokenKey = "token";
+
+WorkDoneProgressCreateParams::WorkDoneProgressCreateParams(ProgressToken token):
+	token(token)
+{};
+
+WorkDoneProgressCreateParams::~WorkDoneProgressCreateParams(){};
+
 }
