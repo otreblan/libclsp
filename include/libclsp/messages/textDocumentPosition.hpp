@@ -16,19 +16,40 @@
 
 #pragma once
 
-#include <libclsp/messages/cancelParams.hpp>
-#include <libclsp/messages/diagnostic.hpp>
-#include <libclsp/messages/fileResourceChanges.hpp>
-#include <libclsp/messages/jsonTypes.hpp>
-#include <libclsp/messages/location.hpp>
-#include <libclsp/messages/locationLink.hpp>
-#include <libclsp/messages/message.hpp>
-#include <libclsp/messages/notificationMessage.hpp>
-#include <libclsp/messages/objectT.hpp>
-#include <libclsp/messages/position.hpp>
-#include <libclsp/messages/range.hpp>
-#include <libclsp/messages/responseMessage.hpp>
 #include <libclsp/messages/textDocumentIdentifier.hpp>
-#include <libclsp/messages/textDocumentItem.hpp>
-#include <libclsp/messages/textDocumentPosition.hpp>
-#include <libclsp/messages/textEdit.hpp>
+#include <libclsp/messages/position.hpp>
+
+namespace libclsp
+{
+
+using namespace std;
+
+/// A parameter literal used in requests to pass a text document
+/// and a position inside that document.
+///
+/// textDocument: TextDocumentIdentifier
+///
+/// position: Position
+///
+struct TextDocumentPositionParams
+{
+
+	const static String textDocumentKey;
+
+	/// The text document.
+	TextDocumentIdentifier textDocument;
+
+
+	const static String positionKey;
+
+	/// The position inside the text document.
+	Position position;
+
+
+	TextDocumentPositionParams(TextDocumentIdentifier textDocument,
+		Position position);
+
+	virtual ~TextDocumentPositionParams();
+};
+
+}
