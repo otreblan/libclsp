@@ -42,6 +42,7 @@ using Array = vector<variant<String, Number, Boolean, Null, Object>>;
 using Any = variant<String, Number, Boolean, Null, Object, Array>;
 
 /// Protocol types
-using DocumentUri = String;
+using DocumentUri   = String;
+using ProgressToken = variant<Number, String>;
 
 }
