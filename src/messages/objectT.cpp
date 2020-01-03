@@ -76,4 +76,35 @@ void writeArray(Writer<StringBuffer> &writer, Array &a)
 	writer.EndArray();
 }
 
+void writeAny(Writer<StringBuffer> &writer, Any &a)
+{
+	visit(overload
+	(
+		[&writer](String ii)
+		{
+			writer.String(ii.c_str());
+		},
+		[&writer](Number ii)
+		{
+			writeNumber(writer, ii);
+		},
+		[&writer](Boolean ii)
+		{
+			writer.Bool(ii);
+		},
+		[&writer](Null)
+		{
+			writer.Null();
+		},
+		[&writer](Object ii)
+		{
+			ii->write(writer);
+		},
+		[&writer](Array &ii)
+		{
+			writeArray(writer, ii);
+		}
+	), a);
+}
+
 }

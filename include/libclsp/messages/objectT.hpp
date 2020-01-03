@@ -54,4 +54,7 @@ void writeNumber(Writer<StringBuffer> &writer, Number n);
 /// Array json writer
 void writeArray(Writer<StringBuffer> &writer, Array &a);
 
+/// Any json writer
+void writeAny(Writer<StringBuffer> &writer, Any &a);
+
 }
