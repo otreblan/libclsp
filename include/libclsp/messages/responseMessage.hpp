@@ -131,6 +131,16 @@ struct ResponseMessage: public Message
 		optional<ResponseError> error);
 
 	virtual ~ResponseMessage();
+
+
+	/// This is for writing the json
+	virtual void write(Writer<StringBuffer> &writer);
+
+private:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(Writer<StringBuffer> &writer);
+
+	void writeResultOrError(Writer<StringBuffer> &writer);
 };
 
 }

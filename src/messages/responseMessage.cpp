@@ -43,6 +43,79 @@ ResponseMessage::ResponseMessage(variant<Number, String, Null> id,
 ResponseMessage::~ResponseMessage(){};
 
 
+void ResponseMessage::write(Writer<StringBuffer> &writer)
+{
+	writer.StartObject();
+
+	Message::partialWrite(writer);
+	partialWrite(writer);
+
+	writer.EndObject();
+}
+
+void ResponseMessage::partialWrite(Writer<StringBuffer> &writer)
+{
+	// id
+	writer.Key(idKey.c_str());
+	visit(overload
+	(
+		[&writer](Number ii)
+		{
+			ObjectT::write(writer, ii);
+		},
+		[&writer](String ii)
+		{
+			writer.String(ii.c_str());
+		},
+		[&writer](Null)
+		{
+			writer.Null();
+		}
+	), id);
+
+	// result? or error?
+	writeResultOrError(writer);
+}
+
+void ResponseMessage::writeResultOrError(Writer<StringBuffer> &writer)
+{
+	if(result.has_value())
+	{
+		// result
+		writer.Key(resultKey.c_str());
+		visit(overload
+		(
+			[&writer](String ii)
+			{
+				writer.String(ii.c_str());
+			},
+			[&writer](Number ii)
+			{
+				ObjectT::write(writer, ii);
+			},
+			[&writer](Boolean ii)
+			{
+				writer.Bool(ii);
+			},
+			[&writer](Object ii)
+			{
+				ii->write(writer);
+			},
+			[&writer](Null)
+			{
+				writer.Null();
+			}
+		), result.value());
+	}
+	else
+	{
+		// error
+		writer.Key(errorKey.c_str());
+		error.value().write(writer);
+	}
+}
+
+
 const String ResponseError::codeKey    = "code";
 const String ResponseError::messageKey = "message";
 const String ResponseError::dataKey    = "data";
@@ -96,7 +169,6 @@ void ResponseError::writeData(Writer<StringBuffer> &writer)
 			},
 			[&writer](Boolean ii)
 			{
-				std::cerr << "Bool\n";
 				writer.Bool(ii);
 			},
 			[&writer](Array &ii)
