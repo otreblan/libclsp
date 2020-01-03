@@ -69,4 +69,7 @@ struct DocumentFilter
 	virtual ~DocumentFilter();
 };
 
+/// A document selector is the combination of one or more document filters.
+using DocumentSelector = vector<DocumentFilter>;
+
 }

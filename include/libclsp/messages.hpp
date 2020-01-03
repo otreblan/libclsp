@@ -29,7 +29,9 @@
 #include <libclsp/messages/position.hpp>
 #include <libclsp/messages/range.hpp>
 #include <libclsp/messages/responseMessage.hpp>
+#include <libclsp/messages/staticRegistration.hpp>
 #include <libclsp/messages/textDocumentIdentifier.hpp>
 #include <libclsp/messages/textDocumentItem.hpp>
 #include <libclsp/messages/textDocumentPosition.hpp>
+#include <libclsp/messages/textDocumentRegistration.hpp>
 #include <libclsp/messages/textEdit.hpp>
