@@ -30,6 +30,7 @@
 #include <libclsp/messages/position.hpp>
 #include <libclsp/messages/range.hpp>
 #include <libclsp/messages/responseMessage.hpp>
+#include <libclsp/messages/showMessage.hpp>
 #include <libclsp/messages/staticRegistration.hpp>
 #include <libclsp/messages/textDocumentIdentifier.hpp>
 #include <libclsp/messages/textDocumentItem.hpp>

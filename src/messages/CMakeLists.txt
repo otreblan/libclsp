@@ -29,6 +29,7 @@ target_sources(${PROJECT_NAME}
 		position.cpp
 		range.cpp
 		responseMessage.cpp
+		showMessage.cpp
 		staticRegistration.cpp
 		textDocumentIdentifier.cpp
 		textDocumentItem.cpp
