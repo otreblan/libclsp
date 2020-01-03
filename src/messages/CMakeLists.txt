@@ -35,4 +35,5 @@ target_sources(${PROJECT_NAME}
 		textDocumentPosition.cpp
 		textDocumentRegistration.cpp
 		textEdit.cpp
+		workDoneProgress.cpp
 )

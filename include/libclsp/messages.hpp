@@ -36,3 +36,4 @@
 #include <libclsp/messages/textDocumentPosition.hpp>
 #include <libclsp/messages/textDocumentRegistration.hpp>
 #include <libclsp/messages/textEdit.hpp>
+#include <libclsp/messages/workDoneProgress.hpp>
