@@ -31,31 +31,6 @@ protected:
 	/// This is like write() but without the object bounds.
 	virtual void partialWrite(Writer<StringBuffer> &writer);
 
-	/// Copied from https://arne-mertz.de/2018/05/overload-build-a-variant-visitor-on-the-fly/
-	template<class ...Fs>
-	struct overload : Fs...
-	{
-		overload(Fs const&... fs): Fs{fs}...{};
-
-		using Fs::operator()...;
-	};
-
-	/// A visitor for writing numbers
-	struct NumberWriter2
-	{
-		Writer<StringBuffer> &writer;
-
-		void operator()(int n);
-		void operator()(double n);
-	};
-
-
-	/// Number json writer
-	static void write(Writer<StringBuffer> &writer, Number n);
-
-	/// Array json writer
-	static void write(Writer<StringBuffer> &writer, Array &a);
-
 public:
 	/// This is for writing the json
 	virtual void write(Writer<StringBuffer> &writer);
@@ -63,5 +38,20 @@ public:
 	ObjectT();
 	virtual ~ObjectT();
 };
+
+/// Copied from https://arne-mertz.de/2018/05/overload-build-a-variant-visitor-on-the-fly/
+template<class ...Fs>
+struct overload : Fs...
+{
+	overload(Fs const&... fs): Fs{fs}...{};
+
+	using Fs::operator()...;
+};
+
+/// Number json writer
+void writeNumber(Writer<StringBuffer> &writer, Number n);
+
+/// Array json writer
+void writeArray(Writer<StringBuffer> &writer, Array &a);
 
 }

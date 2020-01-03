@@ -29,7 +29,7 @@ void ObjectT::write( [[maybe_unused]] Writer<StringBuffer> &writer){};
 ObjectT::ObjectT(){};
 ObjectT::~ObjectT(){};
 
-void ObjectT::write(Writer<StringBuffer> &writer, Number n)
+void writeNumber(Writer<StringBuffer> &writer, Number n)
 {
 	visit(overload
 	(
@@ -44,7 +44,7 @@ void ObjectT::write(Writer<StringBuffer> &writer, Number n)
 	), n);
 }
 
-void ObjectT::write(Writer<StringBuffer> &writer, Array &a)
+void writeArray(Writer<StringBuffer> &writer, Array &a)
 {
 	writer.StartArray();
 	for(const auto &ii:a)
@@ -57,7 +57,7 @@ void ObjectT::write(Writer<StringBuffer> &writer, Array &a)
 			},
 			[&writer](Number ii)
 			{
-				write(writer, ii);
+				writeNumber(writer, ii);
 			},
 			[&writer](Boolean ii)
 			{

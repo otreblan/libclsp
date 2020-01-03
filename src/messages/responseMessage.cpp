@@ -61,7 +61,7 @@ void ResponseMessage::partialWrite(Writer<StringBuffer> &writer)
 	(
 		[&writer](Number ii)
 		{
-			ObjectT::write(writer, ii);
+			writeNumber(writer, ii);
 		},
 		[&writer](String ii)
 		{
@@ -91,7 +91,7 @@ void ResponseMessage::writeResultOrError(Writer<StringBuffer> &writer)
 			},
 			[&writer](Number ii)
 			{
-				ObjectT::write(writer, ii);
+				writeNumber(writer, ii);
 			},
 			[&writer](Boolean ii)
 			{
@@ -165,7 +165,7 @@ void ResponseError::writeData(Writer<StringBuffer> &writer)
 			},
 			[&writer](Number ii)
 			{
-				ObjectT::write(writer, ii);
+				writeNumber(writer, ii);
 			},
 			[&writer](Boolean ii)
 			{
@@ -173,7 +173,7 @@ void ResponseError::writeData(Writer<StringBuffer> &writer)
 			},
 			[&writer](Array &ii)
 			{
-				ObjectT::write(writer, ii);
+				writeArray(writer, ii);
 			},
 			[&writer](Object ii)
 			{
