@@ -40,3 +40,4 @@
 #include <libclsp/messages/textDocumentRegistration.hpp>
 #include <libclsp/messages/textEdit.hpp>
 #include <libclsp/messages/workDoneProgress.hpp>
+#include <libclsp/messages/workspaceFolder.hpp>

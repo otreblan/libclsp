@@ -39,4 +39,5 @@ target_sources(${PROJECT_NAME}
 		textDocumentRegistration.cpp
 		textEdit.cpp
 		workDoneProgress.cpp
+		workspaceFolder.cpp
 )
