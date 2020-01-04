@@ -178,4 +178,152 @@ Number operator/(Number const &n1, Number const &n2)
 	return ret;
 }
 
+
+Number& operator+=(Number &n1, Number const &n2)
+{
+	visit(overload
+	(
+		[&n1, &n2](int i)
+		{
+			visit(overload
+			(
+				[&n1, i](int j)
+				{
+					n1 = i + j;
+				},
+				[&n1, i](double j)
+				{
+					n1 = i + j;
+				}
+			), n2);
+		},
+		[&n1, &n2](double i)
+		{
+			visit(overload
+			(
+				[&n1, i](int j)
+				{
+					n1 = i + j;
+				},
+				[&n1, i](double j)
+				{
+					n1 = i + j;
+				}
+			), n2);
+		}
+	), n1);
+
+	return n1;
+}
+
+Number& operator-=(Number &n1, Number const &n2)
+{
+	visit(overload
+	(
+		[&n1, &n2](int i)
+		{
+			visit(overload
+			(
+				[&n1, i](int j)
+				{
+					n1 = i - j;
+				},
+				[&n1, i](double j)
+				{
+					n1 = i - j;
+				}
+			), n2);
+		},
+		[&n1, &n2](double i)
+		{
+			visit(overload
+			(
+				[&n1, i](int j)
+				{
+					n1 = i - j;
+				},
+				[&n1, i](double j)
+				{
+					n1 = i - j;
+				}
+			), n2);
+		}
+	), n1);
+
+	return n1;
+}
+
+Number& operator*=(Number &n1, Number const &n2)
+{
+	visit(overload
+	(
+		[&n1, &n2](int i)
+		{
+			visit(overload
+			(
+				[&n1, i](int j)
+				{
+					n1 = i * j;
+				},
+				[&n1, i](double j)
+				{
+					n1 = i * j;
+				}
+			), n2);
+		},
+		[&n1, &n2](double i)
+		{
+			visit(overload
+			(
+				[&n1, i](int j)
+				{
+					n1 = i * j;
+				},
+				[&n1, i](double j)
+				{
+					n1 = i * j;
+				}
+			), n2);
+		}
+	), n1);
+
+	return n1;
+}
+
+Number& operator/=(Number &n1, Number const &n2)
+{
+	visit(overload
+	(
+		[&n1, &n2](int i)
+		{
+			visit(overload
+			(
+				[&n1, i](int j)
+				{
+					n1 = i / j;
+				},
+				[&n1, i](double j)
+				{
+					n1 = i / j;
+				}
+			), n2);
+		},
+		[&n1, &n2](double i)
+		{
+			visit(overload
+			(
+				[&n1, i](int j)
+				{
+					n1 = i / j;
+				},
+				[&n1, i](double j)
+				{
+					n1 = i / j;
+				}
+			), n2);
+		}
+	), n1);
+
+	return n1;
+}
 }
