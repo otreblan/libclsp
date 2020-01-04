@@ -49,5 +49,8 @@ using ProgressToken = variant<Number, String>;
 // Some operator overloads for the Number type
 
 Number operator+(Number const &n1, Number const &n2);
+Number operator-(Number const &n1, Number const &n2);
+Number operator*(Number const &n1, Number const &n2);
+Number operator/(Number const &n1, Number const &n2);
 
 }
