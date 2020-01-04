@@ -14,40 +14,51 @@
 // You should have received a copy of the GNU General Public License
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
-
-#include <string>
-#include <variant>
-#include <vector>
-#include <memory>
+#include <libclsp/messages/jsonTypes.hpp>
+#include <libclsp/messages/objectT.hpp>
 
 namespace libclsp
 {
 
-class ObjectT;
-
 using namespace std;
 
-/// Primitive json-rpc types
-using String  = string;
-using Number  = variant<int, double>;
-using Boolean = bool;
-using Null    = monostate;
+Number operator+(Number const &n1, Number const &n2)
+{
+	Number ret;
 
-/// Structured json-rpc types
-using Object = shared_ptr<ObjectT>; // Types in variant have to be CopyConstructible
-using Array = vector<variant<String, Number, Boolean, Null, Object>>;
+	visit(overload
+	(
+		[&ret, &n2](int i)
+		{
+			visit(overload
+			(
+				[&ret, i](int j)
+				{
+					ret = i + j;
+				},
+				[&ret, i](double j)
+				{
+					ret = i + j;
+				}
+			), n2);
+		},
+		[&ret, &n2](double i)
+		{
+			visit(overload
+			(
+				[&ret, i](int j)
+				{
+					ret = i + j;
+				},
+				[&ret, i](double j)
+				{
+					ret = i + j;
+				}
+			), n2);
+		}
+	), n1);
 
-/// A collection of all json-rpc types
-using Any = variant<String, Number, Boolean, Null, Object, Array>;
-
-/// Protocol types
-using DocumentUri   = String;
-using ProgressToken = variant<Number, String>;
-
-
-// Some operator overloads for the Number type
-
-Number operator+(Number const &n1, Number const &n2);
+	return ret;
+}
 
 }

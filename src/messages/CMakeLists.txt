@@ -21,6 +21,7 @@ target_sources(${PROJECT_NAME}
 		didChangeWorkspaceFolders.cpp
 		documentFilter.cpp
 		fileResourceChanges.cpp
+		jsonTypes.cpp
 		location.cpp
 		locationLink.cpp
 		logMessage.cpp
