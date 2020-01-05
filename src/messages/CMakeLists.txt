@@ -23,6 +23,7 @@ target_sources(${PROJECT_NAME}
 		didChangeWatchedFiles.cpp
 		didChangeWorkspaceFolders.cpp
 		documentFilter.cpp
+		executeCommand.cpp
 		fileResourceChanges.cpp
 		jsonTypes.cpp
 		location.cpp
