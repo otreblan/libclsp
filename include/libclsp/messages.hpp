@@ -44,6 +44,7 @@
 #include <libclsp/messages/textDocumentItem.hpp>
 #include <libclsp/messages/textDocumentPosition.hpp>
 #include <libclsp/messages/textDocumentRegistration.hpp>
+#include <libclsp/messages/textDocumentSync.hpp>
 #include <libclsp/messages/textEdit.hpp>
 #include <libclsp/messages/workDoneProgress.hpp>
 #include <libclsp/messages/workspaceEdit.hpp>

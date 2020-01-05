@@ -44,6 +44,7 @@ target_sources(${PROJECT_NAME}
 		textDocumentItem.cpp
 		textDocumentPosition.cpp
 		textDocumentRegistration.cpp
+		textDocumentSync.cpp
 		textEdit.cpp
 		workDoneProgress.cpp
 		workspaceEdit.cpp
