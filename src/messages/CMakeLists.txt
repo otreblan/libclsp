@@ -17,6 +17,7 @@
 target_sources(${PROJECT_NAME}
 	PRIVATE
 		cancelParams.cpp
+		configuration.cpp
 		diagnostic.cpp
 		didChangeConfiguration.cpp
 		didChangeWorkspaceFolders.cpp
