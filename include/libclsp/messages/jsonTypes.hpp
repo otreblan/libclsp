@@ -52,6 +52,7 @@ Number operator+(Number const &n1, Number const &n2);
 Number operator-(Number const &n1, Number const &n2);
 Number operator*(Number const &n1, Number const &n2);
 Number operator/(Number const &n1, Number const &n2);
+Number operator|(Number const &n1, Number const &n2);
 
 Number& operator+=(Number &n1, Number const &n2);
 Number& operator-=(Number &n1, Number const &n2);

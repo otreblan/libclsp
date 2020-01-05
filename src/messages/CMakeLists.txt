@@ -20,6 +20,7 @@ target_sources(${PROJECT_NAME}
 		configuration.cpp
 		diagnostic.cpp
 		didChangeConfiguration.cpp
+		didChangeWatchedFiles.cpp
 		didChangeWorkspaceFolders.cpp
 		documentFilter.cpp
 		fileResourceChanges.cpp
