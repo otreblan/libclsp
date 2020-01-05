@@ -28,4 +28,16 @@ TextDocumentIdentifier::TextDocumentIdentifier(DocumentUri uri):
 
 TextDocumentIdentifier::~TextDocumentIdentifier(){};
 
+
+const String VersionedTextDocumentIdentifier::versionKey = "version";
+
+VersionedTextDocumentIdentifier::
+	VersionedTextDocumentIdentifier(DocumentUri uri,
+		variant<Number, Null> version):
+			TextDocumentIdentifier(uri),
+			version(version)
+{};
+
+VersionedTextDocumentIdentifier::~VersionedTextDocumentIdentifier(){};
+
 }
