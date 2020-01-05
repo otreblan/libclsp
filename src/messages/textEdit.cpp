@@ -30,4 +30,16 @@ TextEdit::TextEdit(Range range, String newText):
 
 TextEdit::~TextEdit(){};
 
+
+const String TextDocumentEdit::textDocumentKey = "textDocument";
+const String TextDocumentEdit::editsKey        = "edits";
+
+TextDocumentEdit::TextDocumentEdit(VersionedTextDocumentIdentifier textDocument,
+	vector<TextEdit> edits):
+		textDocument(textDocument),
+		edits(edits)
+{};
+
+TextDocumentEdit::~TextDocumentEdit(){};
+
 }

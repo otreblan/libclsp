@@ -41,6 +41,10 @@ struct TextDocumentIdentifier
 	virtual ~TextDocumentIdentifier();
 };
 
+/// An identifier to denote a specific version of a text document.
+///
+/// version: Number | Null
+///
 struct VersionedTextDocumentIdentifier: public TextDocumentIdentifier
 {
 	const static String versionKey;

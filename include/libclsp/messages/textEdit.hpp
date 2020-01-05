@@ -16,10 +16,10 @@
 
 #pragma once
 
-#include <variant>
 #include <optional>
 
 #include <libclsp/messages/range.hpp>
+#include <libclsp/messages/textDocumentIdentifier.hpp>
 
 namespace libclsp
 {
@@ -51,6 +51,33 @@ struct TextEdit
 	TextEdit(Range range, String newText);
 
 	virtual ~TextEdit();
+};
+
+/// Describes textual changes on a single text document.
+///
+/// textDocument: VersionedTextDocumentIdentifier
+///
+/// edits: TextEdit[]
+///
+struct TextDocumentEdit
+{
+	const static String textDocumentKey;
+
+	/// The text document to change.
+	VersionedTextDocumentIdentifier textDocument;
+
+
+	const static String editsKey;
+
+	/// The edits to be applied.
+	vector<TextEdit> edits;
+
+
+	TextDocumentEdit(VersionedTextDocumentIdentifier textDocument,
+		vector<TextEdit> edits);
+
+	virtual ~TextDocumentEdit();
+
 };
 
 }
