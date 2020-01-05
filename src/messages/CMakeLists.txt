@@ -16,6 +16,7 @@
 
 target_sources(${PROJECT_NAME}
 	PRIVATE
+		applyWorkspaceEdit.cpp
 		cancelParams.cpp
 		configuration.cpp
 		diagnostic.cpp

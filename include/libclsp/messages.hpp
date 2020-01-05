@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include <libclsp/messages/applyWorkspaceEdit.hpp>
 #include <libclsp/messages/cancelParams.hpp>
 #include <libclsp/messages/configuration.hpp>
 #include <libclsp/messages/diagnostic.hpp>
