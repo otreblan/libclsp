@@ -18,7 +18,7 @@
 
 #include <optional>
 
-#include <libclsp/messages/jsonTypes.hpp>
+#include <libclsp/messages/didSaveTextDocument.hpp>
 
 namespace libclsp
 {
@@ -49,6 +49,12 @@ enum class TextDocumentSyncKind
 ///
 /// change?: TextDocumentSyncKind
 ///
+/// willSave?: Boolean
+///
+/// willSaveWaitUntil?: Boolean
+///
+/// save?: SaveOptions
+///
 struct TextDocumentSyncOptions
 {
 
@@ -64,14 +70,88 @@ struct TextDocumentSyncOptions
 	/// Change notifications are sent to the server. See TextDocumentSyncKind.None,
 	/// TextDocumentSyncKind.Full and TextDocumentSyncKind.Incremental. If omitted
 	/// it defaults to TextDocumentSyncKind.None.
-	TextDocumentSyncKind change;
+	optional<TextDocumentSyncKind> change;
 
 
-	TextDocumentSyncOptions(optional<Boolean> openClose, TextDocumentSyncKind change);
+	const static String willSaveKey;
+
+	/// If present will save notifications are sent to the server.
+	/// If omitted the notification should not be sent.
+	optional<Boolean> willSave;
+
+
+	const static String willSaveWaitUntilKey;
+
+	/// If present will save wait until requests are sent to the server.
+	/// If omitted the request should not be sent.
+	optional<Boolean> willSaveWaitUntil;
+
+
+	const static String saveKey;
+
+	/// If present save notifications are sent to the server.
+	/// If omitted the notification should not be sent.
+	optional<SaveOptions> save;
+
+
+	TextDocumentSyncOptions(optional<Boolean> openClose,
+		optional<TextDocumentSyncKind> change,
+		optional<Boolean> willSave,
+		optional<Boolean> willSaveWaitUntil,
+		optional<SaveOptions> save);
 
 	TextDocumentSyncOptions();
 
 	virtual ~TextDocumentSyncOptions();
+};
+
+/// Client capability for syncing textDocument's
+///
+/// dynamicRegistration?: Boolean;
+///
+/// willSave?: Boolean;
+///
+/// willSaveWaitUntil?: Boolean;
+///
+/// didSave?: Boolean;
+///
+struct TextDocumentSyncClientCapabilities
+{
+
+	const static String dynamicRegistrationKey;
+
+	/// Whether text document synchronization supports dynamic registration.
+	optional<Boolean> dynamicRegistration;
+
+
+	const static String willSaveKey;
+
+	/// The client supports sending will save notifications.
+	optional<Boolean> willSave;
+
+
+	const static String willSaveWaitUntilKey;
+
+	/// The client supports sending a will save request and
+	/// waits for a response providing text edits which will
+	/// be applied to the document before it is saved.
+	optional<Boolean> willSaveWaitUntil;
+
+
+	const static String didSaveKey;
+
+	/// The client supports did save notifications.
+	optional<Boolean> didSave;
+
+
+	TextDocumentSyncClientCapabilities(optional<Boolean> dynamicRegistration,
+		optional<Boolean> willSave,
+		optional<Boolean> willSaveWaitUntil,
+		optional<Boolean> didSave);
+
+	TextDocumentSyncClientCapabilities();
+
+	virtual ~TextDocumentSyncClientCapabilities();
 };
 
 }

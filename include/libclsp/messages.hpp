@@ -24,6 +24,7 @@
 #include <libclsp/messages/didChangeTextDocument.hpp>
 #include <libclsp/messages/didChangeWatchedFiles.hpp>
 #include <libclsp/messages/didChangeWorkspaceFolders.hpp>
+#include <libclsp/messages/didCloseTextDocument.hpp>
 #include <libclsp/messages/didOpenTextDocument.hpp>
 #include <libclsp/messages/didSaveTextDocument.hpp>
 #include <libclsp/messages/documentFilter.hpp>

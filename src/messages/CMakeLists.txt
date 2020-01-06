@@ -24,6 +24,7 @@ target_sources(${PROJECT_NAME}
 		didChangeTextDocument.cpp
 		didChangeWatchedFiles.cpp
 		didChangeWorkspaceFolders.cpp
+		didCloseTextDocument.cpp
 		didOpenTextDocument.cpp
 		didSaveTextDocument.cpp
 		documentFilter.cpp
