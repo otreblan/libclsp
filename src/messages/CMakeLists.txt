@@ -21,6 +21,7 @@ target_sources(${PROJECT_NAME}
 		configuration.cpp
 		diagnostic.cpp
 		didChangeConfiguration.cpp
+		didChangeTextDocument.cpp
 		didChangeWatchedFiles.cpp
 		didChangeWorkspaceFolders.cpp
 		didOpenTextDocument.cpp

@@ -21,6 +21,7 @@
 #include <libclsp/messages/configuration.hpp>
 #include <libclsp/messages/diagnostic.hpp>
 #include <libclsp/messages/didChangeConfiguration.hpp>
+#include <libclsp/messages/didChangeTextDocument.hpp>
 #include <libclsp/messages/didChangeWatchedFiles.hpp>
 #include <libclsp/messages/didChangeWorkspaceFolders.hpp>
 #include <libclsp/messages/didOpenTextDocument.hpp>
