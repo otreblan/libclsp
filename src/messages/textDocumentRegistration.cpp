@@ -29,5 +29,9 @@ TextDocumentRegistrationOptions::
 		documentSelector(documentSelector)
 {};
 
+TextDocumentRegistrationOptions::TextDocumentRegistrationOptions():
+	documentSelector()
+{};
+
 TextDocumentRegistrationOptions::~TextDocumentRegistrationOptions(){};
 }

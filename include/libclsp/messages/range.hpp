@@ -48,6 +48,8 @@ struct Range
 
 	Range(Position start, Position end);
 
+	Range();
+
 	virtual ~Range();
 };
 

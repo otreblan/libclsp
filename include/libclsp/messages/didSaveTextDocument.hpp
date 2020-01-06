@@ -39,6 +39,8 @@ struct SaveOptions
 
 	SaveOptions(optional<Boolean> includeText);
 
+	SaveOptions();
+
 	virtual ~SaveOptions();
 };
 
@@ -56,6 +58,8 @@ struct TextDocumentSaveRegistrationOptions: public TextDocumentRegistrationOptio
 	TextDocumentSaveRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
 		optional<Boolean> includeText);
+
+	TextDocumentSaveRegistrationOptions();
 
 	virtual ~TextDocumentSaveRegistrationOptions();
 };
@@ -84,6 +88,8 @@ struct DidSaveTextDocumentParams
 
 	DidSaveTextDocumentParams(TextDocumentIdentifier textDocument,
 		optional<String> text);
+
+	DidSaveTextDocumentParams();
 
 	virtual ~DidSaveTextDocumentParams();
 };

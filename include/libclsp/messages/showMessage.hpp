@@ -64,6 +64,8 @@ struct ShowMessageParams
 
 	ShowMessageParams(MessageType type, String message);
 
+	ShowMessageParams();
+
 	virtual ~ShowMessageParams();
 };
 
@@ -79,6 +81,9 @@ struct MessageActionItem
 	String title;
 
 	MessageActionItem(String title);
+
+	MessageActionItem();
+
 	virtual ~MessageActionItem();
 };
 
@@ -105,6 +110,8 @@ struct ShowMessageRequestParams
 	ShowMessageRequestParams(MessageType type,
 		String message,
 		optional<vector<MessageActionItem>> actions);
+
+	ShowMessageRequestParams();
 
 	virtual ~ShowMessageRequestParams();
 };

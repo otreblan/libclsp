@@ -24,7 +24,12 @@ using namespace std;
 const String CancelParams::idKey = "id";
 
 CancelParams::CancelParams(variant<Number, String> id):
-	id(id){};
+	id(id)
+{};
+
+CancelParams::CancelParams():
+	id()
+{};
 
 CancelParams::~CancelParams(){};
 

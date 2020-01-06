@@ -41,6 +41,9 @@ struct ConfigurationItem
 
 
 	ConfigurationItem(optional<DocumentUri> scopeUri, optional<String> section);
+
+	ConfigurationItem();
+
 	virtual ~ConfigurationItem();
 };
 
@@ -51,6 +54,9 @@ struct ConfigurationParams
 	vector<ConfigurationItem> items;
 
 	ConfigurationParams(vector<ConfigurationItem> items);
+
+	ConfigurationParams();
+
 	virtual ~ConfigurationParams();
 };
 

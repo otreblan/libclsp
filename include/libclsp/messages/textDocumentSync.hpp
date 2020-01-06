@@ -69,6 +69,8 @@ struct TextDocumentSyncOptions
 
 	TextDocumentSyncOptions(optional<Boolean> openClose, TextDocumentSyncKind change);
 
+	TextDocumentSyncOptions();
+
 	virtual ~TextDocumentSyncOptions();
 };
 

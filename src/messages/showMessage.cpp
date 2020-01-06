@@ -29,11 +29,20 @@ ShowMessageParams::ShowMessageParams(MessageType type, String message):
 	message(message)
 {};
 
+ShowMessageParams::ShowMessageParams():
+	type(),
+	message()
+{};
+
 ShowMessageParams::~ShowMessageParams(){};
 
 
 MessageActionItem::MessageActionItem(String title):
 	title(title)
+{};
+
+MessageActionItem::MessageActionItem():
+	title()
 {};
 
 MessageActionItem::~MessageActionItem(){};
@@ -49,6 +58,12 @@ ShowMessageRequestParams::ShowMessageRequestParams(MessageType type,
 		type(type),
 		message(message),
 		actions(actions)
+{};
+
+ShowMessageRequestParams::ShowMessageRequestParams():
+	type(),
+	message(),
+	actions()
 {};
 
 ShowMessageRequestParams::~ShowMessageRequestParams(){};

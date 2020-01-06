@@ -38,6 +38,8 @@ struct TextDocumentIdentifier
 
 	TextDocumentIdentifier(DocumentUri uri);
 
+	TextDocumentIdentifier();
+
 	virtual ~TextDocumentIdentifier();
 };
 
@@ -61,6 +63,9 @@ struct VersionedTextDocumentIdentifier: public TextDocumentIdentifier
 
 
 	VersionedTextDocumentIdentifier(DocumentUri uri, variant<Number, Null> version);
+
+	VersionedTextDocumentIdentifier();
+
 	virtual ~VersionedTextDocumentIdentifier();
 
 };

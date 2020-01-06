@@ -38,6 +38,13 @@ WorkDoneProgressBegin::WorkDoneProgressBegin(String title,
 		percentage(percentage)
 {};
 
+WorkDoneProgressBegin::WorkDoneProgressBegin():
+	title(),
+	cancellable(),
+	message(),
+	percentage()
+{};
+
 WorkDoneProgressBegin::~WorkDoneProgressBegin(){};
 
 
@@ -55,6 +62,12 @@ WorkDoneProgressReport::WorkDoneProgressReport(optional<Boolean> cancellable,
 		percentage(percentage)
 {};
 
+WorkDoneProgressReport::WorkDoneProgressReport():
+	cancellable(),
+	message(),
+	percentage()
+{};
+
 WorkDoneProgressReport::~WorkDoneProgressReport(){};
 
 
@@ -64,6 +77,10 @@ const String WorkDoneProgressEnd::messageKey = "message";
 
 WorkDoneProgressEnd::WorkDoneProgressEnd(optional<String> message):
 	message(message)
+{};
+
+WorkDoneProgressEnd::WorkDoneProgressEnd():
+	message()
 {};
 
 WorkDoneProgressEnd::~WorkDoneProgressEnd(){};
@@ -76,6 +93,10 @@ WorkDoneProgressParams::
 		workDoneToken(workDoneToken)
 {};
 
+WorkDoneProgressParams::WorkDoneProgressParams():
+	workDoneToken()
+{};
+
 WorkDoneProgressParams::~WorkDoneProgressParams(){};
 
 
@@ -86,6 +107,10 @@ WorkDoneProgressOptions::
 		workDoneProgress(workDoneProgress)
 {};
 
+WorkDoneProgressOptions::WorkDoneProgressOptions():
+	workDoneProgress()
+{};
+
 WorkDoneProgressOptions::~WorkDoneProgressOptions(){};
 
 
@@ -93,6 +118,10 @@ const String WorkDoneProgressCreateParams::tokenKey = "token";
 
 WorkDoneProgressCreateParams::WorkDoneProgressCreateParams(ProgressToken token):
 	token(token)
+{};
+
+WorkDoneProgressCreateParams::WorkDoneProgressCreateParams():
+	token()
 {};
 
 WorkDoneProgressCreateParams::~WorkDoneProgressCreateParams(){};

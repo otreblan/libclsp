@@ -47,6 +47,8 @@ struct LogMessageParams
 
 	LogMessageParams(MessageType type, String message);
 
+	LogMessageParams();
+
 	virtual ~LogMessageParams();
 };
 

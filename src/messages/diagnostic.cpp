@@ -42,7 +42,18 @@ Diagnostic::Diagnostic(Range range,
 		source(source),
 		message(message),
 		tags(tags),
-		relatedInformation(relatedInformation){};
+		relatedInformation(relatedInformation)
+{};
+
+Diagnostic::Diagnostic():
+	range(),
+	severity(),
+	code(),
+	source(),
+	message(),
+	tags(),
+	relatedInformation()
+{};
 
 Diagnostic::~Diagnostic(){};
 
@@ -54,6 +65,11 @@ DiagnosticRelatedInformation::DiagnosticRelatedInformation(Location location,
 	String message):
 		location(location),
 		message(message){};
+
+DiagnosticRelatedInformation::DiagnosticRelatedInformation():
+	location(),
+	message()
+{};
 
 DiagnosticRelatedInformation::~DiagnosticRelatedInformation(){};
 

@@ -38,6 +38,9 @@ struct DidChangeConfigurationClientCapabilities
 
 
 	DidChangeConfigurationClientCapabilities(optional<Boolean> dynamicRegistration);
+
+	DidChangeConfigurationClientCapabilities();
+
 	virtual ~DidChangeConfigurationClientCapabilities();
 
 };
@@ -55,6 +58,9 @@ struct DidChangeConfigurationParams
 
 
 	DidChangeConfigurationParams(Any settings);
+
+	DidChangeConfigurationParams();
+
 	virtual ~DidChangeConfigurationParams();
 };
 

@@ -40,6 +40,8 @@ struct DidOpenTextDocumentParams
 
 	DidOpenTextDocumentParams(TextDocumentItem textDocument);
 
+	DidOpenTextDocumentParams();
+
 	virtual ~DidOpenTextDocumentParams();
 };
 

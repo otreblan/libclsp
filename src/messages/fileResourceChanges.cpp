@@ -27,7 +27,13 @@ const String CreateFileOptions::ignoreIfExistsKey = "ignoreIfExists";
 CreateFileOptions::CreateFileOptions(optional<Boolean> overwrite,
 	optional<Boolean> ignoreIfExists):
 		overwrite(overwrite),
-		ignoreIfExists(ignoreIfExists){};
+		ignoreIfExists(ignoreIfExists)
+{};
+
+CreateFileOptions::CreateFileOptions():
+	overwrite(),
+	ignoreIfExists()
+{};
 
 CreateFileOptions::~CreateFileOptions(){};
 
@@ -39,7 +45,13 @@ const String CreateFile::optionsKey = "options";
 
 CreateFile::CreateFile(DocumentUri uri, optional<CreateFileOptions> options):
 	uri(uri),
-	options(options){};
+	options(options)
+{};
+
+CreateFile::CreateFile():
+	uri(),
+	options()
+{};
 
 CreateFile::~CreateFile(){};
 
@@ -50,7 +62,13 @@ const String RenameFileOptions::ignoreIfExistsKey = "ignoreIfExists";
 RenameFileOptions::RenameFileOptions(optional<Boolean> overwrite,
 	optional<Boolean> ignoreIfExists):
 		overwrite(overwrite),
-		ignoreIfExists(ignoreIfExists){};
+		ignoreIfExists(ignoreIfExists)
+{};
+
+RenameFileOptions::RenameFileOptions():
+		overwrite(),
+		ignoreIfExists()
+{};
 
 RenameFileOptions::~RenameFileOptions(){};
 
@@ -66,7 +84,14 @@ RenameFile::RenameFile(DocumentUri oldUri,
 	optional<RenameFileOptions> options):
 		oldUri(oldUri),
 		newUri(newUri),
-		options(options){};
+		options(options)
+{};
+
+RenameFile::RenameFile():
+	oldUri(),
+	newUri(),
+	options()
+{};
 
 RenameFile::~RenameFile(){};
 
@@ -77,7 +102,13 @@ const String DeleteFileOptions::ignoreIfNotExistsKey = "ignoreIfNotExists";
 DeleteFileOptions::DeleteFileOptions(optional<Boolean> recursive,
 	optional<Boolean> ignoreIfNotExists):
 		recursive(recursive),
-		ignoreIfNotExists(ignoreIfNotExists){};
+		ignoreIfNotExists(ignoreIfNotExists)
+{};
+
+DeleteFileOptions::DeleteFileOptions():
+	recursive(),
+	ignoreIfNotExists()
+{};
 
 DeleteFileOptions::~DeleteFileOptions(){};
 
@@ -89,7 +120,13 @@ const String DeleteFile::optionsKey = "options";
 
 DeleteFile::DeleteFile(DocumentUri uri, optional<DeleteFileOptions> options):
 	uri(uri),
-	options(options){};
+	options(options)
+{};
+
+DeleteFile::DeleteFile():
+	uri(),
+	options()
+{};
 
 DeleteFile::~DeleteFile(){};
 

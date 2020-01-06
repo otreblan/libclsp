@@ -30,13 +30,23 @@ DidChangeConfigurationClientCapabilities::
 {};
 
 DidChangeConfigurationClientCapabilities::
-	~DidChangeConfigurationClientCapabilities(){};
+	DidChangeConfigurationClientCapabilities():
+		dynamicRegistration()
+{};
+
+DidChangeConfigurationClientCapabilities::
+	~DidChangeConfigurationClientCapabilities()
+{};
 
 
 const String DidChangeConfigurationParams::settingsKey = "settings";
 
 DidChangeConfigurationParams::DidChangeConfigurationParams(Any settings):
 	settings(settings)
+{};
+
+DidChangeConfigurationParams::DidChangeConfigurationParams():
+	settings()
 {};
 
 DidChangeConfigurationParams::~DidChangeConfigurationParams(){};

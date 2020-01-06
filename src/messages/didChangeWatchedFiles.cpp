@@ -30,6 +30,11 @@ DidChangeWatchedFilesClientCapabilities::
 {};
 
 DidChangeWatchedFilesClientCapabilities::
+	DidChangeWatchedFilesClientCapabilities():
+		dynamicRegistration()
+{};
+
+DidChangeWatchedFilesClientCapabilities::
 	~DidChangeWatchedFilesClientCapabilities()
 {};
 
@@ -42,6 +47,11 @@ FileSystemWatcher::FileSystemWatcher(String globPattern, optional<Number> key):
 	key(key)
 {};
 
+FileSystemWatcher::FileSystemWatcher():
+	globPattern(),
+	key()
+{};
+
 FileSystemWatcher::~FileSystemWatcher(){};
 
 
@@ -50,6 +60,11 @@ const String DidChangeWatchedFilesRegistrationOptions::watchersKey = "watchers";
 DidChangeWatchedFilesRegistrationOptions::
 	DidChangeWatchedFilesRegistrationOptions(vector<FileSystemWatcher> watchers):
 		watchers(watchers)
+{};
+
+DidChangeWatchedFilesRegistrationOptions::
+	DidChangeWatchedFilesRegistrationOptions():
+		watchers()
 {};
 
 DidChangeWatchedFilesRegistrationOptions::
@@ -65,6 +80,11 @@ FileEvent::FileEvent(DocumentUri uri, FileChangeType type):
 	type(type)
 {};
 
+FileEvent::FileEvent():
+	uri(),
+	type()
+{};
+
 FileEvent::~FileEvent(){};
 
 
@@ -72,6 +92,10 @@ const String DidChangeWatchedFilesParams::changesKey = "changes";
 
 DidChangeWatchedFilesParams::DidChangeWatchedFilesParams(vector<FileEvent> changes):
 	changes(changes)
+{};
+
+DidChangeWatchedFilesParams::DidChangeWatchedFilesParams():
+	changes()
 {};
 
 DidChangeWatchedFilesParams::~DidChangeWatchedFilesParams(){};

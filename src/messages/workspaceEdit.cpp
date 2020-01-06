@@ -37,6 +37,11 @@ WorkspaceEdit::WorkspaceEdit(optional<map<DocumentUri, vector<TextEdit>>> change
 		documentChanges(documentChanges)
 {};
 
+WorkspaceEdit::WorkspaceEdit():
+	changes(),
+	documentChanges()
+{};
+
 WorkspaceEdit::~WorkspaceEdit(){};
 
 
@@ -56,6 +61,12 @@ WorkspaceEditClientCapabilities::
 			documentChanges(documentChanges),
 			resourceOperations(resourceOperations),
 			failureHandling(failureHandling)
+{};
+
+WorkspaceEditClientCapabilities::WorkspaceEditClientCapabilities():
+	documentChanges(),
+	resourceOperations(),
+	failureHandling()
 {};
 
 WorkspaceEditClientCapabilities::~WorkspaceEditClientCapabilities(){};

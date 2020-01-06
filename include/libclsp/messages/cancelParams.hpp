@@ -40,6 +40,8 @@ struct CancelParams
 
 	CancelParams(variant<Number, String> id);
 
+	CancelParams();
+
 	virtual ~CancelParams();
 };
 

@@ -47,6 +47,8 @@ struct DiagnosticRelatedInformation
 
 	DiagnosticRelatedInformation(Location location, String message);
 
+	DiagnosticRelatedInformation();
+
 	virtual ~DiagnosticRelatedInformation();
 };
 
@@ -150,6 +152,8 @@ struct Diagnostic
 		String message,
 		optional<vector<DiagnosticTag>> tags,
 		optional<vector<DiagnosticRelatedInformation>> relatedInformation);
+
+	Diagnostic();
 
 	virtual ~Diagnostic();
 };

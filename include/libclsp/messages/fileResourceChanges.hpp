@@ -16,7 +16,6 @@
 
 #pragma once
 
-#include <variant>
 #include <optional>
 
 #include <libclsp/messages/jsonTypes.hpp>
@@ -47,6 +46,8 @@ struct CreateFileOptions
 
 
 	CreateFileOptions(optional<Boolean> overwrite, optional<Boolean> ignoreIfExists);
+
+	CreateFileOptions();
 
 	virtual ~CreateFileOptions();
 };
@@ -80,6 +81,8 @@ struct CreateFile
 
 	CreateFile(DocumentUri uri, optional<CreateFileOptions> options);
 
+	CreateFile();
+
 	virtual ~CreateFile();
 };
 
@@ -104,6 +107,8 @@ struct RenameFileOptions
 
 
 	RenameFileOptions(optional<Boolean> overwrite, optional<Boolean> ignoreIfExists);
+
+	RenameFileOptions();
 
 	virtual ~RenameFileOptions();
 };
@@ -146,6 +151,8 @@ struct RenameFile
 		DocumentUri newUri,
 		optional<RenameFileOptions> options);
 
+	RenameFile();
+
 	virtual ~RenameFile();
 };
 
@@ -172,6 +179,8 @@ struct DeleteFileOptions
 
 	DeleteFileOptions(optional<Boolean> recursive,
 		optional<Boolean> ignoreIfNotExists);
+
+	DeleteFileOptions();
 
 	virtual ~DeleteFileOptions();
 };
@@ -204,6 +213,8 @@ struct DeleteFile
 
 
 	DeleteFile(DocumentUri uri, optional<DeleteFileOptions> options);
+
+	DeleteFile();
 
 	virtual ~DeleteFile();
 };

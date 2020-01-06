@@ -26,7 +26,13 @@ const String TextEdit::newTextKey = "newText";
 
 TextEdit::TextEdit(Range range, String newText):
 	range(range),
-	newText(newText){};
+	newText(newText)
+{};
+
+TextEdit::TextEdit():
+	range(),
+	newText()
+{};
 
 TextEdit::~TextEdit(){};
 
@@ -38,6 +44,11 @@ TextDocumentEdit::TextDocumentEdit(VersionedTextDocumentIdentifier textDocument,
 	vector<TextEdit> edits):
 		textDocument(textDocument),
 		edits(edits)
+{};
+
+TextDocumentEdit::TextDocumentEdit():
+	textDocument(),
+	edits()
 {};
 
 TextDocumentEdit::~TextDocumentEdit(){};

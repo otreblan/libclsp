@@ -87,6 +87,8 @@ struct WorkDoneProgressBegin
 		optional<String> message,
 		optional<Number> percentage);
 
+	WorkDoneProgressBegin();
+
 	virtual ~WorkDoneProgressBegin();
 
 };
@@ -141,6 +143,8 @@ struct WorkDoneProgressReport
 		optional<String> message,
 		optional<Number> percentage);
 
+	WorkDoneProgressReport();
+
 	virtual ~WorkDoneProgressReport();
 };
 
@@ -159,6 +163,8 @@ struct WorkDoneProgressEnd
 
 	WorkDoneProgressEnd(optional<String> message);
 
+	WorkDoneProgressEnd();
+
 	virtual ~WorkDoneProgressEnd();
 };
 
@@ -175,6 +181,9 @@ struct WorkDoneProgressParams
 
 
 	WorkDoneProgressParams(optional<ProgressToken> workDoneToken);
+
+	WorkDoneProgressParams();
+
 	virtual ~WorkDoneProgressParams();
 };
 
@@ -190,6 +199,9 @@ struct WorkDoneProgressOptions
 
 
 	WorkDoneProgressOptions(optional<ProgressToken> workDoneProgress);
+
+	WorkDoneProgressOptions();
+
 	virtual ~WorkDoneProgressOptions();
 };
 
@@ -208,6 +220,9 @@ struct WorkDoneProgressCreateParams
 
 
 	WorkDoneProgressCreateParams(ProgressToken token);
+
+	WorkDoneProgressCreateParams();
+
 	virtual ~WorkDoneProgressCreateParams();
 };
 

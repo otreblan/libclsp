@@ -48,6 +48,8 @@ struct ApplyWorkspaceEditParams
 
 	ApplyWorkspaceEditParams(optional<String> label, WorkspaceEdit edit);
 
+	ApplyWorkspaceEditParams();
+
 	virtual ~ApplyWorkspaceEditParams();
 };
 
@@ -75,6 +77,8 @@ struct ApplyWorkspaceEditResponse
 
 
 	ApplyWorkspaceEditResponse(Boolean applied, optional<String> failureReason);
+
+	ApplyWorkspaceEditResponse();
 
 	virtual ~ApplyWorkspaceEditResponse();
 };

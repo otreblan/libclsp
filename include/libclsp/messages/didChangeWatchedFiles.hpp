@@ -41,6 +41,9 @@ struct DidChangeWatchedFilesClientCapabilities
 
 
 	DidChangeWatchedFilesClientCapabilities(optional<Boolean> dynamicRegistration);
+
+	DidChangeWatchedFilesClientCapabilities();
+
 	virtual ~DidChangeWatchedFilesClientCapabilities();
 };
 
@@ -87,6 +90,9 @@ struct FileSystemWatcher
 
 
 	FileSystemWatcher(String globPattern, optional<Number> key);
+
+	FileSystemWatcher();
+
 	virtual ~FileSystemWatcher();
 
 };
@@ -104,6 +110,9 @@ struct DidChangeWatchedFilesRegistrationOptions
 	vector<FileSystemWatcher> watchers;
 
 	DidChangeWatchedFilesRegistrationOptions(vector<FileSystemWatcher> watchers);
+
+	DidChangeWatchedFilesRegistrationOptions();
+
 	virtual ~DidChangeWatchedFilesRegistrationOptions();
 };
 
@@ -142,6 +151,9 @@ struct FileEvent
 
 
 	FileEvent(DocumentUri uri, FileChangeType type);
+
+	FileEvent();
+
 	virtual ~FileEvent();
 };
 
@@ -158,6 +170,9 @@ struct DidChangeWatchedFilesParams
 
 
 	DidChangeWatchedFilesParams(vector<FileEvent> changes);
+
+	DidChangeWatchedFilesParams();
+
 	virtual ~DidChangeWatchedFilesParams();
 };
 

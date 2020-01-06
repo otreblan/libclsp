@@ -31,7 +31,15 @@ LocationLink::LocationLink(optional<Range> originSelectionRange,
 		originSelectionRange(originSelectionRange),
 		targetUri(targetUri),
 		targetRange(targetRange),
-		targetSelectionRange(targetSelectionRange){};
+		targetSelectionRange(targetSelectionRange)
+{};
+
+LocationLink::LocationLink():
+	originSelectionRange(),
+	targetUri(),
+	targetRange(),
+	targetSelectionRange()
+{};
 
 LocationLink::~LocationLink(){};
 

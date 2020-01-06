@@ -46,6 +46,8 @@ struct WorkspaceFoldersChangeEvent
 	WorkspaceFoldersChangeEvent(vector<WorkspaceFolder> added,
 		vector<WorkspaceFolder> removed);
 
+	WorkspaceFoldersChangeEvent();
+
 	virtual ~WorkspaceFoldersChangeEvent();
 
 };
@@ -64,6 +66,9 @@ struct DidChangeWorkspaceFoldersParams
 	WorkspaceFoldersChangeEvent event;
 
 	DidChangeWorkspaceFoldersParams(WorkspaceFoldersChangeEvent event);
+
+	DidChangeWorkspaceFoldersParams();
+
 	virtual ~DidChangeWorkspaceFoldersParams();
 };
 

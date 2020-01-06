@@ -26,7 +26,13 @@ const String Location::rangeKey = "range";
 
 Location::Location(DocumentUri uri, Range range):
 	uri(uri),
-	range(range){};
+	range(range)
+{};
+
+Location::Location():
+	uri(),
+	range()
+{};
 
 Location::~Location(){};
 

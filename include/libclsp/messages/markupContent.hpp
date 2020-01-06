@@ -65,6 +65,8 @@ struct MarkupContent
 
 	MarkupContent(MarkupKind kind, String value);
 
+	MarkupContent();
+
 	virtual ~MarkupContent();
 
 };

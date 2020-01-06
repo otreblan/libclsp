@@ -33,6 +33,12 @@ DocumentFilter::DocumentFilter(optional<String> language,
 		pattern(pattern)
 {};
 
+DocumentFilter::DocumentFilter():
+	language(),
+	scheme(),
+	pattern()
+{};
+
 DocumentFilter::~DocumentFilter(){};
 
 }

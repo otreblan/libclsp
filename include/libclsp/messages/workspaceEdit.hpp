@@ -78,6 +78,8 @@ struct WorkspaceEdit
 			>
 		> documentChanges);
 
+	WorkspaceEdit();
+
 	virtual ~WorkspaceEdit();
 };
 
@@ -159,6 +161,8 @@ struct WorkspaceEditClientCapabilities
 	WorkspaceEditClientCapabilities(optional<Boolean> documentChanges,
 		optional<vector<ResourceOperationKind>> resourceOperations,
 		optional<FailureHandlingKind> failureHandling);
+
+	WorkspaceEditClientCapabilities();
 
 	virtual ~WorkspaceEditClientCapabilities();
 

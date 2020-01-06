@@ -43,6 +43,8 @@ struct StaticRegistrationOptions
 
 	StaticRegistrationOptions(optional<String> id);
 
+	StaticRegistrationOptions();
+
 	virtual ~StaticRegistrationOptions();
 };
 

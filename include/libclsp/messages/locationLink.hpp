@@ -75,6 +75,8 @@ struct LocationLink
 		Range targetRange,
 		Range targetSelectionRange);
 
+	LocationLink();
+
 	virtual ~LocationLink();
 };
 

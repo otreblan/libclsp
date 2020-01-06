@@ -49,6 +49,8 @@ struct TextDocumentPositionParams
 	TextDocumentPositionParams(TextDocumentIdentifier textDocument,
 		Position position);
 
+	TextDocumentPositionParams();
+
 	virtual ~TextDocumentPositionParams();
 };
 

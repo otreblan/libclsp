@@ -66,6 +66,8 @@ struct DocumentFilter
 		optional<String> scheme,
 		optional<String> pattern);
 
+	DocumentFilter();
+
 	virtual ~DocumentFilter();
 };
 

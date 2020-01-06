@@ -30,6 +30,11 @@ NotificationMessage::NotificationMessage(String method,
 		params(params)
 {};
 
+NotificationMessage::NotificationMessage():
+	method(),
+	params()
+{};
+
 NotificationMessage::~NotificationMessage(){};
 
 }

@@ -27,6 +27,10 @@ DidOpenTextDocumentParams::DidOpenTextDocumentParams(TextDocumentItem textDocume
 	textDocument(textDocument)
 {};
 
+DidOpenTextDocumentParams::DidOpenTextDocumentParams():
+	textDocument()
+{};
+
 DidOpenTextDocumentParams::~DidOpenTextDocumentParams(){};
 
 }

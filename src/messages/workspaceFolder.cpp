@@ -33,6 +33,11 @@ WorkspaceFoldersServerCapabilities::
 			changeNotifications(changeNotifications)
 {};
 
+WorkspaceFoldersServerCapabilities::WorkspaceFoldersServerCapabilities():
+	supported(),
+	changeNotifications()
+{};
+
 WorkspaceFoldersServerCapabilities::~WorkspaceFoldersServerCapabilities(){};
 
 
@@ -42,6 +47,11 @@ const String WorkspaceFolder::nameKey = "name";
 WorkspaceFolder::WorkspaceFolder(DocumentUri uri, String name):
 	uri(uri),
 	name(name)
+{};
+
+WorkspaceFolder::WorkspaceFolder():
+	uri(),
+	name()
 {};
 
 WorkspaceFolder::~WorkspaceFolder(){};

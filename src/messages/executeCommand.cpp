@@ -29,6 +29,10 @@ ExecuteCommandClientCapabilities::
 		dynamicRegistration(dynamicRegistration)
 {};
 
+ExecuteCommandClientCapabilities::ExecuteCommandClientCapabilities():
+	dynamicRegistration()
+{};
+
 ExecuteCommandClientCapabilities::~ExecuteCommandClientCapabilities(){};
 
 
@@ -38,6 +42,11 @@ ExecuteCommandOptions::ExecuteCommandOptions(optional<Boolean> workDoneProgress,
 	vector<String> commands):
 		WorkDoneProgressOptions(workDoneProgress),
 		commands(commands)
+{};
+
+ExecuteCommandOptions::ExecuteCommandOptions():
+	WorkDoneProgressOptions(),
+	commands()
 {};
 
 ExecuteCommandOptions::~ExecuteCommandOptions(){};
@@ -52,6 +61,12 @@ ExecuteCommandParams::ExecuteCommandParams(optional<ProgressToken> workDoneToken
 		WorkDoneProgressParams(workDoneToken),
 		command(command),
 		arguments(arguments)
+{};
+
+ExecuteCommandParams::ExecuteCommandParams():
+	WorkDoneProgressParams(),
+	command(),
+	arguments()
 {};
 
 ExecuteCommandParams::~ExecuteCommandParams(){};

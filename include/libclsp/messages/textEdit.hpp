@@ -50,6 +50,8 @@ struct TextEdit
 
 	TextEdit(Range range, String newText);
 
+	TextEdit();
+
 	virtual ~TextEdit();
 };
 
@@ -75,6 +77,8 @@ struct TextDocumentEdit
 
 	TextDocumentEdit(VersionedTextDocumentIdentifier textDocument,
 		vector<TextEdit> edits);
+
+	TextDocumentEdit();
 
 	virtual ~TextDocumentEdit();
 

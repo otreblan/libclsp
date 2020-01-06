@@ -78,6 +78,8 @@ struct ResponseError: public ObjectT
 	ResponseError(ErrorCodes code, String message,
 		optional<variant<String, Number, Boolean, Array, Object, Null>> data);
 
+	ResponseError();
+
 	virtual ~ResponseError();
 
 	/// This is for writing the json
@@ -125,10 +127,12 @@ struct ResponseMessage: public Message
 	optional<ResponseError> error;
 
 	ResponseMessage(variant<Number, String, Null> id,
-		optional<variant<String, Number, Boolean, Object, Null>> result);
+		variant<String, Number, Boolean, Object, Null> result);
 
 	ResponseMessage(variant<Number, String, Null> id,
-		optional<ResponseError> error);
+		ResponseError error);
+
+	ResponseMessage();
 
 	virtual ~ResponseMessage();
 

@@ -39,6 +39,8 @@ struct TextDocumentRegistrationOptions
 
 	TextDocumentRegistrationOptions(variant<DocumentSelector, Null> documentSelector);
 
+	TextDocumentRegistrationOptions();
+
 	virtual ~TextDocumentRegistrationOptions();
 };
 

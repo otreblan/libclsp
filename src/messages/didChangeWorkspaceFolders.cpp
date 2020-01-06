@@ -31,6 +31,11 @@ WorkspaceFoldersChangeEvent::WorkspaceFoldersChangeEvent(
 		removed(removed)
 {};
 
+WorkspaceFoldersChangeEvent::WorkspaceFoldersChangeEvent():
+	added(),
+	removed()
+{};
+
 WorkspaceFoldersChangeEvent::~WorkspaceFoldersChangeEvent(){};
 
 
@@ -39,6 +44,10 @@ const String DidChangeWorkspaceFoldersParams::eventKey = "event";
 DidChangeWorkspaceFoldersParams::
 	DidChangeWorkspaceFoldersParams(WorkspaceFoldersChangeEvent event):
 		event(event)
+{};
+
+DidChangeWorkspaceFoldersParams::DidChangeWorkspaceFoldersParams():
+	event()
 {};
 
 DidChangeWorkspaceFoldersParams::~DidChangeWorkspaceFoldersParams(){};

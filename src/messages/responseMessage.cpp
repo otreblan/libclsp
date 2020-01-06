@@ -27,15 +27,20 @@ const String ResponseMessage::errorKey  = "error";
 
 
 ResponseMessage::ResponseMessage(variant<Number, String, Null> id,
-	optional<variant<String, Number, Boolean, Object, Null>> result):
+	variant<String, Number, Boolean, Object, Null> result):
 		id(id),
 		result(result)
 {};
 
 ResponseMessage::ResponseMessage(variant<Number, String, Null> id,
-	optional<ResponseError> error):
+	ResponseError error):
 		id(id),
 		error(error)
+{};
+
+ResponseMessage::ResponseMessage():
+	id(),
+	error()
 {};
 
 ResponseMessage::~ResponseMessage(){};
@@ -123,6 +128,12 @@ ResponseError::ResponseError(ErrorCodes code, String message,
 		code(code),
 		message(message),
 		data(data)
+{};
+
+ResponseError::ResponseError():
+	code(),
+	message(),
+	data()
 {};
 
 ResponseError::~ResponseError(){};

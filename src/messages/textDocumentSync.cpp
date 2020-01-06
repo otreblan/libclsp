@@ -30,6 +30,11 @@ TextDocumentSyncOptions::TextDocumentSyncOptions(optional<Boolean> openClose,
 		change(change)
 {};
 
+TextDocumentSyncOptions::TextDocumentSyncOptions():
+	openClose(),
+	change()
+{};
+
 TextDocumentSyncOptions::~TextDocumentSyncOptions(){};
 
 }

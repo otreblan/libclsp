@@ -29,6 +29,11 @@ LogMessageParams::LogMessageParams(MessageType type, String message):
 	message(message)
 {};
 
+LogMessageParams::LogMessageParams():
+	type(),
+	message()
+{};
+
 LogMessageParams::~LogMessageParams(){};
 
 }

@@ -33,7 +33,15 @@ TextDocumentItem::TextDocumentItem(DocumentUri uri,
 		uri(uri),
 		languageId(languageId),
 		version(version),
-		text(text){};
+		text(text)
+{};
+
+TextDocumentItem::TextDocumentItem():
+	uri(),
+	languageId(),
+	version(),
+	text()
+{};
 
 TextDocumentItem::~TextDocumentItem(){};
 

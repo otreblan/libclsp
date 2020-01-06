@@ -40,6 +40,8 @@ struct ExecuteCommandClientCapabilities
 
 	ExecuteCommandClientCapabilities(optional<Boolean> dynamicRegistration);
 
+	ExecuteCommandClientCapabilities();
+
 	virtual ~ExecuteCommandClientCapabilities();
 };
 
@@ -58,6 +60,8 @@ struct ExecuteCommandOptions: public WorkDoneProgressOptions
 
 	ExecuteCommandOptions(optional<Boolean> workDoneProgress,
 		vector<String> commands);
+
+	ExecuteCommandOptions();
 
 	virtual ~ExecuteCommandOptions();
 };
@@ -89,6 +93,8 @@ struct ExecuteCommandParams: public WorkDoneProgressParams
 	ExecuteCommandParams(optional<ProgressToken> workDoneToken,
 		String command,
 		optional<vector<Any>> arguments);
+
+	ExecuteCommandParams();
 
 	virtual ~ExecuteCommandParams();
 };

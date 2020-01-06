@@ -57,6 +57,8 @@ struct Registration
 
 	Registration(String id, String method, optional<Any> registerOptions);
 
+	Registration();
+
 	virtual ~Registration();
 };
 
@@ -73,6 +75,9 @@ struct RegistrationParams
 	vector<Registration> registrations;
 
 	RegistrationParams(vector<Registration> registrations);
+
+	RegistrationParams();
+
 	virtual ~RegistrationParams();
 };
 
@@ -101,6 +106,8 @@ struct UnRegistration
 
 	UnRegistration(String id, String method);
 
+	UnRegistration();
+
 	virtual ~UnRegistration();
 };
 
@@ -120,6 +127,9 @@ struct UnRegistrationParams
 	vector<UnRegistration> unregisterations;
 
 	UnRegistrationParams(vector<UnRegistration> unregisterations);
+
+	UnRegistrationParams();
+
 	virtual ~UnRegistrationParams();
 };
 }

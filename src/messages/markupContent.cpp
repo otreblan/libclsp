@@ -30,6 +30,11 @@ MarkupContent::MarkupContent(MarkupKind kind, String value):
 	value(value)
 {};
 
+MarkupContent::MarkupContent():
+	kind(),
+	value()
+{};
+
 MarkupContent::~MarkupContent(){};
 
 }

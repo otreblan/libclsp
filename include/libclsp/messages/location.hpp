@@ -44,6 +44,8 @@ struct Location
 
 	Location(DocumentUri uri, Range range);
 
+	Location();
+
 	virtual ~Location();
 };
 

@@ -27,7 +27,13 @@ const String Range::endKey   = "end";
 
 Range::Range(Position start, Position end):
 	start(start),
-	end(end){};
+	end(end)
+{};
+
+Range::Range():
+	start(),
+	end()
+{};
 
 Range::~Range(){};
 

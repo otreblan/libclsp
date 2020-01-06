@@ -66,6 +66,8 @@ struct TextDocumentItem
 		Number version,
 		String text);
 
+	TextDocumentItem();
+
 	virtual ~TextDocumentItem();
 };
 

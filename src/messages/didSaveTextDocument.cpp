@@ -27,6 +27,10 @@ SaveOptions::SaveOptions(optional<Boolean> includeText):
 	includeText(includeText)
 {};
 
+SaveOptions::SaveOptions():
+	includeText()
+{};
+
 SaveOptions::~SaveOptions(){};
 
 
@@ -37,6 +41,11 @@ TextDocumentSaveRegistrationOptions::TextDocumentSaveRegistrationOptions(
 	optional<Boolean> includeText):
 		TextDocumentRegistrationOptions(documentSelector),
 		includeText(includeText)
+{};
+
+TextDocumentSaveRegistrationOptions::TextDocumentSaveRegistrationOptions():
+	TextDocumentRegistrationOptions(),
+	includeText()
 {};
 
 TextDocumentSaveRegistrationOptions::~TextDocumentSaveRegistrationOptions(){};
@@ -50,6 +59,11 @@ DidSaveTextDocumentParams::
 		optional<String> text):
 			textDocument(textDocument),
 			text(text)
+{};
+
+DidSaveTextDocumentParams::DidSaveTextDocumentParams():
+	textDocument(),
+	text()
 {};
 
 DidSaveTextDocumentParams::~DidSaveTextDocumentParams(){};

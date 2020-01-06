@@ -63,6 +63,8 @@ struct WillSaveTextDocumentParams
 	WillSaveTextDocumentParams(TextDocumentIdentifier textDocument,
 		TextDocumentSaveReason reason);
 
+	WillSaveTextDocumentParams();
+
 	virtual ~WillSaveTextDocumentParams();
 };
 

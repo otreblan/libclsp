@@ -31,6 +31,11 @@ WillSaveTextDocumentParams::
 			reason(reason)
 {};
 
+WillSaveTextDocumentParams::WillSaveTextDocumentParams():
+	textDocument(),
+	reason()
+{};
+
 WillSaveTextDocumentParams::~WillSaveTextDocumentParams(){};
 
 }

@@ -52,6 +52,8 @@ struct Position
 
 	Position(Number line, Number character);
 
+	Position();
+
 	virtual ~Position();
 };
 

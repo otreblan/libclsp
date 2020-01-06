@@ -31,6 +31,11 @@ TextDocumentPositionParams::TextDocumentPositionParams(
 		position(position)
 {};
 
+TextDocumentPositionParams::TextDocumentPositionParams():
+	textDocument(),
+	position()
+{};
+
 TextDocumentPositionParams::~TextDocumentPositionParams(){};
 
 }

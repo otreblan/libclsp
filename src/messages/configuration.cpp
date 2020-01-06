@@ -30,6 +30,11 @@ ConfigurationItem::ConfigurationItem(optional<DocumentUri> scopeUri,
 		section(section)
 {};
 
+ConfigurationItem::ConfigurationItem():
+		scopeUri(),
+		section()
+{};
+
 ConfigurationItem::~ConfigurationItem(){};
 
 
@@ -37,6 +42,10 @@ const String ConfigurationParams::itemsKey = "items";
 
 ConfigurationParams::ConfigurationParams(vector<ConfigurationItem> items):
 	items(items)
+{};
+
+ConfigurationParams::ConfigurationParams():
+	items()
 {};
 
 ConfigurationParams::~ConfigurationParams(){};

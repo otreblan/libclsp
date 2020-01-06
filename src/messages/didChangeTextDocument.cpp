@@ -30,6 +30,11 @@ TextDocumentChangeRegistrationOptions::TextDocumentChangeRegistrationOptions(
 		syncKind(syncKind)
 {};
 
+TextDocumentChangeRegistrationOptions::TextDocumentChangeRegistrationOptions():
+	TextDocumentRegistrationOptions(),
+	syncKind()
+{};
+
 TextDocumentChangeRegistrationOptions::
 	~TextDocumentChangeRegistrationOptions()
 {};
@@ -48,6 +53,11 @@ TextDocumentContentChangeEvent::
 		text(text)
 {};
 
+TextDocumentContentChangeEvent::TextDocumentContentChangeEvent():
+	range(),
+	text()
+{};
+
 TextDocumentContentChangeEvent::~TextDocumentContentChangeEvent(){};
 
 #pragma GCC diagnostic pop
@@ -60,6 +70,11 @@ DidChangeTextDocumentParams::
 		vector<TextDocumentContentChangeEvent> contentChanges):
 			textDocument(textDocument),
 			contentChanges(contentChanges)
+{};
+
+DidChangeTextDocumentParams::DidChangeTextDocumentParams():
+	textDocument(),
+	contentChanges()
 {};
 
 DidChangeTextDocumentParams::~DidChangeTextDocumentParams(){};

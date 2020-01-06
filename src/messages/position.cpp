@@ -27,7 +27,13 @@ const String Position::characterKey = "character";
 
 Position::Position(Number line, Number character):
 	line(line),
-	character(character){};
+	character(character)
+{};
+
+Position::Position():
+	line(),
+	character()
+{};
 
 Position::~Position(){};
 

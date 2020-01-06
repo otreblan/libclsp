@@ -55,6 +55,8 @@ struct WorkspaceFoldersServerCapabilities
 	WorkspaceFoldersServerCapabilities(optional<Boolean> supported,
 		optional<variant<String, Boolean>> changeNotifications);
 
+	WorkspaceFoldersServerCapabilities();
+
 	virtual ~WorkspaceFoldersServerCapabilities();
 };
 
@@ -81,6 +83,9 @@ struct WorkspaceFolder
 
 
 	WorkspaceFolder(DocumentUri uri, String name);
+
+	WorkspaceFolder();
+
 	virtual ~WorkspaceFolder();
 };
 

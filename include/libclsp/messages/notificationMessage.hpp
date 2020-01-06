@@ -49,6 +49,8 @@ struct NotificationMessage: public Message
 	NotificationMessage(String method,
 		optional<variant<Array, Object>> params);
 
+	NotificationMessage();
+
 	virtual ~NotificationMessage();
 };
 

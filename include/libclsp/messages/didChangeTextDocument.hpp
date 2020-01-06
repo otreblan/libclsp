@@ -48,6 +48,8 @@ struct TextDocumentChangeRegistrationOptions:
 		variant<DocumentSelector, Null> documentSelector,
 		TextDocumentSyncKind syncKind);
 
+	TextDocumentChangeRegistrationOptions();
+
 	virtual ~TextDocumentChangeRegistrationOptions();
 };
 
@@ -91,6 +93,8 @@ struct TextDocumentContentChangeEvent
 
 	TextDocumentContentChangeEvent(optional<Range> range, String text);
 
+	TextDocumentContentChangeEvent();
+
 	virtual ~TextDocumentContentChangeEvent();
 };
 
@@ -123,6 +127,8 @@ struct DidChangeTextDocumentParams
 
 	DidChangeTextDocumentParams(VersionedTextDocumentIdentifier textDocument,
 		vector<TextDocumentContentChangeEvent> contentChanges);
+
+	DidChangeTextDocumentParams();
 
 	virtual ~DidChangeTextDocumentParams();
 };

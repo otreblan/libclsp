@@ -24,7 +24,12 @@ using namespace std;
 const String TextDocumentIdentifier::uriKey = "uri";
 
 TextDocumentIdentifier::TextDocumentIdentifier(DocumentUri uri):
-	uri(uri){};
+	uri(uri)
+{};
+
+TextDocumentIdentifier::TextDocumentIdentifier():
+	uri()
+{};
 
 TextDocumentIdentifier::~TextDocumentIdentifier(){};
 
@@ -36,6 +41,11 @@ VersionedTextDocumentIdentifier::
 		variant<Number, Null> version):
 			TextDocumentIdentifier(uri),
 			version(version)
+{};
+
+VersionedTextDocumentIdentifier::VersionedTextDocumentIdentifier():
+	TextDocumentIdentifier(),
+	version()
 {};
 
 VersionedTextDocumentIdentifier::~VersionedTextDocumentIdentifier(){};

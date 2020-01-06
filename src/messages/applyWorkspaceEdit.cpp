@@ -30,6 +30,11 @@ ApplyWorkspaceEditParams::ApplyWorkspaceEditParams(optional<String> label,
 		edit(edit)
 {};
 
+ApplyWorkspaceEditParams::ApplyWorkspaceEditParams():
+		label(),
+		edit()
+{};
+
 ApplyWorkspaceEditParams::~ApplyWorkspaceEditParams(){};
 
 
@@ -40,6 +45,11 @@ ApplyWorkspaceEditResponse::ApplyWorkspaceEditResponse(Boolean applied,
 	optional<String> failureReason):
 		applied(applied),
 		failureReason(failureReason)
+{};
+
+ApplyWorkspaceEditResponse::ApplyWorkspaceEditResponse():
+	applied(),
+	failureReason()
 {};
 
 ApplyWorkspaceEditResponse::~ApplyWorkspaceEditResponse(){};
