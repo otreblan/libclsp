@@ -32,6 +32,7 @@ target_sources(${PROJECT_NAME}
 		documentFilter.cpp
 		executeCommand.cpp
 		fileResourceChanges.cpp
+		hover.cpp
 		jsonTypes.cpp
 		location.cpp
 		locationLink.cpp

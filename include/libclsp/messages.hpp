@@ -32,6 +32,7 @@
 #include <libclsp/messages/documentFilter.hpp>
 #include <libclsp/messages/executeCommand.hpp>
 #include <libclsp/messages/fileResourceChanges.hpp>
+#include <libclsp/messages/hover.hpp>
 #include <libclsp/messages/jsonTypes.hpp>
 #include <libclsp/messages/location.hpp>
 #include <libclsp/messages/locationLink.hpp>
