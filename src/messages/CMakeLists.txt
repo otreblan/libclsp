@@ -18,6 +18,8 @@ target_sources(${PROJECT_NAME}
 	PRIVATE
 		applyWorkspaceEdit.cpp
 		cancelParams.cpp
+		command.cpp
+		completion.cpp
 		configuration.cpp
 		diagnostic.cpp
 		didChangeConfiguration.cpp
@@ -38,6 +40,7 @@ target_sources(${PROJECT_NAME}
 		message.cpp
 		notificationMessage.cpp
 		objectT.cpp
+		partialResult.cpp
 		position.cpp
 		range.cpp
 		registration.cpp

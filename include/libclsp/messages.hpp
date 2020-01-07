@@ -18,6 +18,8 @@
 
 #include <libclsp/messages/applyWorkspaceEdit.hpp>
 #include <libclsp/messages/cancelParams.hpp>
+#include <libclsp/messages/command.hpp>
+#include <libclsp/messages/completion.hpp>
 #include <libclsp/messages/configuration.hpp>
 #include <libclsp/messages/diagnostic.hpp>
 #include <libclsp/messages/didChangeConfiguration.hpp>
@@ -38,6 +40,7 @@
 #include <libclsp/messages/message.hpp>
 #include <libclsp/messages/notificationMessage.hpp>
 #include <libclsp/messages/objectT.hpp>
+#include <libclsp/messages/partialResult.hpp>
 #include <libclsp/messages/position.hpp>
 #include <libclsp/messages/range.hpp>
 #include <libclsp/messages/registration.hpp>
