@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <libclsp/messages/staticRegistration.hpp>
+#include <libclsp/types/staticRegistration.hpp>
 
 namespace libclsp
 {

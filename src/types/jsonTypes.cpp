@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <libclsp/messages/jsonTypes.hpp>
-#include <libclsp/messages/objectT.hpp>
+#include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace libclsp
 {
