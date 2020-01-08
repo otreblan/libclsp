@@ -27,20 +27,18 @@ namespace libclsp
 
 using namespace std;
 
-/// Goto Declaration request client capabilities
+/// Goto Definition request client capabilities
 ///
 /// dynamicRegistration?: boolean;
 ///
 /// linkSupport?: boolean;
 ///
-struct DeclarationClientCapabilities
+struct DefinitionClientCapabilities
 {
 
 	const static String dynamicRegistrationKey;
 
-	/// Whether declaration supports dynamic registration. If this is set to
-	/// `true` the client supports the new `DeclarationRegistrationOptions`
-	/// return value for the corresponding server capability as well.
+	/// Whether declaration supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
 
 
@@ -53,45 +51,45 @@ struct DeclarationClientCapabilities
 	optional<Boolean> linkSupport;
 
 
-	DeclarationClientCapabilities(optional<Boolean> dynamicRegistration,
+	DefinitionClientCapabilities(optional<Boolean> dynamicRegistration,
 		optional<Boolean> linkSupport);
 
-	DeclarationClientCapabilities();
+	DefinitionClientCapabilities();
 
-	virtual ~DeclarationClientCapabilities();
+	virtual ~DefinitionClientCapabilities();
 };
 
-using DeclarationOptions = WorkDoneProgressOptions;
+using DefinitionOptions = WorkDoneProgressOptions;
 
-struct DeclarationRegistrationOptions:
-	public DeclarationOptions,
+struct DefinitionRegistrationOptions:
+	public DefinitionOptions,
 	public TextDocumentRegistrationOptions,
 	public StaticRegistrationOptions
 {
 
-	DeclarationRegistrationOptions(optional<ProgressToken> workDoneProgress,
+	DefinitionRegistrationOptions(optional<ProgressToken> workDoneProgress,
 		variant<DocumentSelector, Null> documentSelector,
 		optional<String> id);
 
-	DeclarationRegistrationOptions();
+	DefinitionRegistrationOptions();
 
-	virtual ~DeclarationRegistrationOptions();
+	virtual ~DefinitionRegistrationOptions();
 };
 
-struct DeclarationParams:
+struct DefinitionParams:
 	public TextDocumentPositionParams,
 	public WorkDoneProgressParams,
 	public PartialResultParams
 {
 
-	DeclarationParams(TextDocumentIdentifier textDocument,
+	DefinitionParams(TextDocumentIdentifier textDocument,
 		Position position,
 		optional<ProgressToken> workDoneToken,
 		optional<ProgressToken> partialResultToken);
 
-	DeclarationParams();
+	DefinitionParams();
 
-	virtual ~DeclarationParams();
+	virtual ~DefinitionParams();
 };
 
 }

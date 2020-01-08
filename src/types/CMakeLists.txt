@@ -22,6 +22,7 @@ target_sources(${PROJECT_NAME}
 		completion.cpp
 		configuration.cpp
 		declaration.cpp
+		definition.cpp
 		diagnostic.cpp
 		didChangeConfiguration.cpp
 		didChangeTextDocument.cpp
