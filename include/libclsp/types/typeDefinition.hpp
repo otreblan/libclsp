@@ -27,18 +27,20 @@ namespace libclsp
 
 using namespace std;
 
-/// Goto Definition request client capabilities
+/// Goto type definition request client capabilities
 ///
 /// dynamicRegistration?: boolean;
 ///
 /// linkSupport?: boolean;
 ///
-struct DefinitionClientCapabilities
+struct TypeDefinitionClientCapabilities
 {
 
 	const static String dynamicRegistrationKey;
 
-	/// Whether declaration supports dynamic registration.
+	/// Whether implementation supports dynamic registration. If this is set to
+	/// `true` the client supports the new `TypeDefinitionRegistrationOptions`
+	/// return value for the corresponding server capability as well.
 	optional<Boolean> dynamicRegistration;
 
 
@@ -51,44 +53,46 @@ struct DefinitionClientCapabilities
 	optional<Boolean> linkSupport;
 
 
-	DefinitionClientCapabilities(optional<Boolean> dynamicRegistration,
+	TypeDefinitionClientCapabilities(optional<Boolean> dynamicRegistration,
 		optional<Boolean> linkSupport);
 
-	DefinitionClientCapabilities();
+	TypeDefinitionClientCapabilities();
 
-	virtual ~DefinitionClientCapabilities();
+	virtual ~TypeDefinitionClientCapabilities();
 };
 
-using DefinitionOptions = WorkDoneProgressOptions;
+using TypeDefinitionOptions = WorkDoneProgressOptions;
 
-struct DefinitionRegistrationOptions:
+struct TypeDefinitionRegistrationOptions:
 	public TextDocumentRegistrationOptions,
-	public DefinitionOptions
+	public TypeDefinitionOptions,
+	public StaticRegistrationOptions
 {
 
-	DefinitionRegistrationOptions(
+	TypeDefinitionRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress);
+		optional<ProgressToken> workDoneProgress,
+		optional<String> id);
 
-	DefinitionRegistrationOptions();
+	TypeDefinitionRegistrationOptions();
 
-	virtual ~DefinitionRegistrationOptions();
+	virtual ~TypeDefinitionRegistrationOptions();
 };
 
-struct DefinitionParams:
+struct TypeDefinitionParams:
 	public TextDocumentPositionParams,
 	public WorkDoneProgressParams,
 	public PartialResultParams
 {
 
-	DefinitionParams(TextDocumentIdentifier textDocument,
+	TypeDefinitionParams(TextDocumentIdentifier textDocument,
 		Position position,
 		optional<ProgressToken> workDoneToken,
 		optional<ProgressToken> partialResultToken);
 
-	DefinitionParams();
+	TypeDefinitionParams();
 
-	virtual ~DefinitionParams();
+	virtual ~TypeDefinitionParams();
 };
 
 }

@@ -14,50 +14,54 @@
 // You should have received a copy of the GNU General Public License
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
-#include <libclsp/types/definition.hpp>
+#include <libclsp/types/typeDefinition.hpp>
 
 namespace libclsp
 {
 
 using namespace std;
 
-const String DefinitionClientCapabilities::
+const String TypeDefinitionClientCapabilities::
 	dynamicRegistrationKey = "dynamicRegistration";
 
-const String DefinitionClientCapabilities::
+const String TypeDefinitionClientCapabilities::
 	linkSupportKey         = "linkSupport";
 
-DefinitionClientCapabilities::
-	DefinitionClientCapabilities(optional<Boolean> dynamicRegistration,
+TypeDefinitionClientCapabilities::
+	TypeDefinitionClientCapabilities(optional<Boolean> dynamicRegistration,
 		optional<Boolean> linkSupport):
 			dynamicRegistration(dynamicRegistration),
 			linkSupport(linkSupport)
 {};
 
-DefinitionClientCapabilities::DefinitionClientCapabilities():
+TypeDefinitionClientCapabilities::TypeDefinitionClientCapabilities():
 	dynamicRegistration(),
 	linkSupport()
 {};
 
-DefinitionClientCapabilities::~DefinitionClientCapabilities(){};
+TypeDefinitionClientCapabilities::~TypeDefinitionClientCapabilities(){};
 
 
-DefinitionRegistrationOptions::DefinitionRegistrationOptions(
+TypeDefinitionRegistrationOptions::
+	TypeDefinitionRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress):
+		optional<ProgressToken> workDoneProgress,
+		optional<String> id):
 			TextDocumentRegistrationOptions(documentSelector),
-			DefinitionOptions(workDoneProgress)
+			TypeDefinitionOptions(workDoneProgress),
+			StaticRegistrationOptions(id)
 {};
 
-DefinitionRegistrationOptions::DefinitionRegistrationOptions():
+TypeDefinitionRegistrationOptions::TypeDefinitionRegistrationOptions():
 	TextDocumentRegistrationOptions(),
-	DefinitionOptions()
+	TypeDefinitionOptions(),
+	StaticRegistrationOptions()
 {};
 
-DefinitionRegistrationOptions::~DefinitionRegistrationOptions(){};
+TypeDefinitionRegistrationOptions::~TypeDefinitionRegistrationOptions(){};
 
 
-DefinitionParams::DefinitionParams(TextDocumentIdentifier textDocument,
+TypeDefinitionParams::TypeDefinitionParams(TextDocumentIdentifier textDocument,
 	Position position,
 	optional<ProgressToken> workDoneToken,
 	optional<ProgressToken> partialResultToken):
@@ -66,12 +70,12 @@ DefinitionParams::DefinitionParams(TextDocumentIdentifier textDocument,
 		PartialResultParams(partialResultToken)
 {};
 
-DefinitionParams::DefinitionParams():
+TypeDefinitionParams::TypeDefinitionParams():
 	TextDocumentPositionParams(),
 	WorkDoneProgressParams(),
 	PartialResultParams()
 {};
 
-DefinitionParams::~DefinitionParams(){};
+TypeDefinitionParams::~TypeDefinitionParams(){};
 
 }

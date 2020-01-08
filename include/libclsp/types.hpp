@@ -57,6 +57,7 @@
 #include <libclsp/types/textDocumentRegistration.hpp>
 #include <libclsp/types/textDocumentSync.hpp>
 #include <libclsp/types/textEdit.hpp>
+#include <libclsp/types/typeDefinition.hpp>
 #include <libclsp/types/willSaveTextDocument.hpp>
 #include <libclsp/types/workDoneProgress.hpp>
 #include <libclsp/types/workspaceEdit.hpp>

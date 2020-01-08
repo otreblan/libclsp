@@ -57,6 +57,7 @@ target_sources(${PROJECT_NAME}
 		textDocumentRegistration.cpp
 		textDocumentSync.cpp
 		textEdit.cpp
+		typeDefinition.cpp
 		willSaveTextDocument.cpp
 		workDoneProgress.cpp
 		workspaceEdit.cpp
