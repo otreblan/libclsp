@@ -16,7 +16,6 @@
 
 #pragma once
 
-#include <libclsp/types/staticRegistration.hpp>
 #include <libclsp/types/textDocumentPosition.hpp>
 #include <libclsp/types/textDocumentRegistration.hpp>
 #include <libclsp/types/workDoneProgress.hpp>

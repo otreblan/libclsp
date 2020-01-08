@@ -34,6 +34,7 @@
 #include <libclsp/types/documentFilter.hpp>
 #include <libclsp/types/executeCommand.hpp>
 #include <libclsp/types/fileResourceChanges.hpp>
+#include <libclsp/types/highlight.hpp>
 #include <libclsp/types/hover.hpp>
 #include <libclsp/types/implementation.hpp>
 #include <libclsp/types/jsonTypes.hpp>

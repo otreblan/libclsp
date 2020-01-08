@@ -34,6 +34,7 @@ target_sources(${PROJECT_NAME}
 		documentFilter.cpp
 		executeCommand.cpp
 		fileResourceChanges.cpp
+		highlight.cpp
 		hover.cpp
 		implementation.cpp
 		jsonTypes.cpp
