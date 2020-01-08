@@ -35,6 +35,7 @@
 #include <libclsp/types/executeCommand.hpp>
 #include <libclsp/types/fileResourceChanges.hpp>
 #include <libclsp/types/hover.hpp>
+#include <libclsp/types/implementation.hpp>
 #include <libclsp/types/jsonTypes.hpp>
 #include <libclsp/types/location.hpp>
 #include <libclsp/types/locationLink.hpp>

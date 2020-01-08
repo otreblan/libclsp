@@ -35,6 +35,7 @@ target_sources(${PROJECT_NAME}
 		executeCommand.cpp
 		fileResourceChanges.cpp
 		hover.cpp
+		implementation.cpp
 		jsonTypes.cpp
 		location.cpp
 		locationLink.cpp
