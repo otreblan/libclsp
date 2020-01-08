@@ -21,6 +21,7 @@
 #include <libclsp/types/command.hpp>
 #include <libclsp/types/completion.hpp>
 #include <libclsp/types/configuration.hpp>
+#include <libclsp/types/declaration.hpp>
 #include <libclsp/types/diagnostic.hpp>
 #include <libclsp/types/didChangeConfiguration.hpp>
 #include <libclsp/types/didChangeTextDocument.hpp>
