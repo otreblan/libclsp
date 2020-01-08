@@ -47,6 +47,7 @@ target_sources(${PROJECT_NAME}
 		registration.cpp
 		responseMessage.cpp
 		showMessage.cpp
+		signatureHelp.cpp
 		staticRegistration.cpp
 		textDocumentIdentifier.cpp
 		textDocumentItem.cpp

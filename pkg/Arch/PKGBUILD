@@ -1,7 +1,7 @@
 # Maintainer: Otreblan <otreblain@gmail.com>
 
 pkgname=libclsp-git
-pkgver=r95.8a0441e
+pkgver=r97.aea7327
 pkgrel=1
 epoch=
 pkgdesc="A C++17 library for language servers"
