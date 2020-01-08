@@ -54,6 +54,7 @@ target_sources(${PROJECT_NAME}
 		showMessage.cpp
 		signatureHelp.cpp
 		staticRegistration.cpp
+		symbol.cpp
 		textDocumentIdentifier.cpp
 		textDocumentItem.cpp
 		textDocumentPosition.cpp
