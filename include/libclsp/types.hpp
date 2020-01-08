@@ -47,6 +47,7 @@
 #include <libclsp/types/partialResult.hpp>
 #include <libclsp/types/position.hpp>
 #include <libclsp/types/range.hpp>
+#include <libclsp/types/reference.hpp>
 #include <libclsp/types/registration.hpp>
 #include <libclsp/types/responseMessage.hpp>
 #include <libclsp/types/showMessage.hpp>

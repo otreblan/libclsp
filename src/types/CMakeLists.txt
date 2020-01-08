@@ -47,6 +47,7 @@ target_sources(${PROJECT_NAME}
 		partialResult.cpp
 		position.cpp
 		range.cpp
+		reference.cpp
 		registration.cpp
 		responseMessage.cpp
 		showMessage.cpp
