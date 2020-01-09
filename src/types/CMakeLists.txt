@@ -18,6 +18,7 @@ target_sources(${PROJECT_NAME}
 	PRIVATE
 		applyWorkspaceEdit.cpp
 		cancelParams.cpp
+		codeAction.cpp
 		command.cpp
 		completion.cpp
 		configuration.cpp
