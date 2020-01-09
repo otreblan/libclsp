@@ -21,6 +21,21 @@ namespace libclsp
 
 using namespace std;
 
+const boost::bimap<MarkupKind, String> MarkupKindMap =
+	boost::assign::list_of<boost::bimap<MarkupKind, String>::relation>
+		(MarkupKind::PlainText, "plaintext")
+		(MarkupKind::Markdown, "markdown");
+
+String MarkupKind2String(MarkupKind kind)
+{
+	return MarkupKindMap.left.at(kind);
+}
+
+MarkupKind String2MarkupKind(String str)
+{
+	return MarkupKindMap.right.at(str);
+}
+
 const String MarkupContent::kindKey  = "kind";
 const String MarkupContent::valueKey = "value";
 

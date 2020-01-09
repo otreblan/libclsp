@@ -16,6 +16,9 @@
 
 #pragma once
 
+#include <boost/bimap.hpp>
+#include <boost/assign.hpp>
+
 #include <libclsp/types/jsonTypes.hpp>
 
 namespace libclsp
@@ -36,6 +39,12 @@ enum class MarkupKind
 	/// Markdown is supported as a content format
 	Markdown
 };
+
+extern const boost::bimap<MarkupKind, String> MarkupKindMap;
+
+String MarkupKind2String(MarkupKind kind);
+MarkupKind String2MarkupKind(String str);
+
 
 /// A `MarkupContent` literal represents a string value which content is
 /// interpreted base on its kind flag. Currently the protocol supports
