@@ -33,6 +33,7 @@ target_sources(${PROJECT_NAME}
 		didCloseTextDocument.cpp
 		didOpenTextDocument.cpp
 		didSaveTextDocument.cpp
+		documentColor.cpp
 		documentFilter.cpp
 		documentLink.cpp
 		executeCommand.cpp

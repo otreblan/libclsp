@@ -33,6 +33,7 @@
 #include <libclsp/types/didCloseTextDocument.hpp>
 #include <libclsp/types/didOpenTextDocument.hpp>
 #include <libclsp/types/didSaveTextDocument.hpp>
+#include <libclsp/types/documentColor.hpp>
 #include <libclsp/types/documentFilter.hpp>
 #include <libclsp/types/documentLink.hpp>
 #include <libclsp/types/executeCommand.hpp>
