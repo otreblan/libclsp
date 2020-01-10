@@ -34,6 +34,7 @@ target_sources(${PROJECT_NAME}
 		didOpenTextDocument.cpp
 		didSaveTextDocument.cpp
 		documentFilter.cpp
+		documentLink.cpp
 		executeCommand.cpp
 		fileResourceChanges.cpp
 		highlight.cpp

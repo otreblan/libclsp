@@ -34,6 +34,7 @@
 #include <libclsp/types/didOpenTextDocument.hpp>
 #include <libclsp/types/didSaveTextDocument.hpp>
 #include <libclsp/types/documentFilter.hpp>
+#include <libclsp/types/documentLink.hpp>
 #include <libclsp/types/executeCommand.hpp>
 #include <libclsp/types/fileResourceChanges.hpp>
 #include <libclsp/types/highlight.hpp>
