@@ -27,11 +27,11 @@ using namespace std;
 
 /// Represents a reference to a command.
 ///
-/// title: string;
+/// title: String
 ///
-/// command: string;
+/// command: String
 ///
-/// arguments?: any[];
+/// arguments?: Any[]
 ///
 struct Command
 {

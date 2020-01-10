@@ -19,6 +19,7 @@
 #include <libclsp/types/applyWorkspaceEdit.hpp>
 #include <libclsp/types/cancelParams.hpp>
 #include <libclsp/types/codeAction.hpp>
+#include <libclsp/types/codeLens.hpp>
 #include <libclsp/types/command.hpp>
 #include <libclsp/types/completion.hpp>
 #include <libclsp/types/configuration.hpp>
