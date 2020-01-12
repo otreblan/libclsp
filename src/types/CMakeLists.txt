@@ -20,6 +20,7 @@ target_sources(${PROJECT_NAME}
 		cancelParams.cpp
 		codeAction.cpp
 		codeLens.cpp
+		colorPresentation.cpp
 		command.cpp
 		completion.cpp
 		configuration.cpp
