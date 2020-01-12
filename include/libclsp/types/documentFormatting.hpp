@@ -134,7 +134,7 @@ struct FormattingOptions
 	virtual ~FormattingOptions();
 };
 
-/// Document highlight request parameters
+/// Document formatting request parameters
 ///
 /// textDocument: TextDocumentIdentifier
 ///

@@ -17,6 +17,7 @@
 target_sources(${PROJECT_NAME}
 	PRIVATE
 		applyWorkspaceEdit.cpp
+		documentRangeFormatting.cpp
 		cancelParams.cpp
 		codeAction.cpp
 		codeLens.cpp
