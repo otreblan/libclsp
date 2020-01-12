@@ -36,6 +36,7 @@
 #include <libclsp/types/didSaveTextDocument.hpp>
 #include <libclsp/types/documentColor.hpp>
 #include <libclsp/types/documentFilter.hpp>
+#include <libclsp/types/documentFormatting.hpp>
 #include <libclsp/types/documentLink.hpp>
 #include <libclsp/types/executeCommand.hpp>
 #include <libclsp/types/fileResourceChanges.hpp>
