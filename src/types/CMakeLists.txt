@@ -42,6 +42,7 @@ target_sources(${PROJECT_NAME}
 		documentRangeFormatting.cpp
 		executeCommand.cpp
 		fileResourceChanges.cpp
+		foldingRange.cpp
 		highlight.cpp
 		hover.cpp
 		implementation.cpp
