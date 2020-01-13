@@ -61,6 +61,7 @@
 #include <libclsp/types/registration.hpp>
 #include <libclsp/types/rename.hpp>
 #include <libclsp/types/responseMessage.hpp>
+#include <libclsp/types/selectionRange.hpp>
 #include <libclsp/types/showMessage.hpp>
 #include <libclsp/types/signatureHelp.hpp>
 #include <libclsp/types/staticRegistration.hpp>
