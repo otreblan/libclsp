@@ -58,6 +58,7 @@ target_sources(${PROJECT_NAME}
 		range.cpp
 		reference.cpp
 		registration.cpp
+		rename.cpp
 		responseMessage.cpp
 		showMessage.cpp
 		signatureHelp.cpp
