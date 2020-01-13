@@ -17,7 +17,6 @@
 target_sources(${PROJECT_NAME}
 	PRIVATE
 		applyWorkspaceEdit.cpp
-		documentRangeFormatting.cpp
 		cancelParams.cpp
 		codeAction.cpp
 		codeLens.cpp
@@ -39,6 +38,8 @@ target_sources(${PROJECT_NAME}
 		documentFilter.cpp
 		documentFormatting.cpp
 		documentLink.cpp
+		documentOnTypeFormatting.cpp
+		documentRangeFormatting.cpp
 		executeCommand.cpp
 		fileResourceChanges.cpp
 		highlight.cpp

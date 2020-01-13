@@ -38,6 +38,7 @@
 #include <libclsp/types/documentFilter.hpp>
 #include <libclsp/types/documentFormatting.hpp>
 #include <libclsp/types/documentLink.hpp>
+#include <libclsp/types/documentOnTypeFormatting.hpp>
 #include <libclsp/types/documentRangeFormatting.hpp>
 #include <libclsp/types/executeCommand.hpp>
 #include <libclsp/types/fileResourceChanges.hpp>
