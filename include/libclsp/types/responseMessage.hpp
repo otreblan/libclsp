@@ -16,8 +16,10 @@
 
 #pragma once
 
-#include <variant>
+#include <any>
+#include <functional>
 #include <optional>
+#include <variant>
 
 #include <libclsp/types/jsonTypes.hpp>
 #include <libclsp/types/message.hpp>
@@ -98,7 +100,7 @@ private:
 ///
 /// id: Number | String | Null
 ///
-/// result?: String | Number | Boolean | Object | Null
+/// result?: any
 ///
 /// error?: ResponseError
 ///
@@ -118,7 +120,9 @@ struct ResponseMessage: public Message
 
 	/// The result of a request. This member is REQUIRED on success.
 	/// This member MUST NOT exist if there was an error invoking the method.
-	optional<variant<String, Number, Boolean, Object, Null>> result;
+	optional<any> result;
+
+	function<void(any&, Writer<StringBuffer>&)> resultWriter;
 
 
 	const static String errorKey;
@@ -127,7 +131,8 @@ struct ResponseMessage: public Message
 	optional<ResponseError> error;
 
 	ResponseMessage(variant<Number, String, Null> id,
-		variant<String, Number, Boolean, Object, Null> result);
+		any result,
+		function<void(any&, Writer<StringBuffer>&)> resultWriter);
 
 	ResponseMessage(variant<Number, String, Null> id,
 		ResponseError error);

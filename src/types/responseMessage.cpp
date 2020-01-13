@@ -27,9 +27,11 @@ const String ResponseMessage::errorKey  = "error";
 
 
 ResponseMessage::ResponseMessage(variant<Number, String, Null> id,
-	variant<String, Number, Boolean, Object, Null> result):
+	any result,
+	function<void(any&, Writer<StringBuffer>&)> resultWriter):
 		id(id),
-		result(result)
+		result(result),
+		resultWriter(resultWriter)
 {};
 
 ResponseMessage::ResponseMessage(variant<Number, String, Null> id,
@@ -86,29 +88,7 @@ void ResponseMessage::writeResultOrError(Writer<StringBuffer> &writer)
 	{
 		// result
 		writer.Key(resultKey.c_str());
-		visit(overload
-		(
-			[&writer](String ii)
-			{
-				writer.String(ii.c_str());
-			},
-			[&writer](Number ii)
-			{
-				writeNumber(writer, ii);
-			},
-			[&writer](Boolean ii)
-			{
-				writer.Bool(ii);
-			},
-			[&writer](Object ii)
-			{
-				ii->write(writer);
-			},
-			[&writer](Null)
-			{
-				writer.Null();
-			}
-		), result.value());
+		resultWriter(result.value(), writer);
 	}
 	else
 	{
