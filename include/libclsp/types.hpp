@@ -77,3 +77,4 @@
 #include <libclsp/types/workDoneProgress.hpp>
 #include <libclsp/types/workspaceEdit.hpp>
 #include <libclsp/types/workspaceFolder.hpp>
+#include <libclsp/types/workspaceSymbol.hpp>

@@ -77,4 +77,5 @@ target_sources(${PROJECT_NAME}
 		workDoneProgress.cpp
 		workspaceEdit.cpp
 		workspaceFolder.cpp
+		workspaceSymbol.cpp
 )
