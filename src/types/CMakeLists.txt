@@ -19,6 +19,7 @@ target_sources(${PROJECT_NAME}
 		applyWorkspaceEdit.cpp
 		cancelParams.cpp
 		codeAction.cpp
+		publishDiagnostic.cpp
 		codeLens.cpp
 		colorPresentation.cpp
 		command.cpp

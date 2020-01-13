@@ -56,6 +56,7 @@
 #include <libclsp/types/objectT.hpp>
 #include <libclsp/types/partialResult.hpp>
 #include <libclsp/types/position.hpp>
+#include <libclsp/types/publishDiagnostic.hpp>
 #include <libclsp/types/range.hpp>
 #include <libclsp/types/reference.hpp>
 #include <libclsp/types/registration.hpp>
