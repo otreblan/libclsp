@@ -27,16 +27,22 @@ const String PublishDiagnosticsClientCapabilities::
 const String PublishDiagnosticsClientCapabilities::
 	tagSupportKey         = "tagSupport";
 
+const String PublishDiagnosticsClientCapabilities::
+	versionSupportKey     = "versionSupport";
+
 PublishDiagnosticsClientCapabilities::
 	PublishDiagnosticsClientCapabilities(optional<Boolean> relatedInformation,
-		optional<TagSupport> tagSupport):
+		optional<TagSupport> tagSupport,
+		optional<Boolean> versionSupport):
 			relatedInformation(relatedInformation),
-			tagSupport(tagSupport)
+			tagSupport(tagSupport),
+			versionSupport(versionSupport)
 {};
 
 PublishDiagnosticsClientCapabilities::PublishDiagnosticsClientCapabilities():
 	relatedInformation(),
-	tagSupport()
+	tagSupport(),
+	versionSupport()
 {};
 
 PublishDiagnosticsClientCapabilities::

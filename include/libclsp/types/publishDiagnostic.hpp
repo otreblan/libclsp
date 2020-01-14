@@ -32,6 +32,8 @@ using namespace std;
 /// 	valueSet: DiagnosticTag[]
 /// }
 ///
+/// versionSupport?: Boolean
+///
 struct PublishDiagnosticsClientCapabilities
 {
 
@@ -72,8 +74,18 @@ struct PublishDiagnosticsClientCapabilities
 	optional<TagSupport> tagSupport;
 
 
+	const static String versionSupportKey;
+
+	/// Whether the client interprets the version property of the
+	/// `textDocument/publishDiagnostics` notification`s parameter.
+	///
+	/// @since 3.15.0
+	optional<Boolean> versionSupport;
+
+
 	PublishDiagnosticsClientCapabilities(optional<Boolean> relatedInformation,
-		optional<TagSupport> tagSupport);
+		optional<TagSupport> tagSupport,
+		optional<Boolean> versionSupport);
 
 	PublishDiagnosticsClientCapabilities();
 
