@@ -226,4 +226,37 @@ struct WorkDoneProgressCreateParams
 	virtual ~WorkDoneProgressCreateParams();
 };
 
+/// $/progress parameters
+///
+/// token: ProgressToken
+///
+/// value: WorkDoneProgressBegin | WorkDoneProgressReport | WorkDoneProgressEnd
+///
+struct ProgressParams
+{
+
+	const static String tokenKey;
+
+	/// The progress token provided by the client or server.
+	ProgressToken token;
+
+
+	const static String valueKey;
+
+	/// The progress data.
+	variant<WorkDoneProgressBegin,
+		WorkDoneProgressReport,
+		WorkDoneProgressEnd> value;
+
+
+	ProgressParams(ProgressToken token,
+		variant<WorkDoneProgressBegin,
+			WorkDoneProgressReport,
+			WorkDoneProgressEnd> value);
+
+	ProgressParams();
+
+	virtual ~ProgressParams();
+};
+
 }

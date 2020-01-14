@@ -126,4 +126,23 @@ WorkDoneProgressCreateParams::WorkDoneProgressCreateParams():
 
 WorkDoneProgressCreateParams::~WorkDoneProgressCreateParams(){};
 
+
+const String ProgressParams::tokenKey = "token";
+const String ProgressParams::valueKey = "value";
+
+ProgressParams::ProgressParams(ProgressToken token,
+	variant<WorkDoneProgressBegin,
+		WorkDoneProgressReport,
+		WorkDoneProgressEnd> value):
+	token(token),
+	value(value)
+{};
+
+ProgressParams::ProgressParams():
+	token(),
+	value()
+{};
+
+ProgressParams::~ProgressParams(){};
+
 }
