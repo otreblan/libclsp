@@ -5,7 +5,7 @@
 A C++17 library for
 [language servers](https://microsoft.github.io/language-server-protocol/).
 
-This is a WIP so almost nothing is functional.
+Currently this library is only objects from the 3.15.0 specification.
 
 ## TODO
 * [ ] Parsing
@@ -14,4 +14,16 @@ This is a WIP so almost nothing is functional.
 * [x] All lsp structs declared
 
 ## Install (Arch linux)
-`yay -S libclsp`
+
+``` bash
+yay -S libclsp
+```
+
+## Link (CMake)
+
+``` cmake
+include(FindPkgConfig)
+pkg_check_modules(LIBCLSP libclsp)
+
+target_link_libraries(foo PUBLIC ${LIBCLSP_LIBRARIES})
+```
