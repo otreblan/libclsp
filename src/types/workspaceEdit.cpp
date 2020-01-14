@@ -24,7 +24,7 @@ using namespace std;
 const String WorkspaceEdit::changesKey         = "changes";
 const String WorkspaceEdit::documentChangesKey = "documentChangesKey";
 
-WorkspaceEdit::WorkspaceEdit(optional<map<DocumentUri, vector<TextEdit>>> changes,
+WorkspaceEdit::WorkspaceEdit(optional<Changes> changes,
 	optional<
 		variant<
 			vector<TextDocumentEdit>,
@@ -43,6 +43,17 @@ WorkspaceEdit::WorkspaceEdit():
 {};
 
 WorkspaceEdit::~WorkspaceEdit(){};
+
+
+WorkspaceEdit::Changes::Changes(map<DocumentUri, vector<TextEdit>> changes):
+	changes(changes)
+{};
+
+WorkspaceEdit::Changes::Changes():
+	changes()
+{};
+
+WorkspaceEdit::Changes::~Changes(){};
 
 
 const String WorkspaceEditClientCapabilities::

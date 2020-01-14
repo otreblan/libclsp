@@ -40,7 +40,20 @@ struct WorkspaceEdit
 	const static String changesKey;
 
 	/// Holds changes to existing resources.
-	optional<map<DocumentUri, vector<TextEdit>>> changes;
+	struct Changes
+	{
+		map<DocumentUri, vector<TextEdit>> changes;
+
+
+		Changes(map<DocumentUri, vector<TextEdit>> changes);
+
+		Changes();
+
+		virtual ~Changes();
+	};
+
+	/// Holds changes to existing resources.
+	optional<Changes> changes;
 
 
 	const static String documentChangesKey;
@@ -68,7 +81,7 @@ struct WorkspaceEdit
 	> documentChanges;
 
 
-	WorkspaceEdit(optional<map<DocumentUri, vector<TextEdit>>> changes,
+	WorkspaceEdit(optional<Changes> changes,
 		optional<
 			variant<
 				vector<TextDocumentEdit>,
