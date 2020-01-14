@@ -137,9 +137,12 @@ private:
 
 	const static boost::bimap<_FoldingRangeKind, String> kindMap;
 
+	variant<_FoldingRangeKind, String> kind;
+
+	FoldingRangeKind(_FoldingRangeKind kind);
+
 public:
 
-	variant<_FoldingRangeKind, String> kind;
 
 
 	/// Folding range for a comment
@@ -153,8 +156,6 @@ public:
 
 
 	FoldingRangeKind(String kind);
-
-	FoldingRangeKind(_FoldingRangeKind kind);
 
 	virtual ~FoldingRangeKind();
 

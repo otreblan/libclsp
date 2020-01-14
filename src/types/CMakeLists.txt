@@ -19,7 +19,6 @@ target_sources(${PROJECT_NAME}
 		applyWorkspaceEdit.cpp
 		cancelParams.cpp
 		codeAction.cpp
-		publishDiagnostic.cpp
 		codeLens.cpp
 		colorPresentation.cpp
 		command.cpp
@@ -47,6 +46,7 @@ target_sources(${PROJECT_NAME}
 		highlight.cpp
 		hover.cpp
 		implementation.cpp
+		initialize.cpp
 		jsonTypes.cpp
 		location.cpp
 		locationLink.cpp
@@ -57,6 +57,7 @@ target_sources(${PROJECT_NAME}
 		objectT.cpp
 		partialResult.cpp
 		position.cpp
+		publishDiagnostic.cpp
 		range.cpp
 		reference.cpp
 		registration.cpp

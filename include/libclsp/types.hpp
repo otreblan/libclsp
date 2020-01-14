@@ -46,6 +46,7 @@
 #include <libclsp/types/highlight.hpp>
 #include <libclsp/types/hover.hpp>
 #include <libclsp/types/implementation.hpp>
+#include <libclsp/types/initialize.hpp>
 #include <libclsp/types/jsonTypes.hpp>
 #include <libclsp/types/location.hpp>
 #include <libclsp/types/locationLink.hpp>
