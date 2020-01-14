@@ -43,6 +43,7 @@
 #include <libclsp/types/executeCommand.hpp>
 #include <libclsp/types/fileResourceChanges.hpp>
 #include <libclsp/types/foldingRange.hpp>
+#include <libclsp/types/genericObject.hpp>
 #include <libclsp/types/highlight.hpp>
 #include <libclsp/types/hover.hpp>
 #include <libclsp/types/implementation.hpp>

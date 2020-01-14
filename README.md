@@ -9,7 +9,7 @@ This is a WIP so almost nothing is functional.
 * [ ] Parsing
 * [ ] Writing
 * [ ] The server
-* [ ] All structs declared
+* [x] All lsp structs declared
 
 ## Install (Arch linux)
 `yay -S libclsp-git`

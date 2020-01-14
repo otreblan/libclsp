@@ -43,6 +43,7 @@ target_sources(${PROJECT_NAME}
 		executeCommand.cpp
 		fileResourceChanges.cpp
 		foldingRange.cpp
+		genericObject.cpp
 		highlight.cpp
 		hover.cpp
 		implementation.cpp
