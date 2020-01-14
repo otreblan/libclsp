@@ -62,6 +62,7 @@
 #include <libclsp/types/reference.hpp>
 #include <libclsp/types/registration.hpp>
 #include <libclsp/types/rename.hpp>
+#include <libclsp/types/requestMessage.hpp>
 #include <libclsp/types/responseMessage.hpp>
 #include <libclsp/types/selectionRange.hpp>
 #include <libclsp/types/showMessage.hpp>

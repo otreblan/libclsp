@@ -122,7 +122,7 @@ struct ResponseMessage: public Message
 	/// This member MUST NOT exist if there was an error invoking the method.
 	optional<any> result;
 
-	function<void(any&, Writer<StringBuffer>&)> resultWriter;
+	optional<function<void(any&, Writer<StringBuffer>&)>> resultWriter;
 
 
 	const static String errorKey;
@@ -132,7 +132,7 @@ struct ResponseMessage: public Message
 
 	ResponseMessage(variant<Number, String, Null> id,
 		any result,
-		function<void(any&, Writer<StringBuffer>&)> resultWriter);
+		optional<function<void(any&, Writer<StringBuffer>&)>> resultWriter);
 
 	ResponseMessage(variant<Number, String, Null> id,
 		ResponseError error);

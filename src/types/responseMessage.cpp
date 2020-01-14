@@ -28,7 +28,7 @@ const String ResponseMessage::errorKey  = "error";
 
 ResponseMessage::ResponseMessage(variant<Number, String, Null> id,
 	any result,
-	function<void(any&, Writer<StringBuffer>&)> resultWriter):
+	optional<function<void(any&, Writer<StringBuffer>&)>> resultWriter):
 		id(id),
 		result(result),
 		resultWriter(resultWriter)
@@ -88,7 +88,7 @@ void ResponseMessage::writeResultOrError(Writer<StringBuffer> &writer)
 	{
 		// result
 		writer.Key(resultKey.c_str());
-		resultWriter(result.value(), writer);
+		resultWriter.value()(result.value(), writer);
 	}
 	else
 	{
