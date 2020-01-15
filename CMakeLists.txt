@@ -17,7 +17,7 @@
 cmake_minimum_required(VERSION 3.13.0)
 
 project(libclsp
-	VERSION 0.1.2
+	VERSION 0.1.3
 	DESCRIPTION "A language server protocol C++ library"
 	HOMEPAGE_URL "https://github.com/otreblan/libclsp"
 	LANGUAGES "CXX"
