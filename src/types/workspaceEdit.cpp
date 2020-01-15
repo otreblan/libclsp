@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
+#include <stdexcept>
+
 #include <libclsp/types/workspaceEdit.hpp>
 
 namespace libclsp
@@ -43,6 +45,37 @@ WorkspaceEdit::WorkspaceEdit():
 {};
 
 WorkspaceEdit::~WorkspaceEdit(){};
+
+const boost::bimap<ResourceOperationKind::Kind, String>
+ResourceOperationKind::kindMap =
+	boost::assign::list_of<boost::bimap<Kind, String>::relation>
+		(Kind::Create, "create")
+		(Kind::Rename, "rename")
+		(Kind::Delete, "delete");
+
+ResourceOperationKind::ResourceOperationKind(Kind kind):
+	kind(kind)
+{};
+
+ResourceOperationKind::ResourceOperationKind(String kind)
+{
+	auto newKind = kindMap.right.find(kind);
+
+	if(newKind != kindMap.right.end())
+	{
+		this->kind = newKind->second;
+	}
+	else
+	{
+		throw invalid_argument("Kind not found in the map");
+	}
+}
+
+ResourceOperationKind::~ResourceOperationKind(){};
+
+const ResourceOperationKind ResourceOperationKind::Create = Kind::Create;
+const ResourceOperationKind ResourceOperationKind::Rename = Kind::Rename;
+const ResourceOperationKind ResourceOperationKind::Delete = Kind::Delete;
 
 
 WorkspaceEdit::Changes::Changes(map<DocumentUri, vector<TextEdit>> changes):

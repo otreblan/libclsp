@@ -16,8 +16,10 @@
 
 #pragma once
 
-#include <optional>
+#include <boost/assign.hpp>
+#include <boost/bimap.hpp>
 #include <map>
+#include <optional>
 
 #include <libclsp/types/textEdit.hpp>
 #include <libclsp/types/fileResourceChanges.hpp>
@@ -96,22 +98,49 @@ struct WorkspaceEdit
 	virtual ~WorkspaceEdit();
 };
 
-enum class ResourceOperationKind
+/// The kind of resource operations supported by the client.
+class ResourceOperationKind
 {
+private:
+
+	enum class Kind
+	{
+		Create,
+		Rename,
+		Delete
+	};
+
+	static const boost::bimap<Kind, String> kindMap;
+
+	Kind kind;
+
+	ResourceOperationKind(Kind kind);
+
+public:
+
 	/// Supports creating new files and folders.
-	///
-	/// 'create'
-	Create,
+	const static ResourceOperationKind Create;
 
 	/// Supports renaming existing files and folders.
-	///
-	/// 'rename'
-	Rename,
+	const static ResourceOperationKind Rename;
 
 	/// Supports deleting existing files and folders.
-	///
-	/// 'delete'
-	Delete
+	const static ResourceOperationKind Delete;
+
+
+	ResourceOperationKind(String kind);
+
+	virtual ~ResourceOperationKind();
+
+	operator String()
+	{
+		return kindMap.left.at(kind);
+	}
+
+	bool operator<(ResourceOperationKind& other)
+	{
+		return this->kind < other.kind;
+	}
 };
 
 enum class FailureHandlingKind

@@ -33,10 +33,7 @@ class MarkupKind
 private:
 	enum class _MarkupKind
 	{
-		/// Plain text is supported as a content format
 		PlainText,
-
-		/// Markdown is supported as a content format
 		Markdown
 	};
 
@@ -48,8 +45,10 @@ private:
 
 public:
 
+	/// Plain text is supported as a content format
 	const static MarkupKind PlainText;
 
+	/// Markdown is supported as a content format
 	const static MarkupKind Markdown;
 
 
