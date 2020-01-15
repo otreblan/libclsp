@@ -14,5 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
-add_subdirectory(server)
-add_subdirectory(types)
+target_sources(${PROJECT_NAME}
+	PRIVATE
+		#Nothing yet
+)
