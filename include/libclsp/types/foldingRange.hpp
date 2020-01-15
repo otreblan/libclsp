@@ -118,32 +118,11 @@ struct FoldingRangeParams:
 	virtual ~FoldingRangeParams();
 };
 
-/// Enum of known range kinds
-class FoldingRangeKind
+/// Known range kinds
+struct FoldingRangeKind
 {
 
-private:
-	enum class _FoldingRangeKind
-	{
-		/// Folding range for a comment
-		Comment,
-
-		/// Folding range for a imports or includes
-		Imports,
-
-		/// Folding range for a region (e.g. `#region`)
-		Region
-	};
-
-	const static boost::bimap<_FoldingRangeKind, String> kindMap;
-
-	variant<_FoldingRangeKind, String> kind;
-
-	FoldingRangeKind(_FoldingRangeKind kind);
-
-public:
-
-
+	String kind;
 
 	/// Folding range for a comment
 	const static FoldingRangeKind Comment;
@@ -159,7 +138,15 @@ public:
 
 	virtual ~FoldingRangeKind();
 
-	operator String();
+	operator String()
+	{
+		return kind;
+	}
+
+	bool operator<(FoldingRangeKind& other)
+	{
+		return this->kind < other.kind;
+	}
 
 };
 

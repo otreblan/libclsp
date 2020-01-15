@@ -85,55 +85,16 @@ FoldingRangeParams::FoldingRangeParams():
 FoldingRangeParams::~FoldingRangeParams(){};
 
 
-FoldingRangeKind::FoldingRangeKind(String kind)
-{
-	auto newKind = kindMap.right.find(kind);
-
-	// If the kind is in the enum
-	if(newKind != kindMap.right.end())
-	{
-		this->kind = newKind->second;
-	}
-	else
-	{
-		this->kind = kind;
-	}
-}
-
-FoldingRangeKind::FoldingRangeKind(_FoldingRangeKind kind):
+FoldingRangeKind::FoldingRangeKind(String kind):
 	kind(kind)
 {};
 
 FoldingRangeKind::~FoldingRangeKind(){};
 
-const boost::bimap<FoldingRangeKind::_FoldingRangeKind, String>
-	FoldingRangeKind::kindMap =
-	boost::assign::list_of<boost::bimap<_FoldingRangeKind, String>::relation>
-		(_FoldingRangeKind::Comment, "comment")
-		(_FoldingRangeKind::Imports, "imports")
-		(_FoldingRangeKind::Region, "region");
 
-FoldingRangeKind::operator String()
-{
-	String ret;
-
-	visit(overload(
-		[&ret](_FoldingRangeKind kind)
-		{
-			ret = kindMap.left.at(kind);
-		},
-		[&ret](String kind)
-		{
-			ret = kind;
-		}
-	), kind);
-
-	return ret;
-}
-
-const FoldingRangeKind FoldingRangeKind::Comment = _FoldingRangeKind::Comment;
-const FoldingRangeKind FoldingRangeKind::Imports = _FoldingRangeKind::Imports;
-const FoldingRangeKind FoldingRangeKind::Region  = _FoldingRangeKind::Region;
+const FoldingRangeKind FoldingRangeKind::Comment = "comment"s;
+const FoldingRangeKind FoldingRangeKind::Imports = "imports"s;
+const FoldingRangeKind FoldingRangeKind::Region  = "region"s;
 
 
 const String FoldingRange::startLineKey      = "startLine";
