@@ -26,14 +26,14 @@ CodeActionKind::CodeActionKind(String kind):
 {};
 
 const CodeActionKind
-	CodeActionKind::Empty                 = {""},
-	CodeActionKind::QuickFix              = {"quickfix"},
-	CodeActionKind::Refactor              = {"refactor"},
-	CodeActionKind::RefactorExtract       = {"refactor.extract"},
-	CodeActionKind::RefactorInline        = {"refactor.inline"},
-	CodeActionKind::RefactorRewrite       = {"refactor.rewrite"},
-	CodeActionKind::Source                = {"source"},
-	CodeActionKind::SourceOrganizeImports = {"source.organizeImports"};
+	CodeActionKind::Empty                 = ""s,
+	CodeActionKind::QuickFix              = "quickfix"s,
+	CodeActionKind::Refactor              = "refactor"s,
+	CodeActionKind::RefactorExtract       = "refactor.extract"s,
+	CodeActionKind::RefactorInline        = "refactor.inline"s,
+	CodeActionKind::RefactorRewrite       = "refactor.rewrite"s,
+	CodeActionKind::Source                = "source"s,
+	CodeActionKind::SourceOrganizeImports = "source.organizeImports"s;
 
 
 const String CodeActionClientCapabilities::

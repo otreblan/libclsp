@@ -40,6 +40,11 @@ struct CodeActionKind
 		return kind;
 	}
 
+	bool operator<(CodeActionKind& other)
+	{
+		return this->kind < other.kind;
+	}
+
 	CodeActionKind(String kind);
 
 	/// Empty kind.
