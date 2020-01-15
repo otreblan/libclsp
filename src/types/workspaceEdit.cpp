@@ -46,6 +46,7 @@ WorkspaceEdit::WorkspaceEdit():
 
 WorkspaceEdit::~WorkspaceEdit(){};
 
+
 const boost::bimap<ResourceOperationKind::Kind, String>
 ResourceOperationKind::kindMap =
 	boost::assign::list_of<boost::bimap<Kind, String>::relation>
@@ -76,6 +77,40 @@ ResourceOperationKind::~ResourceOperationKind(){};
 const ResourceOperationKind ResourceOperationKind::Create = Kind::Create;
 const ResourceOperationKind ResourceOperationKind::Rename = Kind::Rename;
 const ResourceOperationKind ResourceOperationKind::Delete = Kind::Delete;
+
+
+const boost::bimap<FailureHandlingKind::Kind, String>
+FailureHandlingKind::kindMap =
+	boost::assign::list_of<boost::bimap<Kind, String>::relation>
+		(Kind::Abort,                 "abort")
+		(Kind::Transactional,         "transactional")
+		(Kind::TextOnlyTransactional, "textOnlyTransactional")
+		(Kind::Undo,                  "undo");
+
+FailureHandlingKind::FailureHandlingKind(Kind kind):
+	kind(kind)
+{};
+
+FailureHandlingKind::FailureHandlingKind(String kind)
+{
+	auto newKind = kindMap.right.find(kind);
+
+	if(newKind != kindMap.right.end())
+	{
+		this->kind = newKind->second;
+	}
+	else
+	{
+		throw invalid_argument("Kind not found in the map");
+	}
+}
+
+FailureHandlingKind::~FailureHandlingKind(){};
+
+const FailureHandlingKind FailureHandlingKind::Abort = Kind::Abort,
+	FailureHandlingKind::Transactional               = Kind::Transactional,
+	FailureHandlingKind::TextOnlyTransactional       = Kind::TextOnlyTransactional,
+	FailureHandlingKind::Undo                        = Kind::Undo;
 
 
 WorkspaceEdit::Changes::Changes(map<DocumentUri, vector<TextEdit>> changes):

@@ -143,34 +143,60 @@ public:
 	}
 };
 
-enum class FailureHandlingKind
+class FailureHandlingKind
 {
+private:
+
+	enum class Kind
+	{
+		Abort,
+		Transactional,
+		TextOnlyTransactional,
+		Undo
+	};
+
+	static const boost::bimap<Kind, String> kindMap;
+
+	Kind kind;
+
+	FailureHandlingKind(Kind kind);
+
+public:
+
+
 	/// Applying the workspace change is simply aborted if one of the changes
 	/// provided fails.
 	/// All operations executed before the failing operation stay executed.
-	///
-	/// 'abort'
-	Abort,
+	const static FailureHandlingKind Abort;
 
 	/// All operations are executed transactionally. That means they either all
 	/// succeed or no changes at all are applied to the workspace.
-	///
-	/// 'transactional'
-	Transactional,
+	const static FailureHandlingKind Transactional;
 
 	/// If the workspace edit contains only textual file changes they are
 	/// executed transactionally.
 	/// If resource changes (create, rename or delete file) are part of the
 	/// change the failure handling strategy is abort.
-	///
-	/// 'textOnlyTransactional'
-	TextOnlyTransactional,
+	const static FailureHandlingKind TextOnlyTransactional;
 
 	/// The client tries to undo the operations already executed. But there is
 	/// no guarantee that this succeeds.
-	///
-	/// 'undo'
-	Undo
+	const static FailureHandlingKind Undo;
+
+
+	FailureHandlingKind(String kind);
+
+	virtual ~FailureHandlingKind();
+
+	operator String()
+	{
+		return kindMap.left.at(kind);
+	}
+
+	bool operator<(FailureHandlingKind& other)
+	{
+		return this->kind < other.kind;
+	}
 };
 
 struct WorkspaceEditClientCapabilities
