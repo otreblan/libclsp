@@ -21,20 +21,39 @@ namespace libclsp
 
 using namespace std;
 
-const boost::bimap<MarkupKind, String> MarkupKindMap =
-	boost::assign::list_of<boost::bimap<MarkupKind, String>::relation>
-		(MarkupKind::PlainText, "plaintext")
-		(MarkupKind::Markdown, "markdown");
+const boost::bimap<MarkupKind::_MarkupKind, String> MarkupKind::kindMap =
+	boost::assign::list_of<boost::bimap<_MarkupKind, String>::relation>
+		(_MarkupKind::PlainText, "plaintext")
+		(_MarkupKind::Markdown, "markdown");
 
-String MarkupKind2String(MarkupKind kind)
+MarkupKind::MarkupKind(_MarkupKind kind):
+	kind(kind)
+{};
+
+MarkupKind::MarkupKind():
+	kind(_MarkupKind::PlainText) // PlainText by default
+{};
+
+MarkupKind::MarkupKind(String kind)
 {
-	return MarkupKindMap.left.at(kind);
+	auto newKind = kindMap.right.find(kind);
+
+	if(newKind != kindMap.right.end()) // If the kind is in the enum
+	{
+		this->kind = newKind->second;
+	}
+	else
+	{
+		// PlainText by default
+		this->kind = _MarkupKind::PlainText;
+	}
 }
 
-MarkupKind String2MarkupKind(String str)
-{
-	return MarkupKindMap.right.at(str);
-}
+MarkupKind::~MarkupKind(){};
+
+const MarkupKind MarkupKind::PlainText = _MarkupKind::PlainText;
+const MarkupKind MarkupKind::Markdown  = _MarkupKind::Markdown;
+
 
 const String MarkupContent::kindKey  = "kind";
 const String MarkupContent::valueKey = "value";

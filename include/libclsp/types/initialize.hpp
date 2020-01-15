@@ -374,8 +374,8 @@ struct ClientCapabilities
 /// Trace used by the server
 class TraceKind
 {
+private:
 
-public:
 	enum class _TraceKind
 	{
 		Off,
@@ -385,10 +385,14 @@ public:
 
 	_TraceKind kind;
 
-
-	TraceKind(String kind);
+	const static boost::bimap<_TraceKind, String> kindMap;
 
 	TraceKind(_TraceKind kind);
+
+public:
+	TraceKind(String kind);
+
+	TraceKind();
 
 
 	const static TraceKind Off;
@@ -397,10 +401,15 @@ public:
 
 	virtual ~TraceKind();
 
-	operator String();
-private:
+	operator String()
+	{
+		return kindMap.left.at(kind);
+	}
 
-	const static boost::bimap<_TraceKind, String> kindMap;
+	bool operator<(TraceKind& other)
+	{
+		return this->kind < other.kind;
+	}
 };
 
 #pragma GCC diagnostic push

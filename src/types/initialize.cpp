@@ -241,6 +241,10 @@ TraceKind::TraceKind(_TraceKind kind):
 	kind(kind)
 {};
 
+TraceKind::TraceKind():
+	kind(_TraceKind::Off) // Off by default
+{};
+
 TraceKind::~TraceKind(){};
 
 const boost::bimap<TraceKind::_TraceKind, String> TraceKind::kindMap =
@@ -249,10 +253,6 @@ const boost::bimap<TraceKind::_TraceKind, String> TraceKind::kindMap =
 		(_TraceKind::Messages, "messages")
 		(_TraceKind::Verbose,  "verbose");
 
-TraceKind::operator String()
-{
-	return kindMap.left.at(kind);
-}
 
 const TraceKind TraceKind::Off      = _TraceKind::Off;
 const TraceKind TraceKind::Messages = _TraceKind::Messages;

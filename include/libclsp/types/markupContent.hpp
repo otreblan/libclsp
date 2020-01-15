@@ -28,22 +28,47 @@ using namespace std;
 
 /// Describes the content type that a client supports in various
 /// result literals like `Hover`, `ParameterInfo` or `CompletionItem`.
-///
-/// Please note that `MarkupKinds` must not start with a `$`. This kinds
-/// are reserved for internal usage.
-enum class MarkupKind
+class MarkupKind
 {
-	/// Plain text is supported as a content format
-	PlainText,
+private:
+	enum class _MarkupKind
+	{
+		/// Plain text is supported as a content format
+		PlainText,
 
-	/// Markdown is supported as a content format
-	Markdown
+		/// Markdown is supported as a content format
+		Markdown
+	};
+
+	static const boost::bimap<_MarkupKind, String> kindMap;
+
+	_MarkupKind kind;
+
+	MarkupKind(_MarkupKind kind);
+
+public:
+
+	const static MarkupKind PlainText;
+
+	const static MarkupKind Markdown;
+
+
+	MarkupKind();
+
+	MarkupKind(String kind);
+
+	virtual ~MarkupKind();
+
+	operator String()
+	{
+		return kindMap.left.at(kind);
+	}
+
+	bool operator<(MarkupKind& other)
+	{
+		return this->kind < other.kind;
+	}
 };
-
-extern const boost::bimap<MarkupKind, String> MarkupKindMap;
-
-String MarkupKind2String(MarkupKind kind);
-MarkupKind String2MarkupKind(String str);
 
 
 /// A `MarkupContent` literal represents a string value which content is
