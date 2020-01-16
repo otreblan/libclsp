@@ -63,6 +63,9 @@ struct ObjectInitializer
 
 	/// A map with the keys of the object and it's initializers
 	map<Key, ValueSetter> setterMap;
+
+	/// The object being initialized
+	ObjectT* object;
 };
 
 struct JsonHandler: public BaseReaderHandler<UTF8<>, JsonHandler>

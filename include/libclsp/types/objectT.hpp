@@ -46,6 +46,9 @@ public:
 	/// This is for writing the json
 	virtual void write(Writer<StringBuffer> &writer);
 
+	/// This checks if the JsonHandler called all necesary keys
+	virtual bool isValid();
+
 	ObjectT();
 	virtual ~ObjectT();
 };

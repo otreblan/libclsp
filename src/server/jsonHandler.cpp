@@ -168,4 +168,46 @@ bool JsonHandler::String(const char* str, SizeType, bool)
 	return true;
 }
 
+bool JsonHandler::StartObject()
+{
+
+	auto jsonPair = objectStack.top().setterMap.find(lastKey);
+
+	if(jsonPair != objectStack.top().setterMap.end()) // Key found in map
+	{
+		if(jsonPair->second.setObject.has_value())
+		{
+			auto& setObject = jsonPair->second.setObject.value();
+
+			setObject();
+		}
+		else
+		{
+			// This Key is not an Object
+			return false;
+		}
+	}
+	else
+	{
+		// TODO
+		// Add something to build objects with index signatures
+
+		// Key not found
+		return false;
+	}
+	return true;
+}
+
+bool JsonHandler::Key(const char* str, SizeType, bool)
+{
+	lastKey = str;
+
+	return true;
+}
+
+bool JsonHandler::EndObject(SizeType)
+{
+	return objectStack.top().object->isValid();
+}
+
 }
