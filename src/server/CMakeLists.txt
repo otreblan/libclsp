@@ -16,5 +16,5 @@
 
 target_sources(${PROJECT_NAME}
 	PRIVATE
-		#Nothing yet
+		jsonHandler.cpp
 )

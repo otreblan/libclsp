@@ -16,8 +16,12 @@
 
 #pragma once
 
+#include <functional>
+
 #include <rapidjson/writer.h>
+
 #include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/server/jsonHandler.hpp>
 
 namespace libclsp
 {
@@ -25,9 +29,16 @@ namespace libclsp
 using namespace std;
 using namespace rapidjson;
 
+struct JsonHandler;
+
 class ObjectT
 {
 protected:
+
+	/// This fills the String->ValueSetter map at the top of the handler stack
+	virtual void fillHandlerMap(JsonHandler& handler);
+
+
 	/// This is like write() but without the object bounds.
 	virtual void partialWrite(Writer<StringBuffer> &writer);
 

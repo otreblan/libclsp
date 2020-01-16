@@ -23,6 +23,7 @@ using namespace std;
 using namespace rapidjson;
 
 
+void ObjectT::fillHandlerMap( [[maybe_unused]] JsonHandler& handler){};
 void ObjectT::partialWrite( [[maybe_unused]] Writer<StringBuffer> &writer){};
 void ObjectT::write( [[maybe_unused]] Writer<StringBuffer> &writer){};
 
