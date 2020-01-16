@@ -45,6 +45,9 @@ using Any = variant<String, Number, Boolean, Null, Object, Array>;
 using DocumentUri   = String;
 using ProgressToken = variant<Number, String>;
 
+/// A utility type
+using Key = const String;
+
 
 // Some operator overloads for the Number type
 

@@ -55,11 +55,25 @@ struct ValueSetter
 
 };
 
+/// Data for the object initialization
+struct ObjectInitializer
+{
+	/// The key from which the object is the value
+	Key key;
+
+	/// A map with the keys of the object and it's initializers
+	map<Key, ValueSetter> setterMap;
+};
+
 struct JsonHandler: public BaseReaderHandler<UTF8<>, JsonHandler>
 {
 
-	/// The top of this stack represents the object being constructed
-	stack<map<libclsp::String, ValueSetter>> objectStack;
+	/// The top of this stack represents the path of the object being
+	/// constructed and the functions to initialize it's members
+	stack<ObjectInitializer> objectStack;
+
+	/// Last key obtained by Key()
+	libclsp::String lastKey;
 
 	// Functions needed by the RapidJson reader.
 

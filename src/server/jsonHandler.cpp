@@ -22,5 +22,35 @@ namespace libclsp
 
 using namespace std;
 
+bool JsonHandler::Null()
+{
+
+	auto jsonPair = objectStack.top().setterMap.find(lastKey);
+
+	if(jsonPair != objectStack.top().setterMap.end()) // Key found in map
+	{
+		if(jsonPair->second.setNull.has_value())
+		{
+			auto& setBool = jsonPair->second.setNull.value();
+
+			setBool();
+		}
+		else
+		{
+			// This Key is not a Boolean
+			return false;
+		}
+	}
+	else
+	{
+		// TODO
+		// Add something to build objects with index signatures
+
+		// Key not found
+		return false;
+	}
+
+	return true;
+}
 
 }
