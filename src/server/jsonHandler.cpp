@@ -138,4 +138,34 @@ bool JsonHandler::Double(double d)
 	return Number(d);
 }
 
+bool JsonHandler::String(const char* str, SizeType, bool)
+{
+	auto jsonPair = objectStack.top().setterMap.find(lastKey);
+
+	if(jsonPair != objectStack.top().setterMap.end()) // Key found in map
+	{
+		if(jsonPair->second.setString.has_value())
+		{
+			auto& setString = jsonPair->second.setString.value();
+
+			setString(str);
+		}
+		else
+		{
+			// This Key is not a String
+			return false;
+		}
+	}
+	else
+	{
+		// TODO
+		// Add something to build objects with index signatures
+
+		// Key not found
+		return false;
+	}
+
+	return true;
+}
+
 }
