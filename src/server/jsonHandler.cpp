@@ -83,4 +83,59 @@ bool JsonHandler::Bool(bool b)
 	return true;
 }
 
+bool JsonHandler::Number(libclsp::Number n)
+{
+	auto jsonPair = objectStack.top().setterMap.find(lastKey);
+
+	if(jsonPair != objectStack.top().setterMap.end()) // Key found in map
+	{
+		if(jsonPair->second.setNumber.has_value())
+		{
+			auto& setNumber = jsonPair->second.setNumber.value();
+
+			setNumber(n);
+		}
+		else
+		{
+			// This Key is not a Number
+			return false;
+		}
+	}
+	else
+	{
+		// TODO
+		// Add something to build objects with index signatures
+
+		// Key not found
+		return false;
+	}
+
+	return true;
+}
+
+bool JsonHandler::Int(int i)
+{
+	return Number(i);
+}
+
+bool JsonHandler::Uint(unsigned u)
+{
+	return Number((int)u);
+}
+
+bool JsonHandler::Int64(int64_t i)
+{
+	return Number((int)i);
+}
+
+bool JsonHandler::Uint64(uint64_t u)
+{
+	return Number((int)u);
+}
+
+bool JsonHandler::Double(double d)
+{
+	return Number(d);
+}
+
 }

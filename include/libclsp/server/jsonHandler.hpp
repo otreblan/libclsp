@@ -79,17 +79,23 @@ struct JsonHandler: public BaseReaderHandler<UTF8<>, JsonHandler>
 
 	bool Null();
 	bool Bool(bool b);
+
+	// Generic number wrapper
+	bool Number(libclsp::Number n);
+
 	bool Int(int i);
 	bool Uint(unsigned u);
 	bool Int64(int64_t i);
 	bool Uint64(uint64_t u);
 	bool Double(double d);
+
 	bool String(const char* str, SizeType length, bool copy);
 	bool StartObject();
 	bool Key(const char* str, SizeType length, bool copy);
 	bool EndObject(SizeType memberCount);
 	bool StartArray();
 	bool EndArray(SizeType elementCount);
+
 };
 
 }
