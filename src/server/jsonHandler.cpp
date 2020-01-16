@@ -31,9 +31,39 @@ bool JsonHandler::Null()
 	{
 		if(jsonPair->second.setNull.has_value())
 		{
-			auto& setBool = jsonPair->second.setNull.value();
+			auto& setNull = jsonPair->second.setNull.value();
 
-			setBool();
+			setNull();
+		}
+		else
+		{
+			// This Key is not a Null
+			return false;
+		}
+	}
+	else
+	{
+		// TODO
+		// Add something to build objects with index signatures
+
+		// Key not found
+		return false;
+	}
+
+	return true;
+}
+
+bool JsonHandler::Bool(bool b)
+{
+	auto jsonPair = objectStack.top().setterMap.find(lastKey);
+
+	if(jsonPair != objectStack.top().setterMap.end()) // Key found in map
+	{
+		if(jsonPair->second.setBoolean.has_value())
+		{
+			auto& setBoolean = jsonPair->second.setBoolean.value();
+
+			setBoolean(b);
 		}
 		else
 		{
