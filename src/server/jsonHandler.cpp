@@ -207,7 +207,16 @@ bool JsonHandler::Key(const char* str, SizeType, bool)
 
 bool JsonHandler::EndObject(SizeType)
 {
-	return objectStack.top().object->isValid();
+	if(objectStack.top().object->isValid())
+	{
+		objectStack.pop();
+
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 }
