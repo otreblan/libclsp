@@ -195,6 +195,7 @@ bool JsonHandler::StartObject()
 		// Key not found
 		return false;
 	}
+
 	return true;
 }
 
@@ -211,12 +212,50 @@ bool JsonHandler::EndObject(SizeType)
 	{
 		objectStack.pop();
 
+		// The key returns to the last Object/Array
+		lastKey = objectStack.top().key;
+
 		return true;
 	}
 	else
 	{
 		return false;
 	}
+}
+
+bool JsonHandler::StartArray()
+{
+	auto jsonPair = objectStack.top().setterMap.find(lastKey);
+
+	if(jsonPair != objectStack.top().setterMap.end()) // Key found in map
+	{
+		if(jsonPair->second.setArray.has_value())
+		{
+			auto& setArray = jsonPair->second.setArray.value();
+
+			setArray();
+		}
+		else
+		{
+			// This Key is not an Array
+			return false;
+		}
+	}
+	else
+	{
+		// TODO
+		// Add something to build objects with index signatures
+
+		// Key not found
+		return false;
+	}
+
+	return true;
+}
+bool JsonHandler::EndArray(SizeType elementCount)
+{
+	// ObjectT is also used by array makers
+	return EndObject(elementCount);
 }
 
 }
