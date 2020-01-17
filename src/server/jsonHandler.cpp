@@ -71,15 +71,21 @@ bool JsonHandler::Null()
 
 bool JsonHandler::Bool(bool b)
 {
-	auto jsonPair = objectStack.top().setterMap.find(lastKey);
+	function<void(bool)> setBoolean;
 
-	if(jsonPair != objectStack.top().setterMap.end()) // Key found in map
+
+	auto topObject = objectStack.top();
+
+	auto& setterMap = topObject.setterMap;
+
+	auto jsonPair = setterMap.find(lastKey);
+
+
+	if(jsonPair != setterMap.end()) // Key found in map
 	{
 		if(jsonPair->second.setBoolean.has_value())
 		{
-			auto& setBoolean = jsonPair->second.setBoolean.value();
-
-			setBoolean(b);
+			setBoolean = jsonPair->second.setBoolean.value();
 		}
 		else
 		{
@@ -87,29 +93,45 @@ bool JsonHandler::Bool(bool b)
 			return false;
 		}
 	}
-	else
+	else // Key not found
 	{
-		// TODO
-		// Add something to build objects with index signatures
+		auto& extraSetter = topObject.extraSetter;
 
-		// Key not found
-		return false;
+		if(extraSetter.has_value())
+		{
+			setBoolean = extraSetter->setBoolean.value();
+		}
+		else
+		{
+			// Key not found and no extra members on the object
+			return false;
+		}
 	}
+
+	//TODO add exceptions
+
+	setBoolean(b);
 
 	return true;
 }
 
 bool JsonHandler::Number(libclsp::Number n)
 {
-	auto jsonPair = objectStack.top().setterMap.find(lastKey);
+	function<void(libclsp::Number)> setNumber;
 
-	if(jsonPair != objectStack.top().setterMap.end()) // Key found in map
+
+	auto topObject = objectStack.top();
+
+	auto& setterMap = topObject.setterMap;
+
+	auto jsonPair = setterMap.find(lastKey);
+
+
+	if(jsonPair != setterMap.end()) // Key found in map
 	{
 		if(jsonPair->second.setNumber.has_value())
 		{
-			auto& setNumber = jsonPair->second.setNumber.value();
-
-			setNumber(n);
+			setNumber = jsonPair->second.setNumber.value();
 		}
 		else
 		{
@@ -117,14 +139,24 @@ bool JsonHandler::Number(libclsp::Number n)
 			return false;
 		}
 	}
-	else
+	else // Key not found
 	{
-		// TODO
-		// Add something to build objects with index signatures
+		auto& extraSetter = topObject.extraSetter;
 
-		// Key not found
-		return false;
+		if(extraSetter.has_value())
+		{
+			setNumber = extraSetter->setNumber.value();
+		}
+		else
+		{
+			// Key not found and no extra members on the object
+			return false;
+		}
 	}
+
+	//TODO add exceptions
+
+	setNumber(n);
 
 	return true;
 }
@@ -156,15 +188,21 @@ bool JsonHandler::Double(double d)
 
 bool JsonHandler::String(const char* str, SizeType, bool)
 {
-	auto jsonPair = objectStack.top().setterMap.find(lastKey);
+	function<void(libclsp::String)> setString;
 
-	if(jsonPair != objectStack.top().setterMap.end()) // Key found in map
+
+	auto topObject = objectStack.top();
+
+	auto& setterMap = topObject.setterMap;
+
+	auto jsonPair = setterMap.find(lastKey);
+
+
+	if(jsonPair != setterMap.end()) // Key found in map
 	{
 		if(jsonPair->second.setString.has_value())
 		{
-			auto& setString = jsonPair->second.setString.value();
-
-			setString(str);
+			setString = jsonPair->second.setString.value();
 		}
 		else
 		{
@@ -172,45 +210,70 @@ bool JsonHandler::String(const char* str, SizeType, bool)
 			return false;
 		}
 	}
-	else
+	else // Key not found
 	{
-		// TODO
-		// Add something to build objects with index signatures
+		auto& extraSetter = topObject.extraSetter;
 
-		// Key not found
-		return false;
+		if(extraSetter.has_value())
+		{
+			setString = extraSetter->setString.value();
+		}
+		else
+		{
+			// Key not found and no extra members on the object
+			return false;
+		}
 	}
+
+	//TODO add exceptions
+
+	setString(str);
 
 	return true;
 }
 
 bool JsonHandler::StartObject()
 {
+	function<void()> setObject;
 
-	auto jsonPair = objectStack.top().setterMap.find(lastKey);
 
-	if(jsonPair != objectStack.top().setterMap.end()) // Key found in map
+	auto topObject = objectStack.top();
+
+	auto& setterMap = topObject.setterMap;
+
+	auto jsonPair = setterMap.find(lastKey);
+
+
+	if(jsonPair != setterMap.end()) // Key found in map
 	{
 		if(jsonPair->second.setObject.has_value())
 		{
-			auto& setObject = jsonPair->second.setObject.value();
-
-			setObject();
+			setObject = jsonPair->second.setObject.value();
 		}
 		else
 		{
-			// This Key is not an Object
+			// This Key is not a Object
 			return false;
 		}
 	}
-	else
+	else // Key not found
 	{
-		// TODO
-		// Add something to build objects with index signatures
+		auto& extraSetter = topObject.extraSetter;
 
-		// Key not found
-		return false;
+		if(extraSetter.has_value())
+		{
+			setObject = extraSetter->setObject.value();
+		}
+		else
+		{
+			// Key not found and no extra members on the object
+			return false;
+		}
 	}
+
+	//TODO add exceptions
+
+	setObject();
 
 	return true;
 }
@@ -241,33 +304,50 @@ bool JsonHandler::EndObject(SizeType)
 
 bool JsonHandler::StartArray()
 {
-	auto jsonPair = objectStack.top().setterMap.find(lastKey);
+	function<void()> setArray;
 
-	if(jsonPair != objectStack.top().setterMap.end()) // Key found in map
+
+	auto topArray = objectStack.top();
+
+	auto& setterMap = topArray.setterMap;
+
+	auto jsonPair = setterMap.find(lastKey);
+
+
+	if(jsonPair != setterMap.end()) // Key found in map
 	{
 		if(jsonPair->second.setArray.has_value())
 		{
-			auto& setArray = jsonPair->second.setArray.value();
-
-			setArray();
+			setArray = jsonPair->second.setArray.value();
 		}
 		else
 		{
-			// This Key is not an Array
+			// This Key is not a Array
 			return false;
 		}
 	}
-	else
+	else // Key not found
 	{
-		// TODO
-		// Add something to build objects with index signatures
+		auto& extraSetter = topArray.extraSetter;
 
-		// Key not found
-		return false;
+		if(extraSetter.has_value())
+		{
+			setArray = extraSetter->setArray.value();
+		}
+		else
+		{
+			// Key not found and no extra members on the object
+			return false;
+		}
 	}
+
+	//TODO add exceptions
+
+	setArray();
 
 	return true;
 }
+
 bool JsonHandler::EndArray(SizeType elementCount)
 {
 	// ObjectT is also used by array makers
