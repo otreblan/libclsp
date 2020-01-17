@@ -25,15 +25,21 @@ using namespace std;
 bool JsonHandler::Null()
 {
 
-	auto jsonPair = objectStack.top().setterMap.find(lastKey);
+	function<void()> setNull;
 
-	if(jsonPair != objectStack.top().setterMap.end()) // Key found in map
+
+	auto topObject = objectStack.top();
+
+	auto& setterMap = topObject.setterMap;
+
+	auto jsonPair = setterMap.find(lastKey);
+
+
+	if(jsonPair != setterMap.end()) // Key found in map
 	{
 		if(jsonPair->second.setNull.has_value())
 		{
-			auto& setNull = jsonPair->second.setNull.value();
-
-			setNull();
+			setNull = jsonPair->second.setNull.value();
 		}
 		else
 		{
@@ -41,14 +47,24 @@ bool JsonHandler::Null()
 			return false;
 		}
 	}
-	else
+	else // Key not found
 	{
-		// TODO
-		// Add something to build objects with index signatures
+		auto& extraSetter = topObject.extraSetter;
 
-		// Key not found
-		return false;
+		if(extraSetter.has_value())
+		{
+			setNull = extraSetter->setNull.value();
+		}
+		else
+		{
+			// Key not found and no extra members on the object
+			return false;
+		}
 	}
+
+	//TODO add exceptions
+
+	setNull();
 
 	return true;
 }

@@ -64,6 +64,9 @@ struct ObjectInitializer
 	/// A map with the keys of the object and it's initializers
 	map<Key, ValueSetter> setterMap;
 
+	/// An optional setter for objects with index signatures
+	optional<ValueSetter> extraSetter;
+
 	/// The object or array being initialized
 	ObjectT* object;
 };
