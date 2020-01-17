@@ -17,4 +17,19 @@
 #pragma once
 
 #include <libclsp/server/jsonHandler.hpp>
-#include <libclsp/server/server.hpp>
+
+namespace libclsp
+{
+
+using namespace std;
+
+class server
+{
+protected:
+
+	/// This starts the server and seeks for the Initialize request.
+	void startIO();
+
+};
+
+}
