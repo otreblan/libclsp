@@ -34,11 +34,14 @@ using namespace std;
 ///
 struct Location: public ObjectT
 {
+private:
 	const static String uriKey;
+	const static String rangeKey;
+
+public:
 
 	DocumentUri uri;
 
-	const static String rangeKey;
 
 	Range range;
 

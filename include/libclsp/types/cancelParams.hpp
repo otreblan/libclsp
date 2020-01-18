@@ -33,8 +33,10 @@ using namespace std;
 ///
 struct CancelParams: public ObjectT
 {
-
+private:
 	const static String idKey;
+
+public:
 
 	/// The request id to cancel.
 	variant<Number, String> id;

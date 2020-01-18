@@ -38,8 +38,14 @@ using namespace std;
 ///
 struct LocationLink: public ObjectT
 {
-
+private:
 	const static String originSelectionRangeKey;
+	const static String targetUriKey;
+	const static String targetRangeKey;
+	const static String targetSelectionRangeKey;
+
+public:
+
 
 	/// Span of the origin of this link.
 	///
@@ -48,13 +54,9 @@ struct LocationLink: public ObjectT
 	optional<Range> originSelectionRange;
 
 
-	const static String targetUriKey;
-
 	/// The target resource identifier of this link.
 	DocumentUri targetUri;
 
-
-	const static String targetRangeKey;
 
 	/// The full target range of this link. If the target for example is a symbol
 	/// then target range is the range enclosing this symbol not including
@@ -62,8 +64,6 @@ struct LocationLink: public ObjectT
 	/// This information is typically used to highlight the range in the editor.
 	Range targetRange;
 
-
-	const static String targetSelectionRangeKey;
 
 	/// The range that should be selected and revealed when this link is being followed,
 	/// e.g the name of a function.  Must be contained by the the `targetRange`.

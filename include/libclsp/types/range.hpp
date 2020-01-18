@@ -34,14 +34,15 @@ using namespace std;
 ///
 struct Range: public ObjectT
 {
-
+private:
 	const static String startKey;
+	const static String endKey;
+
+public:
 
 	/// The range's start position.
 	Position start;
 
-
-	const static String endKey;
 
 	/// The range's end position.
 	Position end;

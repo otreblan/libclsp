@@ -35,13 +35,16 @@ using namespace std;
 ///
 struct Position: public ObjectT
 {
-
+private:
 	const static String lineKey;
+	const static String characterKey;
+
+public:
+
 
 	/// Line position in a document (zero-based).
 	Number line;
 
-	const static String characterKey;
 
 	/// Character offset on a line in a document (zero-based). Assuming that the line is
 	/// represented as a string, the `character` value represents the gap between the
