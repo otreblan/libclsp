@@ -29,11 +29,85 @@ Location::Location(DocumentUri uri, Range range):
 	range(range)
 {};
 
-Location::Location():
-	uri(),
-	range()
-{};
+Location::Location(){};
 
 Location::~Location(){};
+
+void Location::fillInitializer(JsonHandler& handler)
+{
+	auto& topValue = handler.objectStack.top();
+
+	auto& setterMap = topValue.setterMap;
+	auto& neededMap = topValue.neededMap;
+
+	// Value setters
+
+	// uri:
+	setterMap.emplace(
+		uriKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				uri = str;
+
+				neededMap[uriKey] = true;
+			},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// range:
+	setterMap.emplace(
+		rangeKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, &neededMap, &handler]()
+			{
+				handler.preFillInitializer();
+
+				range.fillInitializer(handler);
+
+				neededMap[rangeKey] = true;
+			}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(uriKey, 0);
+	neededMap.emplace(rangeKey, 0);
+
+	// This
+	topValue.object = this;
+}
 
 }

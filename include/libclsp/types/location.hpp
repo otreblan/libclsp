@@ -32,7 +32,7 @@ using namespace std;
 ///
 /// range: Range
 ///
-struct Location
+struct Location: public ObjectT
 {
 	const static String uriKey;
 
@@ -41,6 +41,17 @@ struct Location
 	const static String rangeKey;
 
 	Range range;
+
+	//
+	//====================   Parsing   ======================================//
+
+	/// This fills the ObjectInitializer at the top of the handler stack
+	virtual void fillInitializer(JsonHandler& handler);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
 
 	Location(DocumentUri uri, Range range);
 
