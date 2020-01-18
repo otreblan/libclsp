@@ -20,6 +20,7 @@
 #include <optional>
 
 #include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace libclsp
 {
@@ -30,13 +31,23 @@ using namespace std;
 ///
 /// id: Number | String
 ///
-struct CancelParams
+struct CancelParams: public ObjectT
 {
 
 	const static String idKey;
 
 	/// The request id to cancel.
 	variant<Number, String> id;
+
+	//====================   Parsing   ======================================//
+
+	/// This fills the ObjectInitializer at the top of the handler stack
+	virtual void fillInitializer(JsonHandler& handler);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
 
 	CancelParams(variant<Number, String> id);
 

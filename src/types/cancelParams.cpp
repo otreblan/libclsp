@@ -27,10 +27,42 @@ CancelParams::CancelParams(variant<Number, String> id):
 	id(id)
 {};
 
-CancelParams::CancelParams():
-	id()
-{};
-
+CancelParams::CancelParams(){};
 CancelParams::~CancelParams(){};
+
+void CancelParams::fillInitializer(JsonHandler& handler)
+{
+	auto& topValue = handler.objectStack.top();
+
+	auto& setterMap = topValue.setterMap;
+	auto& neededMap = topValue.neededMap;
+
+	// Value setters
+	setterMap.emplace(
+		idKey,
+		ValueSetter{
+			[this, &neededMap](String str)
+			{
+				id = str;
+				neededMap[idKey] = true;
+			},
+			[this, &neededMap](Number n)
+			{
+				id = n;
+				neededMap[idKey] = true;
+			},
+			{},
+			{},
+			{},
+			{}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(idKey, 0);
+
+	// This
+	topValue.object = this;
+}
 
 }

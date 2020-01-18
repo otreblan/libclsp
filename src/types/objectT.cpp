@@ -23,12 +23,23 @@ using namespace std;
 using namespace rapidjson;
 
 
-void ObjectT::fillHandlerMap( [[maybe_unused]] JsonHandler& handler){};
+void ObjectT::fillInitializer( [[maybe_unused]] JsonHandler& handler){};
 void ObjectT::partialWrite( [[maybe_unused]] Writer<StringBuffer> &writer){};
 void ObjectT::write( [[maybe_unused]] Writer<StringBuffer> &writer){};
 
-bool ObjectT::isValid()
+bool ObjectT::isValid(JsonHandler& handler)
 {
+	auto& neededMap = handler.objectStack.top().neededMap;
+
+	for(auto initializedPair: neededMap)
+	{
+		// If a needed value is left uninitialized
+		if(!initializedPair.second)
+		{
+			return false;
+		}
+	}
+
 	return true;
 }
 

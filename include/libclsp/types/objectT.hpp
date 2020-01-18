@@ -35,8 +35,8 @@ class ObjectT
 {
 protected:
 
-	/// This fills the String->ValueSetter map at the top of the handler stack
-	virtual void fillHandlerMap(JsonHandler& handler);
+	/// This fills the ObjectInitializer at the top of the handler stack
+	virtual void fillInitializer(JsonHandler& handler);
 
 
 	/// This is like write() but without the object bounds.
@@ -47,7 +47,7 @@ public:
 	virtual void write(Writer<StringBuffer> &writer);
 
 	/// This checks if the JsonHandler called all necesary keys
-	virtual bool isValid();
+	virtual bool isValid(JsonHandler& handler);
 
 	ObjectT();
 	virtual ~ObjectT();

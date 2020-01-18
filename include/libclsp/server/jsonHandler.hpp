@@ -64,6 +64,10 @@ struct ObjectInitializer
 	/// A map with the keys of the object and it's initializers
 	map<Key, ValueSetter> setterMap;
 
+	/// A map with the keys of the members that need to be initialized.
+	/// The bool is set to true when the value is initialized.
+	map<Key, bool> neededMap;
+
 	/// An optional setter for objects with index signatures
 	optional<ValueSetter> extraSetter;
 
