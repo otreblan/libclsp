@@ -30,11 +30,80 @@ Position::Position(Number line, Number character):
 	character(character)
 {};
 
-Position::Position():
-	line(),
-	character()
-{};
-
+Position::Position(){};
 Position::~Position(){};
+
+void Position::fillInitializer(JsonHandler& handler)
+{
+	auto& topValue = handler.objectStack.top();
+
+	auto& setterMap = topValue.setterMap;
+	auto& neededMap = topValue.neededMap;
+
+	// Value setters
+
+	// line:
+	setterMap.emplace(
+		lineKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			[this, &neededMap](Number n)
+			{
+				line = n;
+				neededMap[lineKey] = true;
+			},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// character:
+	setterMap.emplace(
+		characterKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			[this, &neededMap](Number n)
+			{
+				character = n;
+				neededMap[characterKey] = true;
+			},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(lineKey, 0);
+	neededMap.emplace(characterKey, 0);
+
+	// This
+	topValue.object = this;
+}
 
 }

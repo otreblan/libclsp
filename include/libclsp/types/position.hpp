@@ -20,6 +20,7 @@
 #include <optional>
 
 #include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace libclsp
 {
@@ -32,7 +33,7 @@ using namespace std;
 ///
 /// character: Number
 ///
-struct Position
+struct Position: public ObjectT
 {
 
 	const static String lineKey;
@@ -49,6 +50,16 @@ struct Position
 	/// If the character value is greater than the line length it defaults back to the
 	/// line length.
 	Number character;
+
+	//====================   Parsing   ======================================//
+
+	/// This fills the ObjectInitializer at the top of the handler stack
+	virtual void fillInitializer(JsonHandler& handler);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
 
 	Position(Number line, Number character);
 

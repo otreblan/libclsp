@@ -38,22 +38,35 @@ void CancelParams::fillInitializer(JsonHandler& handler)
 	auto& neededMap = topValue.neededMap;
 
 	// Value setters
+	
+	// id:
 	setterMap.emplace(
 		idKey,
 		ValueSetter{
+			// String
 			[this, &neededMap](String str)
 			{
 				id = str;
 				neededMap[idKey] = true;
 			},
+
+			// Number
 			[this, &neededMap](Number n)
 			{
 				id = n;
 				neededMap[idKey] = true;
 			},
+
+			// Boolean
 			{},
+
+			// Null
 			{},
+
+			// Array
 			{},
+
+			// Object
 			{}
 		}
 	);
