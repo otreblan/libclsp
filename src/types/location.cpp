@@ -30,7 +30,6 @@ Location::Location(DocumentUri uri, Range range):
 {};
 
 Location::Location(){};
-
 Location::~Location(){};
 
 void Location::fillInitializer(JsonHandler& handler)

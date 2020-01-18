@@ -34,13 +34,147 @@ LocationLink::LocationLink(optional<Range> originSelectionRange,
 		targetSelectionRange(targetSelectionRange)
 {};
 
-LocationLink::LocationLink():
-	originSelectionRange(),
-	targetUri(),
-	targetRange(),
-	targetSelectionRange()
-{};
-
+LocationLink::LocationLink(){};
 LocationLink::~LocationLink(){};
+
+
+void LocationLink::fillInitializer(JsonHandler& handler)
+{
+	auto& topValue = handler.objectStack.top();
+
+	auto& setterMap = topValue.setterMap;
+	auto& neededMap = topValue.neededMap;
+
+	// Value setters
+
+	// originSelectionRange?:
+	setterMap.emplace(
+		originSelectionRangeKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, &handler]()
+			{
+				handler.preFillInitializer();
+
+				originSelectionRange.emplace();
+				originSelectionRange.value().fillInitializer(handler);
+			}
+		}
+	);
+
+	// targetUri:
+	setterMap.emplace(
+		targetUriKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				targetUri = str;
+
+				neededMap[targetUriKey] = true;
+			},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// targetRange:
+	setterMap.emplace(
+		targetRangeKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, &neededMap, &handler]()
+			{
+				handler.preFillInitializer();
+
+				targetRange.fillInitializer(handler);
+
+				neededMap[targetRangeKey] = true;
+			}
+		}
+	);
+
+	// targetSelectionRange:
+	setterMap.emplace(
+		targetSelectionRangeKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, &neededMap, &handler]()
+			{
+				handler.preFillInitializer();
+
+				targetSelectionRange.fillInitializer(handler);
+
+				neededMap[targetSelectionRangeKey] = true;
+			}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(targetUriKey, 0);
+	neededMap.emplace(targetRangeKey, 0);
+	neededMap.emplace(targetSelectionRangeKey, 0);
+
+	// This
+	topValue.object = this;
+}
 
 }

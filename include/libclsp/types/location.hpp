@@ -42,7 +42,7 @@ struct Location: public ObjectT
 
 	Range range;
 
-	//
+
 	//====================   Parsing   ======================================//
 
 	/// This fills the ObjectInitializer at the top of the handler stack

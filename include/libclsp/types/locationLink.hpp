@@ -36,7 +36,7 @@ using namespace std;
 ///
 /// targetSelectionRange: Range
 ///
-struct LocationLink
+struct LocationLink: public ObjectT
 {
 
 	const static String originSelectionRangeKey;
@@ -69,6 +69,17 @@ struct LocationLink
 	/// e.g the name of a function.  Must be contained by the the `targetRange`.
 	/// See also `DocumentSymbol#range`
 	Range targetSelectionRange;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills the ObjectInitializer at the top of the handler stack
+	virtual void fillInitializer(JsonHandler& handler);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
 
 	LocationLink(optional<Range> originSelectionRange,
 		DocumentUri targetUri,
