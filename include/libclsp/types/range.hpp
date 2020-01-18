@@ -32,7 +32,7 @@ using namespace std;
 ///
 /// end: Position
 ///
-struct Range
+struct Range: public ObjectT
 {
 
 	const static String startKey;
@@ -45,6 +45,17 @@ struct Range
 
 	/// The range's end position.
 	Position end;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills the ObjectInitializer at the top of the handler stack
+	virtual void fillInitializer(JsonHandler& handler);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
 
 	Range(Position start, Position end);
 

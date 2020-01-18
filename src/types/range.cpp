@@ -30,11 +30,86 @@ Range::Range(Position start, Position end):
 	end(end)
 {};
 
-Range::Range():
-	start(),
-	end()
-{};
-
+Range::Range(){};
 Range::~Range(){};
+
+void Range::fillInitializer(JsonHandler& handler)
+{
+	auto& topValue = handler.objectStack.top();
+
+	auto& setterMap = topValue.setterMap;
+	auto& neededMap = topValue.neededMap;
+
+	// Value setters
+
+	// start:
+	setterMap.emplace(
+		startKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, &neededMap, &handler]()
+			{
+				handler.preFillInitializer();
+
+				start.fillInitializer(handler);
+
+				neededMap[startKey] = true;
+			}
+		}
+	);
+
+	// end:
+	setterMap.emplace(
+		endKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, &neededMap, &handler]()
+			{
+				handler.preFillInitializer();
+
+				end.fillInitializer(handler);
+
+				neededMap[endKey] = true;
+			}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(startKey, 0);
+	neededMap.emplace(endKey, 0);
+
+	// This
+	topValue.object = this;
+}
 
 }

@@ -354,4 +354,15 @@ bool JsonHandler::EndArray(SizeType elementCount)
 	return EndObject(elementCount);
 }
 
+void JsonHandler::preFillInitializer()
+{
+	objectStack.emplace(ObjectInitializer{
+		lastKey,
+		{},
+		{},
+		{},
+		nullptr
+	});
+}
+
 }

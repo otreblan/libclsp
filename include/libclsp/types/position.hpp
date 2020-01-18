@@ -51,6 +51,7 @@ struct Position: public ObjectT
 	/// line length.
 	Number character;
 
+
 	//====================   Parsing   ======================================//
 
 	/// This fills the ObjectInitializer at the top of the handler stack
