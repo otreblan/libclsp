@@ -28,7 +28,7 @@ bool JsonHandler::Null()
 	function<void()> setNull;
 
 
-	auto topObject = objectStack.top();
+	auto& topObject = objectStack.top();
 
 	auto& setterMap = topObject.setterMap;
 
@@ -74,7 +74,7 @@ bool JsonHandler::Bool(bool b)
 	function<void(bool)> setBoolean;
 
 
-	auto topObject = objectStack.top();
+	auto& topObject = objectStack.top();
 
 	auto& setterMap = topObject.setterMap;
 
@@ -120,7 +120,7 @@ bool JsonHandler::Number(libclsp::Number n)
 	function<void(libclsp::Number)> setNumber;
 
 
-	auto topObject = objectStack.top();
+	auto& topObject = objectStack.top();
 
 	auto& setterMap = topObject.setterMap;
 
@@ -191,7 +191,7 @@ bool JsonHandler::String(const char* str, SizeType, bool)
 	function<void(libclsp::String)> setString;
 
 
-	auto topObject = objectStack.top();
+	auto& topObject = objectStack.top();
 
 	auto& setterMap = topObject.setterMap;
 
@@ -237,7 +237,7 @@ bool JsonHandler::StartObject()
 	function<void()> setObject;
 
 
-	auto topObject = objectStack.top();
+	auto& topObject = objectStack.top();
 
 	auto& setterMap = topObject.setterMap;
 
@@ -307,7 +307,7 @@ bool JsonHandler::StartArray()
 	function<void()> setArray;
 
 
-	auto topArray = objectStack.top();
+	auto& topArray = objectStack.top();
 
 	auto& setterMap = topArray.setterMap;
 
@@ -357,11 +357,24 @@ bool JsonHandler::EndArray(SizeType elementCount)
 void JsonHandler::preFillInitializer()
 {
 	objectStack.emplace(ObjectInitializer{
+		// Key
 		lastKey,
+
+		// SetterMap
 		{},
+
+
+		// NeededMap
 		{},
+
+		// Object
+		nullptr,
+
+		// ExtraSeter
 		{},
-		nullptr
+
+		// ObjectMaker
+		{},
 	});
 }
 

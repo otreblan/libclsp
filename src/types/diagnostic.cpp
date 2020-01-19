@@ -45,17 +45,345 @@ Diagnostic::Diagnostic(Range range,
 		relatedInformation(relatedInformation)
 {};
 
-Diagnostic::Diagnostic():
-	range(),
-	severity(),
-	code(),
-	source(),
-	message(),
-	tags(),
-	relatedInformation()
-{};
-
+Diagnostic::Diagnostic(){};
 Diagnostic::~Diagnostic(){};
+
+void Diagnostic::fillInitializer(JsonHandler& handler)
+{
+	auto& topValue = handler.objectStack.top();
+
+	auto& setterMap = topValue.setterMap;
+	auto& neededMap = topValue.neededMap;
+
+	// Value setters
+
+	// range:
+	setterMap.emplace(
+		rangeKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, &neededMap, &handler]()
+			{
+				handler.preFillInitializer();
+
+				range.fillInitializer(handler);
+
+				neededMap[rangeKey] = true;
+			}
+		}
+	);
+
+	// severity?:
+	setterMap.emplace(
+		severityKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			[this](Number n)
+			{
+				if(holds_alternative<int>(n))
+				{
+					int i = get<int>(n);
+
+					if(i > 0 && i <= 4) // Enum bounds
+					{
+						severity = (DiagnosticSeverity)i;
+						return;
+					}
+				}
+
+				// Nothing by default
+			},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// code?:
+	setterMap.emplace(
+		codeKey,
+		ValueSetter{
+			// String
+			[this](String str)
+			{
+				code = str;
+			},
+
+			// Number
+			[this](Number n)
+			{
+				code = n;
+			},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// source?:
+	setterMap.emplace(
+		sourceKey,
+		ValueSetter{
+			// String
+			[this](String str)
+			{
+				source = str;
+			},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// message?:
+	setterMap.emplace(
+		messageKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				message = str;
+
+				neededMap[messageKey] = true;
+			},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// tags?:
+	setterMap.emplace(
+		tagsKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			[this, &handler]()
+			{
+
+				tags = vector<DiagnosticTag>();
+
+				auto* maker = new TagsMaker;
+				maker->parent = this;
+
+				handler.preFillInitializer();
+				maker->fillInitializer(handler);
+			},
+
+			// Object
+			{}
+		}
+	);
+
+	// relatedInformation?:
+	setterMap.emplace(
+		relatedInformationKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			[this, &handler]()
+			{
+
+				relatedInformation = vector<DiagnosticRelatedInformation>();
+
+				auto* maker = new RelatedInformationMaker;
+				maker->parent = this;
+
+				handler.preFillInitializer();
+				maker->fillInitializer(handler);
+			},
+
+			// Object
+			{}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(rangeKey, 0);
+	neededMap.emplace(messageKey, 0);
+
+	// This
+	topValue.object = this;
+}
+
+void Diagnostic::TagsMaker::fillInitializer(JsonHandler& handler)
+{
+	auto& topValue = handler.objectStack.top();
+
+	auto& extraSetter = topValue.extraSetter;
+	auto& Vector = parent->tags.value();
+
+	// Value setters
+
+	// DiagnosticTag[]
+	extraSetter =
+	{
+		// String
+		{},
+
+		// Number
+		[&Vector](Number n)
+		{
+			if(holds_alternative<int>(n))
+			{
+				int i = get<int>(n);
+
+				if(i > 0 && i <= 2) // Enum bounds
+				{
+					Vector.emplace_back((DiagnosticTag)i);
+					return;
+				}
+			}
+
+			// Nothing is added by default
+
+		},
+
+		// Boolean
+		{},
+
+		// Null
+		{},
+
+		// Array
+		{},
+
+		// Object
+		{}
+	};
+
+	// This
+	topValue.object = this;
+
+	// ObjectMaker
+	topValue.objectMaker = unique_ptr<ObjectT>(this);
+}
+
+void Diagnostic::RelatedInformationMaker::fillInitializer(JsonHandler& handler)
+{
+	auto& topValue = handler.objectStack.top();
+
+	auto& extraSetter = topValue.extraSetter;
+	auto& Vector = parent->relatedInformation.value();
+
+	// Value setters
+
+	// DiagnosticRelatedInformation[]
+	extraSetter =
+	{
+		// String
+		{},
+
+		// Number
+		{},
+
+		// Boolean
+		{},
+
+		// Null
+		{},
+
+		// Array
+		{},
+
+		// Object
+		[&Vector, &handler]()
+		{
+			auto& obj = Vector.emplace_back();
+
+			handler.preFillInitializer();
+			obj.fillInitializer(handler);
+		}
+	};
+
+	// This
+	topValue.object = this;
+
+	// ObjectMaker
+	topValue.objectMaker = unique_ptr<ObjectT>(this);
+}
 
 
 const String DiagnosticRelatedInformation::locationKey = "location";
@@ -64,13 +392,87 @@ const String DiagnosticRelatedInformation::messageKey  = "message";
 DiagnosticRelatedInformation::DiagnosticRelatedInformation(Location location,
 	String message):
 		location(location),
-		message(message){};
-
-DiagnosticRelatedInformation::DiagnosticRelatedInformation():
-	location(),
-	message()
+		message(message)
 {};
 
+DiagnosticRelatedInformation::DiagnosticRelatedInformation(){};
 DiagnosticRelatedInformation::~DiagnosticRelatedInformation(){};
+
+void DiagnosticRelatedInformation::fillInitializer(JsonHandler& handler)
+{
+	auto& topValue = handler.objectStack.top();
+
+	auto& setterMap = topValue.setterMap;
+	auto& neededMap = topValue.neededMap;
+
+	// Value setters
+
+	// location;
+	setterMap.emplace(
+		locationKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, &neededMap, &handler]()
+			{
+				handler.preFillInitializer();
+
+				location.fillInitializer(handler);
+
+				neededMap[locationKey] = true;
+			}
+		}
+	);
+
+	// message:
+	setterMap.emplace(
+		messageKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				message = str;
+
+				neededMap[messageKey] = true;
+			},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(locationKey, 0);
+	neededMap.emplace(messageKey, 0);
+
+	// This
+	topValue.object = this;
+}
 
 }

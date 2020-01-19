@@ -32,18 +32,30 @@ using namespace std;
 ///
 /// message: String
 ///
-struct DiagnosticRelatedInformation
+struct DiagnosticRelatedInformation: public ObjectT
 {
+private:
 	const static String locationKey;
+	const static String messageKey;
+
+public:
 
 	/// The location of this related diagnostic information.
 	Location location;
 
-
-	const static String messageKey;
-
 	/// The message of this related diagnostic information.
 	String message;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills the ObjectInitializer at the top of the handler stack
+	virtual void fillInitializer(JsonHandler& handler);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
 
 	DiagnosticRelatedInformation(Location location, String message);
 
@@ -97,53 +109,89 @@ enum class DiagnosticTag
 ///
 /// relatedInformation?: DiagnosticRelatedInformation[]
 ///
-struct Diagnostic
+struct Diagnostic: public ObjectT
 {
+private:
 	const static String rangeKey;
+	const static String severityKey;
+	const static String codeKey;
+	const static String sourceKey;
+	const static String messageKey;
+	const static String tagsKey;
+	const static String relatedInformationKey;
+
+	struct TagsMaker: public ObjectT
+	{
+
+		// The object where the array is build
+		Diagnostic* parent;
+
+		//====================   Parsing   ==================================//
+
+		/// This fills the ObjectInitializer at the top of the handler stack
+		virtual void fillInitializer(JsonHandler& handler);
+
+
+		// Using default isValid()
+
+		//===================================================================//
+	};
+
+	struct RelatedInformationMaker: public ObjectT
+	{
+
+		// The object where the array is build
+		Diagnostic* parent;
+
+		//====================   Parsing   ==================================//
+
+		/// This fills the ObjectInitializer at the top of the handler stack
+		virtual void fillInitializer(JsonHandler& handler);
+
+
+		// Using default isValid()
+
+		//===================================================================//
+	};
+
+public:
 
 	/// The range at which the message applies.
 	Range range;
-
-
-	const static String severityKey;
 
 	/// The diagnostic's severity. Can be omitted. If omitted it is up to the
 	/// client to interpret diagnostics as error, warning, info or hint.
 	optional<DiagnosticSeverity> severity;
 
-
-	const static String codeKey;
-
 	/// The diagnostic's code, which might appear in the user interface.
 	optional<variant<Number, String>> code;
-
-
-	const static String sourceKey;
 
 	/// A human-readable string describing the source of this
 	/// diagnostic, e.g. 'typescript' or 'super lint'.
 	optional<String> source;
 
-
-	const static String messageKey;
-
 	/// The diagnostic's message.
 	String message;
-
-
-	const static String tagsKey;
 
 	/// Additional metadata about the diagnostic.
 	///
 	/// @since 3.15.0
 	optional<vector<DiagnosticTag>> tags;
 
-
-	const static String relatedInformationKey;
-
 	/// An array of related diagnostic information, e.g. when symbol-names within
 	/// a scope collide all definitions can be marked via this property.
 	optional<vector<DiagnosticRelatedInformation>> relatedInformation;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills the ObjectInitializer at the top of the handler stack
+	virtual void fillInitializer(JsonHandler& handler);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
 
 	Diagnostic(Range range,
 		optional<DiagnosticSeverity> severity,

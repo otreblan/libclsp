@@ -68,11 +68,15 @@ struct ObjectInitializer
 	/// The bool is set to true when the value is initialized.
 	map<Key, bool> neededMap;
 
+	/// The object or array being initialized
+	ObjectT* object;
+
 	/// An optional setter for objects with index signatures
 	optional<ValueSetter> extraSetter;
 
-	/// The object or array being initialized
-	ObjectT* object;
+	// An optional object that makes another type of object or an array
+	optional<unique_ptr<ObjectT>> objectMaker;
+
 };
 
 struct JsonHandler: public BaseReaderHandler<UTF8<>, JsonHandler>
