@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace libclsp
 {
@@ -27,13 +27,25 @@ using namespace std;
 ///
 /// uri: DocumentUri
 ///
-struct TextDocumentIdentifier
+struct TextDocumentIdentifier: public ObjectT
 {
-
+private:
 	const static String uriKey;
+
+public:
 
 	/// The text document's URI.
 	DocumentUri uri;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills the ObjectInitializer at the top of the handler stack
+	virtual void fillInitializer(JsonHandler& handler);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	TextDocumentIdentifier(DocumentUri uri);
@@ -49,7 +61,10 @@ struct TextDocumentIdentifier
 ///
 struct VersionedTextDocumentIdentifier: public TextDocumentIdentifier
 {
+private:
 	const static String versionKey;
+
+public:
 
 	/// The version number of this document. If a versioned text document identifier
 	/// is sent from the server to the client and the file is not open in the editor
@@ -60,6 +75,16 @@ struct VersionedTextDocumentIdentifier: public TextDocumentIdentifier
 	/// The version number of a document will increase after each change, including
 	/// undo/redo. The number doesn't need to be consecutive.
 	variant<Number, Null> version;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills the ObjectInitializer at the top of the handler stack
+	virtual void fillInitializer(JsonHandler& handler);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	VersionedTextDocumentIdentifier(DocumentUri uri, variant<Number, Null> version);

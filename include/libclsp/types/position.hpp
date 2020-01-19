@@ -41,7 +41,6 @@ private:
 
 public:
 
-
 	/// Line position in a document (zero-based).
 	Number line;
 

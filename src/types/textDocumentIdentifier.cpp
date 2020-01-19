@@ -27,11 +27,52 @@ TextDocumentIdentifier::TextDocumentIdentifier(DocumentUri uri):
 	uri(uri)
 {};
 
-TextDocumentIdentifier::TextDocumentIdentifier():
-	uri()
-{};
-
+TextDocumentIdentifier::TextDocumentIdentifier(){};
 TextDocumentIdentifier::~TextDocumentIdentifier(){};
+
+void TextDocumentIdentifier::fillInitializer(JsonHandler& handler)
+{
+	auto& topValue = handler.objectStack.top();
+
+	auto& setterMap = topValue.setterMap;
+	auto& neededMap = topValue.neededMap;
+
+	// Value setters
+
+	// uri:
+	setterMap.emplace(
+		uriKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				uri = str;
+				neededMap[uriKey] = true;
+			},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(uriKey, 0);
+
+	// This
+	topValue.object = this;
+}
 
 
 const String VersionedTextDocumentIdentifier::versionKey = "version";
@@ -43,11 +84,58 @@ VersionedTextDocumentIdentifier::
 			version(version)
 {};
 
-VersionedTextDocumentIdentifier::VersionedTextDocumentIdentifier():
-	TextDocumentIdentifier(),
-	version()
-{};
-
+VersionedTextDocumentIdentifier::VersionedTextDocumentIdentifier(){};
 VersionedTextDocumentIdentifier::~VersionedTextDocumentIdentifier(){};
+
+void VersionedTextDocumentIdentifier::fillInitializer(JsonHandler& handler)
+{
+	auto& topValue = handler.objectStack.top();
+
+	auto& setterMap = topValue.setterMap;
+	auto& neededMap = topValue.neededMap;
+
+	// Parent
+	TextDocumentIdentifier::fillInitializer(handler);
+
+	// Value setters
+
+	// version:
+	setterMap.emplace(
+		versionKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			[this, &neededMap](Number n)
+			{
+				version = n;
+				neededMap[versionKey] = true;
+			},
+
+			// Boolean
+			{},
+
+			// Null
+			[this, &neededMap]()
+			{
+				version = Null();
+				neededMap[versionKey] = true;
+			},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(versionKey, 0);
+
+	// This
+	topValue.object = this;
+}
 
 }
