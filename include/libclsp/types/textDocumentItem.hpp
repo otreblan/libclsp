@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace libclsp
 {
@@ -33,32 +33,38 @@ using namespace std;
 ///
 /// text: String
 ///
-struct TextDocumentItem
+struct TextDocumentItem: public ObjectT
 {
-
+private:
 	const static String uriKey;
+	const static String languageIdKey;
+	const static String versionKey;
+	const static String textKey;
+
+public:
 
 	/// The text document's URI.
 	DocumentUri uri;
 
-
-	const static String languageIdKey;
-
 	/// The text document's language identifier.
 	String languageId;
-
-
-	const static String versionKey;
 
 	/// The version number of this document (it will increase after each
 	/// change, including undo/redo).
 	Number version;
 
-
-	const static String textKey;
-
 	/// The content of the opened text document.
 	String text;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills the ObjectInitializer at the top of the handler stack
+	virtual void fillInitializer(JsonHandler& handler);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	TextDocumentItem(DocumentUri uri,

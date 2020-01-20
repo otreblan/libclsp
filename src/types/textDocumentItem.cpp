@@ -36,13 +36,138 @@ TextDocumentItem::TextDocumentItem(DocumentUri uri,
 		text(text)
 {};
 
-TextDocumentItem::TextDocumentItem():
-	uri(),
-	languageId(),
-	version(),
-	text()
-{};
-
+TextDocumentItem::TextDocumentItem(){};
 TextDocumentItem::~TextDocumentItem(){};
+
+void TextDocumentItem::fillInitializer(JsonHandler& handler)
+{
+	auto& topValue = handler.objectStack.top();
+
+	auto& setterMap = topValue.setterMap;
+	auto& neededMap = topValue.neededMap;
+
+	// Value setters
+
+	// uri:
+	setterMap.emplace(
+		uriKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				uri = str;
+				neededMap[uriKey] = true;
+			},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// languageId:
+	setterMap.emplace(
+		languageIdKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				languageId = str;
+				neededMap[languageIdKey] = true;
+			},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// version:
+	setterMap.emplace(
+		versionKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			[this, &neededMap](Number n)
+			{
+				version = n;
+				neededMap[versionKey] = true;
+			},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// text:
+	setterMap.emplace(
+		textKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				text = str;
+				neededMap[textKey] = true;
+			},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(uriKey, 0);
+	neededMap.emplace(languageIdKey, 0);
+	neededMap.emplace(versionKey, 0);
+	neededMap.emplace(textKey, 0);
+
+	// This
+	topValue.object = this;
+}
 
 }
