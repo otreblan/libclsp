@@ -38,12 +38,12 @@ LocationLink::LocationLink(){};
 LocationLink::~LocationLink(){};
 
 
-void LocationLink::fillInitializer(JsonHandler& handler)
+void LocationLink::fillInitializer(ObjectInitializer& initializer)
 {
-	auto& topValue = handler.objectStack.top();
+	auto* handler = initializer.handler;
 
-	auto& setterMap = topValue.setterMap;
-	auto& neededMap = topValue.neededMap;
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
 
 	// Value setters
 
@@ -67,12 +67,13 @@ void LocationLink::fillInitializer(JsonHandler& handler)
 			{},
 
 			// Object
-			[this, &handler]()
+			[this, handler]()
 			{
-				handler.preFillInitializer();
+				handler->preFillInitializer();
 
 				originSelectionRange.emplace();
-				originSelectionRange.value().fillInitializer(handler);
+				originSelectionRange.value().
+					fillInitializer(handler->objectStack.top());
 			}
 		}
 	);
@@ -126,11 +127,11 @@ void LocationLink::fillInitializer(JsonHandler& handler)
 			{},
 
 			// Object
-			[this, &neededMap, &handler]()
+			[this, handler, &neededMap]()
 			{
-				handler.preFillInitializer();
+				handler->preFillInitializer();
 
-				targetRange.fillInitializer(handler);
+				targetRange.fillInitializer(handler->objectStack.top());
 
 				neededMap[targetRangeKey] = true;
 			}
@@ -157,11 +158,12 @@ void LocationLink::fillInitializer(JsonHandler& handler)
 			{},
 
 			// Object
-			[this, &neededMap, &handler]()
+			[this, handler, &neededMap]()
 			{
-				handler.preFillInitializer();
+				handler->preFillInitializer();
 
-				targetSelectionRange.fillInitializer(handler);
+				targetSelectionRange.
+					fillInitializer(handler->objectStack.top());
 
 				neededMap[targetSelectionRangeKey] = true;
 			}
@@ -174,7 +176,7 @@ void LocationLink::fillInitializer(JsonHandler& handler)
 	neededMap.emplace(targetSelectionRangeKey, 0);
 
 	// This
-	topValue.object = this;
+	initializer.object = this;
 }
 
 }

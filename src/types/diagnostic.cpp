@@ -48,12 +48,12 @@ Diagnostic::Diagnostic(Range range,
 Diagnostic::Diagnostic(){};
 Diagnostic::~Diagnostic(){};
 
-void Diagnostic::fillInitializer(JsonHandler& handler)
+void Diagnostic::fillInitializer(ObjectInitializer& initializer)
 {
-	auto& topValue = handler.objectStack.top();
+	auto* handler = initializer.handler;
 
-	auto& setterMap = topValue.setterMap;
-	auto& neededMap = topValue.neededMap;
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
 
 	// Value setters
 
@@ -77,11 +77,11 @@ void Diagnostic::fillInitializer(JsonHandler& handler)
 			{},
 
 			// Object
-			[this, &neededMap, &handler]()
+			[this, handler, &neededMap]()
 			{
-				handler.preFillInitializer();
+				handler->preFillInitializer();
 
-				range.fillInitializer(handler);
+				range.fillInitializer(handler->objectStack.top());
 
 				neededMap[rangeKey] = true;
 			}
@@ -229,7 +229,7 @@ void Diagnostic::fillInitializer(JsonHandler& handler)
 			{},
 
 			// Array
-			[this, &handler]()
+			[this, handler]()
 			{
 
 				tags = vector<DiagnosticTag>();
@@ -237,8 +237,8 @@ void Diagnostic::fillInitializer(JsonHandler& handler)
 				auto* maker = new TagsMaker;
 				maker->parent = this;
 
-				handler.preFillInitializer();
-				maker->fillInitializer(handler);
+				handler->preFillInitializer();
+				maker->fillInitializer(handler->objectStack.top());
 			},
 
 			// Object
@@ -263,7 +263,7 @@ void Diagnostic::fillInitializer(JsonHandler& handler)
 			{},
 
 			// Array
-			[this, &handler]()
+			[this, handler]()
 			{
 
 				relatedInformation = vector<DiagnosticRelatedInformation>();
@@ -271,8 +271,8 @@ void Diagnostic::fillInitializer(JsonHandler& handler)
 				auto* maker = new RelatedInformationMaker;
 				maker->parent = this;
 
-				handler.preFillInitializer();
-				maker->fillInitializer(handler);
+				handler->preFillInitializer();
+				maker->fillInitializer(handler->objectStack.top());
 			},
 
 			// Object
@@ -285,14 +285,12 @@ void Diagnostic::fillInitializer(JsonHandler& handler)
 	neededMap.emplace(messageKey, 0);
 
 	// This
-	topValue.object = this;
+	initializer.object = this;
 }
 
-void Diagnostic::TagsMaker::fillInitializer(JsonHandler& handler)
+void Diagnostic::TagsMaker::fillInitializer(ObjectInitializer& initializer)
 {
-	auto& topValue = handler.objectStack.top();
-
-	auto& extraSetter = topValue.extraSetter;
+	auto& extraSetter = initializer.extraSetter;
 	auto& Vector = parent->tags.value();
 
 	// Value setters
@@ -335,17 +333,18 @@ void Diagnostic::TagsMaker::fillInitializer(JsonHandler& handler)
 	};
 
 	// This
-	topValue.object = this;
+	initializer.object = this;
 
 	// ObjectMaker
-	topValue.objectMaker = unique_ptr<ObjectT>(this);
+	initializer.objectMaker = unique_ptr<ObjectT>(this);
 }
 
-void Diagnostic::RelatedInformationMaker::fillInitializer(JsonHandler& handler)
+void Diagnostic::RelatedInformationMaker::
+	fillInitializer(ObjectInitializer& initializer)
 {
-	auto& topValue = handler.objectStack.top();
+	auto* handler = initializer.handler;
 
-	auto& extraSetter = topValue.extraSetter;
+	auto& extraSetter = initializer.extraSetter;
 	auto& Vector = parent->relatedInformation.value();
 
 	// Value setters
@@ -369,20 +368,21 @@ void Diagnostic::RelatedInformationMaker::fillInitializer(JsonHandler& handler)
 		{},
 
 		// Object
-		[&Vector, &handler]()
+		[&Vector, handler]()
 		{
 			auto& obj = Vector.emplace_back();
 
-			handler.preFillInitializer();
-			obj.fillInitializer(handler);
+			handler->preFillInitializer();
+
+			obj.fillInitializer(handler->objectStack.top());
 		}
 	};
 
 	// This
-	topValue.object = this;
+	initializer.object = this;
 
 	// ObjectMaker
-	topValue.objectMaker = unique_ptr<ObjectT>(this);
+	initializer.objectMaker = unique_ptr<ObjectT>(this);
 }
 
 
@@ -398,12 +398,12 @@ DiagnosticRelatedInformation::DiagnosticRelatedInformation(Location location,
 DiagnosticRelatedInformation::DiagnosticRelatedInformation(){};
 DiagnosticRelatedInformation::~DiagnosticRelatedInformation(){};
 
-void DiagnosticRelatedInformation::fillInitializer(JsonHandler& handler)
+void DiagnosticRelatedInformation::fillInitializer(ObjectInitializer& initializer)
 {
-	auto& topValue = handler.objectStack.top();
+	auto* handler = initializer.handler;
 
-	auto& setterMap = topValue.setterMap;
-	auto& neededMap = topValue.neededMap;
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
 
 	// Value setters
 
@@ -427,11 +427,11 @@ void DiagnosticRelatedInformation::fillInitializer(JsonHandler& handler)
 			{},
 
 			// Object
-			[this, &neededMap, &handler]()
+			[this, handler, &neededMap]()
 			{
-				handler.preFillInitializer();
+				handler->preFillInitializer();
 
-				location.fillInitializer(handler);
+				location.fillInitializer(handler->objectStack.top());
 
 				neededMap[locationKey] = true;
 			}
@@ -472,7 +472,7 @@ void DiagnosticRelatedInformation::fillInitializer(JsonHandler& handler)
 	neededMap.emplace(messageKey, 0);
 
 	// This
-	topValue.object = this;
+	initializer.object = this;
 }
 
 }

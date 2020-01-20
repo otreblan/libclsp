@@ -23,9 +23,9 @@ using namespace std;
 using namespace rapidjson;
 
 
-void ObjectT::fillInitializer( [[maybe_unused]] JsonHandler& handler){};
-void ObjectT::partialWrite( [[maybe_unused]] Writer<StringBuffer> &writer){};
-void ObjectT::write( [[maybe_unused]] Writer<StringBuffer> &writer){};
+void ObjectT::fillInitializer(ObjectInitializer&){};
+void ObjectT::partialWrite(Writer<StringBuffer>&){};
+void ObjectT::write(Writer<StringBuffer>&){};
 
 bool ObjectT::isValid(JsonHandler& handler)
 {

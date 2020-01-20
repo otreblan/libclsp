@@ -30,12 +30,10 @@ TextDocumentIdentifier::TextDocumentIdentifier(DocumentUri uri):
 TextDocumentIdentifier::TextDocumentIdentifier(){};
 TextDocumentIdentifier::~TextDocumentIdentifier(){};
 
-void TextDocumentIdentifier::fillInitializer(JsonHandler& handler)
+void TextDocumentIdentifier::fillInitializer(ObjectInitializer& initializer)
 {
-	auto& topValue = handler.objectStack.top();
-
-	auto& setterMap = topValue.setterMap;
-	auto& neededMap = topValue.neededMap;
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
 
 	// Value setters
 
@@ -71,7 +69,7 @@ void TextDocumentIdentifier::fillInitializer(JsonHandler& handler)
 	neededMap.emplace(uriKey, 0);
 
 	// This
-	topValue.object = this;
+	initializer.object = this;
 }
 
 
@@ -87,15 +85,14 @@ VersionedTextDocumentIdentifier::
 VersionedTextDocumentIdentifier::VersionedTextDocumentIdentifier(){};
 VersionedTextDocumentIdentifier::~VersionedTextDocumentIdentifier(){};
 
-void VersionedTextDocumentIdentifier::fillInitializer(JsonHandler& handler)
+void VersionedTextDocumentIdentifier::
+	fillInitializer(ObjectInitializer& initializer)
 {
-	auto& topValue = handler.objectStack.top();
-
-	auto& setterMap = topValue.setterMap;
-	auto& neededMap = topValue.neededMap;
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
 
 	// Parent
-	TextDocumentIdentifier::fillInitializer(handler);
+	TextDocumentIdentifier::fillInitializer(initializer);
 
 	// Value setters
 
@@ -135,7 +132,7 @@ void VersionedTextDocumentIdentifier::fillInitializer(JsonHandler& handler)
 	neededMap.emplace(versionKey, 0);
 
 	// This
-	topValue.object = this;
+	initializer.object = this;
 }
 
 }

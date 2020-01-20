@@ -33,12 +33,10 @@ Position::Position(Number line, Number character):
 Position::Position(){};
 Position::~Position(){};
 
-void Position::fillInitializer(JsonHandler& handler)
+void Position::fillInitializer(ObjectInitializer& initializer)
 {
-	auto& topValue = handler.objectStack.top();
-
-	auto& setterMap = topValue.setterMap;
-	auto& neededMap = topValue.neededMap;
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
 
 	// Value setters
 
@@ -103,7 +101,7 @@ void Position::fillInitializer(JsonHandler& handler)
 	neededMap.emplace(characterKey, 0);
 
 	// This
-	topValue.object = this;
+	initializer.object = this;
 }
 
 }

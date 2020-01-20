@@ -32,12 +32,12 @@ TextEdit::TextEdit(Range range, String newText):
 TextEdit::TextEdit(){};
 TextEdit::~TextEdit(){};
 
-void TextEdit::fillInitializer(JsonHandler& handler)
+void TextEdit::fillInitializer(ObjectInitializer& initializer)
 {
-	auto& topValue = handler.objectStack.top();
+	auto* handler = initializer.handler;
 
-	auto& setterMap = topValue.setterMap;
-	auto& neededMap = topValue.neededMap;
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
 
 	// Value setters
 
@@ -61,11 +61,11 @@ void TextEdit::fillInitializer(JsonHandler& handler)
 			{},
 
 			// Object
-			[this, &handler, &neededMap]()
+			[this, handler, &neededMap]()
 			{
-				handler.preFillInitializer();
+				handler->preFillInitializer();
 
-				range.fillInitializer(handler);
+				range.fillInitializer(handler->objectStack.top());
 
 				neededMap[rangeKey] = true;
 			}
@@ -105,7 +105,7 @@ void TextEdit::fillInitializer(JsonHandler& handler)
 	neededMap.emplace(newTextKey, 0);
 
 	// This
-	topValue.object = this;
+	initializer.object = this;
 }
 
 const String TextDocumentEdit::textDocumentKey = "textDocument";
@@ -120,12 +120,12 @@ TextDocumentEdit::TextDocumentEdit(VersionedTextDocumentIdentifier textDocument,
 TextDocumentEdit::TextDocumentEdit(){};
 TextDocumentEdit::~TextDocumentEdit(){};
 
-void TextDocumentEdit::fillInitializer(JsonHandler& handler)
+void TextDocumentEdit::fillInitializer(ObjectInitializer& initializer)
 {
-	auto& topValue = handler.objectStack.top();
+	auto* handler = initializer.handler;
 
-	auto& setterMap = topValue.setterMap;
-	auto& neededMap = topValue.neededMap;
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
 
 	// Value setters
 
@@ -149,10 +149,10 @@ void TextDocumentEdit::fillInitializer(JsonHandler& handler)
 			{},
 
 			// Object
-			[this, &handler, &neededMap]()
+			[this, handler, &neededMap]()
 			{
-				handler.preFillInitializer();
-				textDocument.fillInitializer(handler);
+				handler->preFillInitializer();
+				textDocument.fillInitializer(handler->objectStack.top());
 
 				neededMap[textDocumentKey] = true;
 			}
@@ -176,13 +176,13 @@ void TextDocumentEdit::fillInitializer(JsonHandler& handler)
 			{},
 
 			// Array
-			[this, &handler, &neededMap]()
+			[this, handler, &neededMap]()
 			{
 				auto* maker = new EditsMaker;
 				maker->parent = this;
 
-				handler.preFillInitializer();
-				maker->fillInitializer(handler);
+				handler->preFillInitializer();
+				maker->fillInitializer(handler->objectStack.top());
 
 				neededMap[editsKey] = true;
 			},
@@ -197,14 +197,14 @@ void TextDocumentEdit::fillInitializer(JsonHandler& handler)
 	neededMap.emplace(editsKey, 0);
 
 	// This
-	topValue.object = this;
+	initializer.object = this;
 }
 
-void TextDocumentEdit::EditsMaker::fillInitializer(JsonHandler& handler)
+void TextDocumentEdit::EditsMaker::fillInitializer(ObjectInitializer& initializer)
 {
-	auto& topValue = handler.objectStack.top();
+	auto* handler = initializer.handler;
 
-	auto& extraSetter = topValue.extraSetter;
+	auto& extraSetter = initializer.extraSetter;
 	auto& Vector = parent->edits;
 
 	// Value setters
@@ -228,20 +228,20 @@ void TextDocumentEdit::EditsMaker::fillInitializer(JsonHandler& handler)
 		{},
 
 		// Object
-		[&Vector, &handler]()
+		[&Vector, handler]()
 		{
 			auto& obj = Vector.emplace_back();
 
-			handler.preFillInitializer();
-			obj.fillInitializer(handler);
+			handler->preFillInitializer();
+			obj.fillInitializer(handler->objectStack.top());
 		}
 	};
 
 	// This
-	topValue.object = this;
+	initializer.object = this;
 
 	// ObjectMaker
-	topValue.objectMaker = unique_ptr<ObjectT>(this);
+	initializer.objectMaker = unique_ptr<ObjectT>(this);
 }
 
 }

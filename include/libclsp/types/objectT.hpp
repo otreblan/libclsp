@@ -35,9 +35,8 @@ class ObjectT
 {
 protected:
 
-	/// This fills the ObjectInitializer at the top of the handler stack
-	virtual void fillInitializer(JsonHandler& handler);
-
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
 
 	/// This is like write() but without the object bounds.
 	virtual void partialWrite(Writer<StringBuffer> &writer);

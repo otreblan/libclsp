@@ -49,8 +49,8 @@ public:
 
 	//====================   Parsing   ======================================//
 
-	/// This fills the ObjectInitializer at the top of the handler stack
-	virtual void fillInitializer(JsonHandler& handler);
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
 
 	// Using default isValid()
 
@@ -128,9 +128,8 @@ private:
 
 		//====================   Parsing   ==================================//
 
-		/// This fills the ObjectInitializer at the top of the handler stack
-		virtual void fillInitializer(JsonHandler& handler);
-
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
 
 		// Using default isValid()
 
@@ -145,9 +144,8 @@ private:
 
 		//====================   Parsing   ==================================//
 
-		/// This fills the ObjectInitializer at the top of the handler stack
-		virtual void fillInitializer(JsonHandler& handler);
-
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
 
 		// Using default isValid()
 
@@ -185,8 +183,8 @@ public:
 
 	//====================   Parsing   ======================================//
 
-	/// This fills the ObjectInitializer at the top of the handler stack
-	virtual void fillInitializer(JsonHandler& handler);
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
 
 	// Using default isValid()
 

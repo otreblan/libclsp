@@ -39,12 +39,10 @@ TextDocumentItem::TextDocumentItem(DocumentUri uri,
 TextDocumentItem::TextDocumentItem(){};
 TextDocumentItem::~TextDocumentItem(){};
 
-void TextDocumentItem::fillInitializer(JsonHandler& handler)
+void TextDocumentItem::fillInitializer(ObjectInitializer& initializer)
 {
-	auto& topValue = handler.objectStack.top();
-
-	auto& setterMap = topValue.setterMap;
-	auto& neededMap = topValue.neededMap;
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
 
 	// Value setters
 
@@ -167,7 +165,7 @@ void TextDocumentItem::fillInitializer(JsonHandler& handler)
 	neededMap.emplace(textKey, 0);
 
 	// This
-	topValue.object = this;
+	initializer.object = this;
 }
 
 }

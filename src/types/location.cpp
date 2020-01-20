@@ -32,12 +32,12 @@ Location::Location(DocumentUri uri, Range range):
 Location::Location(){};
 Location::~Location(){};
 
-void Location::fillInitializer(JsonHandler& handler)
+void Location::fillInitializer(ObjectInitializer& initializer)
 {
-	auto& topValue = handler.objectStack.top();
+	auto* handler = initializer.handler;
 
-	auto& setterMap = topValue.setterMap;
-	auto& neededMap = topValue.neededMap;
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
 
 	// Value setters
 
@@ -90,11 +90,11 @@ void Location::fillInitializer(JsonHandler& handler)
 			{},
 
 			// Object
-			[this, &neededMap, &handler]()
+			[this, handler, &neededMap]()
 			{
-				handler.preFillInitializer();
+				handler->preFillInitializer();
 
-				range.fillInitializer(handler);
+				range.fillInitializer(handler->objectStack.top());
 
 				neededMap[rangeKey] = true;
 			}
@@ -106,7 +106,7 @@ void Location::fillInitializer(JsonHandler& handler)
 	neededMap.emplace(rangeKey, 0);
 
 	// This
-	topValue.object = this;
+	initializer.object = this;
 }
 
 }
