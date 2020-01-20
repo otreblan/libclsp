@@ -29,13 +29,84 @@ TextEdit::TextEdit(Range range, String newText):
 	newText(newText)
 {};
 
-TextEdit::TextEdit():
-	range(),
-	newText()
-{};
-
+TextEdit::TextEdit(){};
 TextEdit::~TextEdit(){};
 
+void TextEdit::fillInitializer(JsonHandler& handler)
+{
+	auto& topValue = handler.objectStack.top();
+
+	auto& setterMap = topValue.setterMap;
+	auto& neededMap = topValue.neededMap;
+
+	// Value setters
+
+	// range:
+	setterMap.emplace(
+		rangeKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, &handler, &neededMap]()
+			{
+				handler.preFillInitializer();
+
+				range.fillInitializer(handler);
+
+				neededMap[rangeKey] = true;
+			}
+		}
+	);
+
+	// newText:
+	setterMap.emplace(
+		newTextKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				newText = str;
+				neededMap[newTextKey] = true;
+			},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(rangeKey, 0);
+	neededMap.emplace(newTextKey, 0);
+
+	// This
+	topValue.object = this;
+}
 
 const String TextDocumentEdit::textDocumentKey = "textDocument";
 const String TextDocumentEdit::editsKey        = "edits";
@@ -46,11 +117,131 @@ TextDocumentEdit::TextDocumentEdit(VersionedTextDocumentIdentifier textDocument,
 		edits(edits)
 {};
 
-TextDocumentEdit::TextDocumentEdit():
-	textDocument(),
-	edits()
-{};
-
+TextDocumentEdit::TextDocumentEdit(){};
 TextDocumentEdit::~TextDocumentEdit(){};
+
+void TextDocumentEdit::fillInitializer(JsonHandler& handler)
+{
+	auto& topValue = handler.objectStack.top();
+
+	auto& setterMap = topValue.setterMap;
+	auto& neededMap = topValue.neededMap;
+
+	// Value setters
+
+	// textDocument:
+	setterMap.emplace(
+		textDocumentKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, &handler, &neededMap]()
+			{
+				handler.preFillInitializer();
+				textDocument.fillInitializer(handler);
+
+				neededMap[textDocumentKey] = true;
+			}
+		}
+	);
+
+	// edits:
+	setterMap.emplace(
+		editsKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			[this, &handler, &neededMap]()
+			{
+				auto* maker = new EditsMaker;
+				maker->parent = this;
+
+				handler.preFillInitializer();
+				maker->fillInitializer(handler);
+
+				neededMap[editsKey] = true;
+			},
+
+			// Object
+			{}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(textDocumentKey, 0);
+	neededMap.emplace(editsKey, 0);
+
+	// This
+	topValue.object = this;
+}
+
+void TextDocumentEdit::EditsMaker::fillInitializer(JsonHandler& handler)
+{
+	auto& topValue = handler.objectStack.top();
+
+	auto& extraSetter = topValue.extraSetter;
+	auto& Vector = parent->edits;
+
+	// Value setters
+
+	// TextEdit[]
+	extraSetter =
+	{
+		// String
+		{},
+
+		// Number
+		{},
+
+		// Boolean
+		{},
+
+		// Null
+		{},
+
+		// Array
+		{},
+
+		// Object
+		[&Vector, &handler]()
+		{
+			auto& obj = Vector.emplace_back();
+
+			handler.preFillInitializer();
+			obj.fillInitializer(handler);
+		}
+	};
+
+	// This
+	topValue.object = this;
+
+	// ObjectMaker
+	topValue.objectMaker = unique_ptr<ObjectT>(this);
+}
 
 }

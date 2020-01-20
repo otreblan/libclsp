@@ -32,21 +32,33 @@ using namespace std;
 ///
 /// newText: String
 ///
-struct TextEdit
+struct TextEdit: public ObjectT
 {
+private:
 
 	const static String rangeKey;
+	const static String newTextKey;
+
+public:
 
 	/// The range of the text document to be manipulated. To insert
 	/// text into a document create a range where start == end.
 	Range range;
 
-
-	const static String newTextKey;
-
 	/// The string to be inserted. For delete operations use an
 	/// empty string.
 	String newText;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills the ObjectInitializer at the top of the handler stack
+	virtual void fillInitializer(JsonHandler& handler);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
 
 	TextEdit(Range range, String newText);
 
@@ -61,18 +73,43 @@ struct TextEdit
 ///
 /// edits: TextEdit[]
 ///
-struct TextDocumentEdit
+struct TextDocumentEdit: public ObjectT
 {
+private:
 	const static String textDocumentKey;
+	const static String editsKey;
 
+	struct EditsMaker: public ObjectT
+	{
+		// The object where the array is build
+		TextDocumentEdit* parent;
+
+		//====================   Parsing   ==================================//
+
+		/// This fills the ObjectInitializer at the top of the handler stack
+		virtual void fillInitializer(JsonHandler& handler);
+
+		// Using default isValid()
+
+		//===================================================================//
+	};
+
+public:
 	/// The text document to change.
 	VersionedTextDocumentIdentifier textDocument;
 
-
-	const static String editsKey;
-
 	/// The edits to be applied.
 	vector<TextEdit> edits;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills the ObjectInitializer at the top of the handler stack
+	virtual void fillInitializer(JsonHandler& handler);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	TextDocumentEdit(VersionedTextDocumentIdentifier textDocument,
