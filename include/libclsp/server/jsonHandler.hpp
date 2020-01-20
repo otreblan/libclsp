@@ -32,6 +32,8 @@ namespace libclsp
 using namespace std;
 using namespace rapidjson;
 
+struct JsonHandler;
+
 /// Functions to initialize a json member
 struct ValueSetter
 {
@@ -70,6 +72,9 @@ struct ObjectInitializer
 
 	/// The object or array being initialized
 	ObjectT* object;
+
+	/// The handler of the json parsing
+	JsonHandler* handler;
 
 	/// An optional setter for objects with index signatures
 	optional<ValueSetter> extraSetter;

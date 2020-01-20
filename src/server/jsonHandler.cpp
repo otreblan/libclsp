@@ -363,12 +363,14 @@ void JsonHandler::preFillInitializer()
 		// SetterMap
 		{},
 
-
 		// NeededMap
 		{},
 
 		// Object
 		nullptr,
+
+		// Handler,
+		this,
 
 		// ExtraSeter
 		{},
