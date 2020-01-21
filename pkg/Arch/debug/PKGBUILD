@@ -17,6 +17,7 @@ provides=('libclsp')
 conflicts=('libclsp')
 source=("${pkgname}::git+file://$(git rev-parse --show-toplevel)")
 md5sums=('SKIP')
+options=(debug)
 
 prepare() {
 	mkdir -p "${pkgname}/build"
@@ -34,7 +35,6 @@ build() {
 	cd "${pkgname}/build" || exit 1
 	cmake \
 		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DCMAKE_UNITY_BUILD=ON \
 		-DCMAKE_INTERPROCEDURAL_OPTIMIZATION=ON \
 		..
 	make
