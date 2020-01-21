@@ -31,19 +31,28 @@ using namespace std;
 ///
 /// position: Position
 ///
-struct TextDocumentPositionParams
+struct TextDocumentPositionParams: public ObjectT
 {
-
+private:
 	const static String textDocumentKey;
+	const static String positionKey;
 
+public:
 	/// The text document.
 	TextDocumentIdentifier textDocument;
 
-
-	const static String positionKey;
-
 	/// The position inside the text document.
 	Position position;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	TextDocumentPositionParams(TextDocumentIdentifier textDocument,

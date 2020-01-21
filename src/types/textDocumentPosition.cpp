@@ -31,11 +31,86 @@ TextDocumentPositionParams::TextDocumentPositionParams(
 		position(position)
 {};
 
-TextDocumentPositionParams::TextDocumentPositionParams():
-	textDocument(),
-	position()
-{};
-
+TextDocumentPositionParams::TextDocumentPositionParams(){};
 TextDocumentPositionParams::~TextDocumentPositionParams(){};
+
+void TextDocumentPositionParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Value setters
+
+	// textDocument:
+	setterMap.emplace(
+		textDocumentKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, handler, &neededMap, &initializer]()
+			{
+				handler->preFillInitializer();
+
+				textDocument.fillInitializer(initializer);
+
+				neededMap[textDocumentKey] = true;
+			}
+		}
+	);
+
+	// position:
+	setterMap.emplace(
+		positionKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, handler, &neededMap, &initializer]()
+			{
+				handler->preFillInitializer();
+
+				position.fillInitializer(initializer);
+
+				neededMap[positionKey] = true;
+			}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(textDocumentKey, 0);
+	neededMap.emplace(positionKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 }

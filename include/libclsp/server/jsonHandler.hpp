@@ -116,7 +116,8 @@ struct JsonHandler: public BaseReaderHandler<UTF8<>, JsonHandler>
 	bool EndArray(SizeType elementCount);
 
 
-	/// This function must be called before an object calls fillInitializer()
+	/// A new ObjectInitializer is put at the top of the stack.
+	/// This function must be called before an object calls fillInitializer().
 	void preFillInitializer();
 };
 
