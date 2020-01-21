@@ -94,7 +94,7 @@ void CancelParams::partialWrite(JsonWriter &writer)
 		{
 			writer.Number(n);
 		},
-		[&writer](String str)
+		[&writer](String &str)
 		{
 			writer.String(str);
 		}

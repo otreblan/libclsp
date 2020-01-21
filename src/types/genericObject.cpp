@@ -160,4 +160,22 @@ void GenericObject::ArrayMaker::
 	initializer.objectMaker = unique_ptr<ObjectT>(this);
 }
 
+void GenericObject::write(JsonWriter &writer)
+{
+	writer.StartObject();
+
+	partialWrite(writer);
+
+	writer.EndObject();
+}
+
+void GenericObject::partialWrite(JsonWriter &writer)
+{
+	for(auto &i: children)
+	{
+		writer.Key(i.first);
+		writer.Any(i.second);
+	}
+}
+
 }

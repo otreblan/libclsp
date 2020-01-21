@@ -64,7 +64,7 @@ void ResponseMessage::partialWrite(JsonWriter &writer)
 		{
 			writer.Number(n);
 		},
-		[&writer](String str)
+		[&writer](String &str)
 		{
 			writer.String(str);
 		},
@@ -139,7 +139,7 @@ void ResponseError::writeData(JsonWriter &writer)
 		writer.Key(dataKey);
 		visit(overload
 		(
-			[&writer](String str)
+			[&writer](String &str)
 			{
 				writer.String(str);
 			},

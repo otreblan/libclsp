@@ -50,8 +50,12 @@ private:
 
 		virtual ~ArrayMaker();
 	};
-public:
 
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
+public:
 	/// Key-value pairs of anything
 	map<String, Any> children;
 
@@ -62,6 +66,11 @@ public:
 	virtual void fillInitializer(ObjectInitializer& initializer);
 
 	// Using default isValid()
+	
+	//====================   Writing   ======================================//
+
+	/// This is for writing the json
+	virtual void write(JsonWriter &writer);
 
 	//=======================================================================//
 
