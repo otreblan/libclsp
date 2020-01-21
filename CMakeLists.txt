@@ -84,6 +84,7 @@ target_link_libraries(${PROJECT_NAME}
 target_compile_definitions(${PROJECT_NAME}
 	PUBLIC
 		${RAPIDJSON_CFLAGS_OTHER}
+		RAPIDJSON_HAS_STDSTRING=1
 )
 
 # Default flags

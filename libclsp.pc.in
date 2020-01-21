@@ -10,4 +10,4 @@ URL: @PROJECT_HOMEPAGE_URL@
 
 Requires:
 Libs: -L${libdir} -lclsp
-Cflags: -I${includedir}
+Cflags: -I${includedir} -DRAPIDJSON_HAS_STDSTRING=1
