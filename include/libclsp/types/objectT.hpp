@@ -34,14 +34,14 @@ struct JsonHandler;
 class ObjectT
 {
 protected:
-
-	/// This fills an ObjectInitializer
-	virtual void fillInitializer(ObjectInitializer& initializer);
-
 	/// This is like write() but without the object bounds.
 	virtual void partialWrite(Writer<StringBuffer> &writer);
 
 public:
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
 	/// This is for writing the json
 	virtual void write(Writer<StringBuffer> &writer);
 

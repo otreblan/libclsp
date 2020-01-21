@@ -16,21 +16,55 @@
 
 #pragma once
 
-#include <map>
-#include <optional>
-
-#include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace libclsp
 {
 
 using namespace std;
 
+
 /// An object with no predefined key-value pairs.
-struct GenericObject
+struct GenericObject: public ObjectT
 {
+private:
+	struct ArrayMaker: public ObjectT
+	{
+		/// The generic object where the array is constructed
+		GenericObject& parent;
+
+		/// The key of the array
+		string key;
+
+		//====================   Parsing   ======================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//=======================================================================//
+
+
+		ArrayMaker(GenericObject& parent, string key);
+
+		virtual ~ArrayMaker();
+	};
+public:
+
 	/// Key-value pairs of anything
 	map<String, Any> children;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
 
 	GenericObject(map<String, Any> children);
 
