@@ -124,4 +124,9 @@ void writeAny(Writer<StringBuffer> &writer, Any &a)
 	), a);
 }
 
+void writeKey(Writer<StringBuffer> &writer, const String &str)
+{
+	writer.Key(str.c_str(), str.size());
+}
+
 }

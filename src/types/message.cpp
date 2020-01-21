@@ -35,8 +35,8 @@ void Message::write(Writer<StringBuffer> &ww)
 
 void Message::partialWrite(Writer<StringBuffer> &ww)
 {
-	ww.Key(jsonrpc.first.c_str());
-	ww.String(jsonrpc.second.c_str());
+	ww.Key(jsonrpc.first.c_str(), jsonrpc.first.length());
+	ww.String(jsonrpc.second);
 }
 
 }

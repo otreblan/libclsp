@@ -61,7 +61,7 @@ void ResponseMessage::write(Writer<StringBuffer> &writer)
 void ResponseMessage::partialWrite(Writer<StringBuffer> &writer)
 {
 	// id
-	writer.Key(idKey.c_str());
+	writeKey(writer, idKey);
 	visit(overload
 	(
 		[&writer](Number ii)
@@ -70,7 +70,7 @@ void ResponseMessage::partialWrite(Writer<StringBuffer> &writer)
 		},
 		[&writer](String ii)
 		{
-			writer.String(ii.c_str());
+			writer.String(ii);
 		},
 		[&writer](Null)
 		{
@@ -87,7 +87,7 @@ void ResponseMessage::writeResultOrError(Writer<StringBuffer> &writer)
 	if(result.has_value())
 	{
 		// result
-		writer.Key(resultKey.c_str());
+		writeKey(writer, resultKey);
 		resultWriter.value()(result.value(), writer);
 	}
 	else
@@ -130,12 +130,12 @@ void ResponseError::write(Writer<StringBuffer> &writer)
 void ResponseError::partialWrite(Writer<StringBuffer> &writer)
 {
 	// code
-	writer.Key(codeKey.c_str());
+	writeKey(writer, codeKey);
 	writer.Int((int)code);
 
 	// message
-	writer.Key(messageKey.c_str());
-	writer.String(message.c_str());
+	writeKey(writer, messageKey);
+	writer.String(message);
 
 	// data?
 	writeData(writer);
@@ -145,12 +145,12 @@ void ResponseError::writeData(Writer<StringBuffer> &writer)
 {
 	if(data.has_value())
 	{
-		writer.Key(dataKey.c_str());
+		writer.Key(dataKey.c_str(), dataKey.size());
 		visit(overload
 		(
 			[&writer](String ii)
 			{
-				writer.String(ii.c_str());
+				writer.String(ii);
 			},
 			[&writer](Number ii)
 			{

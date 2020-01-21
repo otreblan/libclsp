@@ -70,4 +70,7 @@ void writeArray(Writer<StringBuffer> &writer, Array &a);
 /// Any json writer
 void writeAny(Writer<StringBuffer> &writer, Any &a);
 
+/// Write key with std::string
+void writeKey(Writer<StringBuffer> &writer, const String &str);
+
 }

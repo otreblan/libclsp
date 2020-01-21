@@ -25,5 +25,9 @@ yay -S libclsp
 include(FindPkgConfig)
 pkg_check_modules(LIBCLSP libclsp)
 
+add_executable(foo)
+
 target_link_libraries(foo PUBLIC ${LIBCLSP_LIBRARIES})
+target_include_directories(foo PUBLIC ${LIBCLSP_INCLUDE_DIRS})
+target_compile_definitions(foo PUBLIC ${LIBCLSP_CFLAGS_OTHER})
 ```
