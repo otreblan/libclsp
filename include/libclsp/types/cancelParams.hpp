@@ -36,10 +36,15 @@ struct CancelParams: public ObjectT
 private:
 	const static String idKey;
 
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 public:
 
 	/// The request id to cancel.
 	variant<Number, String> id;
+
 
 	//====================   Parsing   ======================================//
 
@@ -47,6 +52,11 @@ public:
 	virtual void fillInitializer(ObjectInitializer& initializer);
 
 	// Using default isValid()
+
+	//====================   Writing   ======================================//
+
+	/// This is for writing the json
+	virtual void write(JsonWriter &writer);
 
 	//=======================================================================//
 
