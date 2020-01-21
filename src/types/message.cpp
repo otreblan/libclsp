@@ -26,17 +26,19 @@ const pair<String, String> Message::jsonrpc = {"jsonrpc", "2.0"};
 Message::Message(){};
 Message::~Message(){};
 
-void Message::write(Writer<StringBuffer> &ww)
+void Message::write(JsonWriter &writer)
 {
-	ww.StartObject();
-	partialWrite(ww);
-	ww.EndObject();
+	writer.StartObject();
+
+	partialWrite(writer);
+
+	writer.EndObject();
 }
 
-void Message::partialWrite(Writer<StringBuffer> &ww)
+void Message::partialWrite(JsonWriter &writer)
 {
-	ww.Key(jsonrpc.first.c_str(), jsonrpc.first.length());
-	ww.String(jsonrpc.second);
+	writer.Key(jsonrpc.first);
+	writer.String(jsonrpc.second);
 }
 
 }

@@ -29,7 +29,7 @@ using namespace std;
 struct Message: public ObjectT
 {
 	/// This is for writing the json
-	virtual void write(Writer<StringBuffer> &ww);
+	virtual void write(JsonWriter &writer);
 
 	const static pair<String, String> jsonrpc;
 
@@ -38,7 +38,7 @@ struct Message: public ObjectT
 
 protected:
 	/// This is like write() but without the object bounds.
-	virtual void partialWrite(Writer<StringBuffer> &ww);
+	virtual void partialWrite(JsonWriter &writer);
 
 };
 

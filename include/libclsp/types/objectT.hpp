@@ -33,7 +33,7 @@ class ObjectT
 {
 protected:
 	/// This is like write() but without the object bounds.
-	virtual void partialWrite(Writer<StringBuffer> &writer);
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
 
@@ -41,7 +41,7 @@ public:
 	virtual void fillInitializer(ObjectInitializer& initializer);
 
 	/// This is for writing the json
-	virtual void write(Writer<StringBuffer> &writer);
+	virtual void write(JsonWriter &writer);
 
 	/// This checks if the JsonHandler called all necesary keys
 	virtual bool isValid(JsonHandler& handler);
@@ -49,17 +49,5 @@ public:
 	ObjectT();
 	virtual ~ObjectT();
 };
-
-/// Number json writer
-void writeNumber(Writer<StringBuffer> &writer, Number n);
-
-/// Array json writer
-void writeArray(Writer<StringBuffer> &writer, Array &a);
-
-/// Any json writer
-void writeAny(Writer<StringBuffer> &writer, Any &a);
-
-/// Write key with std::string
-void writeKey(Writer<StringBuffer> &writer, const String &str);
 
 }

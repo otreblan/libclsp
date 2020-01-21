@@ -24,8 +24,8 @@ using namespace rapidjson;
 
 
 void ObjectT::fillInitializer(ObjectInitializer&){};
-void ObjectT::partialWrite(Writer<StringBuffer>&){};
-void ObjectT::write(Writer<StringBuffer>&){};
+void ObjectT::partialWrite(JsonWriter&){};
+void ObjectT::write(JsonWriter&){};
 
 bool ObjectT::isValid(JsonHandler& handler)
 {
@@ -45,88 +45,5 @@ bool ObjectT::isValid(JsonHandler& handler)
 
 ObjectT::ObjectT(){};
 ObjectT::~ObjectT(){};
-
-void writeNumber(Writer<StringBuffer> &writer, Number n)
-{
-	visit(overload
-	(
-		[&writer](int n)
-		{
-			writer.Int(n);
-		},
-		[&writer](double n)
-		{
-			writer.Double(n);
-		}
-	), n);
-}
-
-void writeArray(Writer<StringBuffer> &writer, Array &a)
-{
-	writer.StartArray();
-	for(const auto &ii:a)
-	{
-		visit(overload
-		(
-			[&writer](String ii)
-			{
-				writer.String(ii.c_str());
-			},
-			[&writer](Number ii)
-			{
-				writeNumber(writer, ii);
-			},
-			[&writer](Boolean ii)
-			{
-				writer.Bool(ii);
-			},
-			[&writer](Null)
-			{
-				writer.Null();
-			},
-			[&writer](Object ii)
-			{
-				ii->write(writer);
-			}
-		), ii);
-	}
-	writer.EndArray();
-}
-
-void writeAny(Writer<StringBuffer> &writer, Any &a)
-{
-	visit(overload
-	(
-		[&writer](String ii)
-		{
-			writer.String(ii.c_str());
-		},
-		[&writer](Number ii)
-		{
-			writeNumber(writer, ii);
-		},
-		[&writer](Boolean ii)
-		{
-			writer.Bool(ii);
-		},
-		[&writer](Null)
-		{
-			writer.Null();
-		},
-		[&writer](Object ii)
-		{
-			ii->write(writer);
-		},
-		[&writer](Array &ii)
-		{
-			writeArray(writer, ii);
-		}
-	), a);
-}
-
-void writeKey(Writer<StringBuffer> &writer, const String &str)
-{
-	writer.Key(str.c_str(), str.size());
-}
 
 }

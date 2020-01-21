@@ -85,15 +85,15 @@ struct ResponseError: public ObjectT
 	virtual ~ResponseError();
 
 	/// This is for writing the json
-	virtual void write(Writer<StringBuffer> &writer);
+	virtual void write(JsonWriter &writer);
 
 private:
 
 	/// This is like write() but without the object bounds.
-	virtual void partialWrite(Writer<StringBuffer> &writer);
+	virtual void partialWrite(JsonWriter &writer);
 
 	/// Writer for the data pair
-	void writeData(Writer<StringBuffer> &writer);
+	void writeData(JsonWriter &writer);
 };
 
 /// A Response Message sent as a result of a request.
@@ -122,7 +122,7 @@ struct ResponseMessage: public Message
 	/// This member MUST NOT exist if there was an error invoking the method.
 	optional<any> result;
 
-	optional<function<void(any&, Writer<StringBuffer>&)>> resultWriter;
+	optional<function<void(JsonWriter& ,any&)>> resultWriter;
 
 
 	const static String errorKey;
@@ -132,7 +132,7 @@ struct ResponseMessage: public Message
 
 	ResponseMessage(variant<Number, String, Null> id,
 		any result,
-		optional<function<void(any&, Writer<StringBuffer>&)>> resultWriter);
+		optional<function<void(JsonWriter& ,any&)>> resultWriter);
 
 	ResponseMessage(variant<Number, String, Null> id,
 		ResponseError error);
@@ -143,13 +143,13 @@ struct ResponseMessage: public Message
 
 
 	/// This is for writing the json
-	virtual void write(Writer<StringBuffer> &writer);
+	virtual void write(JsonWriter &writer);
 
 private:
 	/// This is like write() but without the object bounds.
-	virtual void partialWrite(Writer<StringBuffer> &writer);
+	virtual void partialWrite(JsonWriter &writer);
 
-	void writeResultOrError(Writer<StringBuffer> &writer);
+	void writeResultOrError(JsonWriter &writer);
 };
 
 }

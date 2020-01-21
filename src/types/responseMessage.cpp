@@ -28,7 +28,7 @@ const String ResponseMessage::errorKey  = "error";
 
 ResponseMessage::ResponseMessage(variant<Number, String, Null> id,
 	any result,
-	optional<function<void(any&, Writer<StringBuffer>&)>> resultWriter):
+	optional<function<void(JsonWriter& ,any&)>> resultWriter):
 		id(id),
 		result(result),
 		resultWriter(resultWriter)
@@ -40,15 +40,11 @@ ResponseMessage::ResponseMessage(variant<Number, String, Null> id,
 		error(error)
 {};
 
-ResponseMessage::ResponseMessage():
-	id(),
-	error()
-{};
-
+ResponseMessage::ResponseMessage(){};
 ResponseMessage::~ResponseMessage(){};
 
 
-void ResponseMessage::write(Writer<StringBuffer> &writer)
+void ResponseMessage::write(JsonWriter &writer)
 {
 	writer.StartObject();
 
@@ -58,19 +54,19 @@ void ResponseMessage::write(Writer<StringBuffer> &writer)
 	writer.EndObject();
 }
 
-void ResponseMessage::partialWrite(Writer<StringBuffer> &writer)
+void ResponseMessage::partialWrite(JsonWriter &writer)
 {
 	// id
-	writeKey(writer, idKey);
+	writer.Key(idKey);
 	visit(overload
 	(
-		[&writer](Number ii)
+		[&writer](Number n)
 		{
-			writeNumber(writer, ii);
+			writer.Number(n);
 		},
-		[&writer](String ii)
+		[&writer](String str)
 		{
-			writer.String(ii);
+			writer.String(str);
 		},
 		[&writer](Null)
 		{
@@ -82,19 +78,19 @@ void ResponseMessage::partialWrite(Writer<StringBuffer> &writer)
 	writeResultOrError(writer);
 }
 
-void ResponseMessage::writeResultOrError(Writer<StringBuffer> &writer)
+void ResponseMessage::writeResultOrError(JsonWriter &writer)
 {
 	if(result.has_value())
 	{
 		// result
-		writeKey(writer, resultKey);
-		resultWriter.value()(result.value(), writer);
+		writer.Key(resultKey);
+		resultWriter.value()(writer, result.value());
 	}
 	else
 	{
 		// error
-		writer.Key(errorKey.c_str());
-		error.value().write(writer);
+		writer.Key(errorKey);
+		error->write(writer);
 	}
 }
 
@@ -110,15 +106,10 @@ ResponseError::ResponseError(ErrorCodes code, String message,
 		data(data)
 {};
 
-ResponseError::ResponseError():
-	code(),
-	message(),
-	data()
-{};
-
+ResponseError::ResponseError(){};
 ResponseError::~ResponseError(){};
 
-void ResponseError::write(Writer<StringBuffer> &writer)
+void ResponseError::write(JsonWriter &writer)
 {
 	writer.StartObject();
 
@@ -127,46 +118,46 @@ void ResponseError::write(Writer<StringBuffer> &writer)
 	writer.EndObject();
 }
 
-void ResponseError::partialWrite(Writer<StringBuffer> &writer)
+void ResponseError::partialWrite(JsonWriter &writer)
 {
 	// code
-	writeKey(writer, codeKey);
+	writer.Key(codeKey);
 	writer.Int((int)code);
 
 	// message
-	writeKey(writer, messageKey);
+	writer.Key(messageKey);
 	writer.String(message);
 
 	// data?
 	writeData(writer);
 }
 
-void ResponseError::writeData(Writer<StringBuffer> &writer)
+void ResponseError::writeData(JsonWriter &writer)
 {
 	if(data.has_value())
 	{
-		writer.Key(dataKey.c_str(), dataKey.size());
+		writer.Key(dataKey);
 		visit(overload
 		(
-			[&writer](String ii)
+			[&writer](String str)
 			{
-				writer.String(ii);
+				writer.String(str);
 			},
-			[&writer](Number ii)
+			[&writer](Number n)
 			{
-				writeNumber(writer, ii);
+				writer.Number(n);
 			},
-			[&writer](Boolean ii)
+			[&writer](Boolean b)
 			{
-				writer.Bool(ii);
+				writer.Bool(b);
 			},
-			[&writer](Array &ii)
+			[&writer](Array &a)
 			{
-				writeArray(writer, ii);
+				writer.Array(a);
 			},
-			[&writer](Object ii)
+			[&writer](Object obj)
 			{
-				ii->write(writer);
+				writer.Object(*obj);
 			},
 			[&writer](Null)
 			{
