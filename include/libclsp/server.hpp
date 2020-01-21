@@ -17,4 +17,5 @@
 #pragma once
 
 #include <libclsp/server/jsonHandler.hpp>
+#include <libclsp/server/jsonWriter.hpp>
 #include <libclsp/server/server.hpp>

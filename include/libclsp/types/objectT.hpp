@@ -18,10 +18,8 @@
 
 #include <functional>
 
-#include <rapidjson/writer.h>
-
-#include <libclsp/types/jsonTypes.hpp>
 #include <libclsp/server/jsonHandler.hpp>
+#include <libclsp/server/jsonWriter.hpp>
 
 namespace libclsp
 {
@@ -50,15 +48,6 @@ public:
 
 	ObjectT();
 	virtual ~ObjectT();
-};
-
-/// Copied from https://arne-mertz.de/2018/05/overload-build-a-variant-visitor-on-the-fly/
-template<class ...Fs>
-struct overload : Fs...
-{
-	overload(Fs const&... fs): Fs{fs}...{};
-
-	using Fs::operator()...;
 };
 
 /// Number json writer

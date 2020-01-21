@@ -17,5 +17,6 @@
 target_sources(${PROJECT_NAME}
 	PRIVATE
 		jsonHandler.cpp
+		jsonWriter.cpp
 		server.cpp
 )
