@@ -57,42 +57,36 @@ enum class TextDocumentSyncKind
 ///
 struct TextDocumentSyncOptions
 {
-
+private:
 	const static String openCloseKey;
+	const static String changeKey;
+	const static String willSaveKey;
+	const static String willSaveWaitUntilKey;
+	const static String saveKey;
 
+public:
 	/// Open and close notifications are sent to the server. If omitted
 	/// open close notification should not be sent.
 	optional<Boolean> openClose;
-
-
-	const static String changeKey;
 
 	/// Change notifications are sent to the server. See TextDocumentSyncKind.None,
 	/// TextDocumentSyncKind.Full and TextDocumentSyncKind.Incremental. If omitted
 	/// it defaults to TextDocumentSyncKind.None.
 	optional<TextDocumentSyncKind> change;
 
-
-	const static String willSaveKey;
-
 	/// If present will save notifications are sent to the server.
 	/// If omitted the notification should not be sent.
 	optional<Boolean> willSave;
-
-
-	const static String willSaveWaitUntilKey;
 
 	/// If present will save wait until requests are sent to the server.
 	/// If omitted the request should not be sent.
 	optional<Boolean> willSaveWaitUntil;
 
-
-	const static String saveKey;
-
 	/// If present save notifications are sent to the server.
 	/// If omitted the notification should not be sent.
 	optional<SaveOptions> save;
 
+	// No parsing
 
 	TextDocumentSyncOptions(optional<Boolean> openClose,
 		optional<TextDocumentSyncKind> change,
@@ -115,33 +109,38 @@ struct TextDocumentSyncOptions
 ///
 /// didSave?: Boolean;
 ///
-struct TextDocumentSyncClientCapabilities
+struct TextDocumentSyncClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
+	const static String willSaveKey;
+	const static String willSaveWaitUntilKey;
+	const static String didSaveKey;
 
+public:
 	/// Whether text document synchronization supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
 
-
-	const static String willSaveKey;
-
 	/// The client supports sending will save notifications.
 	optional<Boolean> willSave;
-
-
-	const static String willSaveWaitUntilKey;
 
 	/// The client supports sending a will save request and
 	/// waits for a response providing text edits which will
 	/// be applied to the document before it is saved.
 	optional<Boolean> willSaveWaitUntil;
 
-
-	const static String didSaveKey;
-
 	/// The client supports did save notifications.
 	optional<Boolean> didSave;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	TextDocumentSyncClientCapabilities(optional<Boolean> dynamicRegistration,

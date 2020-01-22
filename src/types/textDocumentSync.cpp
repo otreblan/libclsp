@@ -41,14 +41,7 @@ TextDocumentSyncOptions::TextDocumentSyncOptions(optional<Boolean> openClose,
 {};
 
 
-TextDocumentSyncOptions::TextDocumentSyncOptions():
-	openClose(),
-	change(),
-	willSave(),
-	willSaveWaitUntil(),
-	save()
-{};
-
+TextDocumentSyncOptions::TextDocumentSyncOptions(){};
 TextDocumentSyncOptions::~TextDocumentSyncOptions(){};
 
 
@@ -76,13 +69,122 @@ TextDocumentSyncClientCapabilities::
 			didSave(didSave)
 {};
 
-TextDocumentSyncClientCapabilities::TextDocumentSyncClientCapabilities():
-	dynamicRegistration(),
-	willSave(),
-	willSaveWaitUntil(),
-	didSave()
-{};
-
+TextDocumentSyncClientCapabilities::TextDocumentSyncClientCapabilities(){};
 TextDocumentSyncClientCapabilities::~TextDocumentSyncClientCapabilities(){};
 
+void TextDocumentSyncClientCapabilities::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?:
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// willSave?:
+	setterMap.emplace(
+		willSaveKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				willSave = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+	// willSaveWaitUntil?:
+	setterMap.emplace(
+		willSaveWaitUntilKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				willSaveWaitUntil = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+	// didSave?:
+	setterMap.emplace(
+		didSaveKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				didSave = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+	// This
+	initializer.object = this;
+}
 }
