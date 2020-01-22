@@ -19,6 +19,7 @@
 #include <optional>
 
 #include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace libclsp
 {
@@ -33,14 +34,13 @@ using namespace std;
 ///
 struct WorkspaceFoldersServerCapabilities
 {
-
+private:
 	const static String supportedKey;
+	const static String changeNotificationsKey;
 
+public:
 	/// The server has support for workspace folders
 	optional<Boolean> supported;
-
-
-	const static String changeNotificationsKey;
 
 	/// Whether the server wants to receive workspace folder
 	/// change notifications.
@@ -51,6 +51,7 @@ struct WorkspaceFoldersServerCapabilities
 	/// using the `client/unregisterCapability` request.
 	optional<variant<String, Boolean>> changeNotifications;
 
+	// No parsing
 
 	WorkspaceFoldersServerCapabilities(optional<Boolean> supported,
 		optional<variant<String, Boolean>> changeNotifications);
@@ -66,20 +67,29 @@ struct WorkspaceFoldersServerCapabilities
 ///
 /// name: String
 ///
-struct WorkspaceFolder
+struct WorkspaceFolder: public ObjectT
 {
-
+private:
 	const static String uriKey;
+	const static String nameKey;
 
+public:
 	/// The associated URI for this workspace folder.
 	DocumentUri uri;
-
-
-	const static String nameKey;
 
 	/// The name of the workspace folder. Used to refer to this
 	/// workspace folder in the user interface.
 	String name;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	WorkspaceFolder(DocumentUri uri, String name);

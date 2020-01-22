@@ -33,11 +33,7 @@ WorkspaceFoldersServerCapabilities::
 			changeNotifications(changeNotifications)
 {};
 
-WorkspaceFoldersServerCapabilities::WorkspaceFoldersServerCapabilities():
-	supported(),
-	changeNotifications()
-{};
-
+WorkspaceFoldersServerCapabilities::WorkspaceFoldersServerCapabilities(){};
 WorkspaceFoldersServerCapabilities::~WorkspaceFoldersServerCapabilities(){};
 
 
@@ -49,11 +45,79 @@ WorkspaceFolder::WorkspaceFolder(DocumentUri uri, String name):
 	name(name)
 {};
 
-WorkspaceFolder::WorkspaceFolder():
-	uri(),
-	name()
-{};
-
+WorkspaceFolder::WorkspaceFolder(){};
 WorkspaceFolder::~WorkspaceFolder(){};
+
+
+void WorkspaceFolder::fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Value setters
+
+	// uri:
+	setterMap.emplace(
+		uriKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				uri = str;
+				neededMap[uriKey] = true;
+			},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// name:
+	setterMap.emplace(
+		nameKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				name = str;
+				neededMap[nameKey] = true;
+			},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(uriKey, 0);
+	neededMap.emplace(nameKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 }
