@@ -19,6 +19,8 @@
 #include <optional>
 
 #include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
+#include <libclsp/types/genericObject.hpp>
 
 namespace libclsp
 {
@@ -38,13 +40,16 @@ using namespace std;
 ///
 /// percentage?: Number
 ///
-struct WorkDoneProgressBegin
+struct WorkDoneProgressBegin: public ObjectT
 {
-
-	const static pair<String, String> kind;
-
-
+private:
 	const static String titleKey;
+	const static String cancellableKey;
+	const static String messageKey;
+	const static String percentageKey;
+
+public:
+	const static pair<String, String> kind;
 
 	/// Mandatory title of the progress operation. Used to briefly inform about
 	/// the kind of operation being performed.
@@ -52,16 +57,10 @@ struct WorkDoneProgressBegin
 	/// Examples: "Indexing" or "Linking dependencies".
 	String title;
 
-
-	const static String cancellableKey;
-
 	/// Controls if a cancel button should show to allow the user to cancel the
 	/// long running operation. Clients that don't support cancellation are allowed
 	/// to ignore the setting.
 	optional<Boolean> cancellable;
-
-
-	const static String messageKey;
 
 	/// Optional, more detailed associated progress message. Contains
 	/// complementary information to the `title`.
@@ -70,9 +69,6 @@ struct WorkDoneProgressBegin
 	/// If unset, the previous progress message (if any) is still valid.
 	optional<String> message;
 
-
-	const static String percentageKey;
-
 	/// Optional progress percentage to display (value 100 is considered 100%).
 	/// If not provided infinite progress is assumed and clients are allowed
 	/// to ignore the `percentage` value in subsequent in report notifications.
@@ -80,6 +76,16 @@ struct WorkDoneProgressBegin
 	/// The value should be steadily rising. Clients are free to ignore values
 	/// that are not following this rule.
 	optional<Number> percentage;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	WorkDoneProgressBegin(String title,
@@ -104,12 +110,15 @@ struct WorkDoneProgressBegin
 ///
 /// percentage?: Number
 ///
-struct WorkDoneProgressReport
+struct WorkDoneProgressReport: public ObjectT
 {
-	const static pair<String, String> kind;
-
-
+private:
 	const static String cancellableKey;
+	const static String messageKey;
+	const static String percentageKey;
+
+public:
+	const static pair<String, String> kind;
 
 	/// Controls enablement state of a cancel button. This property is only valid if a cancel
 	/// button got requested in the `WorkDoneProgressStart` payload.
@@ -118,18 +127,12 @@ struct WorkDoneProgressReport
 	/// enablement state are allowed to ignore the setting.
 	optional<Boolean> cancellable;
 
-
-	const static String messageKey;
-
 	/// Optional, more detailed associated progress message. Contains
 	/// complementary information to the `title`.
 	///
 	/// Examples: "3/25 files", "project/src/module2", "node_modules/some_dep".
 	/// If unset, the previous progress message (if any) is still valid.
 	optional<String> message;
-
-
-	const static String percentageKey;
 
 	/// Optional progress percentage to display (value 100 is considered 100%).
 	/// If not provided infinite progress is assumed and clients are allowed
@@ -138,6 +141,17 @@ struct WorkDoneProgressReport
 	/// The value should be steadily rising. Clients are free to ignore values
 	/// that are not following this rule.
 	optional<Number> percentage;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
 
 	WorkDoneProgressReport(optional<Boolean> cancellable,
 		optional<String> message,
@@ -148,17 +162,34 @@ struct WorkDoneProgressReport
 	virtual ~WorkDoneProgressReport();
 };
 
-struct WorkDoneProgressEnd
+/// Signaling the end of a progress reporting is done using the following
+/// payload
+///
+/// kind: 'end'
+///
+/// message?: String
+///
+struct WorkDoneProgressEnd: public ObjectT
 {
-
-	const static pair<String, String> kind;
-
-
+private:
 	const static String messageKey;
+
+public:
+	const static pair<String, String> kind;
 
 	/// Optional, a final message indicating to for example indicate
 	/// the outcome of the operation.
 	optional<String> message;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	WorkDoneProgressEnd(optional<String> message);
@@ -172,12 +203,24 @@ struct WorkDoneProgressEnd
 ///
 /// workDoneToken?: ProgressToken
 ///
-struct WorkDoneProgressParams
+struct WorkDoneProgressParams: public ObjectT
 {
+private:
 	const static String workDoneTokenKey;
 
+public:
 	/// An optional token that a server can use to report work done progress.
 	optional<ProgressToken> workDoneToken;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	WorkDoneProgressParams(optional<ProgressToken> workDoneToken);
@@ -196,6 +239,8 @@ struct WorkDoneProgressOptions
 	const static String workDoneProgressKey;
 
 	optional<Boolean> workDoneProgress;
+
+	// No parsing
 
 
 	WorkDoneProgressOptions(optional<ProgressToken> workDoneProgress);
@@ -218,6 +263,8 @@ struct WorkDoneProgressCreateParams
 	/// The token to be used to report progress.
 	ProgressToken token;
 
+	// No parsing
+
 
 	WorkDoneProgressCreateParams(ProgressToken token);
 
@@ -232,21 +279,52 @@ struct WorkDoneProgressCreateParams
 ///
 /// value: WorkDoneProgressBegin | WorkDoneProgressReport | WorkDoneProgressEnd
 ///
-struct ProgressParams
+struct ProgressParams: public ObjectT
 {
-
+private:
 	const static String tokenKey;
+	const static String valueKey;
 
+	struct ValueMaker: public ObjectT
+	{
+		/// The object where value is
+		ProgressParams &parent;
+
+		/// A cache for the values recieved before kind:
+		GenericObject cache;
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
+
+		ValueMaker(ProgressParams &parent);
+
+		virtual ~ValueMaker();
+	};
+
+public:
 	/// The progress token provided by the client or server.
 	ProgressToken token;
-
-
-	const static String valueKey;
 
 	/// The progress data.
 	variant<WorkDoneProgressBegin,
 		WorkDoneProgressReport,
 		WorkDoneProgressEnd> value;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	ProgressParams(ProgressToken token,

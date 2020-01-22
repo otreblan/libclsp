@@ -31,7 +31,7 @@ using namespace std;
 
 /// A workspace edit represents changes to many resources
 /// managed in the workspace.
-//
+///
 /// changes?: { [uri: DocumentUri]: TextEdit[]; }
 ///
 /// documentChanges?: (TextDocumentEdit[] | (TextDocumentEdit | CreateFile | RenameFile | DeleteFile)[])
