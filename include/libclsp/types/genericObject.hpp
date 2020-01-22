@@ -23,34 +23,30 @@ namespace libclsp
 
 using namespace std;
 
+/// This helps to parse a generic array
+struct ArrayMaker: public ObjectT
+{
+	/// The array to make
+	Array& parentArray;
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
+
+	ArrayMaker(Array& parentArray);
+
+	virtual ~ArrayMaker();
+};
 
 /// An object with no predefined key-value pairs.
 struct GenericObject: public ObjectT
 {
-private:
-	struct ArrayMaker: public ObjectT
-	{
-		/// The generic object where the array is constructed
-		GenericObject& parent;
-
-		/// The key of the array
-		string key;
-
-		//====================   Parsing   ======================================//
-
-		/// This fills an ObjectInitializer
-		virtual void fillInitializer(ObjectInitializer& initializer);
-
-		// Using default isValid()
-
-		//=======================================================================//
-
-
-		ArrayMaker(GenericObject& parent, string key);
-
-		virtual ~ArrayMaker();
-	};
-
 protected:
 	/// This is like write() but without the object bounds.
 	virtual void partialWrite(JsonWriter &writer);

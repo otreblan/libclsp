@@ -68,9 +68,9 @@ void GenericObject::fillInitializer(ObjectInitializer& initializer)
 		// Array
 		[this, handler]()
 		{
-			auto* maker = new ArrayMaker(*this, handler->lastKey);
+			auto& newArray = children.emplace(handler->lastKey, Array()).first->second;
 
-			children[handler->lastKey] = Array();
+			auto* maker = new ArrayMaker(get<Array>(newArray));
 
 			handler->preFillInitializer();
 			maker->fillInitializer(handler->objectStack.top());
@@ -93,20 +93,17 @@ void GenericObject::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
-GenericObject::ArrayMaker::ArrayMaker(GenericObject& parent, string key):
-	parent(parent),
-	key(key)
+ArrayMaker::ArrayMaker(Array& parentArray):
+	parentArray(parentArray)
 {};
 
-GenericObject::ArrayMaker::~ArrayMaker(){};
+ArrayMaker::~ArrayMaker(){};
 
-void GenericObject::ArrayMaker::
-	fillInitializer(ObjectInitializer& initializer)
+void ArrayMaker::fillInitializer(ObjectInitializer& initializer)
 {
 	auto* handler = initializer.handler;
 
 	auto& extraSetter = initializer.extraSetter;
-	auto& Vector = get<Array>(parent.children[key]);
 
 	// Value setters
 
@@ -114,38 +111,38 @@ void GenericObject::ArrayMaker::
 	extraSetter =
 	{
 		// String
-		[&Vector](String str)
+		[this](String str)
 		{
-			Vector.emplace_back(str);
+			parentArray.emplace_back(str);
 		},
 
 		// Number
-		[&Vector](Number n)
+		[this](Number n)
 		{
-			Vector.emplace_back(n);
+			parentArray.emplace_back(n);
 		},
 
 		// Boolean
-		[&Vector](Boolean b)
+		[this](Boolean b)
 		{
-			Vector.emplace_back(b);
+			parentArray.emplace_back(b);
 		},
 
 		// Null
-		[&Vector]()
+		[this]()
 		{
-			Vector.emplace_back(Null());
+			parentArray.emplace_back(Null());
 		},
 
 		// Array
 		{},
 
 		// Object
-		[&Vector, handler]()
+		[this, handler]()
 		{
 			auto obj = make_shared<GenericObject>();
 
-			Vector.emplace_back(obj);
+			parentArray.emplace_back(obj);
 
 			handler->preFillInitializer();
 

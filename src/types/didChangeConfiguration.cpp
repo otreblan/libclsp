@@ -15,6 +15,7 @@
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <libclsp/types/didChangeConfiguration.hpp>
+#include <libclsp/types/genericObject.hpp>
 
 namespace libclsp
 {
@@ -30,13 +31,50 @@ DidChangeConfigurationClientCapabilities::
 {};
 
 DidChangeConfigurationClientCapabilities::
-	DidChangeConfigurationClientCapabilities():
-		dynamicRegistration()
+	DidChangeConfigurationClientCapabilities()
 {};
 
 DidChangeConfigurationClientCapabilities::
 	~DidChangeConfigurationClientCapabilities()
 {};
+
+void DidChangeConfigurationClientCapabilities::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?:
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 
 const String DidChangeConfigurationParams::settingsKey = "settings";
@@ -45,10 +83,81 @@ DidChangeConfigurationParams::DidChangeConfigurationParams(Any settings):
 	settings(settings)
 {};
 
-DidChangeConfigurationParams::DidChangeConfigurationParams():
-	settings()
-{};
-
+DidChangeConfigurationParams::DidChangeConfigurationParams(){};
 DidChangeConfigurationParams::~DidChangeConfigurationParams(){};
+
+void DidChangeConfigurationParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Value setters
+
+	// settings
+	setterMap.emplace(
+		settingsKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				settings = str;
+				neededMap[settingsKey] = true;
+			},
+
+			// Number
+			[this, &neededMap](Number n)
+			{
+				settings = n;
+				neededMap[settingsKey] = true;
+			},
+
+			// Boolean
+			[this, &neededMap](Boolean b)
+			{
+				settings = b;
+				neededMap[settingsKey] = true;
+			},
+
+			// Null
+			[this, &neededMap]()
+			{
+				settings = Null();
+				neededMap[settingsKey] = true;
+			},
+
+			// Array
+			[this, handler, &neededMap]()
+			{
+				settings = Array();
+
+				auto* maker = new ArrayMaker(get<Array>(settings));
+
+				handler->preFillInitializer();
+				maker->fillInitializer(handler->objectStack.top());
+
+				neededMap[settingsKey] = true;
+			},
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				settings = Object(new GenericObject());
+
+				handler->preFillInitializer();
+				get<Object>(settings)->fillInitializer(handler->objectStack.top());
+
+				neededMap[settingsKey] = true;
+			}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(settingsKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 }

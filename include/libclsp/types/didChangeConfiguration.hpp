@@ -19,6 +19,7 @@
 #include <optional>
 
 #include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace libclsp
 {
@@ -29,12 +30,24 @@ using namespace std;
 ///
 /// dynamicRegistration?: Boolean
 ///
-struct DidChangeConfigurationClientCapabilities
+struct DidChangeConfigurationClientCapabilities: public ObjectT
 {
+private:
 	const static String dynamicRegistrationKey;
 
+public:
 	/// Did change configuration notification supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DidChangeConfigurationClientCapabilities(optional<Boolean> dynamicRegistration);
@@ -49,12 +62,24 @@ struct DidChangeConfigurationClientCapabilities
 ///
 /// settings: Any
 ///
-struct DidChangeConfigurationParams
+struct DidChangeConfigurationParams: public ObjectT
 {
+private:
 	const static String settingsKey;
 
+public:
 	/// The actual changed settings
 	Any settings;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DidChangeConfigurationParams(Any settings);
