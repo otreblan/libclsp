@@ -29,24 +29,60 @@ ShowMessageParams::ShowMessageParams(MessageType type, String message):
 	message(message)
 {};
 
-ShowMessageParams::ShowMessageParams():
-	type(),
-	message()
-{};
-
+ShowMessageParams::ShowMessageParams(){};
 ShowMessageParams::~ShowMessageParams(){};
 
+
+const String MessageActionItem::titleKey = "title";
 
 MessageActionItem::MessageActionItem(String title):
 	title(title)
 {};
 
-MessageActionItem::MessageActionItem():
-	title()
-{};
-
+MessageActionItem::MessageActionItem(){};
 MessageActionItem::~MessageActionItem(){};
 
+void MessageActionItem::fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Value setters
+
+	// title:
+	setterMap.emplace(
+		titleKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				title = str;
+				neededMap[titleKey] = true;
+			},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(titleKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 const String ShowMessageRequestParams::typeKey    = "type";
 const String ShowMessageRequestParams::messageKey = "message";
@@ -60,12 +96,7 @@ ShowMessageRequestParams::ShowMessageRequestParams(MessageType type,
 		actions(actions)
 {};
 
-ShowMessageRequestParams::ShowMessageRequestParams():
-	type(),
-	message(),
-	actions()
-{};
-
+ShowMessageRequestParams::ShowMessageRequestParams(){};
 ShowMessageRequestParams::~ShowMessageRequestParams(){};
 
 }

@@ -19,6 +19,7 @@
 #include <optional>
 
 #include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace libclsp
 {
@@ -49,17 +50,19 @@ enum class MessageType
 ///
 struct ShowMessageParams
 {
-
+private:
 	const static String typeKey;
+	const static String messageKey;
 
+public:
 	/// The message type. See {@link MessageType}.
 	MessageType type;
 
-
-	const static String messageKey;
-
 	/// The actual message.
 	String message;
+
+
+	// No parsing
 
 
 	ShowMessageParams(MessageType type, String message);
@@ -73,12 +76,25 @@ struct ShowMessageParams
 ///
 /// title: String
 ///
-struct MessageActionItem
+struct MessageActionItem: public ObjectT
 {
+private:
 	const static String titleKey;
 
+public:
 	/// A short title like 'Retry', 'Open Log' etc.
 	String title;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
 
 	MessageActionItem(String title);
 
@@ -89,23 +105,22 @@ struct MessageActionItem
 
 struct ShowMessageRequestParams
 {
-
+private:
 	const static String typeKey;
+	const static String messageKey;
+	const static String actionsKey;
 
+public:
 	/// The message type. See {@link MessageType}.
 	MessageType type;
-
-
-	const static String messageKey;
 
 	/// The actual message.
 	String message;
 
-
-	const static String actionsKey;
-
 	/// The message action items to present.
 	optional<vector<MessageActionItem>> actions;
+
+	// No parsing
 
 	ShowMessageRequestParams(MessageType type,
 		String message,
