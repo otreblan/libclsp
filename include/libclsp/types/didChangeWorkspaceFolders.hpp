@@ -29,18 +29,47 @@ using namespace std;
 ///
 /// removed: WorkspaceFolder[]
 ///
-struct WorkspaceFoldersChangeEvent
+struct WorkspaceFoldersChangeEvent: public ObjectT
 {
-	const static String addedKey;;
+private:
+	const static String addedKey;
+	const static String removedKey;;
 
+	struct AddedRemovedMaker: public ObjectT
+	{
+		/// A reference to the vector to make
+		vector<WorkspaceFolder>& parentArray;
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
+
+		AddedRemovedMaker(vector<WorkspaceFolder>& parentArray);
+
+		virtual ~AddedRemovedMaker();
+	};
+
+public:
 	/// The array of added workspace folders
 	vector<WorkspaceFolder> added;
 
-
-	const static String removedKey;;
-
 	/// The array of the removed workspace folders
 	vector<WorkspaceFolder> removed;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	WorkspaceFoldersChangeEvent(vector<WorkspaceFolder> added,
@@ -58,12 +87,25 @@ struct WorkspaceFoldersChangeEvent
 ///
 /// event: WorkspaceFoldersChangeEvent
 ///
-struct DidChangeWorkspaceFoldersParams
+struct DidChangeWorkspaceFoldersParams: public ObjectT
 {
+private:
 	const static String eventKey;
 
+public:
 	/// The actual workspace folder change event.
 	WorkspaceFoldersChangeEvent event;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
 
 	DidChangeWorkspaceFoldersParams(WorkspaceFoldersChangeEvent event);
 
