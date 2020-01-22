@@ -27,18 +27,18 @@ using namespace std;
 
 struct ConfigurationItem
 {
-
+private:
 	const static String scopeUriKey;
+	const static String sectionKey;
 
+public:
 	/// The scope to get the configuration section for.
 	optional<DocumentUri> scopeUri;
-
-
-	const static String sectionKey;
 
 	/// The configuration section asked for.
 	optional<String> section;
 
+	// No parsing
 
 	ConfigurationItem(optional<DocumentUri> scopeUri, optional<String> section);
 
@@ -49,9 +49,13 @@ struct ConfigurationItem
 
 struct ConfigurationParams
 {
+private:
 	const static String itemsKey;
 
+public:
 	vector<ConfigurationItem> items;
+
+	// No parsing
 
 	ConfigurationParams(vector<ConfigurationItem> items);
 

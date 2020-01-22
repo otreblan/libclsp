@@ -30,11 +30,7 @@ ConfigurationItem::ConfigurationItem(optional<DocumentUri> scopeUri,
 		section(section)
 {};
 
-ConfigurationItem::ConfigurationItem():
-		scopeUri(),
-		section()
-{};
-
+ConfigurationItem::ConfigurationItem(){};
 ConfigurationItem::~ConfigurationItem(){};
 
 
@@ -44,10 +40,7 @@ ConfigurationParams::ConfigurationParams(vector<ConfigurationItem> items):
 	items(items)
 {};
 
-ConfigurationParams::ConfigurationParams():
-	items()
-{};
-
+ConfigurationParams::ConfigurationParams(){};
 ConfigurationParams::~ConfigurationParams(){};
 
 }
