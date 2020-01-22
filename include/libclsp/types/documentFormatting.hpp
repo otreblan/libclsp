@@ -95,7 +95,7 @@ struct FormattingOptions
 
 	const static String trimTrailingWhitespaceKey;
 
-	/// Trim trailing whitespaces on a line.
+	/// Trim trailing whitespace on a line.
 	///
 	/// @since 3.15.0
 	optional<Boolean> trimTrailingWhitespace;

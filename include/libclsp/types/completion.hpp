@@ -59,7 +59,7 @@ struct CompletionOptions: public WorkDoneProgressOptions
 	const static String allCommitCharactersKey;
 
 	/// The list of all possible characters that commit a completion.
-	/// This field can be used if clients don't support individual commmit
+	/// This field can be used if clients don't support individual commit
 	/// characters per completion item.
 	///
 	/// If a server provides both `allCommitCharacters` and commit characters
@@ -360,7 +360,7 @@ struct CompletionItem
 
 	/// The format of the insert text. The format applies to both the
 	/// `insertText` property and the `newText` property of a provided
-	/// `textEdit`. If ommitted defaults to `InsertTextFormat.PlainText`.
+	/// `textEdit`. If omitted defaults to `InsertTextFormat.PlainText`.
 	optional<InsertTextFormat> insertTextFormat;
 
 
@@ -623,7 +623,7 @@ struct CompletionClientCapabilities
 	const static String contextSupportKey;
 
 	/// The client supports to send additional context information for a
-	/// `textDocument/completion` requestion.
+	/// `textDocument/completion` request.
 	optional<Boolean> contextSupport;
 
 

@@ -890,7 +890,7 @@ struct InitializeResult
 
 		const static String versionKey;
 
-		/// The servers's version as defined by the server.
+		/// The server's version as defined by the server.
 		optional<String> version;
 
 

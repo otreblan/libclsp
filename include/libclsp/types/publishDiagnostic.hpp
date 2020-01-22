@@ -77,7 +77,7 @@ struct PublishDiagnosticsClientCapabilities
 	const static String versionSupportKey;
 
 	/// Whether the client interprets the version property of the
-	/// `textDocument/publishDiagnostics` notification`s parameter.
+	/// `textDocument/publishDiagnostics` notification's parameter.
 	///
 	/// @since 3.15.0
 	optional<Boolean> versionSupport;
