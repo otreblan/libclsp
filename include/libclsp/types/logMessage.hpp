@@ -32,18 +32,18 @@ using namespace std;
 ///
 struct LogMessageParams
 {
-
+private:
 	const static String typeKey;
+	const static String messageKey;
 
+public:
 	/// The message type. See {@link MessageType}
 	MessageType type;
-
-
-	const static String messageKey;
 
 	/// The actual message
 	String message;
 
+	// No parsing
 
 	LogMessageParams(MessageType type, String message);
 
