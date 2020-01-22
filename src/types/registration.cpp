@@ -31,12 +31,7 @@ Registration::Registration(String id, String method, optional<Any> registerOptio
 	registerOptions(registerOptions)
 {};
 
-Registration::Registration():
-	id(),
-	method(),
-	registerOptions()
-{};
-
+Registration::Registration(){};
 Registration::~Registration(){};
 
 
@@ -46,10 +41,7 @@ RegistrationParams::RegistrationParams(vector<Registration> registrations):
 	registrations(registrations)
 {};
 
-RegistrationParams::RegistrationParams():
-	registrations()
-{};
-
+RegistrationParams::RegistrationParams(){};
 RegistrationParams::~RegistrationParams(){};
 
 
@@ -61,11 +53,7 @@ UnRegistration::UnRegistration(String id, String method):
 	method(method)
 {};
 
-UnRegistration::UnRegistration():
-	id(),
-	method()
-{};
-
+UnRegistration::UnRegistration(){};
 UnRegistration::~UnRegistration(){};
 
 
@@ -75,10 +63,7 @@ UnRegistrationParams::UnRegistrationParams(vector<UnRegistration> unregisteratio
 	unregisterations(unregisterations)
 {};
 
-UnRegistrationParams::UnRegistrationParams():
-	unregisterations()
-{};
-
+UnRegistrationParams::UnRegistrationParams(){};
 UnRegistrationParams::~UnRegistrationParams(){};
 
 }

@@ -35,24 +35,27 @@ using namespace std;
 ///
 struct Registration
 {
-
+private:
 	const static String idKey;
+	const static String methodKey;
+	const static String registerOptionsKey;
 
+public:
 	/// The id used to register the request. The id can be used to deregister
 	/// the request again.
 	String id;
 
-
-	const static String methodKey;
-
 	/// The method / capability to register for.
 	String method;
 
-
-	const static String registerOptionsKey;
-
 	/// Options necessary for the registration.
+	///
+	/// It should be a *RegistrationOptions.
+	/// Like TextDocumentRegistrationOptions.
 	optional<Any> registerOptions;
+
+
+	// No parsing
 
 
 	Registration(String id, String method, optional<Any> registerOptions);
@@ -69,10 +72,13 @@ struct Registration
 ///
 struct RegistrationParams
 {
-
+private:
 	const static String registrationsKey;
 
+public:
 	vector<Registration> registrations;
+
+	// No parsing
 
 	RegistrationParams(vector<Registration> registrations);
 
@@ -90,19 +96,19 @@ struct RegistrationParams
 ///
 struct UnRegistration
 {
-
+private:
 	const static String idKey;
+	const static String methodKey;
 
+public:
 	/// The id used to unregister the request or notification. Usually an id
 	/// provided during the register request.
 	String id;
 
-
-	const static String methodKey;
-
 	/// The method / capability to unregister for.
 	String method;
 
+	// No parsing
 
 	UnRegistration(String id, String method);
 
@@ -118,13 +124,16 @@ struct UnRegistration
 ///
 struct UnRegistrationParams
 {
-
+private:
 	const static String unregisterationsKey;
 
+public:
 	/// This should correctly be named `unregistrations`. However changing this
 	/// is a breaking change and needs to wait until we deliver a 4.x version
 	/// of the specification.
 	vector<UnRegistration> unregisterations;
+
+	// No parsing
 
 	UnRegistrationParams(vector<UnRegistration> unregisterations);
 

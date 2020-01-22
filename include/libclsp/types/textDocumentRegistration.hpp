@@ -29,13 +29,16 @@ using namespace std;
 ///
 struct TextDocumentRegistrationOptions
 {
-
+private:
 	const static String documentSelectorKey;
 
+public:
 	/// A document selector to identify the scope of the registration.
 	/// If set to null the document selector provided on the client side
 	/// will be used.
 	variant<DocumentSelector, Null> documentSelector;
+
+	// No parsing
 
 	TextDocumentRegistrationOptions(variant<DocumentSelector, Null> documentSelector);
 
