@@ -28,10 +28,47 @@ PartialResultParams::
 		partialResultToken(partialResultToken)
 {};
 
-PartialResultParams::PartialResultParams():
-	partialResultToken()
-{};
-
+PartialResultParams::PartialResultParams(){};
 PartialResultParams::~PartialResultParams(){};
+
+void PartialResultParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// partialResultToken?:
+	setterMap.emplace(
+		partialResultTokenKey,
+		ValueSetter{
+			// String
+			[this](String str)
+			{
+				partialResultToken = str;
+			},
+
+			// Number
+			[this](Number n)
+			{
+				partialResultToken = n;
+			},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 }

@@ -19,6 +19,7 @@
 #include <optional>
 
 #include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace libclsp
 {
@@ -29,13 +30,25 @@ using namespace std;
 ///
 /// partialResultToken?: ProgressToken
 ///
-struct PartialResultParams
+struct PartialResultParams: public ObjectT
 {
+private:
 	const static String partialResultTokenKey;
 
+public:
 	/// An optional token that a server can use to report partial results
 	/// (e.g. streaming) to the client.
 	optional<ProgressToken> partialResultToken;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	PartialResultParams(optional<ProgressToken> partialResultToken);
