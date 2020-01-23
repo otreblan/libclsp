@@ -101,6 +101,9 @@ ArrayMaker::~ArrayMaker(){};
 
 void ArrayMaker::fillInitializer(ObjectInitializer& initializer)
 {
+	// ObjectMaker
+	initializer.objectMaker = unique_ptr<ObjectT>(this);
+
 	auto* handler = initializer.handler;
 
 	auto& extraSetter = initializer.extraSetter;
@@ -152,9 +155,6 @@ void ArrayMaker::fillInitializer(ObjectInitializer& initializer)
 
 	// This
 	initializer.object = this;
-
-	// ObjectMaker
-	initializer.objectMaker = unique_ptr<ObjectT>(this);
 }
 
 void GenericObject::write(JsonWriter &writer)

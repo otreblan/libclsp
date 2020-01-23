@@ -202,6 +202,9 @@ void TextDocumentEdit::fillInitializer(ObjectInitializer& initializer)
 
 void TextDocumentEdit::EditsMaker::fillInitializer(ObjectInitializer& initializer)
 {
+	// ObjectMaker
+	initializer.objectMaker = unique_ptr<ObjectT>(this);
+
 	auto* handler = initializer.handler;
 
 	auto& extraSetter = initializer.extraSetter;
@@ -239,9 +242,6 @@ void TextDocumentEdit::EditsMaker::fillInitializer(ObjectInitializer& initialize
 
 	// This
 	initializer.object = this;
-
-	// ObjectMaker
-	initializer.objectMaker = unique_ptr<ObjectT>(this);
 }
 
 }

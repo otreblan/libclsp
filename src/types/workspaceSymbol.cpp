@@ -34,13 +34,78 @@ WorkspaceSymbolClientCapabilities::
 			symbolKind(symbolKind)
 {};
 
-WorkspaceSymbolClientCapabilities::WorkspaceSymbolClientCapabilities():
-	dynamicRegistration(),
-	symbolKind()
-{};
-
+WorkspaceSymbolClientCapabilities::WorkspaceSymbolClientCapabilities(){};
 WorkspaceSymbolClientCapabilities::~WorkspaceSymbolClientCapabilities(){};
 
+void WorkspaceSymbolClientCapabilities::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?:
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// symbolKind?:
+	setterMap.emplace(
+		symbolKindKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, handler]()
+			{
+				symbolKind.emplace();
+
+				handler->preFillInitializer();
+				symbolKind->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 const String WorkspaceSymbolClientCapabilities::SymbolKind::
 	valueSetKey = "valueSet";
@@ -50,12 +115,110 @@ WorkspaceSymbolClientCapabilities::SymbolKind::
 		valueSet(valueSet)
 {};
 
-WorkspaceSymbolClientCapabilities::SymbolKind::SymbolKind():
-	valueSet()
-{};
-
+WorkspaceSymbolClientCapabilities::SymbolKind::SymbolKind(){};
 WorkspaceSymbolClientCapabilities::SymbolKind::~SymbolKind(){};
 
+void WorkspaceSymbolClientCapabilities::SymbolKind::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// valueSet?:
+	setterMap.emplace(
+		symbolKindKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			[this, handler]()
+			{
+				valueSet.emplace();
+
+				auto* maker = new ValueSetMaker(*this);
+
+				handler->preFillInitializer();
+				maker->fillInitializer(handler->objectStack.top());
+			},
+
+			// Object
+			{}
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
+
+WorkspaceSymbolClientCapabilities::SymbolKind::ValueSetMaker::
+	ValueSetMaker(SymbolKind& parent):
+		parent(parent)
+{};
+
+WorkspaceSymbolClientCapabilities::SymbolKind::ValueSetMaker::
+	~ValueSetMaker()
+{};
+
+void WorkspaceSymbolClientCapabilities::SymbolKind::ValueSetMaker::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	// ObjectMaker
+	initializer.objectMaker = unique_ptr<ObjectT>(this);
+
+	auto& extraSetter = initializer.extraSetter;
+	auto& Vector = parent.valueSet.value();
+
+	// Value setters
+
+	// SymbolKind[]
+	extraSetter =
+	{
+		// String
+		{},
+
+		// Number
+		[&Vector](Number n)
+		{
+			if(holds_alternative<int>(n))
+			{
+				int i = get<int>(n);
+
+				Vector.emplace_back((libclsp::SymbolKind)i);
+			}
+
+			// Nothing is added by default
+
+		},
+
+		// Boolean
+		{},
+
+		// Null
+		{},
+
+		// Array
+		{},
+
+		// Object
+		{}
+	};
+
+	// This
+	initializer.object = this;
+}
 
 const String WorkspaceSymbolParams::queryKey = "query";
 
@@ -68,12 +231,53 @@ WorkspaceSymbolParams::WorkspaceSymbolParams(
 		query(query)
 {};
 
-WorkspaceSymbolParams::WorkspaceSymbolParams():
-	WorkDoneProgressParams(),
-	PartialResultParams(),
-	query()
-{};
-
+WorkspaceSymbolParams::WorkspaceSymbolParams(){};
 WorkspaceSymbolParams::~WorkspaceSymbolParams(){};
+
+void WorkspaceSymbolParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Parents
+	WorkDoneProgressParams::fillInitializer(initializer);
+	PartialResultParams::fillInitializer(initializer);
+
+	// Value setters
+
+	// query:
+	setterMap.emplace(
+		queryKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				query = str;
+				neededMap[queryKey] = true;
+			},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(queryKey, 0);
+
+	// This
+	initializer.object = static_cast<WorkDoneProgressParams*>(this);
+}
 
 }

@@ -501,6 +501,9 @@ ProgressParams::ValueMaker::~ValueMaker(){};
 
 void ProgressParams::ValueMaker::fillInitializer(ObjectInitializer& initializer)
 {
+	// ObjectMaker
+	initializer.objectMaker = unique_ptr<ObjectT>(this);
+
 	auto* handler = initializer.handler;
 
 	auto& setterMap = initializer.setterMap;
@@ -588,9 +591,6 @@ void ProgressParams::ValueMaker::fillInitializer(ObjectInitializer& initializer)
 
 	// This
 	initializer.object = this;
-
-	// ObjectMaker
-	initializer.objectMaker = unique_ptr<ObjectT>(this);
 }
 
 }

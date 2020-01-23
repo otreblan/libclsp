@@ -290,6 +290,9 @@ void Diagnostic::fillInitializer(ObjectInitializer& initializer)
 
 void Diagnostic::TagsMaker::fillInitializer(ObjectInitializer& initializer)
 {
+	// ObjectMaker
+	initializer.objectMaker = unique_ptr<ObjectT>(this);
+
 	auto& extraSetter = initializer.extraSetter;
 	auto& Vector = parent->tags.value();
 
@@ -334,14 +337,14 @@ void Diagnostic::TagsMaker::fillInitializer(ObjectInitializer& initializer)
 
 	// This
 	initializer.object = this;
-
-	// ObjectMaker
-	initializer.objectMaker = unique_ptr<ObjectT>(this);
 }
 
 void Diagnostic::RelatedInformationMaker::
 	fillInitializer(ObjectInitializer& initializer)
 {
+	// ObjectMaker
+	initializer.objectMaker = unique_ptr<ObjectT>(this);
+
 	auto* handler = initializer.handler;
 
 	auto& extraSetter = initializer.extraSetter;
@@ -380,9 +383,6 @@ void Diagnostic::RelatedInformationMaker::
 
 	// This
 	initializer.object = this;
-
-	// ObjectMaker
-	initializer.objectMaker = unique_ptr<ObjectT>(this);
 }
 
 

@@ -32,26 +32,46 @@ using namespace std;
 /// 	valueSet?: SymbolKind[]
 /// }
 ///
-struct WorkspaceSymbolClientCapabilities
+struct WorkspaceSymbolClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
+	const static String symbolKindKey;
 
+public:
 	/// Whether declaration supports dynamic registration. If this is set to
 	/// `true` the client supports the new `WorkspaceSymbolRegistrationOptions`
 	/// return value for the corresponding server capability as well.
 	optional<Boolean> dynamicRegistration;
 
-
-	const static String symbolKindKey;
-
 	/// Specific capabilities for the `SymbolKind` in the `workspace/symbol`
 	/// request.
-	struct SymbolKind
+	struct SymbolKind: public ObjectT
 	{
-
+	private:
 		const static String valueSetKey;
 
+		struct ValueSetMaker: public ObjectT
+		{
+			SymbolKind& parent;
+
+
+			//====================   Parsing   ==============================//
+
+			/// This fills an ObjectInitializer
+			virtual void fillInitializer(ObjectInitializer& initializer);
+
+			// Using default isValid()
+
+			//===============================================================//
+
+
+			ValueSetMaker(SymbolKind& parent);
+
+			virtual ~ValueSetMaker();
+		};
+
+	public:
 		/// The symbol kind values the client supports. When this
 		/// property exists the client also guarantees that it will
 		/// handle values outside its set gracefully and falls back
@@ -62,6 +82,15 @@ struct WorkspaceSymbolClientCapabilities
 		/// the initial version of the protocol.
 		optional<vector<libclsp::SymbolKind>> valueSet;
 
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
 
 		SymbolKind(optional<vector<libclsp::SymbolKind>> valueSet);
 
@@ -75,6 +104,16 @@ struct WorkspaceSymbolClientCapabilities
 	optional<SymbolKind> symbolKind;
 
 
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
+
 	WorkspaceSymbolClientCapabilities(optional<Boolean> dynamicRegistration,
 		optional<SymbolKind> symbolKind);
 
@@ -85,9 +124,10 @@ struct WorkspaceSymbolClientCapabilities
 };
 
 using WorkspaceSymbolOptions = WorkDoneProgressOptions;
+// No parsing
 
 using WorkspaceSymbolRegistrationOptions = WorkspaceSymbolOptions;
-
+// No parsing
 
 /// The parameters of a Workspace Symbol Request.
 ///
@@ -97,12 +137,23 @@ struct WorkspaceSymbolParams:
 	public WorkDoneProgressParams,
 	public PartialResultParams
 {
-
+private:
 	const static String queryKey;
 
+public:
 	/// A query string to filter symbols by. Clients may send an empty
 	/// string here to request all symbols.
 	String query;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	WorkspaceSymbolParams(optional<ProgressToken> workDoneToken,
