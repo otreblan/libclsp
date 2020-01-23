@@ -129,7 +129,7 @@ void WorkspaceSymbolClientCapabilities::SymbolKind::
 
 	// valueSet?:
 	setterMap.emplace(
-		symbolKindKey,
+		valueSetKey,
 		ValueSetter{
 			// String
 			{},
