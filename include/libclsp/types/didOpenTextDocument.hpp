@@ -29,13 +29,24 @@ using namespace std;
 ///
 /// textDocument: TextDocumentItem
 ///
-struct DidOpenTextDocumentParams
+struct DidOpenTextDocumentParams: public ObjectT
 {
-
+private:
 	const static String textDocumentKey;
 
+public:
 	/// The document that was opened.
 	TextDocumentItem textDocument;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DidOpenTextDocumentParams(TextDocumentItem textDocument);

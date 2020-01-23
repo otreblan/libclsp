@@ -27,10 +27,53 @@ DidOpenTextDocumentParams::DidOpenTextDocumentParams(TextDocumentItem textDocume
 	textDocument(textDocument)
 {};
 
-DidOpenTextDocumentParams::DidOpenTextDocumentParams():
-	textDocument()
-{};
-
+DidOpenTextDocumentParams::DidOpenTextDocumentParams(){};
 DidOpenTextDocumentParams::~DidOpenTextDocumentParams(){};
+
+void DidOpenTextDocumentParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Value setters
+
+	// textDocument:
+	setterMap.emplace(
+		textDocumentKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+				textDocument.fillInitializer(handler->objectStack.top());
+
+				neededMap[textDocumentKey] = true;
+			}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(textDocumentKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 }
