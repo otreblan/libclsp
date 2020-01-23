@@ -85,6 +85,11 @@ struct TypeDefinitionParams:
 	public PartialResultParams
 {
 
+	// FIXME:
+	// Even if the struct is not parseable this functions must be declared
+	// because virtual inheritance
+	virtual void fillInitializer(ObjectInitializer&){};
+
 	TypeDefinitionParams(TextDocumentIdentifier textDocument,
 		Position position,
 		optional<ProgressToken> workDoneToken,

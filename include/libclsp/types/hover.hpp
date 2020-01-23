@@ -82,6 +82,11 @@ struct HoverParams:
 	public WorkDoneProgressParams
 {
 
+	// FIXME:
+	// Even if the struct is not parseable this functions must be declared
+	// because virtual inheritance
+	virtual void fillInitializer(ObjectInitializer&){};
+
 	HoverParams(TextDocumentIdentifier textDocument,
 		Position position,
 		optional<ProgressToken> workDoneToken);

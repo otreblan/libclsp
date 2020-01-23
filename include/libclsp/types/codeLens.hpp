@@ -95,6 +95,12 @@ struct CodeLensParams:
 	public PartialResultParams
 {
 
+	// FIXME:
+	// Even if the struct is not parseable this functions must be declared
+	// because virtual inheritance
+	virtual void fillInitializer(ObjectInitializer&){};
+
+
 	const static String textDocumentKey;
 
 	/// The document in which the command was invoked.

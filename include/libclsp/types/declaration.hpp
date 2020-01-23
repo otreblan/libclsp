@@ -84,6 +84,11 @@ struct DeclarationParams:
 	public PartialResultParams
 {
 
+	// Even if the struct is not parseable this functions must be declared
+	// because virtual inheritance
+	virtual void fillInitializer(ObjectInitializer&){};
+
+
 	DeclarationParams(TextDocumentIdentifier textDocument,
 		Position position,
 		optional<ProgressToken> workDoneToken,

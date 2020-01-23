@@ -388,6 +388,11 @@ struct SignatureHelpParams:
 	public WorkDoneProgressParams
 {
 
+	// FIXME:
+	// Even if the struct is not parseable this functions must be declared
+	// because virtual inheritance
+	virtual void fillInitializer(ObjectInitializer&){};
+
 	const static String contextKey;
 
 	/// The signature help context. This is only available if the client

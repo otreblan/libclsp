@@ -277,7 +277,7 @@ void WorkspaceSymbolParams::fillInitializer(ObjectInitializer& initializer)
 	neededMap.emplace(queryKey, 0);
 
 	// This
-	initializer.object = static_cast<WorkDoneProgressParams*>(this);
+	initializer.object = this;
 }
 
 }

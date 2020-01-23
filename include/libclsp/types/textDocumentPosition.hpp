@@ -31,7 +31,7 @@ using namespace std;
 ///
 /// position: Position
 ///
-struct TextDocumentPositionParams: public ObjectT
+struct TextDocumentPositionParams: public virtual ObjectT
 {
 private:
 	const static String textDocumentKey;

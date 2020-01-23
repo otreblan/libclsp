@@ -30,7 +30,7 @@ using namespace std;
 ///
 /// partialResultToken?: ProgressToken
 ///
-struct PartialResultParams: public ObjectT
+struct PartialResultParams: public virtual ObjectT
 {
 private:
 	const static String partialResultTokenKey;

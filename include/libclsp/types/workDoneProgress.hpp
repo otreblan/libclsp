@@ -203,7 +203,7 @@ public:
 ///
 /// workDoneToken?: ProgressToken
 ///
-struct WorkDoneProgressParams: public ObjectT
+struct WorkDoneProgressParams: public virtual ObjectT
 {
 private:
 	const static String workDoneTokenKey;
