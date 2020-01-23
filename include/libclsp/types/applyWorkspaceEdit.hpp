@@ -31,20 +31,20 @@ using namespace std;
 ///
 struct ApplyWorkspaceEditParams
 {
-
+private:
 	const static String labelKey;
+	const static String editKey;
 
+public:
 	/// An optional label of the workspace edit. This label is
 	/// presented in the user interface for example on an undo
 	/// stack to undo the workspace edit.
 	optional<String> label;
 
-
-	const static String editKey;
-
 	/// The edits to apply.
 	WorkspaceEdit edit;
 
+	// No parsing
 
 	ApplyWorkspaceEditParams(optional<String> label, WorkspaceEdit edit);
 
@@ -59,21 +59,31 @@ struct ApplyWorkspaceEditParams
 ///
 /// failureReason?: String
 ///
-struct ApplyWorkspaceEditResponse
+struct ApplyWorkspaceEditResponse: public ObjectT
 {
+private:
 	const static String appliedKey;
+	const static String failureReasonKey;
 
+public:
 	/// Indicates whether the edit was applied or not.
 	Boolean applied;
-
-
-	const static String failureReasonKey;
 
 	/// An optional textual description for why the edit was not applied.
 	/// This may be used may be used by the server for diagnostic
 	/// logging or to provide a suitable error for a request that
 	/// triggered the edit.
 	optional<String> failureReason;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	ApplyWorkspaceEditResponse(Boolean applied, optional<String> failureReason);

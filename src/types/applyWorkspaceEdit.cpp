@@ -30,11 +30,7 @@ ApplyWorkspaceEditParams::ApplyWorkspaceEditParams(optional<String> label,
 		edit(edit)
 {};
 
-ApplyWorkspaceEditParams::ApplyWorkspaceEditParams():
-		label(),
-		edit()
-{};
-
+ApplyWorkspaceEditParams::ApplyWorkspaceEditParams(){};
 ApplyWorkspaceEditParams::~ApplyWorkspaceEditParams(){};
 
 
@@ -47,11 +43,76 @@ ApplyWorkspaceEditResponse::ApplyWorkspaceEditResponse(Boolean applied,
 		failureReason(failureReason)
 {};
 
-ApplyWorkspaceEditResponse::ApplyWorkspaceEditResponse():
-	applied(),
-	failureReason()
-{};
-
+ApplyWorkspaceEditResponse::ApplyWorkspaceEditResponse(){};
 ApplyWorkspaceEditResponse::~ApplyWorkspaceEditResponse(){};
+
+void ApplyWorkspaceEditResponse::fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Value setters
+
+	// applied:
+	setterMap.emplace(
+		appliedKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this, &neededMap](Boolean b)
+			{
+				applied = b;
+				neededMap[appliedKey] = true;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// failureReason?:
+	setterMap.emplace(
+		failureReasonKey,
+		ValueSetter{
+			// String
+			[this](String str)
+			{
+				failureReason = str;
+			},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(appliedKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 }
