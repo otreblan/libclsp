@@ -18,7 +18,7 @@
 
 #include <libclsp/types/objectT.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

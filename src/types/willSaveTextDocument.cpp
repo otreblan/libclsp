@@ -16,7 +16,7 @@
 
 #include <libclsp/types/willSaveTextDocument.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

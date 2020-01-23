@@ -21,7 +21,7 @@
 
 #include <libclsp/types/location.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

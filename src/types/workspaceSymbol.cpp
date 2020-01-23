@@ -16,7 +16,7 @@
 
 #include <libclsp/types/workspaceSymbol.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;
@@ -111,7 +111,7 @@ const String WorkspaceSymbolClientCapabilities::SymbolKind::
 	valueSetKey = "valueSet";
 
 WorkspaceSymbolClientCapabilities::SymbolKind::
-	SymbolKind(optional<vector<libclsp::SymbolKind>> valueSet):
+	SymbolKind(optional<vector<clsp::SymbolKind>> valueSet):
 		valueSet(valueSet)
 {};
 
@@ -196,7 +196,7 @@ void WorkspaceSymbolClientCapabilities::SymbolKind::ValueSetMaker::
 			{
 				int i = get<int>(n);
 
-				Vector.emplace_back((libclsp::SymbolKind)i);
+				Vector.emplace_back((clsp::SymbolKind)i);
 			}
 
 			// Nothing is added by default

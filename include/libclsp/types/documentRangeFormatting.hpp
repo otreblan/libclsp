@@ -18,7 +18,7 @@
 
 #include <libclsp/types/documentFormatting.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

@@ -16,7 +16,7 @@
 
 #include <libclsp/types/symbol.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;
@@ -52,7 +52,7 @@ const String DocumentSymbolClientCapabilities::SymbolKind::
 	valueSetKey = "valueSet";
 
 DocumentSymbolClientCapabilities::SymbolKind::
-	SymbolKind(optional<vector<libclsp::SymbolKind>> valueSet):
+	SymbolKind(optional<vector<clsp::SymbolKind>> valueSet):
 		valueSet(valueSet)
 {};
 

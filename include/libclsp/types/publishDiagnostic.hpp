@@ -18,7 +18,7 @@
 
 #include <libclsp/types/diagnostic.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

@@ -26,7 +26,7 @@
 
 #include <libclsp/types/jsonTypes.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;
@@ -92,7 +92,7 @@ struct JsonHandler: public BaseReaderHandler<UTF8<>, JsonHandler>
 	stack<ObjectInitializer> objectStack;
 
 	/// Last key obtained by Key()
-	libclsp::String lastKey;
+	clsp::String lastKey;
 
 	// Functions needed by the RapidJson reader.
 
@@ -100,7 +100,7 @@ struct JsonHandler: public BaseReaderHandler<UTF8<>, JsonHandler>
 	bool Bool(bool b);
 
 	// Generic number wrapper
-	bool Number(libclsp::Number n);
+	bool Number(clsp::Number n);
 
 	bool Int(int i);
 	bool Uint(unsigned u);

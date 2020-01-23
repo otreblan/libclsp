@@ -16,7 +16,7 @@
 
 #include <libclsp/types/documentRangeFormatting.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

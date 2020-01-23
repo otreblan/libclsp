@@ -18,7 +18,7 @@
 
 #include <libclsp/types/workspaceEdit.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

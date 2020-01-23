@@ -17,7 +17,7 @@
 #include <libclsp/types/workDoneProgress.hpp>
 #include <functional>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

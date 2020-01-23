@@ -18,7 +18,7 @@
 
 #include <libclsp/server/jsonHandler.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

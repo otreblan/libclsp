@@ -24,7 +24,7 @@
 #include <libclsp/types/textEdit.hpp>
 #include <libclsp/types/workDoneProgress.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;
@@ -612,10 +612,10 @@ struct CompletionClientCapabilities
 		/// If this property is not present the client only supports
 		/// the completion items kinds from `Text` to `Reference` as defined
 		/// in the initial version of the protocol.
-		optional<vector<libclsp::CompletionItemKind>> valueSet;
+		optional<vector<clsp::CompletionItemKind>> valueSet;
 
 
-		CompletionItemKind(optional<vector<libclsp::CompletionItemKind>> valueSet);
+		CompletionItemKind(optional<vector<clsp::CompletionItemKind>> valueSet);
 
 		CompletionItemKind();
 

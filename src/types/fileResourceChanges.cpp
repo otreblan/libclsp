@@ -16,7 +16,7 @@
 
 #include <libclsp/types/fileResourceChanges.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

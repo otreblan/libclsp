@@ -19,7 +19,7 @@
 
 #include <libclsp/types/textDocumentItem.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

@@ -16,7 +16,7 @@
 
 #include <libclsp/types/didOpenTextDocument.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

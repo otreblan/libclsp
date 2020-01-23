@@ -21,7 +21,7 @@
 #include <libclsp/types/range.hpp>
 #include <libclsp/types/textDocumentIdentifier.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

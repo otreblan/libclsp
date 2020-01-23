@@ -16,7 +16,7 @@
 
 #include <libclsp/types/completion.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;
@@ -295,7 +295,7 @@ const String CompletionClientCapabilities::CompletionItemKind::
 	valueSetKey = "valueSet";
 
 CompletionClientCapabilities::CompletionItemKind::
-	CompletionItemKind(optional<vector<libclsp::CompletionItemKind>> valueSet):
+	CompletionItemKind(optional<vector<clsp::CompletionItemKind>> valueSet):
 		valueSet(valueSet)
 {};
 

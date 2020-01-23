@@ -22,7 +22,7 @@
 #include <libclsp/types/objectT.hpp>
 #include <libclsp/types/genericObject.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

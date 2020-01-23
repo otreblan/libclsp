@@ -16,7 +16,7 @@
 
 #include <libclsp/types/locationLink.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 const String LocationLink::originSelectionRangeKey = "originSelectionRange";

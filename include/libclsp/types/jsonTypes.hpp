@@ -21,7 +21,7 @@
 #include <vector>
 #include <memory>
 
-namespace libclsp
+namespace clsp
 {
 
 class ObjectT;

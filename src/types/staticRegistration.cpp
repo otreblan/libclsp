@@ -16,7 +16,7 @@
 
 #include <libclsp/types/staticRegistration.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

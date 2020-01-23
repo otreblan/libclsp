@@ -25,7 +25,7 @@
 #include <libclsp/types/workDoneProgress.hpp>
 #include <libclsp/types/workspaceEdit.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;
@@ -146,10 +146,10 @@ struct CodeActionClientCapabilities
 			/// property exists the client also guarantees that it will
 			/// handle values outside its set gracefully and falls back
 			/// to a default value when unknown.
-			vector<libclsp::CodeActionKind> valueSet;
+			vector<clsp::CodeActionKind> valueSet;
 
 
-			CodeActionKind(vector<libclsp::CodeActionKind> valueSet);
+			CodeActionKind(vector<clsp::CodeActionKind> valueSet);
 
 			CodeActionKind();
 

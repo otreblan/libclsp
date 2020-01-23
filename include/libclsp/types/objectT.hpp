@@ -21,7 +21,7 @@
 #include <libclsp/server/jsonHandler.hpp>
 #include <libclsp/server/jsonWriter.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

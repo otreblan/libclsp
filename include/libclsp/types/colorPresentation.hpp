@@ -20,7 +20,7 @@
 #include <libclsp/types/textEdit.hpp>
 
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

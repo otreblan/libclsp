@@ -16,7 +16,7 @@
 
 #include <libclsp/types/colorPresentation.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

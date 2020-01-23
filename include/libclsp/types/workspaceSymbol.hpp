@@ -18,7 +18,7 @@
 
 #include <libclsp/types/symbol.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;
@@ -80,7 +80,7 @@ public:
 		/// If this property is not present the client only supports
 		/// the symbol kinds from `File` to `Array` as defined in
 		/// the initial version of the protocol.
-		optional<vector<libclsp::SymbolKind>> valueSet;
+		optional<vector<clsp::SymbolKind>> valueSet;
 
 
 		//====================   Parsing   ==================================//
@@ -92,7 +92,7 @@ public:
 
 		//===================================================================//
 
-		SymbolKind(optional<vector<libclsp::SymbolKind>> valueSet);
+		SymbolKind(optional<vector<clsp::SymbolKind>> valueSet);
 
 		SymbolKind();
 

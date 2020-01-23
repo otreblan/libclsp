@@ -22,7 +22,7 @@
 #include <libclsp/types/workDoneProgress.hpp>
 #include <libclsp/types/partialResult.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

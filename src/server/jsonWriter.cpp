@@ -17,7 +17,7 @@
 #include <libclsp/server/jsonWriter.hpp>
 #include <libclsp/types/objectT.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;
@@ -34,7 +34,7 @@ bool JsonWriter::Object(ObjectT &obj)
 	return true;
 }
 
-bool JsonWriter::Number(libclsp::Number n)
+bool JsonWriter::Number(clsp::Number n)
 {
 	bool result;
 
@@ -53,7 +53,7 @@ bool JsonWriter::Number(libclsp::Number n)
 	return result;
 }
 
-bool JsonWriter::Array(libclsp::Array &a)
+bool JsonWriter::Array(clsp::Array &a)
 {
 	bool result = true;
 
@@ -62,11 +62,11 @@ bool JsonWriter::Array(libclsp::Array &a)
 	{
 		visit(overload
 		(
-			[this, &result](libclsp::String str)
+			[this, &result](clsp::String str)
 			{
 				result &= String(str);
 			},
-			[this, &result](libclsp::Number n)
+			[this, &result](clsp::Number n)
 			{
 				result &= Number(n);
 			},
@@ -74,11 +74,11 @@ bool JsonWriter::Array(libclsp::Array &a)
 			{
 				result &= Bool(b);
 			},
-			[this, &result](libclsp::Null)
+			[this, &result](clsp::Null)
 			{
 				result &= Null();
 			},
-			[this, &result](libclsp::Object obj)
+			[this, &result](clsp::Object obj)
 			{
 				result &= Object(*obj);
 			}
@@ -89,17 +89,17 @@ bool JsonWriter::Array(libclsp::Array &a)
 	return result;
 }
 
-bool JsonWriter::Any(libclsp::Any &a)
+bool JsonWriter::Any(clsp::Any &a)
 {
 	bool result;
 
 	visit(overload
 	(
-		[this, &result](libclsp::String str)
+		[this, &result](clsp::String str)
 		{
 			result = String(str);
 		},
-		[this, &result](libclsp::Number n)
+		[this, &result](clsp::Number n)
 		{
 			result = Number(n);
 		},
@@ -107,15 +107,15 @@ bool JsonWriter::Any(libclsp::Any &a)
 		{
 			result = Bool(b);
 		},
-		[this, &result](libclsp::Null)
+		[this, &result](clsp::Null)
 		{
 			result = Null();
 		},
-		[this, &result](libclsp::Object obj)
+		[this, &result](clsp::Object obj)
 		{
 			result = Object(*obj);
 		},
-		[this, &result](libclsp::Array &a)
+		[this, &result](clsp::Array &a)
 		{
 			result = Array(a);
 		}

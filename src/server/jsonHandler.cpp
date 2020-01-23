@@ -17,7 +17,7 @@
 #include <libclsp/server/jsonHandler.hpp>
 #include <libclsp/types/objectT.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;
@@ -115,9 +115,9 @@ bool JsonHandler::Bool(bool b)
 	return true;
 }
 
-bool JsonHandler::Number(libclsp::Number n)
+bool JsonHandler::Number(clsp::Number n)
 {
-	function<void(libclsp::Number)> setNumber;
+	function<void(clsp::Number)> setNumber;
 
 
 	auto& topObject = objectStack.top();
@@ -188,7 +188,7 @@ bool JsonHandler::Double(double d)
 
 bool JsonHandler::String(const char* str, SizeType, bool)
 {
-	function<void(libclsp::String)> setString;
+	function<void(clsp::String)> setString;
 
 
 	auto& topObject = objectStack.top();

@@ -26,7 +26,7 @@
 #include <libclsp/types/textDocumentRegistration.hpp>
 #include <libclsp/types/workDoneProgress.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

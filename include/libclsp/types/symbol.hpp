@@ -23,7 +23,7 @@
 #include <libclsp/types/textDocumentRegistration.hpp>
 #include <libclsp/types/workDoneProgress.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;
@@ -96,10 +96,10 @@ struct DocumentSymbolClientCapabilities
 		/// If this property is not present the client only supports
 		/// the symbol kinds from `File` to `Array` as defined in
 		/// the initial version of the protocol.
-		optional<vector<libclsp::SymbolKind>> valueSet;
+		optional<vector<clsp::SymbolKind>> valueSet;
 
 
-		SymbolKind(optional<vector<libclsp::SymbolKind>> valueSet);
+		SymbolKind(optional<vector<clsp::SymbolKind>> valueSet);
 
 		SymbolKind();
 

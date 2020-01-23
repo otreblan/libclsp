@@ -16,7 +16,7 @@
 
 #include <libclsp/types/textDocumentSync.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

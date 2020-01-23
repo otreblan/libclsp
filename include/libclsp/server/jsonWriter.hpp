@@ -20,7 +20,7 @@
 
 #include <libclsp/types/jsonTypes.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;
@@ -61,7 +61,7 @@ public:
 	bool Any(Any &a);
 
 	/// Writes a new key
-	bool Key(libclsp::Key& str)
+	bool Key(clsp::Key& str)
 	{
 		return Writer<StringBuffer>::Key(str.c_str(), str.size());
 	}

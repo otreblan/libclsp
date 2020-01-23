@@ -19,7 +19,7 @@
 #include <libclsp/types/textDocumentRegistration.hpp>
 #include <libclsp/types/textDocumentIdentifier.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

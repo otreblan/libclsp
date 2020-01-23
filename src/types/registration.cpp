@@ -16,7 +16,7 @@
 
 #include <libclsp/types/registration.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

@@ -21,7 +21,7 @@
 
 #include <libclsp/types/jsonTypes.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;

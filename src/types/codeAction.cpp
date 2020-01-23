@@ -16,7 +16,7 @@
 
 #include <libclsp/types/codeAction.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;
@@ -87,7 +87,7 @@ const String CodeActionClientCapabilities::
 		valueSetKey = "valueSet";
 
 CodeActionClientCapabilities::CodeActionLiteralSupport::CodeActionKind::
-	CodeActionKind(vector<libclsp::CodeActionKind> valueSet):
+	CodeActionKind(vector<clsp::CodeActionKind> valueSet):
 		valueSet(valueSet)
 {};
 

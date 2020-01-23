@@ -16,7 +16,7 @@
 
 #include <libclsp/types/logMessage.hpp>
 
-namespace libclsp
+namespace clsp
 {
 
 using namespace std;
