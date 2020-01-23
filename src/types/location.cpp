@@ -92,7 +92,7 @@ void Location::fillInitializer(ObjectInitializer& initializer)
 			// Object
 			[this, handler, &neededMap]()
 			{
-				handler->preFillInitializer();
+				handler->pushInitializer();
 
 				range.fillInitializer(handler->objectStack.top());
 

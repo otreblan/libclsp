@@ -69,7 +69,7 @@ void LocationLink::fillInitializer(ObjectInitializer& initializer)
 			// Object
 			[this, handler]()
 			{
-				handler->preFillInitializer();
+				handler->pushInitializer();
 
 				originSelectionRange.emplace();
 				originSelectionRange.value().
@@ -129,7 +129,7 @@ void LocationLink::fillInitializer(ObjectInitializer& initializer)
 			// Object
 			[this, handler, &neededMap]()
 			{
-				handler->preFillInitializer();
+				handler->pushInitializer();
 
 				targetRange.fillInitializer(handler->objectStack.top());
 
@@ -160,7 +160,7 @@ void LocationLink::fillInitializer(ObjectInitializer& initializer)
 			// Object
 			[this, handler, &neededMap]()
 			{
-				handler->preFillInitializer();
+				handler->pushInitializer();
 
 				targetSelectionRange.
 					fillInitializer(handler->objectStack.top());

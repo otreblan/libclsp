@@ -64,7 +64,7 @@ void Range::fillInitializer(ObjectInitializer& initializer)
 			// Object
 			[this, handler, &neededMap]()
 			{
-				handler->preFillInitializer();
+				handler->pushInitializer();
 				start.fillInitializer(handler->objectStack.top());
 
 				neededMap[startKey] = true;
@@ -94,7 +94,7 @@ void Range::fillInitializer(ObjectInitializer& initializer)
 			// Object
 			[this, handler, &neededMap]()
 			{
-				handler->preFillInitializer();
+				handler->pushInitializer();
 				end.fillInitializer(handler->objectStack.top());
 
 				neededMap[endKey] = true;

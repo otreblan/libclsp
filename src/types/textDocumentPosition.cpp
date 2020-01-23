@@ -65,7 +65,7 @@ void TextDocumentPositionParams::fillInitializer(ObjectInitializer& initializer)
 			// Object
 			[this, handler, &neededMap]()
 			{
-				handler->preFillInitializer();
+				handler->pushInitializer();
 
 				textDocument.fillInitializer(handler->objectStack.top());
 
@@ -96,7 +96,7 @@ void TextDocumentPositionParams::fillInitializer(ObjectInitializer& initializer)
 			// Object
 			[this, handler, &neededMap]()
 			{
-				handler->preFillInitializer();
+				handler->pushInitializer();
 
 				position.fillInitializer(handler->objectStack.top());
 

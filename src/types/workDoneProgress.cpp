@@ -474,7 +474,7 @@ void ProgressParams::fillInitializer(ObjectInitializer& initializer)
 			// Object
 			[this, handler]()
 			{
-				handler->preFillInitializer();
+				handler->pushInitializer();
 
 				auto maker = new ValueMaker(*this);
 

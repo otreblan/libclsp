@@ -64,7 +64,7 @@ void WorkspaceFoldersChangeEvent::fillInitializer(ObjectInitializer& initializer
 			{
 				auto* maker = new AddedRemovedMaker(added);
 
-				handler->preFillInitializer();
+				handler->pushInitializer();
 				maker->fillInitializer(handler->objectStack.top());
 
 				neededMap[addedKey] = true;
@@ -96,7 +96,7 @@ void WorkspaceFoldersChangeEvent::fillInitializer(ObjectInitializer& initializer
 			{
 				auto* maker = new AddedRemovedMaker(removed);
 
-				handler->preFillInitializer();
+				handler->pushInitializer();
 				maker->fillInitializer(handler->objectStack.top());
 
 				neededMap[removedKey] = true;
@@ -155,7 +155,7 @@ void WorkspaceFoldersChangeEvent::AddedRemovedMaker::
 		{
 			auto& newObj = parentArray.emplace_back();
 
-			handler->preFillInitializer();
+			handler->pushInitializer();
 
 			newObj.fillInitializer(handler->objectStack.top());
 		}
@@ -210,7 +210,7 @@ void DidChangeWorkspaceFoldersParams::fillInitializer(ObjectInitializer& initial
 			// Object
 			[this, handler, &neededMap]()
 			{
-				handler->preFillInitializer();
+				handler->pushInitializer();
 				event.fillInitializer(handler->objectStack.top());
 
 				neededMap[eventKey] = true;

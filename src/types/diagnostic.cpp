@@ -79,7 +79,7 @@ void Diagnostic::fillInitializer(ObjectInitializer& initializer)
 			// Object
 			[this, handler, &neededMap]()
 			{
-				handler->preFillInitializer();
+				handler->pushInitializer();
 
 				range.fillInitializer(handler->objectStack.top());
 
@@ -237,7 +237,7 @@ void Diagnostic::fillInitializer(ObjectInitializer& initializer)
 				auto* maker = new TagsMaker;
 				maker->parent = this;
 
-				handler->preFillInitializer();
+				handler->pushInitializer();
 				maker->fillInitializer(handler->objectStack.top());
 			},
 
@@ -271,7 +271,7 @@ void Diagnostic::fillInitializer(ObjectInitializer& initializer)
 				auto* maker = new RelatedInformationMaker;
 				maker->parent = this;
 
-				handler->preFillInitializer();
+				handler->pushInitializer();
 				maker->fillInitializer(handler->objectStack.top());
 			},
 
@@ -375,7 +375,7 @@ void Diagnostic::RelatedInformationMaker::
 		{
 			auto& obj = Vector.emplace_back();
 
-			handler->preFillInitializer();
+			handler->pushInitializer();
 
 			obj.fillInitializer(handler->objectStack.top());
 		}
@@ -429,7 +429,7 @@ void DiagnosticRelatedInformation::fillInitializer(ObjectInitializer& initialize
 			// Object
 			[this, handler, &neededMap]()
 			{
-				handler->preFillInitializer();
+				handler->pushInitializer();
 
 				location.fillInitializer(handler->objectStack.top());
 

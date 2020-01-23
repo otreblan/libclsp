@@ -118,7 +118,7 @@ struct JsonHandler: public BaseReaderHandler<UTF8<>, JsonHandler>
 
 	/// A new ObjectInitializer is put at the top of the stack.
 	/// This function must be called before an object calls fillInitializer().
-	void preFillInitializer();
+	void pushInitializer();
 };
 
 }

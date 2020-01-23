@@ -63,7 +63,7 @@ void TextEdit::fillInitializer(ObjectInitializer& initializer)
 			// Object
 			[this, handler, &neededMap]()
 			{
-				handler->preFillInitializer();
+				handler->pushInitializer();
 
 				range.fillInitializer(handler->objectStack.top());
 
@@ -151,7 +151,7 @@ void TextDocumentEdit::fillInitializer(ObjectInitializer& initializer)
 			// Object
 			[this, handler, &neededMap]()
 			{
-				handler->preFillInitializer();
+				handler->pushInitializer();
 				textDocument.fillInitializer(handler->objectStack.top());
 
 				neededMap[textDocumentKey] = true;
@@ -181,7 +181,7 @@ void TextDocumentEdit::fillInitializer(ObjectInitializer& initializer)
 				auto* maker = new EditsMaker;
 				maker->parent = this;
 
-				handler->preFillInitializer();
+				handler->pushInitializer();
 				maker->fillInitializer(handler->objectStack.top());
 
 				neededMap[editsKey] = true;
@@ -235,7 +235,7 @@ void TextDocumentEdit::EditsMaker::fillInitializer(ObjectInitializer& initialize
 		{
 			auto& obj = Vector.emplace_back();
 
-			handler->preFillInitializer();
+			handler->pushInitializer();
 			obj.fillInitializer(handler->objectStack.top());
 		}
 	};

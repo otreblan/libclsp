@@ -134,7 +134,7 @@ void DidChangeConfigurationParams::fillInitializer(ObjectInitializer& initialize
 
 				auto* maker = new ArrayMaker(get<Array>(settings));
 
-				handler->preFillInitializer();
+				handler->pushInitializer();
 				maker->fillInitializer(handler->objectStack.top());
 
 				neededMap[settingsKey] = true;
@@ -145,7 +145,7 @@ void DidChangeConfigurationParams::fillInitializer(ObjectInitializer& initialize
 			{
 				settings = Object(new GenericObject());
 
-				handler->preFillInitializer();
+				handler->pushInitializer();
 				get<Object>(settings)->fillInitializer(handler->objectStack.top());
 
 				neededMap[settingsKey] = true;

@@ -72,7 +72,7 @@ void GenericObject::fillInitializer(ObjectInitializer& initializer)
 
 			auto* maker = new ArrayMaker(get<Array>(newArray));
 
-			handler->preFillInitializer();
+			handler->pushInitializer();
 			maker->fillInitializer(handler->objectStack.top());
 
 		},
@@ -84,7 +84,7 @@ void GenericObject::fillInitializer(ObjectInitializer& initializer)
 
 			children[handler->lastKey] = obj;
 
-			handler->preFillInitializer();
+			handler->pushInitializer();
 			obj->fillInitializer(handler->objectStack.top());
 		}
 	};
@@ -147,7 +147,7 @@ void ArrayMaker::fillInitializer(ObjectInitializer& initializer)
 
 			parentArray.emplace_back(obj);
 
-			handler->preFillInitializer();
+			handler->pushInitializer();
 
 			obj->fillInitializer(handler->objectStack.top());
 		}
@@ -234,7 +234,7 @@ void GenericObject::reParse(JsonHandler& handler)
 				{},
 				[&handler, &newObj]()
 				{
-					handler.preFillInitializer();
+					handler.pushInitializer();
 
 					newObj.fillInitializer(handler.objectStack.top());
 				}

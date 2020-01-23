@@ -97,7 +97,7 @@ void WorkspaceSymbolClientCapabilities::
 			{
 				symbolKind.emplace();
 
-				handler->preFillInitializer();
+				handler->pushInitializer();
 				symbolKind->fillInitializer(handler->objectStack.top());
 			}
 		}
@@ -150,7 +150,7 @@ void WorkspaceSymbolClientCapabilities::SymbolKind::
 
 				auto* maker = new ValueSetMaker(*this);
 
-				handler->preFillInitializer();
+				handler->pushInitializer();
 				maker->fillInitializer(handler->objectStack.top());
 			},
 
