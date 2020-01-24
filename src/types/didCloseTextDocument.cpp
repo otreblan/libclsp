@@ -28,10 +28,53 @@ DidCloseTextDocumentParams::
 		textDocument(textDocument)
 {};
 
-DidCloseTextDocumentParams::DidCloseTextDocumentParams():
-	textDocument()
-{};
-
+DidCloseTextDocumentParams::DidCloseTextDocumentParams(){};
 DidCloseTextDocumentParams::~DidCloseTextDocumentParams(){};
+
+void DidCloseTextDocumentParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Value setters
+
+	// textDocument:
+	setterMap.emplace(
+		textDocumentKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+				textDocument.fillInitializer(handler->objectStack.top());
+
+				neededMap[textDocumentKey] = true;
+			}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(textDocumentKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 }

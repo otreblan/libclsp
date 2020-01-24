@@ -29,13 +29,24 @@ using namespace std;
 ///
 /// textDocument: TextDocumentIdentifier
 ///
-struct DidCloseTextDocumentParams
+struct DidCloseTextDocumentParams: public ObjectT
 {
-
+private:
 	const static String textDocumentKey;
 
+public:
 	/// The document that was closed.
 	TextDocumentIdentifier textDocument;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DidCloseTextDocumentParams(TextDocumentIdentifier textDocument);
