@@ -37,12 +37,15 @@ using namespace std;
 struct TextDocumentChangeRegistrationOptions:
 	public TextDocumentRegistrationOptions
 {
+private:
 	const static String syncKindKey;
 
+public:
 	/// How documents are synced to the server. See TextDocumentSyncKind.Full
 	/// and TextDocumentSyncKind.Incremental.
 	TextDocumentSyncKind syncKind;
 
+	// No parsing
 
 	TextDocumentChangeRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
@@ -60,22 +63,22 @@ struct TextDocumentChangeRegistrationOptions:
 /// are omitted the new text is considered to be the full content
 /// of the document.
 ///
-/// range?: Range
+/// range: Range
 ///
-/// rangeLength?: number
+/// rangeLength?: Number
 ///
 /// text: String
 ///
-struct TextDocumentContentChangeEvent
+struct TextDocumentContentChangeEvent: public ObjectT
 {
-
+private:
 	const static String rangeKey;
-
-	/// The range of the document that changed.
-	optional<Range> range;
-
-
 	const static String rangeLengthKey;
+	const static String textKey;
+
+public:
+	/// The range of the document that changed.
+	Range range;
 
 	/// The optional length of the range that got replaced.
 	///
@@ -83,15 +86,22 @@ struct TextDocumentContentChangeEvent
 	[[deprecated("Use range instead")]]
 	optional<Number> rangeLength;
 
-
-	const static String textKey;
-
 	/// The new text for the provided range.
 	/// If no range is provided then this is the whole document.
 	String text;
 
 
-	TextDocumentContentChangeEvent(optional<Range> range, String text);
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
+
+	TextDocumentContentChangeEvent(Range range, String text);
 
 	TextDocumentContentChangeEvent();
 
@@ -106,18 +116,36 @@ struct TextDocumentContentChangeEvent
 ///
 /// contentChanges: TextDocumentContentChangeEvent[]
 ///
-struct DidChangeTextDocumentParams
+struct DidChangeTextDocumentParams: public ObjectT
 {
-
+private:
 	const static String textDocumentKey;
+	const static String contentChangesKey;
 
+	struct ContentChangesMaker: public ObjectT
+	{
+
+		/// The array to make
+		vector<TextDocumentContentChangeEvent> &parentArray;
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
+
+		ContentChangesMaker(vector<TextDocumentContentChangeEvent> &parentArray);
+
+		virtual ~ContentChangesMaker();
+	};
+public:
 	/// The document that did change. The version number points
 	/// to the version after all provided content changes have
 	/// been applied.
 	VersionedTextDocumentIdentifier textDocument;
-
-
-	const static String contentChangesKey;
 
 	/// The actual content changes. The content changes describe single state
 	/// changes to the document. So if there are two content changes c1 (at
@@ -125,6 +153,16 @@ struct DidChangeTextDocumentParams
 	/// c1 moves the document from S to S' and c2 from S' to S''. So c1 is
 	/// computed on the state S and c2 is computed on the state S'.
 	vector<TextDocumentContentChangeEvent> contentChanges;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DidChangeTextDocumentParams(VersionedTextDocumentIdentifier textDocument,
