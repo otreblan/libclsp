@@ -27,10 +27,7 @@ SaveOptions::SaveOptions(optional<Boolean> includeText):
 	includeText(includeText)
 {};
 
-SaveOptions::SaveOptions():
-	includeText()
-{};
-
+SaveOptions::SaveOptions(){};
 SaveOptions::~SaveOptions(){};
 
 
@@ -43,11 +40,7 @@ TextDocumentSaveRegistrationOptions::TextDocumentSaveRegistrationOptions(
 		includeText(includeText)
 {};
 
-TextDocumentSaveRegistrationOptions::TextDocumentSaveRegistrationOptions():
-	TextDocumentRegistrationOptions(),
-	includeText()
-{};
-
+TextDocumentSaveRegistrationOptions::TextDocumentSaveRegistrationOptions(){};
 TextDocumentSaveRegistrationOptions::~TextDocumentSaveRegistrationOptions(){};
 
 
@@ -61,11 +54,80 @@ DidSaveTextDocumentParams::
 			text(text)
 {};
 
-DidSaveTextDocumentParams::DidSaveTextDocumentParams():
-	textDocument(),
-	text()
-{};
-
+DidSaveTextDocumentParams::DidSaveTextDocumentParams(){};
 DidSaveTextDocumentParams::~DidSaveTextDocumentParams(){};
+
+void DidSaveTextDocumentParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Value setters
+
+	// textDocument:
+	setterMap.emplace(
+		textDocumentKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+				textDocument.fillInitializer(handler->objectStack.top());
+
+				neededMap[textDocumentKey] = true;
+			}
+		}
+	);
+
+	// text?:
+	setterMap.emplace(
+		textKey,
+		ValueSetter{
+			// String
+			[this](String str)
+			{
+				text = str;
+			},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(textDocumentKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 }

@@ -30,12 +30,14 @@ using namespace std;
 ///
 struct SaveOptions
 {
-
+private:
 	const static String includeTextKey;
 
+public:
 	/// The client is supposed to include the content on save.
 	optional<Boolean> includeText;
 
+	// No parsing
 
 	SaveOptions(optional<Boolean> includeText);
 
@@ -50,10 +52,14 @@ struct SaveOptions
 ///
 struct TextDocumentSaveRegistrationOptions: public TextDocumentRegistrationOptions
 {
+private:
 	const static String includeTextKey;
 
+public:
 	/// The client is supposed to include the content on save.
 	optional<Boolean> includeText;
+
+	// No parsing
 
 	TextDocumentSaveRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
@@ -70,20 +76,29 @@ struct TextDocumentSaveRegistrationOptions: public TextDocumentRegistrationOptio
 ///
 /// text?: String
 ///
-struct DidSaveTextDocumentParams
+struct DidSaveTextDocumentParams: public ObjectT
 {
-
+private:
 	const static String textDocumentKey;
+	const static String textKey;
 
+public:
 	/// The document that was saved.
 	TextDocumentIdentifier textDocument;
-
-
-	const static String textKey;
 
 	/// Optional the content when saved. Depends on the includeText value
 	/// when the save notification was requested.
 	optional<String> text;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DidSaveTextDocumentParams(TextDocumentIdentifier textDocument,
