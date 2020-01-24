@@ -39,15 +39,107 @@ PublishDiagnosticsClientCapabilities::
 			versionSupport(versionSupport)
 {};
 
-PublishDiagnosticsClientCapabilities::PublishDiagnosticsClientCapabilities():
-	relatedInformation(),
-	tagSupport(),
-	versionSupport()
-{};
+PublishDiagnosticsClientCapabilities::PublishDiagnosticsClientCapabilities(){};
 
 PublishDiagnosticsClientCapabilities::
 	~PublishDiagnosticsClientCapabilities()
 {};
+
+void PublishDiagnosticsClientCapabilities::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// relatedInformation?:
+	setterMap.emplace(
+		relatedInformationKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				relatedInformation = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// tagSupport?:
+	setterMap.emplace(
+		tagSupportKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, handler]()
+			{
+				tagSupport.emplace();
+
+				handler->pushInitializer();
+				tagSupport->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// versionSupport?:
+	setterMap.emplace(
+		versionSupportKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				versionSupport = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 
 const String PublishDiagnosticsClientCapabilities::TagSupport::
@@ -58,11 +150,113 @@ PublishDiagnosticsClientCapabilities::TagSupport::
 		valueSet(valueSet)
 {}
 
-PublishDiagnosticsClientCapabilities::TagSupport::TagSupport():
-	valueSet()
-{}
-
+PublishDiagnosticsClientCapabilities::TagSupport::TagSupport(){}
 PublishDiagnosticsClientCapabilities::TagSupport::~TagSupport(){};
+
+void PublishDiagnosticsClientCapabilities::TagSupport::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Value setters
+
+	// valueSet:
+	setterMap.emplace(
+		valueSetKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			[this, handler, &neededMap]()
+			{
+				auto* maker = new ValueSetMaker(valueSet);
+
+				handler->pushInitializer();
+				maker->fillInitializer(handler->objectStack.top());
+
+				neededMap[valueSetKey] = true;
+			},
+
+			// Object
+			{}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(valueSetKey, 0);
+
+	// This
+	initializer.object = this;
+}
+
+PublishDiagnosticsClientCapabilities::TagSupport::ValueSetMaker::
+	ValueSetMaker(vector<DiagnosticTag>& parentArray):
+		parentArray(parentArray)
+{};
+
+PublishDiagnosticsClientCapabilities::TagSupport::ValueSetMaker::
+	~ValueSetMaker()
+{};
+
+void PublishDiagnosticsClientCapabilities::TagSupport::ValueSetMaker::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	// ObjectMaker
+	initializer.objectMaker = unique_ptr<ObjectT>(this);
+
+	auto& extraSetter = initializer.extraSetter;
+
+	// Value setters
+
+	// DiagnosticTag[]
+	extraSetter =
+	{
+		// String
+		{},
+
+		// Number
+		[this](Number n)
+		{
+			if(holds_alternative<int>(n))
+			{
+				int i = get<int>(n);
+
+				parentArray.emplace_back((DiagnosticTag)i);
+			}
+
+			// Nothing is added by default
+
+		},
+
+		// Boolean
+		{},
+
+		// Null
+		{},
+
+		// Array
+		{},
+
+		// Object
+		{}
+	};
+
+	// This
+	initializer.object = this;
+}
 
 
 const String PublishDiagnosticsParams::uriKey         = "uri";
@@ -77,12 +271,7 @@ PublishDiagnosticsParams::PublishDiagnosticsParams(DocumentUri uri,
 		diagnostics(diagnostics)
 {};
 
-PublishDiagnosticsParams::PublishDiagnosticsParams():
-	uri(),
-	version(),
-	diagnostics()
-{};
-
+PublishDiagnosticsParams::PublishDiagnosticsParams(){};
 PublishDiagnosticsParams::~PublishDiagnosticsParams(){};
 
 }
