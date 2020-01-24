@@ -45,19 +45,28 @@ enum class TextDocumentSaveReason
 ///
 /// reason: TextDocumentSaveReason
 ///
-struct WillSaveTextDocumentParams
+struct WillSaveTextDocumentParams: public ObjectT
 {
-
+private:
 	const static String textDocumentKey;
+	const static String reasonKey;
 
+public:
 	/// The document that will be saved.
 	TextDocumentIdentifier textDocument;
 
-
-	const static String reasonKey;
-
 	/// The 'TextDocumentSaveReason'.
 	TextDocumentSaveReason reason;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	WillSaveTextDocumentParams(TextDocumentIdentifier textDocument,
