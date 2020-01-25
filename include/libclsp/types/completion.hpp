@@ -31,17 +31,20 @@ using namespace std;
 
 /// Completion server capabilities.
 ///
-/// triggerCharacters?: String[];
+/// triggerCharacters?: String[]
 ///
-/// allCommitCharacters?: String[];
+/// allCommitCharacters?: String[]
 ///
-/// resolveProvider?: Boolean;
+/// resolveProvider?: Boolean
 ///
 struct CompletionOptions: public WorkDoneProgressOptions
 {
-
+private:
 	const static String triggerCharactersKey;
+	const static String allCommitCharactersKey;
+	const static String resolveProviderKey;
 
+public:
 	/// Most tools trigger completion request automatically without explicitly
 	/// requesting it using a keyboard shortcut (e.g. Ctrl+Space).
 	/// Typically they do so when the user starts to type an identifier.
@@ -55,9 +58,6 @@ struct CompletionOptions: public WorkDoneProgressOptions
 	/// list them in `triggerCharacters`.
 	optional<vector<String>> triggerCharacters;
 
-
-	const static String allCommitCharactersKey;
-
 	/// The list of all possible characters that commit a completion.
 	/// This field can be used if clients don't support individual commit
 	/// characters per completion item.
@@ -68,13 +68,11 @@ struct CompletionOptions: public WorkDoneProgressOptions
 	/// @since 3.2.0
 	optional<vector<String>> allCommitCharacters;
 
-
-	const static String resolveProviderKey;
-
 	/// The server provides support to resolve additional information for a
 	/// completion item.
 	optional<Boolean> resolveProvider;
 
+	// No parsing
 
 	CompletionOptions(optional<ProgressToken> workDoneProgress,
 		optional<vector<String>> triggerCharacters,
@@ -90,6 +88,8 @@ struct CompletionRegistrationOptions:
 	public TextDocumentRegistrationOptions,
 	public CompletionOptions
 {
+
+	// No parsing
 
 	CompletionRegistrationOptions(variant<DocumentSelector, Null> documentSelector,
 		optional<ProgressToken> workDoneProgress,
@@ -126,21 +126,30 @@ enum class CompletionTriggerKind
 ///
 /// triggerCharacter?: String
 ///
-struct CompletionContext
+struct CompletionContext: public ObjectT
 {
-
+private:
 	const static String triggerKindKey;
+	const static String triggerCharacterKey;
 
+public:
 	/// How the completion was triggered.
 	CompletionTriggerKind triggerKind;
-
-
-	const static String triggerCharacterKey;
 
 	/// The trigger character (a single character) that has trigger code
 	/// complete. Is undefined if
 	/// `triggerKind != CompletionTriggerKind.TriggerCharacter`
 	optional<String> triggerCharacter;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	CompletionContext(CompletionTriggerKind triggerKind,
@@ -160,18 +169,24 @@ struct CompletionParams:
 	public WorkDoneProgressParams,
 	public PartialResultParams
 {
-
-	// FIXME:
-	// Even if the struct is not parseable this functions must be declared
-	// because virtual inheritance
-	virtual void fillInitializer(ObjectInitializer&){};
-
+private:
 	const static String contextKey;
 
+public:
 	/// The completion context. This is only available if the client specifies
 	/// to send this using
 	/// `ClientCapabilities.textDocument.completion.contextSupport == true`
 	optional<CompletionContext> context;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	CompletionParams(TextDocumentIdentifier textDocument,
@@ -244,85 +259,83 @@ enum class CompletionItemKind
 
 /// Part of the completion response
 ///
-/// label: string;
+/// label: String
 ///
-/// kind?: Number;
+/// kind?: Number
 ///
-/// tags?: CompletionItemTag[];
+/// tags?: CompletionItemTag[]
 ///
-/// detail?: String;
+/// detail?: String
 ///
-/// documentation?: String | MarkupContent;
+/// documentation?: String | MarkupContent
 ///
-/// deprecated?: Boolean;
+/// deprecated?: Boolean
 ///
-/// preselect?: Boolean;
+/// preselect?: Boolean
 ///
-/// sortText?: String;
+/// sortText?: String
 ///
-/// filterText?: String;
+/// filterText?: String
 ///
-/// insertText?: String;
+/// insertText?: String
 ///
-/// insertTextFormat?: InsertTextFormat;
+/// insertTextFormat?: InsertTextFormat
 ///
-/// textEdit?: TextEdit;
+/// textEdit?: TextEdit
 ///
-/// additionalTextEdits?: TextEdit[];
+/// additionalTextEdits?: TextEdit[]
 ///
-/// commitCharacters?: String[];
+/// commitCharacters?: String[]
 ///
-/// command?: Command;
+/// command?: Command
 ///
 /// data?: Any
 ///
 struct CompletionItem
 {
-
+private:
 	const static String labelKey;
+	const static String kindKey;
+	const static String tagsKey;
+	const static String detailKey;
+	const static String documentationKey;
+	const static String deprecatedKey;
+	const static String preselectKey;
+	const static String sortTextKey;
+	const static String filterTextKey;
+	const static String insertTextKey;
+	const static String insertTextFormatKey;
+	const static String textEditKey;
+	const static String additionalTextEditsKey;
+	const static String commitCharactersKey;
+	const static String commandKey;
+	const static String dataKey;
 
+public:
 	/// The label of this completion item. By default
 	/// also the text that is inserted when selecting
 	/// this completion.
 	String label;
-
-
-	const static String kindKey;
 
 	/// The kind of this completion item. Based of the kind
 	/// an icon is chosen by the editor. The standardized set
 	/// of available values is defined in `CompletionItemKind`.
 	optional<CompletionItemKind> kind;
 
-
-	const static String tagsKey;
-
 	/// Tags for this completion item.
 	///
 	/// @since 3.15.0
 	optional<vector<CompletionItemTag>> tags;
 
-
-	const static String detailKey;
-
 	/// A human-readable string with additional information
 	/// about this item, like type or symbol information.
 	optional<String> detail;
 
-
-	const static String documentationKey;
-
 	/// A human-readable string that represents a doc-comment.
 	optional<variant<String, MarkupContent>> documentation;
 
-
-	const static String deprecatedKey;
-
 	/// Indicates if this item is deprecated.
 	optional<Boolean> deprecated;
-
-
-	const static String preselectKey;
 
 	/// Select this item when showing.
 	///
@@ -331,22 +344,13 @@ struct CompletionItem
 	/// item of those that match best is selected.
 	optional<Boolean> preselect;
 
-
-	const static String sortTextKey;
-
 	/// A string that should be used when comparing this item
 	/// with other items. When `falsy` the label is used.
 	optional<String> sortText;
 
-
-	const static String filterTextKey;
-
 	/// A string that should be used when filtering a set of
 	/// completion items. When `falsy` the label is used.
 	optional<String> filterText;
-
-
-	const static String insertTextKey;
 
 	/// A string that should be inserted into a document when selecting
 	/// this completion. When `falsy` the label is used.
@@ -360,16 +364,10 @@ struct CompletionItem
 	/// additional client side interpretation.
 	optional<String> insertText;
 
-
-	const static String insertTextFormatKey;
-
 	/// The format of the insert text. The format applies to both the
 	/// `insertText` property and the `newText` property of a provided
 	/// `textEdit`. If omitted defaults to `InsertTextFormat.PlainText`.
 	optional<InsertTextFormat> insertTextFormat;
-
-
-	const static String textEditKey;
 
 	/// An edit which is applied to a document when selecting this completion.
 	/// When an edit is provided the value of `insertText` is ignored.
@@ -377,9 +375,6 @@ struct CompletionItem
 	/// *Note:* The range of the edit must be a single line range and it must
 	/// contain the position at which completion has been requested.
 	optional<TextEdit> textEdit;
-
-
-	const static String additionalTextEditsKey;
 
 	/// An optional array of additional text edits that are applied when
 	/// selecting this completion. Edits must not overlap (including the same
@@ -390,30 +385,22 @@ struct CompletionItem
 	/// top of the file if the completion item will insert an unqualified type).
 	optional<vector<TextEdit>> additionalTextEdits;
 
-
-	const static String commitCharactersKey;
-
 	/// An optional set of characters that when pressed while this completion
 	/// is active will accept it first and then type that character.
 	/// *Note* that all commit characters should have `length=1` and that
 	/// superfluous characters will be ignored.
 	optional<vector<String>> commitCharacters;
 
-
-	const static String commandKey;
-
 	/// An optional command that is executed *after* inserting this completion.
 	/// *Note* that additional modifications to the current document should
 	/// be described with the additionalTextEdits-property.
 	optional<Command> command;
 
-
-	const static String dataKey;
-
 	/// A data entry field that is preserved on a completion item between
 	/// a completion and a completion resolve request.
 	optional<Any> data;
 
+	// No parsing
 
 	CompletionItem(String label,
 		optional<CompletionItemKind> kind,
@@ -446,19 +433,19 @@ struct CompletionItem
 ///
 struct CompletionList
 {
-
+private:
 	const static String isIncompleteKey;
+	const static String itemsKey;
 
+public:
 	/// This list it not complete. Further typing should result in recomputing
 	/// this list.
 	Boolean isIncomplete;
 
-
-	const static String itemsKey;
-
 	/// The completion items.
 	vector<CompletionItem> items;
 
+	// No parsing
 
 	CompletionList(Boolean isIncomplete, vector<CompletionItem> items);
 
@@ -496,24 +483,49 @@ struct CompletionList
 ///
 /// contextSupport?: Boolean
 ///
-struct CompletionClientCapabilities
+struct CompletionClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
+	const static String completionItemKey;
+	const static String completionItemKindKey;
+	const static String contextSupportKey;
 
+public:
 	/// Whether completion supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
 
-
-	const static String completionItemKey;
-
 	/// The client supports the following `CompletionItem` specific
 	/// capabilities.
-	struct CompletionItem
+	struct CompletionItem: public ObjectT
 	{
-
+	private:
 		const static String snippetSupportKey;
+		const static String commitCharactersSupportKey;
+		const static String documentationFormatKey;
+		const static String deprecatedSupportKey;
+		const static String preselectSupportKey;
+		const static String tagSupportKey;
 
+		struct DocumentationFormatMaker: public ObjectT
+		{
+			/// The array to make
+			vector<MarkupKind> &parentArray;
+
+			//====================   Parsing   ==============================//
+
+			/// This fills an ObjectInitializer
+			virtual void fillInitializer(ObjectInitializer& initializer);
+
+			// Using default isValid()
+
+			//===============================================================//
+
+			DocumentationFormatMaker(vector<MarkupKind> &parentArray);
+
+			virtual ~DocumentationFormatMaker();
+		};
+	public:
 		/// Client supports snippets as insert text.
 		///
 		/// A snippet can define tab stops and placeholders with `$1`, `$2`
@@ -522,33 +534,18 @@ struct CompletionClientCapabilities
 		/// linked, that is typing in one will update others too.
 		optional<Boolean> snippetSupport;
 
-
-		const static String commitCharactersSupportKey;
-
 		/// Client supports commit characters on a completion item.
 		optional<Boolean> commitCharactersSupport;
-
-
-		const static String documentationFormatKey;
 
 		/// Client supports the follow content formats for the documentation
 		/// property. The order describes the preferred format of the client.
 		optional<vector<MarkupKind>> documentationFormat;
 
-
-		const static String deprecatedSupportKey;
-
 		/// Client supports the deprecated property on a completion item.
 		optional<Boolean> deprecatedSupport;
 
-
-		const static String preselectSupportKey;
-
 		/// Client supports the preselect property on a completion item.
 		optional<Boolean> preselectSupport;
-
-
-		const static String tagSupportKey;
 
 		/// Client supports the tag property on a completion item. Clients
 		/// supporting tags have to handle unknown tags gracefully. Clients
@@ -556,13 +553,43 @@ struct CompletionClientCapabilities
 		/// item back to the server in a resolve call.
 		///
 		/// #since 3.15.0
-		struct TagSupport
+		struct TagSupport: public ObjectT
 		{
-
+		private:
 			const static String valueSetKey;
 
+			struct ValueSetMaker: public ObjectT
+			{
+				/// The array to make
+				vector<CompletionItemTag> &parentArray;
+
+				//====================   Parsing   ==========================//
+
+				/// This fills an ObjectInitializer
+				virtual void fillInitializer(ObjectInitializer& initializer);
+
+				// Using default isValid()
+
+				//===========================================================//
+
+				ValueSetMaker(vector<CompletionItemTag> &parentArray);
+
+				virtual ~ValueSetMaker();
+			};
+
+		public:
 			/// The tags supported by the client.
 			vector<CompletionItemTag> valueSet;
+
+
+			//====================   Parsing   ==============================//
+
+			/// This fills an ObjectInitializer
+			virtual void fillInitializer(ObjectInitializer& initializer);
+
+			// Using default isValid()
+
+			//===============================================================//
 
 
 			TagSupport(vector<CompletionItemTag> valueSet);
@@ -580,6 +607,17 @@ struct CompletionClientCapabilities
 		/// #since 3.15.0
 		optional<TagSupport> tagSupport;
 
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
+
+
 		CompletionItem(optional<Boolean> snippetSupport,
 			optional<Boolean> commitCharactersSupport,
 			optional<vector<MarkupKind>> documentationFormat,
@@ -596,14 +634,30 @@ struct CompletionClientCapabilities
 	/// capabilities.
 	optional<CompletionItem> completionItem;
 
-
-	const static String completionItemKindKey;
-
-	struct CompletionItemKind
+	struct CompletionItemKind: public ObjectT
 	{
-
+	private:
 		const static String valueSetKey;
 
+		struct ValueSetMaker: public ObjectT
+		{
+			/// The array to make
+			vector<clsp::CompletionItemKind> &parentArray;
+
+			//====================   Parsing   ==============================//
+
+			/// This fills an ObjectInitializer
+			virtual void fillInitializer(ObjectInitializer& initializer);
+
+			// Using default isValid()
+
+			//===============================================================//
+
+			ValueSetMaker(vector<clsp::CompletionItemKind> &parentArray);
+
+			virtual ~ValueSetMaker();
+		};
+	public:
 		/// The completion item kind values the client supports. When this
 		/// property exists the client also guarantees that it will
 		/// handle values outside its set gracefully and falls back
@@ -615,6 +669,16 @@ struct CompletionClientCapabilities
 		optional<vector<clsp::CompletionItemKind>> valueSet;
 
 
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
+
+
 		CompletionItemKind(optional<vector<clsp::CompletionItemKind>> valueSet);
 
 		CompletionItemKind();
@@ -624,12 +688,19 @@ struct CompletionClientCapabilities
 
 	optional<CompletionItemKind> completionItemKind;
 
-
-	const static String contextSupportKey;
-
 	/// The client supports to send additional context information for a
 	/// `textDocument/completion` request.
 	optional<Boolean> contextSupport;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	CompletionClientCapabilities(optional<Boolean> dynamicRegistration,

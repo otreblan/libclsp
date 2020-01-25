@@ -96,7 +96,7 @@ struct CodeLensParams:
 {
 
 	// FIXME:
-	// Even if the struct is not parseable this functions must be declared
+	// Even if the struct is not parseable this function must be declared
 	// because virtual inheritance
 	virtual void fillInitializer(ObjectInitializer&){};
 

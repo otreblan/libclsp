@@ -89,7 +89,7 @@ target_compile_definitions(${PROJECT_NAME}
 
 # Default flags
 if(NOT DEFINED ENV{CXXFLAGS})
-	set(CMAKE_CXX_FLAGS "-Wall -Wextra -g")
+	set(CMAKE_CXX_FLAGS "-Wall -Wextra -g -Wl,-z,defs")
 endif()
 
 
