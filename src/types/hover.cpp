@@ -34,13 +34,131 @@ HoverClientCapabilities::
 			contentFormat(contentFormat)
 {};
 
-HoverClientCapabilities::HoverClientCapabilities():
-	dynamicRegistration(),
-	contentFormat()
-{};
-
+HoverClientCapabilities::HoverClientCapabilities(){};
 HoverClientCapabilities::~HoverClientCapabilities(){};
 
+
+void HoverClientCapabilities::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?:
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// contentFormat?:
+	setterMap.emplace(
+		contentFormatKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			[this, handler]()
+			{
+				contentFormat.emplace();
+
+				handler->pushInitializer();
+
+				auto* maker = new ContentFormatMaker(contentFormat.value());
+
+				maker->fillInitializer(handler->objectStack.top());
+			},
+
+			// Object
+			{}
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
+
+
+HoverClientCapabilities::ContentFormatMaker::
+	ContentFormatMaker(vector<MarkupKind> &parentArray):
+		parentArray(parentArray)
+{};
+
+HoverClientCapabilities::ContentFormatMaker::
+	~ContentFormatMaker()
+{};
+
+
+void HoverClientCapabilities::ContentFormatMaker::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	// ObjectMaker
+	initializer.objectMaker = unique_ptr<ObjectT>(this);
+
+	auto& extraSetter = initializer.extraSetter;
+
+	// Value setters
+
+	// MarkupKind[]
+	extraSetter =
+	{
+		// String
+		[this](String str)
+		{
+			parentArray.emplace_back(str);
+		},
+
+		// Number
+		{},
+
+		// Boolean
+		{},
+
+		// Null
+		{},
+
+		// Array
+		{},
+
+		// Object
+		{}
+	};
+
+	// This
+	initializer.object = this;
+}
 
 HoverRegistrationOptions::
 	HoverRegistrationOptions(variant<DocumentSelector, Null> documentSelector,
@@ -49,11 +167,7 @@ HoverRegistrationOptions::
 			HoverOptions(workDoneProgress)
 {};
 
-HoverRegistrationOptions::HoverRegistrationOptions():
-	TextDocumentRegistrationOptions(),
-	HoverOptions()
-{};
-
+HoverRegistrationOptions::HoverRegistrationOptions(){};
 HoverRegistrationOptions::~HoverRegistrationOptions(){};
 
 
@@ -64,12 +178,17 @@ HoverParams::HoverParams(TextDocumentIdentifier textDocument,
 		WorkDoneProgressParams(workDoneToken)
 {};
 
-HoverParams::HoverParams():
-	TextDocumentPositionParams(),
-	WorkDoneProgressParams()
-{};
-
+HoverParams::HoverParams(){};
 HoverParams::~HoverParams(){};
+
+void HoverParams::fillInitializer(ObjectInitializer& initializer)
+{
+	TextDocumentPositionParams::fillInitializer(initializer);
+	WorkDoneProgressParams::fillInitializer(initializer);
+
+	// This
+	initializer.object = this;
+}
 
 
 const String _MarkedString::languageKey = "language";
@@ -80,11 +199,7 @@ _MarkedString::_MarkedString(String language, String value):
 	value(value)
 {};
 
-_MarkedString::_MarkedString():
-	language(),
-	value()
-{};
-
+_MarkedString::_MarkedString(){};
 _MarkedString::~_MarkedString(){};
 
 
@@ -108,11 +223,7 @@ Hover::Hover(MarkupContent contents, optional<Range> range):
 	range(range)
 {};
 
-Hover::Hover():
-	contents(),
-	range()
-{};
-
+Hover::Hover(){};
 Hover::~Hover(){};
 
 }

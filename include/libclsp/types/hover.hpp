@@ -31,24 +31,50 @@ using namespace std;
 
 /// Hover request client capabilities
 ///
-/// dynamicRegistration?: Boolean;
+/// dynamicRegistration?: Boolean
 ///
-/// contentFormat?: MarkupKind[];
+/// contentFormat?: MarkupKind[]
 ///
-struct HoverClientCapabilities
+struct HoverClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
+	const static String contentFormatKey;
 
+	struct ContentFormatMaker: public ObjectT
+	{
+		vector<MarkupKind> &parentArray;
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
+
+		ContentFormatMaker(vector<MarkupKind> &parentArray);
+
+		virtual ~ContentFormatMaker();
+	};
+public:
 	/// Whether hover supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
-
-
-	const static String contentFormatKey;
 
 	/// Client supports the follow content formats for the content
 	/// property. The order describes the preferred format of the client.
 	optional<vector<MarkupKind>> contentFormat;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	HoverClientCapabilities(optional<Boolean> dynamicRegistration,
@@ -60,13 +86,15 @@ struct HoverClientCapabilities
 };
 
 /// Hover request server capabilities
-using HoverOptions = WorkDoneProgressOptions;
+using HoverOptions = WorkDoneProgressOptions; // No parsing
 
 /// Hover request registration options
 struct HoverRegistrationOptions:
 	public TextDocumentRegistrationOptions,
 	public HoverOptions
 {
+
+	// No parsing
 
 	HoverRegistrationOptions(variant<DocumentSelector, Null> documentSelector,
 		optional<ProgressToken> workDoneProgress);
@@ -82,10 +110,15 @@ struct HoverParams:
 	public WorkDoneProgressParams
 {
 
-	// FIXME:
-	// Even if the struct is not parseable this function must be declared
-	// because virtual inheritance
-	virtual void fillInitializer(ObjectInitializer&){};
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
 
 	HoverParams(TextDocumentIdentifier textDocument,
 		Position position,
@@ -98,15 +131,16 @@ struct HoverParams:
 
 struct [[deprecated("Use MarkupContent instead.")]] _MarkedString
 {
+private:
 	const static String languageKey;
-
-	String language;
-
-
 	const static String valueKey;
+
+public:
+	String language;
 
 	String value;
 
+	// No parsing
 
 	_MarkedString(String language, String value);
 
@@ -130,40 +164,35 @@ using MarkedString [[deprecated("Use MarkupContent instead.")]] = variant<String
 
 #pragma GCC diagnostic pop
 
-/// The result of a hover request.
-///
-/// contents: MarkedString | MarkedString[] | MarkupContent;
-///
-/// range?: Range;
-///
-struct Hover
-{
-
-	const static String contentsKey;
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
+/// The result of a hover request.
+///
+/// contents: MarkedString | MarkedString[] | MarkupContent
+///
+/// range?: Range
+///
+struct Hover
+{
+private:
+	const static String contentsKey;
+	const static String rangeKey;
+
+public:
 	/// The hover's content
 	variant<MarkedString, vector<MarkedString>, MarkupContent> contents;
-
-#pragma GCC diagnostic pop
-
-	const static String rangeKey;
 
 	/// An optional range is a range inside a text document
 	/// that is used to visualize a hover, e.g. by changing the background color.
 	optional<Range> range;
 
-
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+	// No parsing
 
 	[[deprecated("Use MarkupContent instead.")]]
 	Hover(variant<MarkedString, vector<MarkedString>, MarkupContent> contents,
 		optional<Range> range);
-
-#pragma GCC diagnostic pop
 
 	Hover(MarkupContent contents, optional<Range> range);
 
@@ -171,5 +200,7 @@ struct Hover
 
 	virtual ~Hover();
 };
+
+#pragma GCC diagnostic pop
 
 }
