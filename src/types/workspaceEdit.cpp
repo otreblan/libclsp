@@ -24,7 +24,7 @@ namespace clsp
 using namespace std;
 
 const String WorkspaceEdit::changesKey         = "changes";
-const String WorkspaceEdit::documentChangesKey = "documentChangesKey";
+const String WorkspaceEdit::documentChangesKey = "documentChanges";
 
 WorkspaceEdit::WorkspaceEdit(optional<Changes> changes,
 	optional<
