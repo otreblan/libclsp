@@ -64,12 +64,79 @@ MarkupContent::MarkupContent(MarkupKind kind, String value):
 	value(value)
 {};
 
-MarkupContent::MarkupContent():
-	kind(),
-	value()
-{};
-
+MarkupContent::MarkupContent(){};
 MarkupContent::~MarkupContent(){};
+
+void MarkupContent::fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Value setters
+
+	// kind:
+	setterMap.emplace(
+		kindKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				kind = str;
+				neededMap[kindKey] = true;
+			},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// value:
+	setterMap.emplace(
+		valueKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				value = str;
+				neededMap[valueKey] = true;
+			},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(kindKey, 0);
+	neededMap.emplace(valueKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 }
 

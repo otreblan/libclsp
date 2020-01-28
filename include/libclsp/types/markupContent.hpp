@@ -20,6 +20,7 @@
 #include <boost/assign.hpp>
 
 #include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace clsp
 {
@@ -82,18 +83,28 @@ public:
 ///
 /// value: String
 ///
-struct MarkupContent
+struct MarkupContent: public ObjectT
 {
+private:
 	const static String kindKey;
+	const static String valueKey;
 
+public:
 	/// The type of the Markup
 	MarkupKind kind;
 
-
-	const static String valueKey;
-
 	/// The content itself
 	String value;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	MarkupContent(MarkupKind kind, String value);

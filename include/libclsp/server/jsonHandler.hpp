@@ -79,7 +79,8 @@ struct ObjectInitializer
 	/// An optional setter for objects with index signatures
 	optional<ValueSetter> extraSetter;
 
-	// An optional object that makes another type of object or an array
+	// An optional object that makes another type of object or an array.
+	// This is owned by the initializer.
 	optional<unique_ptr<ObjectT>> objectMaker;
 
 };

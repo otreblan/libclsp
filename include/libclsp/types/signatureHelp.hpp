@@ -28,7 +28,7 @@ using namespace std;
 
 /// Signature Help request client capabilities.
 ///
-/// dynamicRegistration?: Boolean;
+/// dynamicRegistration?: Boolean
 ///
 /// signatureInformation?: {
 ///
@@ -42,42 +42,71 @@ using namespace std;
 ///
 /// contextSupport?: Boolean
 ///
-struct SignatureHelpClientCapabilities
+struct SignatureHelpClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
+	const static String signatureInformationKey;
+	const static String contextSupportKey;
 
+public:
 	/// Whether signature help supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
 
-
-	const static String signatureInformationKey;
-
 	/// The client supports the following `SignatureInformation`
 	/// specific properties.
-	struct SignatureInformation
+	struct SignatureInformation: public ObjectT
 	{
-
+	private:
 		const static String documentationFormatKey;
+		const static String parameterInformationKey;
 
+		struct DocumentationFormatMaker: public ObjectT
+		{
+			vector<MarkupKind> &parentArray;
+
+
+			//====================   Parsing   ==============================//
+
+			/// This fills an ObjectInitializer
+			virtual void fillInitializer(ObjectInitializer& initializer);
+
+			// Using default isValid()
+
+			//===============================================================//
+
+
+			DocumentationFormatMaker(vector<MarkupKind> &parentArray);
+
+			virtual ~DocumentationFormatMaker();
+		};
+	public:
 		/// Client supports the follow content formats for the documentation
 		/// property. The order describes the preferred format of the client.
 		optional<vector<MarkupKind>> documentationFormat;
 
-
-		const static String parameterInformationKey;
-
 		/// Client capabilities specific to parameter information.
-		struct ParameterInformation
+		struct ParameterInformation: public ObjectT
 		{
-
+		private:
 			const static String labelOffsetSupportKey;
 
+		public:
 			/// The client supports processing label offsets instead of a
 			/// simple label string.
 			///
 			/// @since 3.14.0
 			optional<Boolean> labelOffsetSupport;
+
+
+			//====================   Parsing   ==============================//
+
+			/// This fills an ObjectInitializer
+			virtual void fillInitializer(ObjectInitializer& initializer);
+
+			// Using default isValid()
+
+			//===============================================================//
 
 
 			ParameterInformation(optional<Boolean> labelOffsetSupport);
@@ -89,6 +118,16 @@ struct SignatureHelpClientCapabilities
 
 		/// Client capabilities specific to parameter information.
 		optional<ParameterInformation> parameterInformation;
+
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
 
 
 		SignatureInformation(optional<vector<MarkupKind>> documentationFormat,
@@ -103,9 +142,6 @@ struct SignatureHelpClientCapabilities
 	/// specific properties.
 	optional<SignatureInformation> signatureInformation;
 
-
-	const static String contextSupportKey;
-
 	/// The client supports to send additional context information for a
 	/// `textDocument/signatureHelp` request. A client that opts into
 	/// contextSupport will also support the `retriggerCharacters` on
@@ -113,6 +149,16 @@ struct SignatureHelpClientCapabilities
 	///
 	/// @since 3.15.0
 	optional<Boolean> contextSupport;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	SignatureHelpClientCapabilities(optional<Boolean> dynamicRegistration,
@@ -126,21 +172,20 @@ struct SignatureHelpClientCapabilities
 
 /// signatureHelpProvider server capability.
 ///
-/// triggerCharacters?: String[];
+/// triggerCharacters?: String[]
 ///
-/// retriggerCharacters?: String[];
+/// retriggerCharacters?: String[]
 ///
 struct SignatureHelpOptions: public WorkDoneProgressOptions
 {
-
+private:
 	const static String triggerCharactersKey;
+	const static String retriggerCharactersKey;
 
+public:
 	/// The characters that trigger signature help
 	/// automatically.
 	optional<vector<String>> triggerCharacters;
-
-
-	const static String retriggerCharactersKey;
 
 	/// List of characters that re-trigger signature help.
 	///
@@ -151,6 +196,7 @@ struct SignatureHelpOptions: public WorkDoneProgressOptions
 	/// @since 3.15.0
 	optional<vector<String>> retriggerCharacters;
 
+	// No parsing
 
 	SignatureHelpOptions(optional<ProgressToken> workDoneProgress,
 		optional<vector<String>> triggerCharacters,
@@ -165,6 +211,8 @@ struct SignatureHelpRegistrationOptions:
 	public TextDocumentRegistrationOptions,
 	public SignatureHelpOptions
 {
+
+	// No parsing
 
 	SignatureHelpRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
@@ -184,11 +232,35 @@ struct SignatureHelpRegistrationOptions:
 ///
 /// documentation?: String | MarkupContent
 ///
-struct ParameterInformation
+struct ParameterInformation: public ObjectT
 {
-
+private:
 	const static String labelKey;
+	const static String documentationKey;
 
+	struct LabelMaker: public ObjectT
+	{
+		// The index of the last uninitialized Number in the array
+		size_t index = 0;
+
+		array<Number, 2> &parentArray;
+
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
+
+
+		LabelMaker(array<Number, 2> &parentArray);
+
+		virtual ~LabelMaker();
+	};
+public:
 	/// The label of this parameter information.
 	///
 	/// Either a string or an inclusive start and exclusive end offsets within
@@ -202,12 +274,19 @@ struct ParameterInformation
 	/// label part in the `SignatureInformation.label`.
 	variant<String, array<Number, 2>> label;
 
-
-	const static String documentationKey;
-
 	/// The human-readable doc-comment of this parameter. Will be shown
 	/// in the UI but can be omitted.
 	optional<variant<String, MarkupContent>> documentation;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	ParameterInformation(variant<String, array<Number, 2>> label,
@@ -228,27 +307,53 @@ struct ParameterInformation
 ///
 /// parameters?: ParameterInformation[]
 ///
-struct SignatureInformation
+struct SignatureInformation: public ObjectT
 {
-
+private:
 	const static String labelKey;
+	const static String documentationKey;
+	const static String parametersKey;
 
+	struct ParametersMaker: public ObjectT
+	{
+		vector<ParameterInformation> &parentArray;
+
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
+
+
+		ParametersMaker(vector<ParameterInformation> &parentArray);
+
+		virtual ~ParametersMaker();
+	};
+public:
 	/// The label of this signature. Will be shown in
 	/// the UI.
 	String label;
-
-
-	const static String documentationKey;
 
 	/// The human-readable doc-comment of this signature. Will be shown
 	/// in the UI but can be omitted.
 	optional<variant<String, MarkupContent>> documentation;
 
-
-	const static String parametersKey;
-
 	/// The parameters of this signature.
 	optional<vector<ParameterInformation>> parameters;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	SignatureInformation(String label,
@@ -264,22 +369,41 @@ struct SignatureInformation
 /// callable. There can be multiple signature but only one
 /// active and only one active parameter.
 ///
-/// signatures: SignatureInformation[];
+/// signatures: SignatureInformation[]
 ///
-/// activeSignature?: Number;
+/// activeSignature?: Number
 ///
-/// activeParameter?: Number;
+/// activeParameter?: Number
 ///
-struct SignatureHelp
+struct SignatureHelp: public ObjectT
 {
-
+private:
 	const static String signaturesKey;
+	const static String activeSignatureKey;
+	const static String activeParameterKey;
 
+	struct SignaturesMaker: public ObjectT
+	{
+		vector<SignatureInformation> &parentArray;
+
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
+
+
+		SignaturesMaker(vector<SignatureInformation> &parentArray);
+
+		virtual ~SignaturesMaker();
+	};
+public:
 	/// One or more signatures.
 	vector<SignatureInformation> signatures;
-
-
-	const static String activeSignatureKey;
 
 	/// The active signature. If omitted or the value lies outside the
 	/// range of `signatures` the value defaults to zero or is ignored if
@@ -290,9 +414,6 @@ struct SignatureHelp
 	/// mandatory to better express this.
 	optional<Number> activeSignature;
 
-
-	const static String activeParameterKey;
-
 	/// The active parameter of the active signature. If omitted or the value
 	/// lies outside the range of `signatures[activeSignature].parameters`
 	/// defaults to 0 if the active signature has parameters. If
@@ -301,6 +422,16 @@ struct SignatureHelp
 	/// mandatory to better express the active parameter if the
 	/// active signature does have any.
 	optional<Number> activeParameter;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	SignatureHelp(vector<SignatureInformation> signatures,
@@ -332,25 +463,32 @@ enum class SignatureHelpTriggerKind
 /// was triggered.
 ///
 /// @since 3.15.0
-struct SignatureHelpContext
+///
+/// triggerKind: SignatureHelpTriggerKind
+///
+/// triggerCharacter?: String
+///
+/// isRetrigger: Boolean
+///
+/// activeSignatureHelp?: SignatureHelp
+///
+struct SignatureHelpContext: public ObjectT
 {
-
+private:
 	const static String triggerKindKey;
+	const static String triggerCharacterKey;
+	const static String isRetriggerKey;
+	const static String activeSignatureHelpKey;
 
+public:
 	/// Action that caused signature help to be triggered.
 	SignatureHelpTriggerKind triggerKind;
-
-
-	const static String triggerCharacterKey;
 
 	/// Character that caused signature help to be triggered.
 	///
 	/// This is undefined when
 	/// `triggerKind != SignatureHelpTriggerKind.TriggerCharacter`
 	optional<String> triggerCharacter;
-
-
-	const static String isRetriggerKey;
 
 	/// `true` if signature help was already showing when it was triggered.
 	///
@@ -359,14 +497,21 @@ struct SignatureHelpContext
 	/// document content changes.
 	Boolean isRetrigger;
 
-
-	const static String activeSignatureHelpKey;
-
 	/// The currently active `SignatureHelp`.
 	///
 	/// The `activeSignatureHelp` has its `SignatureHelp.activeSignature` field
 	/// updated based on the user navigating through available signatures.
 	optional<SignatureHelp> activeSignatureHelp;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	SignatureHelpContext(SignatureHelpTriggerKind triggerKind,
@@ -381,26 +526,32 @@ struct SignatureHelpContext
 
 /// Signature help request parameters
 ///
-/// context?: SignatureHelpContext;
+/// context?: SignatureHelpContext
 ///
 struct SignatureHelpParams:
 	public TextDocumentPositionParams,
 	public WorkDoneProgressParams
 {
-
-	// FIXME:
-	// Even if the struct is not parseable this function must be declared
-	// because virtual inheritance
-	virtual void fillInitializer(ObjectInitializer&){};
-
+private:
 	const static String contextKey;
 
+public:
 	/// The signature help context. This is only available if the client
 	/// specifies to send this using the client capability
 	/// `textDocument.signatureHelp.contextSupport == true`
 	///
 	/// @since 3.15.0
 	optional<SignatureHelpContext> context;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	SignatureHelpParams(TextDocumentIdentifier textDocument,
