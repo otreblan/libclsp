@@ -34,13 +34,74 @@ DeclarationClientCapabilities::
 			linkSupport(linkSupport)
 {};
 
-DeclarationClientCapabilities::DeclarationClientCapabilities():
-	dynamicRegistration(),
-	linkSupport()
-{};
-
+DeclarationClientCapabilities::DeclarationClientCapabilities(){};
 DeclarationClientCapabilities::~DeclarationClientCapabilities(){};
 
+
+void DeclarationClientCapabilities::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?:
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// linkSupport?:
+	setterMap.emplace(
+		linkSupportKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				linkSupport = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 DeclarationRegistrationOptions::
 	DeclarationRegistrationOptions(optional<ProgressToken> workDoneProgress,
@@ -51,12 +112,7 @@ DeclarationRegistrationOptions::
 			StaticRegistrationOptions(id)
 {};
 
-DeclarationRegistrationOptions::DeclarationRegistrationOptions():
-	DeclarationOptions(),
-	TextDocumentRegistrationOptions(),
-	StaticRegistrationOptions()
-{};
-
+DeclarationRegistrationOptions::DeclarationRegistrationOptions(){};
 DeclarationRegistrationOptions::~DeclarationRegistrationOptions(){};
 
 
@@ -69,12 +125,15 @@ DeclarationParams::DeclarationParams(TextDocumentIdentifier textDocument,
 		PartialResultParams(partialResultToken)
 {};
 
-DeclarationParams::DeclarationParams():
-	TextDocumentPositionParams(),
-	WorkDoneProgressParams(),
-	PartialResultParams()
-{};
-
+DeclarationParams::DeclarationParams(){};
 DeclarationParams::~DeclarationParams(){};
+
+void DeclarationParams::fillInitializer(ObjectInitializer& initializer)
+{
+	// Parents
+	TextDocumentPositionParams::fillInitializer(initializer);
+	WorkDoneProgressParams::fillInitializer(initializer);
+	PartialResultParams::fillInitializer(initializer);
+}
 
 }

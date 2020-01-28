@@ -29,28 +29,37 @@ using namespace std;
 
 /// Goto Declaration request client capabilities
 ///
-/// dynamicRegistration?: boolean;
+/// dynamicRegistration?: Boolean
 ///
-/// linkSupport?: boolean;
+/// linkSupport?: Boolean
 ///
-struct DeclarationClientCapabilities
+struct DeclarationClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
+	const static String linkSupportKey;
 
+public:
 	/// Whether declaration supports dynamic registration. If this is set to
 	/// `true` the client supports the new `DeclarationRegistrationOptions`
 	/// return value for the corresponding server capability as well.
 	optional<Boolean> dynamicRegistration;
-
-
-	const static String linkSupportKey;
 
 	/// The client supports additional metadata in the form of declaration
 	/// links.
 	///
 	/// @since 3.14.0
 	optional<Boolean> linkSupport;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DeclarationClientCapabilities(optional<Boolean> dynamicRegistration,
@@ -61,13 +70,15 @@ struct DeclarationClientCapabilities
 	virtual ~DeclarationClientCapabilities();
 };
 
-using DeclarationOptions = WorkDoneProgressOptions;
+using DeclarationOptions = WorkDoneProgressOptions; // No parsing
 
 struct DeclarationRegistrationOptions:
 	public DeclarationOptions,
 	public TextDocumentRegistrationOptions,
 	public StaticRegistrationOptions
 {
+
+	// No parsing
 
 	DeclarationRegistrationOptions(optional<ProgressToken> workDoneProgress,
 		variant<DocumentSelector, Null> documentSelector,
@@ -84,10 +95,14 @@ struct DeclarationParams:
 	public PartialResultParams
 {
 
-	// Even if the struct is not parseable this function must be declared
-	// because virtual inheritance
-	virtual void fillInitializer(ObjectInitializer&){};
+	//====================   Parsing   ======================================//
 
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 	DeclarationParams(TextDocumentIdentifier textDocument,
 		Position position,
