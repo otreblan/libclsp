@@ -34,13 +34,73 @@ DefinitionClientCapabilities::
 			linkSupport(linkSupport)
 {};
 
-DefinitionClientCapabilities::DefinitionClientCapabilities():
-	dynamicRegistration(),
-	linkSupport()
-{};
-
+DefinitionClientCapabilities::DefinitionClientCapabilities(){};
 DefinitionClientCapabilities::~DefinitionClientCapabilities(){};
 
+void DefinitionClientCapabilities::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?:
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// linkSupport?:
+	setterMap.emplace(
+		linkSupportKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				linkSupport = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 DefinitionRegistrationOptions::DefinitionRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
@@ -49,11 +109,7 @@ DefinitionRegistrationOptions::DefinitionRegistrationOptions(
 			DefinitionOptions(workDoneProgress)
 {};
 
-DefinitionRegistrationOptions::DefinitionRegistrationOptions():
-	TextDocumentRegistrationOptions(),
-	DefinitionOptions()
-{};
-
+DefinitionRegistrationOptions::DefinitionRegistrationOptions(){};
 DefinitionRegistrationOptions::~DefinitionRegistrationOptions(){};
 
 
@@ -66,12 +122,15 @@ DefinitionParams::DefinitionParams(TextDocumentIdentifier textDocument,
 		PartialResultParams(partialResultToken)
 {};
 
-DefinitionParams::DefinitionParams():
-	TextDocumentPositionParams(),
-	WorkDoneProgressParams(),
-	PartialResultParams()
-{};
-
+DefinitionParams::DefinitionParams(){};
 DefinitionParams::~DefinitionParams(){};
+
+void DefinitionParams::fillInitializer(ObjectInitializer& initializer)
+{
+	// Parents
+	TextDocumentPositionParams::fillInitializer(initializer);
+	WorkDoneProgressParams::fillInitializer(initializer);
+	PartialResultParams::fillInitializer(initializer);
+}
 
 }

@@ -29,26 +29,35 @@ using namespace std;
 
 /// Goto Definition request client capabilities
 ///
-/// dynamicRegistration?: boolean;
+/// dynamicRegistration?: Boolean
 ///
-/// linkSupport?: boolean;
+/// linkSupport?: Boolean
 ///
-struct DefinitionClientCapabilities
+struct DefinitionClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
+	const static String linkSupportKey;
 
+public:
 	/// Whether declaration supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
-
-
-	const static String linkSupportKey;
 
 	/// The client supports additional metadata in the form of declaration
 	/// links.
 	///
 	/// @since 3.14.0
 	optional<Boolean> linkSupport;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DefinitionClientCapabilities(optional<Boolean> dynamicRegistration,
@@ -59,12 +68,14 @@ struct DefinitionClientCapabilities
 	virtual ~DefinitionClientCapabilities();
 };
 
-using DefinitionOptions = WorkDoneProgressOptions;
+using DefinitionOptions = WorkDoneProgressOptions; // No parsing
 
 struct DefinitionRegistrationOptions:
 	public TextDocumentRegistrationOptions,
 	public DefinitionOptions
 {
+
+	// No parsing
 
 	DefinitionRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
@@ -81,10 +92,14 @@ struct DefinitionParams:
 	public PartialResultParams
 {
 
-	// FIXME:
-	// Even if the struct is not parseable this function must be declared
-	// because virtual inheritance
-	virtual void fillInitializer(ObjectInitializer&){};
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DefinitionParams(TextDocumentIdentifier textDocument,
