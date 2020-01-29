@@ -70,24 +70,42 @@ enum class SymbolKind
 ///
 /// hierarchicalDocumentSymbolSupport?: Boolean
 ///
-struct DocumentSymbolClientCapabilities
+struct DocumentSymbolClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
+	const static String symbolKindKey;
+	const static String hierarchicalDocumentSymbolSupportKey;
 
+public:
 	/// Whether declaration supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
 
-
-	const static String symbolKindKey;
-
 	/// Specific capabilities for the `SymbolKind` in the
 	/// `textDocument/documentSymbol` request.
-	struct SymbolKind
+	struct SymbolKind: public ObjectT
 	{
-
+	private:
 		const static String valueSetKey;
 
+		struct ValueSetMaker: public ObjectT
+		{
+			vector<clsp::SymbolKind> &parentArray;
+
+			//====================   Parsing   ==============================//
+
+			/// This fills an ObjectInitializer
+			virtual void fillInitializer(ObjectInitializer& initializer);
+
+			// Using default isValid()
+
+			//===============================================================//
+
+			ValueSetMaker(vector<clsp::SymbolKind> &parentArray);
+
+			virtual ~ValueSetMaker();
+		};
+	public:
 		/// The symbol kind values the client supports. When this
 		/// property exists the client also guarantees that it will
 		/// handle values outside its set gracefully and falls back
@@ -97,6 +115,16 @@ struct DocumentSymbolClientCapabilities
 		/// the symbol kinds from `File` to `Array` as defined in
 		/// the initial version of the protocol.
 		optional<vector<clsp::SymbolKind>> valueSet;
+
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
 
 
 		SymbolKind(optional<vector<clsp::SymbolKind>> valueSet);
@@ -110,11 +138,18 @@ struct DocumentSymbolClientCapabilities
 	/// `textDocument/documentSymbol` request.
 	optional<SymbolKind> symbolKind;
 
-
-	const static String hierarchicalDocumentSymbolSupportKey;
-
 	/// The client supports hierarchical document symbols.
 	optional<Boolean> hierarchicalDocumentSymbolSupport;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DocumentSymbolClientCapabilities(optional<Boolean> dynamicRegistration,
@@ -127,12 +162,14 @@ struct DocumentSymbolClientCapabilities
 };
 
 /// Find references server capability
-using DocumentSymbolOptions = WorkDoneProgressOptions;
+using DocumentSymbolOptions = WorkDoneProgressOptions; // No parsing
 
 struct DocumentSymbolRegistrationOptions:
 	public TextDocumentRegistrationOptions,
 	public DocumentSymbolOptions
 {
+
+	// No parsing
 
 	DocumentSymbolRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
@@ -148,25 +185,28 @@ struct DocumentSymbolRegistrationOptions:
 /// textDocument: TextDocumentIdentifier
 ///
 struct DocumentSymbolParams:
-	public TextDocumentPositionParams,
 	public WorkDoneProgressParams,
 	public PartialResultParams
 {
-
-	// FIXME:
-	// Even if the struct is not parseable this function must be declared
-	// because virtual inheritance
-	virtual void fillInitializer(ObjectInitializer&){};
-
+private:
 	const static String textDocumentKey;
 
+public:
 	/// The text document.
 	TextDocumentIdentifier textDocument;
 
 
-	DocumentSymbolParams(TextDocumentIdentifier _textDocument,
-		Position position,
-		optional<ProgressToken> workDoneToken,
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
+
+	DocumentSymbolParams(optional<ProgressToken> workDoneToken,
 		optional<ProgressToken> partialResultToken,
 		TextDocumentIdentifier textDocument);
 
@@ -197,34 +237,29 @@ struct DocumentSymbolParams:
 ///
 struct DocumentSymbol
 {
-
+private:
 	const static String nameKey;
+	const static String detailKey;
+	const static String kindKey;
+	const static String deprecatedKey;
+	const static String rangeKey;
+	const static String selectionRangeKey;
+	const static String childrenKey;
 
+public:
 	/// The name of this symbol. Will be displayed in the user interface and
 	/// therefore must not be an empty string or a string only consisting of
 	/// white spaces.
 	String name;
 
-
-	const static String detailKey;
-
 	/// More detail for this symbol, e.g the signature of a function.
 	optional<String> detail;
-
-
-	const static String kindKey;
 
 	/// The kind of this symbol.
 	SymbolKind kind;
 
-
-	const static String deprecatedKey;
-
 	/// Indicates if this symbol is deprecated.
 	optional<Boolean> deprecated;
-
-
-	const static String rangeKey;
 
 	/// The range enclosing this symbol not including leading/trailing
 	/// whitespace but everything else like comments. This information is
@@ -232,19 +267,14 @@ struct DocumentSymbol
 	/// to reveal in the symbol in the UI.
 	Range range;
 
-
-	const static String selectionRangeKey;
-
 	/// The range that should be selected and revealed when this symbol is
 	/// being picked, e.g the name of a function.  Must be contained by the `range`.
 	Range selectionRange;
 
-
-	const static String childrenKey;
-
 	/// Children of this symbol, e.g. properties of a class.
 	optional<vector<DocumentSymbol>> children;
 
+	// No parsing
 
 	DocumentSymbol(String name,
 		optional<String> detail,
@@ -274,26 +304,22 @@ struct DocumentSymbol
 ///
 struct SymbolInformation
 {
-
+private:
 	const static String nameKey;
+	const static String kindKey;
+	const static String deprecatedKey;
+	const static String locationKey;
+	const static String containerNameKey;
 
+public:
 	/// The name of this symbol.
 	String name;
-
-
-	const static String kindKey;
 
 	/// The kind of this symbol.
 	SymbolKind kind;
 
-
-	const static String deprecatedKey;
-
 	/// Indicates if this symbol is deprecated.
 	optional<Boolean> deprecated;
-
-
-	const static String localtionKey;
 
 	/// The location of this symbol. The location's range is used by a tool
 	/// to reveal the location in the editor. If the symbol is selected in the
@@ -306,15 +332,13 @@ struct SymbolInformation
 	/// the symbols.
 	Location location;
 
-
-	const static String containerNameKey;
-
 	/// The name of the symbol containing this symbol. This information is for
 	/// user interface purposes (e.g. to render a qualifier in the user
 	/// interface if necessary). It can't be used to re-infer a hierarchy for
 	/// the document symbols.
 	optional<String> containerName;
 
+	// No parsing
 
 	SymbolInformation(String name,
 		SymbolKind kind,

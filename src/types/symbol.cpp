@@ -39,14 +39,105 @@ DocumentSymbolClientCapabilities::
 			hierarchicalDocumentSymbolSupport(hierarchicalDocumentSymbolSupport)
 {};
 
-DocumentSymbolClientCapabilities::DocumentSymbolClientCapabilities():
-	dynamicRegistration(),
-	symbolKind(),
-	hierarchicalDocumentSymbolSupport()
-{};
-
+DocumentSymbolClientCapabilities::DocumentSymbolClientCapabilities(){};
 DocumentSymbolClientCapabilities::~DocumentSymbolClientCapabilities(){};
 
+void DocumentSymbolClientCapabilities::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?:
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// symbolKind?:
+	setterMap.emplace(
+		symbolKindKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, handler]()
+			{
+				symbolKind.emplace();
+
+				handler->pushInitializer();
+				symbolKind->fillInitializer(handler->objectStack.top());
+			},
+		}
+	);
+
+	// hierarchicalDocumentSymbolSupport?:
+	setterMap.emplace(
+		hierarchicalDocumentSymbolSupportKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				hierarchicalDocumentSymbolSupport = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 const String DocumentSymbolClientCapabilities::SymbolKind::
 	valueSetKey = "valueSet";
@@ -56,50 +147,188 @@ DocumentSymbolClientCapabilities::SymbolKind::
 		valueSet(valueSet)
 {};
 
-DocumentSymbolClientCapabilities::SymbolKind::SymbolKind():
-	valueSet()
-{};
-
+DocumentSymbolClientCapabilities::SymbolKind::SymbolKind(){};
 DocumentSymbolClientCapabilities::SymbolKind::~SymbolKind(){};
 
+void DocumentSymbolClientCapabilities::SymbolKind::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// valueSet?:
+	setterMap.emplace(
+		valueSetKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			[this, handler]()
+			{
+				valueSet.emplace();
+
+				handler->pushInitializer();
+
+				auto* maker = new ValueSetMaker(valueSet.value());
+
+				maker->fillInitializer(handler->objectStack.top());
+			},
+
+			// Object
+			{}
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
+
+
+DocumentSymbolClientCapabilities::SymbolKind::ValueSetMaker::
+	ValueSetMaker(vector<clsp::SymbolKind> &parentArray):
+		parentArray(parentArray)
+{};
+
+DocumentSymbolClientCapabilities::SymbolKind::ValueSetMaker::
+	~ValueSetMaker()
+{};
+
+void DocumentSymbolClientCapabilities::SymbolKind::ValueSetMaker::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	// ObjectMaker
+	initializer.objectMaker = unique_ptr<ObjectT>(this);
+
+	auto& extraSetter = initializer.extraSetter;
+
+	// Value setters
+
+	// SymbolKind[]
+	extraSetter =
+	{
+		// String
+		{},
+
+		// Number
+		[this](Number n)
+		{
+			if(holds_alternative<int>(n))
+			{
+				int i = get<int>(n);
+
+				parentArray.emplace_back((clsp::SymbolKind)i);
+			}
+
+			// Nothing is added by default
+
+		},
+
+		// Boolean
+		{},
+
+		// Null
+		{},
+
+		// Array
+		{},
+
+		// Object
+		{}
+	};
+
+	// This
+	initializer.object = this;
+}
 
 DocumentSymbolRegistrationOptions::DocumentSymbolRegistrationOptions(
-		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress):
-			TextDocumentRegistrationOptions(documentSelector),
-			DocumentSymbolOptions(workDoneProgress)
+	variant<DocumentSelector, Null> documentSelector,
+	optional<ProgressToken> workDoneProgress):
+		TextDocumentRegistrationOptions(documentSelector),
+		DocumentSymbolOptions(workDoneProgress)
 {};
 
-DocumentSymbolRegistrationOptions::DocumentSymbolRegistrationOptions():
-	TextDocumentRegistrationOptions(),
-	DocumentSymbolOptions()
-{};
-
+DocumentSymbolRegistrationOptions::DocumentSymbolRegistrationOptions(){};
 DocumentSymbolRegistrationOptions::~DocumentSymbolRegistrationOptions(){};
 
 
 const String DocumentSymbolParams::textDocumentKey = "textDocument";
 
-DocumentSymbolParams::DocumentSymbolParams(TextDocumentIdentifier _textDocument,
-	Position position,
-	optional<ProgressToken> workDoneToken,
+DocumentSymbolParams::DocumentSymbolParams(optional<ProgressToken> workDoneToken,
 	optional<ProgressToken> partialResultToken,
 	TextDocumentIdentifier textDocument):
-		TextDocumentPositionParams(_textDocument, position),
 		WorkDoneProgressParams(workDoneToken),
 		PartialResultParams(partialResultToken),
 		textDocument(textDocument)
 {};
 
-DocumentSymbolParams::DocumentSymbolParams():
-	TextDocumentPositionParams(),
-	WorkDoneProgressParams(),
-	PartialResultParams(),
-	textDocument()
-{};
-
+DocumentSymbolParams::DocumentSymbolParams(){};
 DocumentSymbolParams::~DocumentSymbolParams(){};
 
+void DocumentSymbolParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Parents
+	WorkDoneProgressParams::fillInitializer(initializer);
+	PartialResultParams::fillInitializer(initializer);
+
+
+	// Value setters
+
+	// textDocument:
+	setterMap.emplace(
+		textDocumentKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+
+				textDocument.fillInitializer(handler->objectStack.top());
+
+				neededMap[textDocumentKey] = true;
+			}
+		}
+	);
+
+
+	// Needed members
+	neededMap.emplace(textDocumentKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 const String DocumentSymbol::nameKey           = "name";
 const String DocumentSymbol::detailKey         = "detail";
@@ -125,23 +354,14 @@ DocumentSymbol::DocumentSymbol(String name,
 		children(children)
 {};
 
-DocumentSymbol::DocumentSymbol():
-	name(),
-	detail(),
-	kind(),
-	deprecated(),
-	range(),
-	selectionRange(),
-	children()
-{};
-
+DocumentSymbol::DocumentSymbol(){};
 DocumentSymbol::~DocumentSymbol(){};
 
 
 const String SymbolInformation::nameKey          = "name";
 const String SymbolInformation::kindKey          = "kind";
 const String SymbolInformation::deprecatedKey    = "deprecated";
-const String SymbolInformation::localtionKey     = "location";
+const String SymbolInformation::locationKey      = "location";
 const String SymbolInformation::containerNameKey = "containerName";
 
 SymbolInformation::SymbolInformation(String name,
@@ -156,14 +376,7 @@ SymbolInformation::SymbolInformation(String name,
 		containerName(containerName)
 {};
 
-SymbolInformation::SymbolInformation():
-	name(),
-	kind(),
-	deprecated(),
-	location(),
-	containerName()
-{};
-
+SymbolInformation::SymbolInformation(){};
 SymbolInformation::~SymbolInformation(){};
 
 }
