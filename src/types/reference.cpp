@@ -29,12 +29,45 @@ ReferenceClientCapabilities::
 			dynamicRegistration(dynamicRegistration)
 {};
 
-ReferenceClientCapabilities::ReferenceClientCapabilities():
-	dynamicRegistration()
-{};
-
+ReferenceClientCapabilities::ReferenceClientCapabilities(){};
 ReferenceClientCapabilities::~ReferenceClientCapabilities(){};
 
+void ReferenceClientCapabilities::fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?::
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 ReferenceRegistrationOptions::ReferenceRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
@@ -43,11 +76,7 @@ ReferenceRegistrationOptions::ReferenceRegistrationOptions(
 			ReferenceOptions(workDoneProgress)
 {};
 
-ReferenceRegistrationOptions::ReferenceRegistrationOptions():
-	TextDocumentRegistrationOptions(),
-	ReferenceOptions()
-{};
-
+ReferenceRegistrationOptions::ReferenceRegistrationOptions(){};
 ReferenceRegistrationOptions::~ReferenceRegistrationOptions(){};
 
 
@@ -57,12 +86,50 @@ ReferenceContext::ReferenceContext(Boolean includeDeclaration):
 	includeDeclaration(includeDeclaration)
 {};
 
-ReferenceContext::ReferenceContext():
-	includeDeclaration()
-{};
-
+ReferenceContext::ReferenceContext(){};
 ReferenceContext::~ReferenceContext(){};
 
+void ReferenceContext::fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Value setters
+
+	// includeDeclaration:
+	setterMap.emplace(
+		includeDeclarationKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this, &neededMap](Boolean b)
+			{
+				includeDeclaration = b;
+				neededMap[includeDeclarationKey] = true;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(includeDeclarationKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 const String ReferenceParams::contextKey = "context";
 
@@ -77,13 +144,57 @@ ReferenceParams::ReferenceParams(TextDocumentIdentifier textDocument,
 		context(context)
 {};
 
-ReferenceParams::ReferenceParams():
-	TextDocumentPositionParams(),
-	WorkDoneProgressParams(),
-	PartialResultParams(),
-	context()
-{};
-
+ReferenceParams::ReferenceParams(){};
 ReferenceParams::~ReferenceParams(){};
+
+void ReferenceParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Parents
+	TextDocumentPositionParams::fillInitializer(initializer);
+	WorkDoneProgressParams::fillInitializer(initializer);
+	PartialResultParams::fillInitializer(initializer);
+
+	// Value setters
+
+	// context:
+	setterMap.emplace(
+		contextKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			{},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+				context.fillInitializer(handler->objectStack.top());
+				neededMap[contextKey] = true;
+			}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(contextKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 }

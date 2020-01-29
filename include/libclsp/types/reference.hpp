@@ -28,17 +28,26 @@ using namespace std;
 
 /// Goto Reference request client capabilities
 ///
-/// dynamicRegistration?: boolean;
+/// dynamicRegistration?: Boolean
 ///
-struct ReferenceClientCapabilities
+struct ReferenceClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
 
+public:
 	/// Whether declaration supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
 
 
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	ReferenceClientCapabilities(optional<Boolean> dynamicRegistration);
@@ -49,12 +58,14 @@ struct ReferenceClientCapabilities
 };
 
 /// Find references server capability
-using ReferenceOptions = WorkDoneProgressOptions;
+using ReferenceOptions = WorkDoneProgressOptions; // No parsing
 
 struct ReferenceRegistrationOptions:
 	public TextDocumentRegistrationOptions,
 	public ReferenceOptions
 {
+
+	// No parsing
 
 	ReferenceRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
@@ -69,12 +80,23 @@ struct ReferenceRegistrationOptions:
 ///
 /// includeDeclaration: Boolean
 ///
-struct ReferenceContext
+struct ReferenceContext: public ObjectT
 {
-
+private:
 	const static String includeDeclarationKey;
 
+public:
 	Boolean includeDeclaration;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	ReferenceContext(Boolean includeDeclaration);
@@ -93,15 +115,21 @@ struct ReferenceParams:
 	public WorkDoneProgressParams,
 	public PartialResultParams
 {
-
-	// FIXME:
-	// Even if the struct is not parseable this function must be declared
-	// because virtual inheritance
-	virtual void fillInitializer(ObjectInitializer&){};
-
+private:
 	const static String contextKey;
 
+public:
 	ReferenceContext context;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	ReferenceParams(TextDocumentIdentifier textDocument,
