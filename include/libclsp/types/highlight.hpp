@@ -29,15 +29,26 @@ using namespace std;
 
 /// DocumentHighlight request client capabilities
 ///
-/// dynamicRegistration?: boolean;
+/// dynamicRegistration?: Boolean
 ///
-struct DocumentHighlightClientCapabilities
+struct DocumentHighlightClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
 
+public:
 	/// Whether declaration supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DocumentHighlightClientCapabilities(optional<Boolean> dynamicRegistration);
@@ -48,12 +59,14 @@ struct DocumentHighlightClientCapabilities
 };
 
 /// Find references server capability
-using DocumentHighlightOptions = WorkDoneProgressOptions;
+using DocumentHighlightOptions = WorkDoneProgressOptions; // No parsing
 
 struct DocumentHighlightRegistrationOptions:
 	public TextDocumentRegistrationOptions,
 	public DocumentHighlightOptions
 {
+
+	// No parsing
 
 	DocumentHighlightRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
@@ -71,10 +84,15 @@ struct DocumentHighlightParams:
 	public PartialResultParams
 {
 
-	// FIXME:
-	// Even if the struct is not parseable this function must be declared
-	// because virtual inheritance
-	virtual void fillInitializer(ObjectInitializer&){};
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
 
 	DocumentHighlightParams(TextDocumentIdentifier textDocument,
 		Position position,
@@ -104,18 +122,18 @@ enum class DocumentHighlightKind
 /// the background color of its range.
 struct DocumentHighlight
 {
-
+private:
 	const static String rangeKey;
+	const static String kindKey;
 
+public:
 	/// The range this highlight applies to.
 	Range range;
-
-
-	const static String kindKey;
 
 	/// The highlight kind, default is DocumentHighlightKind.Text.
 	optional<DocumentHighlightKind> kind;
 
+	// No parsing
 
 	DocumentHighlight(Range range, optional<DocumentHighlightKind> kind);
 

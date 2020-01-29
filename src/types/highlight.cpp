@@ -29,12 +29,46 @@ DocumentHighlightClientCapabilities::
 			dynamicRegistration(dynamicRegistration)
 {};
 
-DocumentHighlightClientCapabilities::DocumentHighlightClientCapabilities():
-	dynamicRegistration()
-{};
-
+DocumentHighlightClientCapabilities::DocumentHighlightClientCapabilities(){};
 DocumentHighlightClientCapabilities::~DocumentHighlightClientCapabilities(){};
 
+void DocumentHighlightClientCapabilities::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?:
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 DocumentHighlightRegistrationOptions::DocumentHighlightRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
@@ -43,11 +77,7 @@ DocumentHighlightRegistrationOptions::DocumentHighlightRegistrationOptions(
 			DocumentHighlightOptions(workDoneProgress)
 {};
 
-DocumentHighlightRegistrationOptions::DocumentHighlightRegistrationOptions():
-	TextDocumentRegistrationOptions(),
-	DocumentHighlightOptions()
-{};
-
+DocumentHighlightRegistrationOptions::DocumentHighlightRegistrationOptions(){};
 DocumentHighlightRegistrationOptions::~DocumentHighlightRegistrationOptions(){};
 
 
@@ -60,13 +90,16 @@ DocumentHighlightParams::DocumentHighlightParams(TextDocumentIdentifier textDocu
 		PartialResultParams(partialResultToken)
 {};
 
-DocumentHighlightParams::DocumentHighlightParams():
-	TextDocumentPositionParams(),
-	WorkDoneProgressParams(),
-	PartialResultParams()
-{};
-
+DocumentHighlightParams::DocumentHighlightParams(){};
 DocumentHighlightParams::~DocumentHighlightParams(){};
+
+void DocumentHighlightParams::fillInitializer(ObjectInitializer& initializer)
+{
+	// Parents
+	TextDocumentPositionParams::fillInitializer(initializer);
+	WorkDoneProgressParams::fillInitializer(initializer);
+	PartialResultParams::fillInitializer(initializer);
+}
 
 
 const String DocumentHighlight::rangeKey = "range";
@@ -78,11 +111,7 @@ DocumentHighlight::DocumentHighlight(Range range,
 		kind(kind)
 {};
 
-DocumentHighlight::DocumentHighlight():
-	range(),
-	kind()
-{};
-
+DocumentHighlight::DocumentHighlight(){};
 DocumentHighlight::~DocumentHighlight(){};
 
 }
