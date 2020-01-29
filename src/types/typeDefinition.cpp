@@ -34,13 +34,73 @@ TypeDefinitionClientCapabilities::
 			linkSupport(linkSupport)
 {};
 
-TypeDefinitionClientCapabilities::TypeDefinitionClientCapabilities():
-	dynamicRegistration(),
-	linkSupport()
-{};
-
+TypeDefinitionClientCapabilities::TypeDefinitionClientCapabilities(){};
 TypeDefinitionClientCapabilities::~TypeDefinitionClientCapabilities(){};
 
+void TypeDefinitionClientCapabilities::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?:
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// linkSupport?:
+	setterMap.emplace(
+		linkSupportKey,
+		ValueSetter{
+			// String
+			{},
+
+			// Number
+			{},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				linkSupport = b;
+			},
+
+			// Null
+			{},
+
+			// Array
+			{},
+
+			// Object
+			{}
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 TypeDefinitionRegistrationOptions::
 	TypeDefinitionRegistrationOptions(
@@ -52,12 +112,7 @@ TypeDefinitionRegistrationOptions::
 			StaticRegistrationOptions(id)
 {};
 
-TypeDefinitionRegistrationOptions::TypeDefinitionRegistrationOptions():
-	TextDocumentRegistrationOptions(),
-	TypeDefinitionOptions(),
-	StaticRegistrationOptions()
-{};
-
+TypeDefinitionRegistrationOptions::TypeDefinitionRegistrationOptions(){};
 TypeDefinitionRegistrationOptions::~TypeDefinitionRegistrationOptions(){};
 
 
@@ -70,12 +125,15 @@ TypeDefinitionParams::TypeDefinitionParams(TextDocumentIdentifier textDocument,
 		PartialResultParams(partialResultToken)
 {};
 
-TypeDefinitionParams::TypeDefinitionParams():
-	TextDocumentPositionParams(),
-	WorkDoneProgressParams(),
-	PartialResultParams()
-{};
-
+TypeDefinitionParams::TypeDefinitionParams(){};
 TypeDefinitionParams::~TypeDefinitionParams(){};
+
+void TypeDefinitionParams::fillInitializer(ObjectInitializer& initializer)
+{
+	// Parents
+	TextDocumentPositionParams::fillInitializer(initializer);
+	WorkDoneProgressParams::fillInitializer(initializer);
+	PartialResultParams::fillInitializer(initializer);
+}
 
 }
