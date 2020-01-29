@@ -50,10 +50,10 @@ void DidChangeConfigurationClientCapabilities::
 		dynamicRegistrationKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -62,13 +62,13 @@ void DidChangeConfigurationClientCapabilities::
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 

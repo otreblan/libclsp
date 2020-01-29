@@ -52,19 +52,19 @@ void LocationLink::fillInitializer(ObjectInitializer& initializer)
 		originSelectionRangeKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler]()
@@ -91,19 +91,19 @@ void LocationLink::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -112,19 +112,19 @@ void LocationLink::fillInitializer(ObjectInitializer& initializer)
 		targetRangeKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler, &neededMap]()
@@ -143,19 +143,19 @@ void LocationLink::fillInitializer(ObjectInitializer& initializer)
 		targetSelectionRangeKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler, &neededMap]()

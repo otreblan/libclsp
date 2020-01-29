@@ -58,10 +58,10 @@ void ApplyWorkspaceEditResponse::fillInitializer(ObjectInitializer& initializer)
 		appliedKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this, &neededMap](Boolean b)
@@ -71,13 +71,13 @@ void ApplyWorkspaceEditResponse::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -92,19 +92,19 @@ void ApplyWorkspaceEditResponse::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 

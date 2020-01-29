@@ -81,7 +81,7 @@ void CompletionContext::fillInitializer(ObjectInitializer& initializer)
 		triggerKindKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
 			[this, &neededMap](Number n)
@@ -102,16 +102,16 @@ void CompletionContext::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -126,19 +126,19 @@ void CompletionContext::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -184,19 +184,19 @@ void CompletionParams::fillInitializer(ObjectInitializer& initializer)
 		contextKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler]()
@@ -320,10 +320,10 @@ void CompletionClientCapabilities::fillInitializer(ObjectInitializer& initialize
 		dynamicRegistrationKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -332,13 +332,13 @@ void CompletionClientCapabilities::fillInitializer(ObjectInitializer& initialize
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -347,19 +347,19 @@ void CompletionClientCapabilities::fillInitializer(ObjectInitializer& initialize
 		completionItemKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler]()
@@ -377,19 +377,19 @@ void CompletionClientCapabilities::fillInitializer(ObjectInitializer& initialize
 		completionItemKindKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler]()
@@ -407,10 +407,10 @@ void CompletionClientCapabilities::fillInitializer(ObjectInitializer& initialize
 		contextSupportKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -419,13 +419,13 @@ void CompletionClientCapabilities::fillInitializer(ObjectInitializer& initialize
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -485,10 +485,10 @@ void CompletionClientCapabilities::CompletionItem::
 		snippetSupportKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -497,13 +497,13 @@ void CompletionClientCapabilities::CompletionItem::
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -512,10 +512,10 @@ void CompletionClientCapabilities::CompletionItem::
 		commitCharactersSupportKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -524,13 +524,13 @@ void CompletionClientCapabilities::CompletionItem::
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -539,16 +539,16 @@ void CompletionClientCapabilities::CompletionItem::
 		documentationFormatKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
 			[this, handler]()
@@ -563,7 +563,7 @@ void CompletionClientCapabilities::CompletionItem::
 			},
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -572,10 +572,10 @@ void CompletionClientCapabilities::CompletionItem::
 		deprecatedSupportKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -584,13 +584,13 @@ void CompletionClientCapabilities::CompletionItem::
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -599,10 +599,10 @@ void CompletionClientCapabilities::CompletionItem::
 		preselectSupportKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -611,13 +611,13 @@ void CompletionClientCapabilities::CompletionItem::
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -626,19 +626,19 @@ void CompletionClientCapabilities::CompletionItem::
 		tagSupportKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler]()
@@ -685,19 +685,19 @@ void CompletionClientCapabilities::CompletionItem::DocumentationFormatMaker::
 		},
 
 		// Number
-		{},
+		nullopt,
 
 		// Boolean
-		{},
+		nullopt,
 
 		// Null
-		{},
+		nullopt,
 
 		// Array
-		{},
+		nullopt,
 
 		// Object
-		{}
+		nullopt
 	};
 
 	// This
@@ -731,16 +731,16 @@ void CompletionClientCapabilities::CompletionItem::TagSupport::
 		valueSetKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
 			[this, handler, &neededMap]()
@@ -755,7 +755,7 @@ void CompletionClientCapabilities::CompletionItem::TagSupport::
 			},
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -788,7 +788,7 @@ void CompletionClientCapabilities::CompletionItem::TagSupport::ValueSetMaker::
 	extraSetter =
 	{
 		// String
-		{},
+		nullopt,
 
 		// Number
 		[this](Number n)
@@ -807,16 +807,16 @@ void CompletionClientCapabilities::CompletionItem::TagSupport::ValueSetMaker::
 		},
 
 		// Boolean
-		{},
+		nullopt,
 
 		// Null
-		{},
+		nullopt,
 
 		// Array
-		{},
+		nullopt,
 
 		// Object
-		{}
+		nullopt
 	};
 
 	// This
@@ -848,16 +848,16 @@ void CompletionClientCapabilities::CompletionItemKind::
 		valueSetKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
 			[this, handler]()
@@ -872,7 +872,7 @@ void CompletionClientCapabilities::CompletionItemKind::
 			},
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -904,7 +904,7 @@ void CompletionClientCapabilities::CompletionItemKind::ValueSetMaker::
 	extraSetter =
 	{
 		// String
-		{},
+		nullopt,
 
 		// Number
 		[this](Number n)
@@ -923,16 +923,16 @@ void CompletionClientCapabilities::CompletionItemKind::ValueSetMaker::
 		},
 
 		// Boolean
-		{},
+		nullopt,
 
 		// Null
-		{},
+		nullopt,
 
 		// Array
-		{},
+		nullopt,
 
 		// Object
-		{}
+		nullopt
 	};
 
 	// This

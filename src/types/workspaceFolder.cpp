@@ -68,19 +68,19 @@ void WorkspaceFolder::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -96,19 +96,19 @@ void WorkspaceFolder::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 

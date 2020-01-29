@@ -71,19 +71,19 @@ void DidSaveTextDocumentParams::fillInitializer(ObjectInitializer& initializer)
 		textDocumentKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler, &neededMap]()
@@ -107,19 +107,19 @@ void DidSaveTextDocumentParams::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 

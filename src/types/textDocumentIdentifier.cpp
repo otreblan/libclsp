@@ -49,19 +49,19 @@ void TextDocumentIdentifier::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -101,7 +101,7 @@ void VersionedTextDocumentIdentifier::
 		versionKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
 			[this, &neededMap](Number n)
@@ -111,7 +111,7 @@ void VersionedTextDocumentIdentifier::
 			},
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
 			[this, &neededMap]()
@@ -121,10 +121,10 @@ void VersionedTextDocumentIdentifier::
 			},
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 

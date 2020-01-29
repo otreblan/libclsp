@@ -49,10 +49,10 @@ void TypeDefinitionClientCapabilities::
 		dynamicRegistrationKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -61,13 +61,13 @@ void TypeDefinitionClientCapabilities::
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -76,10 +76,10 @@ void TypeDefinitionClientCapabilities::
 		linkSupportKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -88,13 +88,13 @@ void TypeDefinitionClientCapabilities::
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 

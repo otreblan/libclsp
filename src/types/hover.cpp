@@ -51,10 +51,10 @@ void HoverClientCapabilities::fillInitializer(ObjectInitializer& initializer)
 		dynamicRegistrationKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -63,13 +63,13 @@ void HoverClientCapabilities::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -78,16 +78,16 @@ void HoverClientCapabilities::fillInitializer(ObjectInitializer& initializer)
 		contentFormatKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
 			[this, handler]()
@@ -102,7 +102,7 @@ void HoverClientCapabilities::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -141,19 +141,19 @@ void HoverClientCapabilities::ContentFormatMaker::
 		},
 
 		// Number
-		{},
+		nullopt,
 
 		// Boolean
-		{},
+		nullopt,
 
 		// Null
-		{},
+		nullopt,
 
 		// Array
-		{},
+		nullopt,
 
 		// Object
-		{}
+		nullopt
 	};
 
 	// This

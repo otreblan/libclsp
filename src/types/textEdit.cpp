@@ -46,19 +46,19 @@ void TextEdit::fillInitializer(ObjectInitializer& initializer)
 		rangeKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler, &neededMap]()
@@ -84,19 +84,19 @@ void TextEdit::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -134,19 +134,19 @@ void TextDocumentEdit::fillInitializer(ObjectInitializer& initializer)
 		textDocumentKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler, &neededMap]()
@@ -164,16 +164,16 @@ void TextDocumentEdit::fillInitializer(ObjectInitializer& initializer)
 		editsKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
 			[this, handler, &neededMap]()
@@ -188,7 +188,7 @@ void TextDocumentEdit::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -216,19 +216,19 @@ void TextDocumentEdit::EditsMaker::fillInitializer(ObjectInitializer& initialize
 	extraSetter =
 	{
 		// String
-		{},
+		nullopt,
 
 		// Number
-		{},
+		nullopt,
 
 		// Boolean
-		{},
+		nullopt,
 
 		// Null
-		{},
+		nullopt,
 
 		// Array
-		{},
+		nullopt,
 
 		// Object
 		[&Vector, handler]()

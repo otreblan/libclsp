@@ -48,19 +48,19 @@ void TextDocumentPositionParams::fillInitializer(ObjectInitializer& initializer)
 		textDocumentKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler, &neededMap]()
@@ -79,19 +79,19 @@ void TextDocumentPositionParams::fillInitializer(ObjectInitializer& initializer)
 		positionKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler, &neededMap]()

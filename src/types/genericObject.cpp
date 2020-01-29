@@ -138,7 +138,7 @@ void ArrayMaker::fillInitializer(ObjectInitializer& initializer)
 		},
 
 		// Array
-		{},
+		nullopt,
 
 		// Object
 		[this, handler]()
@@ -227,11 +227,11 @@ void GenericObject::reParse(JsonHandler& handler)
 
 			handler.objectStack.emplace().extraSetter =
 			{
-				{},
-				{},
-				{},
-				{},
-				{},
+				nullopt,
+				nullopt,
+				nullopt,
+				nullopt,
+				nullopt,
 				[&handler, &newObj]()
 				{
 					handler.pushInitializer();

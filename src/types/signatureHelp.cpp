@@ -57,10 +57,10 @@ void SignatureHelpClientCapabilities::
 		dynamicRegistrationKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -69,13 +69,13 @@ void SignatureHelpClientCapabilities::
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -84,19 +84,19 @@ void SignatureHelpClientCapabilities::
 		signatureInformationKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler]()
@@ -114,10 +114,10 @@ void SignatureHelpClientCapabilities::
 		contextSupportKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -126,13 +126,13 @@ void SignatureHelpClientCapabilities::
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -172,16 +172,16 @@ void SignatureHelpClientCapabilities::SignatureInformation::
 		documentationFormatKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
 			[this, handler]()
@@ -196,7 +196,7 @@ void SignatureHelpClientCapabilities::SignatureInformation::
 			},
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -205,19 +205,19 @@ void SignatureHelpClientCapabilities::SignatureInformation::
 		parameterInformationKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler]()
@@ -270,19 +270,19 @@ void SignatureHelpClientCapabilities::
 		},
 
 		// Number
-		{},
+		nullopt,
 
 		// Boolean
-		{},
+		nullopt,
 
 		// Null
-		{},
+		nullopt,
 
 		// Array
-		{},
+		nullopt,
 
 		// Object
-		{}
+		nullopt
 	};
 
 	// This
@@ -321,10 +321,10 @@ void SignatureHelpClientCapabilities::
 		labelOffsetSupportKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -333,13 +333,13 @@ void SignatureHelpClientCapabilities::
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -416,13 +416,13 @@ void ParameterInformation::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
 			[this, handler, &neededMap]()
@@ -439,7 +439,7 @@ void ParameterInformation::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -454,16 +454,16 @@ void ParameterInformation::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler]()
@@ -505,7 +505,7 @@ void ParameterInformation::LabelMaker::
 	extraSetter =
 	{
 		// String
-		{},
+		nullopt,
 
 		// Number
 		[this](Number n)
@@ -514,16 +514,16 @@ void ParameterInformation::LabelMaker::
 		},
 
 		// Boolean
-		{},
+		nullopt,
 
 		// Null
-		{},
+		nullopt,
 
 		// Array
-		{},
+		nullopt,
 
 		// Object
-		{}
+		nullopt
 	};
 
 	// This
@@ -567,19 +567,19 @@ void SignatureInformation::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -594,16 +594,16 @@ void SignatureInformation::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler]()
@@ -623,16 +623,16 @@ void SignatureInformation::fillInitializer(ObjectInitializer& initializer)
 		parametersKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
 			[this, handler]()
@@ -647,7 +647,7 @@ void SignatureInformation::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Object
-			{},
+			nullopt,
 		}
 	);
 
@@ -684,19 +684,19 @@ void SignatureInformation::ParametersMaker::
 	extraSetter =
 	{
 		// String
-		{},
+		nullopt,
 
 		// Number
-		{},
+		nullopt,
 
 		// Boolean
-		{},
+		nullopt,
 
 		// Null
-		{},
+		nullopt,
 
 		// Array
-		{},
+		nullopt,
 
 		// Object
 		[this, handler]()
@@ -741,16 +741,16 @@ void SignatureHelp::fillInitializer(ObjectInitializer& initializer)
 		signaturesKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
 			[this, handler, &neededMap]()
@@ -765,7 +765,7 @@ void SignatureHelp::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -774,7 +774,7 @@ void SignatureHelp::fillInitializer(ObjectInitializer& initializer)
 		activeSignatureKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
 			[this](Number n)
@@ -783,16 +783,16 @@ void SignatureHelp::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -801,7 +801,7 @@ void SignatureHelp::fillInitializer(ObjectInitializer& initializer)
 		activeParameterKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
 			[this](Number n)
@@ -810,16 +810,16 @@ void SignatureHelp::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -857,19 +857,19 @@ void SignatureHelp::SignaturesMaker::
 	extraSetter =
 	{
 		// String
-		{},
+		nullopt,
 
 		// Number
-		{},
+		nullopt,
 
 		// Boolean
-		{},
+		nullopt,
 
 		// Null
-		{},
+		nullopt,
 
 		// Array
-		{},
+		nullopt,
 
 		// Object
 		[this, handler]()
@@ -925,7 +925,7 @@ void SignatureHelpContext::fillInitializer(ObjectInitializer& initializer)
 		triggerKindKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
 			[this, &neededMap](Number n)
@@ -945,16 +945,16 @@ void SignatureHelpContext::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -969,19 +969,19 @@ void SignatureHelpContext::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -990,10 +990,10 @@ void SignatureHelpContext::fillInitializer(ObjectInitializer& initializer)
 		isRetriggerKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this, &neededMap](Boolean b)
@@ -1003,13 +1003,13 @@ void SignatureHelpContext::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -1018,19 +1018,19 @@ void SignatureHelpContext::fillInitializer(ObjectInitializer& initializer)
 		activeSignatureHelpKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler]()
@@ -1082,19 +1082,19 @@ void SignatureHelpParams::fillInitializer(ObjectInitializer& initializer)
 		contextKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler]()

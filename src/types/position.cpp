@@ -45,7 +45,7 @@ void Position::fillInitializer(ObjectInitializer& initializer)
 		lineKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
 			[this, &neededMap](Number n)
@@ -55,16 +55,16 @@ void Position::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -73,7 +73,7 @@ void Position::fillInitializer(ObjectInitializer& initializer)
 		characterKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
 			[this, &neededMap](Number n)
@@ -83,16 +83,16 @@ void Position::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 

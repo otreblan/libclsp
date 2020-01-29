@@ -43,10 +43,10 @@ void ReferenceClientCapabilities::fillInitializer(ObjectInitializer& initializer
 		dynamicRegistrationKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -55,13 +55,13 @@ void ReferenceClientCapabilities::fillInitializer(ObjectInitializer& initializer
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -101,10 +101,10 @@ void ReferenceContext::fillInitializer(ObjectInitializer& initializer)
 		includeDeclarationKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this, &neededMap](Boolean b)
@@ -114,13 +114,13 @@ void ReferenceContext::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -166,19 +166,19 @@ void ReferenceParams::fillInitializer(ObjectInitializer& initializer)
 		contextKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler, &neededMap]()

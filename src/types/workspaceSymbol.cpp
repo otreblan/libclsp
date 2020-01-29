@@ -51,10 +51,10 @@ void WorkspaceSymbolClientCapabilities::
 		dynamicRegistrationKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -63,13 +63,13 @@ void WorkspaceSymbolClientCapabilities::
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -78,19 +78,19 @@ void WorkspaceSymbolClientCapabilities::
 		symbolKindKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler]()
@@ -132,16 +132,16 @@ void WorkspaceSymbolClientCapabilities::SymbolKind::
 		valueSetKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
 			[this, handler]()
@@ -155,7 +155,7 @@ void WorkspaceSymbolClientCapabilities::SymbolKind::
 			},
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -187,7 +187,7 @@ void WorkspaceSymbolClientCapabilities::SymbolKind::ValueSetMaker::
 	extraSetter =
 	{
 		// String
-		{},
+		nullopt,
 
 		// Number
 		[&Vector](Number n)
@@ -204,16 +204,16 @@ void WorkspaceSymbolClientCapabilities::SymbolKind::ValueSetMaker::
 		},
 
 		// Boolean
-		{},
+		nullopt,
 
 		// Null
-		{},
+		nullopt,
 
 		// Array
-		{},
+		nullopt,
 
 		// Object
-		{}
+		nullopt
 	};
 
 	// This
@@ -257,19 +257,19 @@ void WorkspaceSymbolParams::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 

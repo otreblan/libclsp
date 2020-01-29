@@ -54,16 +54,16 @@ void PartialResultParams::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 

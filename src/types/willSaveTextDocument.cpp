@@ -48,19 +48,19 @@ void WillSaveTextDocumentParams::fillInitializer(ObjectInitializer& initializer)
 		textDocumentKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler, &neededMap]()
@@ -78,7 +78,7 @@ void WillSaveTextDocumentParams::fillInitializer(ObjectInitializer& initializer)
 		reasonKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
 			[this, &neededMap](Number n)
@@ -98,16 +98,16 @@ void WillSaveTextDocumentParams::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 

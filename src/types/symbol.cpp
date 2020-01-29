@@ -56,10 +56,10 @@ void DocumentSymbolClientCapabilities::
 		dynamicRegistrationKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -68,13 +68,13 @@ void DocumentSymbolClientCapabilities::
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -83,19 +83,19 @@ void DocumentSymbolClientCapabilities::
 		symbolKindKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler]()
@@ -113,10 +113,10 @@ void DocumentSymbolClientCapabilities::
 		hierarchicalDocumentSymbolSupportKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -125,13 +125,13 @@ void DocumentSymbolClientCapabilities::
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -164,16 +164,16 @@ void DocumentSymbolClientCapabilities::SymbolKind::
 		valueSetKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
 			[this, handler]()
@@ -188,7 +188,7 @@ void DocumentSymbolClientCapabilities::SymbolKind::
 			},
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -220,7 +220,7 @@ void DocumentSymbolClientCapabilities::SymbolKind::ValueSetMaker::
 	extraSetter =
 	{
 		// String
-		{},
+		nullopt,
 
 		// Number
 		[this](Number n)
@@ -237,16 +237,16 @@ void DocumentSymbolClientCapabilities::SymbolKind::ValueSetMaker::
 		},
 
 		// Boolean
-		{},
+		nullopt,
 
 		// Null
-		{},
+		nullopt,
 
 		// Array
-		{},
+		nullopt,
 
 		// Object
-		{}
+		nullopt
 	};
 
 	// This
@@ -296,19 +296,19 @@ void DocumentSymbolParams::fillInitializer(ObjectInitializer& initializer)
 		textDocumentKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler, &neededMap]()

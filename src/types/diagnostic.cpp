@@ -62,19 +62,19 @@ void Diagnostic::fillInitializer(ObjectInitializer& initializer)
 		rangeKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler, &neededMap]()
@@ -93,7 +93,7 @@ void Diagnostic::fillInitializer(ObjectInitializer& initializer)
 		severityKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
 			[this](Number n)
@@ -113,16 +113,16 @@ void Diagnostic::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -143,16 +143,16 @@ void Diagnostic::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -167,19 +167,19 @@ void Diagnostic::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -196,19 +196,19 @@ void Diagnostic::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -217,16 +217,16 @@ void Diagnostic::fillInitializer(ObjectInitializer& initializer)
 		tagsKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
 			[this, handler]()
@@ -242,7 +242,7 @@ void Diagnostic::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -251,16 +251,16 @@ void Diagnostic::fillInitializer(ObjectInitializer& initializer)
 		relatedInformationKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
 			[this, handler]()
@@ -276,7 +276,7 @@ void Diagnostic::fillInitializer(ObjectInitializer& initializer)
 			},
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -302,7 +302,7 @@ void Diagnostic::TagsMaker::fillInitializer(ObjectInitializer& initializer)
 	extraSetter =
 	{
 		// String
-		{},
+		nullopt,
 
 		// Number
 		[&Vector](Number n)
@@ -323,16 +323,16 @@ void Diagnostic::TagsMaker::fillInitializer(ObjectInitializer& initializer)
 		},
 
 		// Boolean
-		{},
+		nullopt,
 
 		// Null
-		{},
+		nullopt,
 
 		// Array
-		{},
+		nullopt,
 
 		// Object
-		{}
+		nullopt
 	};
 
 	// This
@@ -356,19 +356,19 @@ void Diagnostic::RelatedInformationMaker::
 	extraSetter =
 	{
 		// String
-		{},
+		nullopt,
 
 		// Number
-		{},
+		nullopt,
 
 		// Boolean
-		{},
+		nullopt,
 
 		// Null
-		{},
+		nullopt,
 
 		// Array
-		{},
+		nullopt,
 
 		// Object
 		[&Vector, handler]()
@@ -412,19 +412,19 @@ void DiagnosticRelatedInformation::fillInitializer(ObjectInitializer& initialize
 		locationKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler, &neededMap]()
@@ -451,19 +451,19 @@ void DiagnosticRelatedInformation::fillInitializer(ObjectInitializer& initialize
 			},
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 

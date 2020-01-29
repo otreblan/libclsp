@@ -69,19 +69,19 @@ void TextDocumentContentChangeEvent::
 		rangeKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler, &neededMap]()
@@ -99,7 +99,7 @@ void TextDocumentContentChangeEvent::
 		rangeLengthKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
 			[this](Number n)
@@ -108,16 +108,16 @@ void TextDocumentContentChangeEvent::
 			},
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -134,19 +134,19 @@ void TextDocumentContentChangeEvent::
 			},
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -187,19 +187,19 @@ void DidChangeTextDocumentParams::fillInitializer(ObjectInitializer& initializer
 		textDocumentKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler, &neededMap]()
@@ -217,16 +217,16 @@ void DidChangeTextDocumentParams::fillInitializer(ObjectInitializer& initializer
 		contentChangesKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
 			[this, handler, &neededMap]()
@@ -240,7 +240,7 @@ void DidChangeTextDocumentParams::fillInitializer(ObjectInitializer& initializer
 			},
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -278,19 +278,19 @@ void DidChangeTextDocumentParams::ContentChangesMaker::
 	extraSetter =
 	{
 		// String
-		{},
+		nullopt,
 
 		// Number
-		{},
+		nullopt,
 
 		// Boolean
-		{},
+		nullopt,
 
 		// Null
-		{},
+		nullopt,
 
 		// Array
-		{},
+		nullopt,
 
 		// Object
 		[this, handler]()

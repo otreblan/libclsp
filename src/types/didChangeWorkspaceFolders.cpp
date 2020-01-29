@@ -48,16 +48,16 @@ void WorkspaceFoldersChangeEvent::fillInitializer(ObjectInitializer& initializer
 		addedKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
 			[this, handler, &neededMap]()
@@ -71,7 +71,7 @@ void WorkspaceFoldersChangeEvent::fillInitializer(ObjectInitializer& initializer
 			},
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -80,16 +80,16 @@ void WorkspaceFoldersChangeEvent::fillInitializer(ObjectInitializer& initializer
 		removedKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
 			[this, handler, &neededMap]()
@@ -103,7 +103,7 @@ void WorkspaceFoldersChangeEvent::fillInitializer(ObjectInitializer& initializer
 			},
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -136,19 +136,19 @@ void WorkspaceFoldersChangeEvent::AddedRemovedMaker::
 	extraSetter =
 	{
 		// String
-		{},
+		nullopt,
 
 		// Number
-		{},
+		nullopt,
 
 		// Boolean
-		{},
+		nullopt,
 
 		// Null
-		{},
+		nullopt,
 
 		// Array
-		{},
+		nullopt,
 
 		// Object
 		[this, handler]()
@@ -193,19 +193,19 @@ void DidChangeWorkspaceFoldersParams::fillInitializer(ObjectInitializer& initial
 		eventKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler, &neededMap]()

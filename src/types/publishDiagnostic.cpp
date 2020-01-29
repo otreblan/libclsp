@@ -58,10 +58,10 @@ void PublishDiagnosticsClientCapabilities::fillInitializer(ObjectInitializer& in
 		relatedInformationKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -70,13 +70,13 @@ void PublishDiagnosticsClientCapabilities::fillInitializer(ObjectInitializer& in
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -85,19 +85,19 @@ void PublishDiagnosticsClientCapabilities::fillInitializer(ObjectInitializer& in
 		tagSupportKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
 			[this, handler]()
@@ -115,10 +115,10 @@ void PublishDiagnosticsClientCapabilities::fillInitializer(ObjectInitializer& in
 		versionSupportKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
 			[this](Boolean b)
@@ -127,13 +127,13 @@ void PublishDiagnosticsClientCapabilities::fillInitializer(ObjectInitializer& in
 			},
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
-			{},
+			nullopt,
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -148,9 +148,9 @@ const String PublishDiagnosticsClientCapabilities::TagSupport::
 PublishDiagnosticsClientCapabilities::TagSupport::
 	TagSupport(vector<DiagnosticTag> valueSet):
 		valueSet(valueSet)
-{}
+{};
 
-PublishDiagnosticsClientCapabilities::TagSupport::TagSupport(){}
+PublishDiagnosticsClientCapabilities::TagSupport::TagSupport(){};
 PublishDiagnosticsClientCapabilities::TagSupport::~TagSupport(){};
 
 void PublishDiagnosticsClientCapabilities::TagSupport::
@@ -168,16 +168,16 @@ void PublishDiagnosticsClientCapabilities::TagSupport::
 		valueSetKey,
 		ValueSetter{
 			// String
-			{},
+			nullopt,
 
 			// Number
-			{},
+			nullopt,
 
 			// Boolean
-			{},
+			nullopt,
 
 			// Null
-			{},
+			nullopt,
 
 			// Array
 			[this, handler, &neededMap]()
@@ -191,7 +191,7 @@ void PublishDiagnosticsClientCapabilities::TagSupport::
 			},
 
 			// Object
-			{}
+			nullopt
 		}
 	);
 
@@ -225,7 +225,7 @@ void PublishDiagnosticsClientCapabilities::TagSupport::ValueSetMaker::
 	extraSetter =
 	{
 		// String
-		{},
+		nullopt,
 
 		// Number
 		[this](Number n)
@@ -242,16 +242,16 @@ void PublishDiagnosticsClientCapabilities::TagSupport::ValueSetMaker::
 		},
 
 		// Boolean
-		{},
+		nullopt,
 
 		// Null
-		{},
+		nullopt,
 
 		// Array
-		{},
+		nullopt,
 
 		// Object
-		{}
+		nullopt
 	};
 
 	// This
