@@ -115,38 +115,67 @@ struct CodeActionKind
 ///
 /// isPreferredSupport?: Boolean
 ///
-struct CodeActionClientCapabilities
+struct CodeActionClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
+	const static String codeActionLiteralSupportKey;
+	const static String isPreferredSupportKey;
 
+public:
 	/// Whether code action supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
-
-
-	const static String codeActionLiteralSupportKey;
 
 	/// The client supports code action literals as a valid
 	/// response of the `textDocument/codeAction` request.
 	///
 	/// @since 3.8.0
-	struct CodeActionLiteralSupport
+	struct CodeActionLiteralSupport: public ObjectT
 	{
-
+	private:
 		const static String codeActionKindKey;
 
+	public:
 		/// The code action kind is supported with the following value
 		/// set.
-		struct CodeActionKind
+		struct CodeActionKind: public ObjectT
 		{
-
+		private:
 			const static String valueSetKey;
 
+			struct ValueSetMaker: public ObjectT
+			{
+				vector<clsp::CodeActionKind> &parentArray;
+
+				//====================   Parsing   ==========================//
+
+				/// This fills an ObjectInitializer
+				virtual void fillInitializer(ObjectInitializer& initializer);
+
+				// Using default isValid()
+
+				//===========================================================//
+
+				ValueSetMaker(vector<clsp::CodeActionKind> &parentArray);
+
+				virtual ~ValueSetMaker();
+			};
+		public:
 			/// The code action kind values the client supports. When this
 			/// property exists the client also guarantees that it will
 			/// handle values outside its set gracefully and falls back
 			/// to a default value when unknown.
 			vector<clsp::CodeActionKind> valueSet;
+
+
+			//====================   Parsing   ==============================//
+
+			/// This fills an ObjectInitializer
+			virtual void fillInitializer(ObjectInitializer& initializer);
+
+			// Using default isValid()
+
+			//===============================================================//
 
 
 			CodeActionKind(vector<clsp::CodeActionKind> valueSet);
@@ -159,6 +188,16 @@ struct CodeActionClientCapabilities
 		/// The code action kind is supported with the following value
 		/// set.
 		CodeActionKind codeActionKind;
+
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
 
 
 		CodeActionLiteralSupport(CodeActionKind codeActionKind);
@@ -175,10 +214,19 @@ struct CodeActionClientCapabilities
 	/// @since 3.8.0
 	optional<CodeActionLiteralSupport> codeActionLiteralSupport;
 
-
-	const static String isPreferredSupportKey;
-
+	/// Whether code action supports the `isPreferred` property.
+	/// @since 3.15.0
 	optional<Boolean> isPreferredSupport;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	CodeActionClientCapabilities(optional<Boolean> dynamicRegistration,
@@ -190,21 +238,23 @@ struct CodeActionClientCapabilities
 	virtual ~CodeActionClientCapabilities();
 };
 
-/// Code action server capabilitY
+/// Code action server capability
 ///
-/// codeActionKinds?: CodeActionKind[];
+/// codeActionKinds?: CodeActionKind[]
 ///
 struct CodeActionOptions: public WorkDoneProgressOptions
 {
-
+private:
 	const static String codeActionKindsKey;
 
+public:
 	/// CodeActionKinds that this server may return.
 	///
 	/// The list of kinds may be generic, such as `CodeActionKind.Refactor`,
 	/// or the server may list out every specific kind they provide.
 	optional<vector<CodeActionKind>> codeActionKinds;
 
+	// No parsing
 
 	CodeActionOptions(optional<ProgressToken> workDoneProgress,
 		optional<vector<CodeActionKind>> codeActionKinds);
@@ -219,6 +269,8 @@ struct CodeActionRegistrationOptions:
 	public CodeActionOptions
 {
 
+	// No parsing
+
 	CodeActionRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
 		optional<ProgressToken> workDoneProgress,
@@ -232,15 +284,52 @@ struct CodeActionRegistrationOptions:
 /// Contains additional diagnostic information about the context in which
 /// a code action is run.
 ///
-/// diagnostics: Diagnostic[];
+/// diagnostics: Diagnostic[]
 ///
-/// only?: CodeActionKind[];
+/// only?: CodeActionKind[]
 ///
-struct CodeActionContext
+struct CodeActionContext: public ObjectT
 {
-
+private:
 	const static String diagnosticsKey;
+	const static String onlyKey;
 
+	struct DiagnosticsMaker: public ObjectT
+	{
+		vector<Diagnostic> &parentArray;
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
+
+		DiagnosticsMaker(vector<Diagnostic> &parentArray);
+
+		virtual ~DiagnosticsMaker();
+	};
+
+	struct OnlyMaker: public ObjectT
+	{
+		vector<CodeActionKind> &parentArray;
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
+
+		OnlyMaker(vector<CodeActionKind> &parentArray);
+
+		virtual ~OnlyMaker();
+	};
+public:
 	/// An array of diagnostics known on the client side overlapping the range
 	/// provided to the `textDocument/codeAction` request. They are provided so
 	/// that the server knows which errors are currently presented to the user
@@ -249,14 +338,21 @@ struct CodeActionContext
 	/// compute code actions is the provided range.
 	vector<Diagnostic> diagnostics;
 
-
-	const static String onlyKey;
-
 	/// Requested kind of actions to return.
 	///
 	/// Actions not of this kind are filtered out by the client before being
 	/// shown. So servers can omit computing them.
 	optional<vector<CodeActionKind>> only;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	CodeActionContext(vector<Diagnostic> diagnostics,
@@ -269,38 +365,40 @@ struct CodeActionContext
 
 /// Params for the CodeActionRequest
 ///
-/// textDocument: TextDocumentIdentifier;
+/// textDocument: TextDocumentIdentifier
 ///
-/// range: Range;
+/// range: Range
 ///
-/// context: CodeActionContext;
+/// context: CodeActionContext
 ///
 struct CodeActionParams:
 	public WorkDoneProgressParams,
 	public PartialResultParams
 {
-
-	// FIXME:
-	// Even if the struct is not parseable this function must be declared
-	// because virtual inheritance
-	virtual void fillInitializer(ObjectInitializer&){};
-
+private:
 	const static String textDocumentKey;
+	const static String rangeKey;
+	const static String contextKey;
 
+public:
 	/// The document in which the command was invoked.
 	TextDocumentIdentifier textDocument;
-
-
-	const static String rangeKey;
 
 	/// The range for which the command was invoked.
 	Range range;
 
-
-	const static String contextKey;
-
 	/// Context carrying additional information.
 	CodeActionContext context;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	CodeActionParams(optional<ProgressToken> workDoneToken,
@@ -334,28 +432,25 @@ struct CodeActionParams:
 ///
 struct CodeAction
 {
-
+private:
 	const static String titleKey;
+	const static String kindKey;
+	const static String diagnosticsKey;
+	const static String isPreferredKey;
+	const static String editKey;
+	const static String commandKey;
 
+public:
 	/// A short, human-readable, title for this code action.
 	String title;
-
-
-	const static String kindKey;
 
 	/// The kind of the code action.
 	///
 	/// Used to filter code actions.
 	optional<CodeActionKind> kind;
 
-
-	const static String diagnosticsKey;
-
 	/// The diagnostics that this code action resolves.
 	optional<vector<Diagnostic>> diagnostics;
-
-
-	const static String isPreferredKey;
 
 	/// Marks this as a preferred action. Preferred actions are used by the
 	/// `auto fix` command and can be targeted by keybindings.
@@ -367,20 +462,15 @@ struct CodeAction
 	/// @since 3.15.0
 	optional<Boolean> isPreferred;
 
-
-	const static String editKey;
-
 	/// The workspace edit this code action performs.
 	optional<WorkspaceEdit> edit;
-
-
-	const static String commandKey;
 
 	/// A command this code action executes. If a code action
 	/// provides an edit and a command, first the edit is
 	/// executed and then the command.
 	optional<Command> command;
 
+	// No parsing
 
 	CodeAction(String title,
 		optional<CodeActionKind> kind,

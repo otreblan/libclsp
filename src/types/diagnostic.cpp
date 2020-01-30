@@ -407,7 +407,7 @@ void DiagnosticRelatedInformation::fillInitializer(ObjectInitializer& initialize
 
 	// Value setters
 
-	// location;
+	// location:
 	setterMap.emplace(
 		locationKey,
 		ValueSetter{
