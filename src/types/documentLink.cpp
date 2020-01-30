@@ -35,12 +35,73 @@ DocumentLinkClientCapabilities::
 {};
 
 
-DocumentLinkClientCapabilities:: DocumentLinkClientCapabilities():
-	dynamicRegistration(),
-	tooltipSupport()
-{};
-
+DocumentLinkClientCapabilities:: DocumentLinkClientCapabilities(){};
 DocumentLinkClientCapabilities::~DocumentLinkClientCapabilities(){};
+
+void DocumentLinkClientCapabilities::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?:
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// tooltipSupport?:
+	setterMap.emplace(
+		tooltipSupportKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				tooltipSupport = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 
 const String DocumentLinkOptions::resolveProviderKey = "resolveProvider";
@@ -52,11 +113,7 @@ DocumentLinkOptions::DocumentLinkOptions(optional<ProgressToken> workDoneProgres
 {};
 
 
-DocumentLinkOptions::DocumentLinkOptions():
-	WorkDoneProgressOptions(),
-	resolveProvider()
-{};
-
+DocumentLinkOptions::DocumentLinkOptions(){};
 DocumentLinkOptions::~DocumentLinkOptions(){};
 
 
@@ -68,11 +125,7 @@ DocumentLinkRegistrationOptions::DocumentLinkRegistrationOptions(
 		DocumentLinkOptions(workDoneProgress, resolveProvider)
 {};
 
-DocumentLinkRegistrationOptions::DocumentLinkRegistrationOptions():
-	TextDocumentRegistrationOptions(),
-	DocumentLinkOptions()
-{};
-
+DocumentLinkRegistrationOptions::DocumentLinkRegistrationOptions(){};
 DocumentLinkRegistrationOptions::~DocumentLinkRegistrationOptions(){};
 
 
@@ -86,14 +139,59 @@ DocumentLinkParams::DocumentLinkParams(optional<ProgressToken> workDoneToken,
 		textDocument(textDocument)
 {};
 
-DocumentLinkParams::DocumentLinkParams():
-	WorkDoneProgressParams(),
-	PartialResultParams(),
-	textDocument()
-{};
-
+DocumentLinkParams::DocumentLinkParams(){};
 DocumentLinkParams::~DocumentLinkParams(){};
 
+void DocumentLinkParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Parents
+	WorkDoneProgressParams::fillInitializer(initializer);
+	PartialResultParams::fillInitializer(initializer);
+
+	// Value setters
+
+	// textDocument:
+	setterMap.emplace(
+		textDocumentKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+
+				textDocument.fillInitializer(handler->objectStack.top());
+
+				neededMap[textDocumentKey] = true;
+			}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(textDocumentKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 const String DocumentLink::rangeKey   = "range";
 const String DocumentLink::targetKey  = "target";
@@ -110,13 +208,7 @@ DocumentLink::DocumentLink(Range range,
 		data(data)
 {};
 
-DocumentLink::DocumentLink():
-	range(),
-	target(),
-	tooltip(),
-	data()
-{};
-
+DocumentLink::DocumentLink(){};
 DocumentLink::~DocumentLink(){};
 
 }

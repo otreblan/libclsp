@@ -35,21 +35,30 @@ using namespace std;
 ///
 /// tooltipSupport?: Boolean
 ///
-struct DocumentLinkClientCapabilities
+struct DocumentLinkClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
+	const static String tooltipSupportKey;
 
+public:
 	/// Whether code action supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
-
-
-	const static String tooltipSupportKey;
 
 	/// Whether the client supports the `tooltip` property on `DocumentLink`.
 	///
 	/// @since 3.15.0
 	optional<Boolean> tooltipSupport;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DocumentLinkClientCapabilities(optional<Boolean> dynamicRegistration,
@@ -66,12 +75,14 @@ struct DocumentLinkClientCapabilities
 ///
 struct DocumentLinkOptions: public WorkDoneProgressOptions
 {
-
+private:
 	const static String resolveProviderKey;
 
+public:
 	/// Code lens has a resolve provider as well.
 	optional<Boolean> resolveProvider;
 
+	// No parsing
 
 	DocumentLinkOptions(optional<ProgressToken> workDoneProgress,
 		optional<Boolean> resolveProvider);
@@ -86,6 +97,8 @@ struct DocumentLinkRegistrationOptions:
 	public DocumentLinkOptions
 {
 
+	// No parsing
+
 	DocumentLinkRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
 		optional<ProgressToken> workDoneProgress,
@@ -98,22 +111,28 @@ struct DocumentLinkRegistrationOptions:
 
 /// Params for the DocumentLink Request
 ///
-/// textDocument: TextDocumentIdentifier;
+/// textDocument: TextDocumentIdentifier
 ///
 struct DocumentLinkParams:
 	public WorkDoneProgressParams,
 	public PartialResultParams
 {
-
-	// FIXME:
-	// Even if the struct is not parseable this function must be declared
-	// because virtual inheritance
-	virtual void fillInitializer(ObjectInitializer&){};
-
+private:
 	const static String textDocumentKey;
 
+public:
 	/// The document to provide document links for.
 	TextDocumentIdentifier textDocument;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DocumentLinkParams(optional<ProgressToken> workDoneToken,
@@ -138,21 +157,19 @@ struct DocumentLinkParams:
 ///
 struct DocumentLink
 {
-
+private:
 	const static String rangeKey;;
+	const static String targetKey;
+	const static String tooltipKey;;
+	const static String dataKey;
 
+public:
 	/// The range this link applies to.
 	Range range;
-
-
-	const static String targetKey;
 
 	/// The uri this link points to. If missing a resolve request is sent
 	/// later.
 	optional<DocumentUri> target;
-
-
-	const static String tooltipKey;;
 
 	/// The tooltip text when you hover over this link.
 	///
@@ -164,13 +181,11 @@ struct DocumentLink
 	/// @since 3.15.0
 	optional<String> tooltip;
 
-
-	const static String dataKey;
-
 	/// A data entry field that is preserved on a document link between a
 	/// DocumentLinkRequest and a DocumentLinkResolveRequest.
 	optional<Any> data;
 
+	// No parsing
 
 	DocumentLink(Range range,
 		optional<DocumentUri> target,
