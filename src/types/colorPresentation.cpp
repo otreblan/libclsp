@@ -37,15 +37,123 @@ ColorPresentationParams::ColorPresentationParams(optional<ProgressToken> workDon
 		range(range)
 {};
 
-ColorPresentationParams::ColorPresentationParams():
-	WorkDoneProgressParams(),
-	PartialResultParams(),
-	textDocument(),
-	color(),
-	range()
-{};
-
+ColorPresentationParams::ColorPresentationParams(){};
 ColorPresentationParams::~ColorPresentationParams(){};
+
+void ColorPresentationParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Parents
+	WorkDoneProgressParams::fillInitializer(initializer);
+	PartialResultParams::fillInitializer(initializer);
+
+	// Value setters
+
+	// textDocument:
+	setterMap.emplace(
+		textDocumentKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+
+				textDocument.fillInitializer(handler->objectStack.top());
+
+				neededMap[textDocumentKey] = true;
+			}
+		}
+	);
+
+	// color:
+	setterMap.emplace(
+		colorKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+
+				color.fillInitializer(handler->objectStack.top());
+
+				neededMap[colorKey] = true;
+			}
+		}
+	);
+
+	// range:
+	setterMap.emplace(
+		rangeKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+
+				range.fillInitializer(handler->objectStack.top());
+
+				neededMap[rangeKey] = true;
+			}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(textDocumentKey, 0);
+	neededMap.emplace(colorKey, 0);
+	neededMap.emplace(rangeKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 
 const String ColorPresentation::labelKey               = "label";
@@ -60,12 +168,7 @@ ColorPresentation::ColorPresentation(String label,
 		additionalTextEdits(additionalTextEdits)
 {};
 
-ColorPresentation::ColorPresentation():
-	label(),
-	textEdit(),
-	additionalTextEdits()
-{};
-
+ColorPresentation::ColorPresentation(){};
 ColorPresentation::~ColorPresentation(){};
 
 }

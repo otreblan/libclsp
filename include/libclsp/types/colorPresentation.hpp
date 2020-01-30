@@ -38,28 +38,30 @@ struct ColorPresentationParams:
 	public WorkDoneProgressParams,
 	public PartialResultParams
 {
-
-	// FIXME:
-	// Even if the struct is not parseable this function must be declared
-	// because virtual inheritance
-	virtual void fillInitializer(ObjectInitializer&){};
-
+private:
 	const static String textDocumentKey;
+	const static String colorKey;
+	const static String rangeKey;
 
+public:
 	/// The text document.
 	TextDocumentIdentifier textDocument;
-
-
-	const static String colorKey;
 
 	/// The color information to request presentations for.
 	Color color;
 
-
-	const static String rangeKey;
-
 	/// The range where the color would be inserted. Serves as a context.
 	Range range;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	ColorPresentationParams(optional<ProgressToken> workDoneToken,
@@ -83,30 +85,28 @@ struct ColorPresentationParams:
 ///
 struct ColorPresentation
 {
-
+private:
 	const static String labelKey;
+	const static String textEditKey;
+	const static String additionalTextEditsKey;
 
+public:
 	/// The label of this color presentation. It will be shown on the color
 	/// picker header. By default this is also the text that is inserted when
 	/// selecting this color presentation.
 	String label;
-
-
-	const static String textEditKey;
 
 	/// An edit which is applied to a document when selecting
 	/// this presentation for the color.  When `falsy` the label
 	/// is used.
 	optional<TextEdit> textEdit;
 
-
-	const static String additionalTextEditsKey;
-
 	/// An optional array of additional text edits that are applied when
 	/// selecting this color presentation. Edits must not overlap with the
 	/// main edit nor with themselves.
 	optional<vector<TextEdit>> additionalTextEdits;
 
+	// No parsing
 
 	ColorPresentation(String label,
 		optional<TextEdit> textEdit,
