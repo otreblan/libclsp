@@ -30,15 +30,26 @@ using namespace std;
 
 /// DocumentColor request client capabilities
 ///
-/// dynamicRegistration?: boolean;
+/// dynamicRegistration?: Boolean
 ///
-struct DocumentColorClientCapabilities
+struct DocumentColorClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
 
+public:
 	/// Whether document color supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DocumentColorClientCapabilities(optional<Boolean> dynamicRegistration);
@@ -48,13 +59,15 @@ struct DocumentColorClientCapabilities
 	virtual ~DocumentColorClientCapabilities();
 };
 
-using DocumentColorOptions = WorkDoneProgressOptions;
+using DocumentColorOptions = WorkDoneProgressOptions; // No parsing
 
 struct DocumentColorRegistrationOptions:
 	public TextDocumentRegistrationOptions,
 	public StaticRegistrationOptions,
 	public DocumentColorOptions
 {
+
+	// No parsing
 
 	DocumentColorRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
@@ -74,16 +87,22 @@ struct DocumentColorParams:
 	public WorkDoneProgressParams,
 	public PartialResultParams
 {
-
-	// FIXME:
-	// Even if the struct is not parseable this function must be declared
-	// because virtual inheritance
-	virtual void fillInitializer(ObjectInitializer&){};
-
+private:
 	const static String textDocumentKey;
 
+public:
 	/// The text document.
 	TextDocumentIdentifier textDocument;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DocumentColorParams(optional<ProgressToken> workDoneToken,
@@ -107,29 +126,26 @@ struct DocumentColorParams:
 ///
 struct Color
 {
+private:
 	const static String redKey;
+	const static String greenKey;
+	const static String blueKey;
+	const static String alphaKey;
 
+public:
 	/// The red component of this color in the range [0-1].
 	const Number red;
-
-
-	const static String greenKey;
 
 	/// The green component of this color in the range [0-1].
 	const Number green;
 
-
-	const static String blueKey;
-
 	/// The blue component of this color in the range [0-1].
 	const Number blue;
-
-
-	const static String alphaKey;
 
 	/// The alpha component of this color in the range [0-1].
 	const Number alpha;
 
+	// No parsing
 
 	Color(const Number red,
 		const Number green,
@@ -149,18 +165,18 @@ struct Color
 ///
 struct ColorInformation
 {
-
+private:
 	const static String rangeKey;
+	const static String colorKey;
 
+public:
 	/// The range in the document where this color appears.
 	Range range;
-
-
-	const static String colorKey;
 
 	/// The actual color value for this color range.
 	Color color;
 
+	// No parsing
 
 	ColorInformation(Range range, Color color);
 

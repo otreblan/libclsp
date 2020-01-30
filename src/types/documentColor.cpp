@@ -26,15 +26,49 @@ const String DocumentColorClientCapabilities::
 
 DocumentColorClientCapabilities::
 	DocumentColorClientCapabilities(optional<Boolean> dynamicRegistration):
-			dynamicRegistration(dynamicRegistration)
+		dynamicRegistration(dynamicRegistration)
 {};
 
-DocumentColorClientCapabilities::DocumentColorClientCapabilities():
-	dynamicRegistration()
-{};
-
+DocumentColorClientCapabilities::DocumentColorClientCapabilities(){};
 DocumentColorClientCapabilities::~DocumentColorClientCapabilities(){};
 
+void DocumentColorClientCapabilities::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?:
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 DocumentColorRegistrationOptions::DocumentColorRegistrationOptions(
 	variant<DocumentSelector, Null> documentSelector,
@@ -46,14 +80,11 @@ DocumentColorRegistrationOptions::DocumentColorRegistrationOptions(
 {};
 
 
-DocumentColorRegistrationOptions::DocumentColorRegistrationOptions():
-	TextDocumentRegistrationOptions(),
-	StaticRegistrationOptions(),
-	DocumentColorOptions()
-{};
-
+DocumentColorRegistrationOptions::DocumentColorRegistrationOptions(){};
 DocumentColorRegistrationOptions::~DocumentColorRegistrationOptions(){};
 
+
+const String DocumentColorParams::textDocumentKey = "textDocument";
 
 DocumentColorParams::DocumentColorParams(optional<ProgressToken> workDoneToken,
 	optional<ProgressToken> partialResultToken,
@@ -63,13 +94,59 @@ DocumentColorParams::DocumentColorParams(optional<ProgressToken> workDoneToken,
 		textDocument(textDocument)
 {};
 
-DocumentColorParams::DocumentColorParams():
-	WorkDoneProgressParams(),
-	PartialResultParams(),
-	textDocument()
-{};
-
+DocumentColorParams::DocumentColorParams(){};
 DocumentColorParams::~DocumentColorParams(){};
+
+void DocumentColorParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Parents
+	WorkDoneProgressParams::fillInitializer(initializer);
+	PartialResultParams::fillInitializer(initializer);
+
+	// Value setters
+
+	// textDocument:
+	setterMap.emplace(
+		textDocumentKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+
+				textDocument.fillInitializer(handler->objectStack.top());
+
+				neededMap[textDocumentKey] = true;
+			}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(textDocumentKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 
 const String Color::redKey   = "red";
@@ -87,13 +164,7 @@ Color::Color(const Number red,
 		alpha(alpha)
 {};
 
-Color::Color():
-	red(),
-	green(),
-	blue(),
-	alpha()
-{};
-
+Color::Color(){};
 Color::~Color(){};
 
 
@@ -105,11 +176,7 @@ ColorInformation::ColorInformation(Range range, Color color):
 	color(color)
 {};
 
-ColorInformation::ColorInformation():
-	range(),
-	color()
-{};
-
+ColorInformation::ColorInformation(){};
 ColorInformation::~ColorInformation(){};
 
 }
