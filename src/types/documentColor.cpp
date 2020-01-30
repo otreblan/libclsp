@@ -152,20 +152,146 @@ void DocumentColorParams::fillInitializer(ObjectInitializer& initializer)
 const String Color::redKey   = "red";
 const String Color::greenKey = "green";
 const String Color::blueKey  = "blue";
-const String Color::alphaKey = "alpha ";
+const String Color::alphaKey = "alpha";
 
-Color::Color(const Number red,
-	const Number green,
-	const Number blue,
-	const Number alpha):
-		red(red),
-		green(green),
-		blue(blue),
-		alpha(alpha)
+Color::Color(Number red, Number green, Number blue, Number alpha):
+	red(red),
+	green(green),
+	blue(blue),
+	alpha(alpha)
 {};
 
 Color::Color(){};
 Color::~Color(){};
+
+void Color::fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Value setters
+
+	// red:
+	setterMap.emplace(
+		redKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			[this, &neededMap](Number n)
+			{
+				red = n;
+				neededMap[redKey] = true;
+			},
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// green:
+	setterMap.emplace(
+		greenKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			[this, &neededMap](Number n)
+			{
+				green = n;
+				neededMap[greenKey] = true;
+			},
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// blue:
+	setterMap.emplace(
+		blueKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			[this, &neededMap](Number n)
+			{
+				blue = n;
+				neededMap[blueKey] = true;
+			},
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// alpha:
+	setterMap.emplace(
+		alphaKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			[this, &neededMap](Number n)
+			{
+				alpha = n;
+				neededMap[alphaKey] = true;
+			},
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(redKey, 0);
+	neededMap.emplace(greenKey, 0);
+	neededMap.emplace(blueKey, 0);
+	neededMap.emplace(alphaKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 
 const String ColorInformation::rangeKey = "range";

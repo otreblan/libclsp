@@ -116,15 +116,15 @@ public:
 
 /// Represents a color in RGBA space.
 ///
-/// const red: Number
+/// red: Number
 ///
-/// const green: Number
+/// green: Number
 ///
-/// const blue: Number
+/// blue: Number
 ///
-/// const alpha: Number
+/// alpha: Number
 ///
-struct Color
+struct Color: public ObjectT
 {
 private:
 	const static String redKey;
@@ -134,23 +134,29 @@ private:
 
 public:
 	/// The red component of this color in the range [0-1].
-	const Number red;
+	Number red;
 
 	/// The green component of this color in the range [0-1].
-	const Number green;
+	Number green;
 
 	/// The blue component of this color in the range [0-1].
-	const Number blue;
+	Number blue;
 
 	/// The alpha component of this color in the range [0-1].
-	const Number alpha;
+	Number alpha;
 
-	// No parsing
 
-	Color(const Number red,
-		const Number green,
-		const Number blue,
-		const Number alpha);
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
+
+	Color(Number red, Number green, Number blue, Number alpha);
 
 	Color();
 

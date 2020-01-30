@@ -31,7 +31,7 @@ bool ObjectT::isValid(JsonHandler& handler)
 {
 	auto& neededMap = handler.objectStack.top().neededMap;
 
-	for(auto initializedPair: neededMap)
+	for(const auto &initializedPair: neededMap)
 	{
 		// If a needed value is left uninitialized
 		if(!initializedPair.second)
