@@ -34,13 +34,24 @@ using namespace std;
 ///
 /// dynamicRegistration?: Boolean
 ///
-struct CodeLensClientCapabilities
+struct CodeLensClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
 
+public:
 	/// Whether code action supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	CodeLensClientCapabilities(optional<Boolean> dynamicRegistration);
@@ -52,16 +63,18 @@ struct CodeLensClientCapabilities
 
 /// Code lens server capability
 ///
-/// codeLensKinds?: CodeLensKind[];
+/// resolveProvider?: Boolean
 ///
 struct CodeLensOptions: public WorkDoneProgressOptions
 {
-
+private:
 	const static String resolveProviderKey;
 
+public:
 	/// Code lens has a resolve provider as well.
 	optional<Boolean> resolveProvider;
 
+	// No parsing
 
 	CodeLensOptions(optional<ProgressToken> workDoneProgress,
 		optional<Boolean> resolveProvider);
@@ -76,6 +89,8 @@ struct CodeLensRegistrationOptions:
 	public CodeLensOptions
 {
 
+	// No parsing
+
 	CodeLensRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
 		optional<ProgressToken> workDoneProgress,
@@ -88,23 +103,28 @@ struct CodeLensRegistrationOptions:
 
 /// Params for the CodeLensRequest
 ///
-/// textDocument: TextDocumentIdentifier;
+/// textDocument: TextDocumentIdentifier
 ///
 struct CodeLensParams:
 	public WorkDoneProgressParams,
 	public PartialResultParams
 {
-
-	// FIXME:
-	// Even if the struct is not parseable this function must be declared
-	// because virtual inheritance
-	virtual void fillInitializer(ObjectInitializer&){};
-
-
+private:
 	const static String textDocumentKey;
 
+public:
 	/// The document in which the command was invoked.
 	TextDocumentIdentifier textDocument;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	CodeLensParams(optional<ProgressToken> workDoneToken,
@@ -131,26 +151,24 @@ struct CodeLensParams:
 ///
 struct CodeLens
 {
-
+private:
 	const static String rangeKey;;
+	const static String commandKey;
+	const static String dataKey;
 
+public:
 	/// The range in which this code lens is valid. Should only span a single
 	/// line.
 	Range range;
 
-
-	const static String commandKey;
-
 	/// The command this code lens represents.
 	optional<Command> command;
-
-
-	const static String dataKey;
 
 	/// A data entry field that is preserved on a code lens item between
 	/// a code lens and a code lens resolve request.
 	optional<Any> data;
 
+	// No parsing
 
 	CodeLens(Range range,
 		optional<Command> command,

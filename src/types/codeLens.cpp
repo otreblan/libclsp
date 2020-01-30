@@ -30,12 +30,45 @@ CodeLensClientCapabilities::
 		dynamicRegistration(dynamicRegistration)
 {};
 
-CodeLensClientCapabilities:: CodeLensClientCapabilities():
-	dynamicRegistration()
-{};
-
+CodeLensClientCapabilities:: CodeLensClientCapabilities(){};
 CodeLensClientCapabilities::~CodeLensClientCapabilities(){};
 
+void CodeLensClientCapabilities::fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?:
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 const String CodeLensOptions::resolveProviderKey = "resolveProvider";
 
@@ -46,11 +79,7 @@ CodeLensOptions::CodeLensOptions(optional<ProgressToken> workDoneProgress,
 {};
 
 
-CodeLensOptions::CodeLensOptions():
-	WorkDoneProgressOptions(),
-	resolveProvider()
-{};
-
+CodeLensOptions::CodeLensOptions(){};
 CodeLensOptions::~CodeLensOptions(){};
 
 
@@ -62,11 +91,7 @@ CodeLensRegistrationOptions::CodeLensRegistrationOptions(
 		CodeLensOptions(workDoneProgress, resolveProvider)
 {};
 
-CodeLensRegistrationOptions::CodeLensRegistrationOptions():
-	TextDocumentRegistrationOptions(),
-	CodeLensOptions()
-{};
-
+CodeLensRegistrationOptions::CodeLensRegistrationOptions(){};
 CodeLensRegistrationOptions::~CodeLensRegistrationOptions(){};
 
 
@@ -80,14 +105,59 @@ CodeLensParams::CodeLensParams(optional<ProgressToken> workDoneToken,
 		textDocument(textDocument)
 {};
 
-CodeLensParams::CodeLensParams():
-	WorkDoneProgressParams(),
-	PartialResultParams(),
-	textDocument()
-{};
-
+CodeLensParams::CodeLensParams(){};
 CodeLensParams::~CodeLensParams(){};
 
+void CodeLensParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Parents
+	WorkDoneProgressParams::fillInitializer(initializer);
+	PartialResultParams::fillInitializer(initializer);
+
+	// Value setters
+
+	// textDocument:
+	setterMap.emplace(
+		textDocumentKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+
+				textDocument.fillInitializer(handler->objectStack.top());
+
+				neededMap[textDocumentKey] = true;
+			}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(textDocumentKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 const String CodeLens::rangeKey   = "range";
 const String CodeLens::commandKey = "command";
@@ -101,12 +171,7 @@ CodeLens::CodeLens(Range range,
 		data(data)
 {};
 
-CodeLens::CodeLens():
-	range(),
-	command(),
-	data()
-{};
-
+CodeLens::CodeLens(){};
 CodeLens::~CodeLens(){};
 
 
