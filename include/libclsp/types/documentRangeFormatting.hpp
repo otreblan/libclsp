@@ -25,15 +25,26 @@ using namespace std;
 
 /// DocumentRangeFormatting request client capabilities
 ///
-/// dynamicRegistration?: boolean;
+/// dynamicRegistration?: Boolean
 ///
-struct DocumentRangeFormattingClientCapabilities
+struct DocumentRangeFormattingClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
 
+public:
 	/// Whether declaration supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DocumentRangeFormattingClientCapabilities(optional<Boolean> dynamicRegistration);
@@ -43,12 +54,14 @@ struct DocumentRangeFormattingClientCapabilities
 	virtual ~DocumentRangeFormattingClientCapabilities();
 };
 
-using DocumentRangeFormattingOptions = WorkDoneProgressOptions;
+using DocumentRangeFormattingOptions = WorkDoneProgressOptions; // No parsing
 
 struct DocumentRangeFormattingRegistrationOptions:
 	public TextDocumentRegistrationOptions,
 	public DocumentRangeFormattingOptions
 {
+
+	// No parsing
 
 	DocumentRangeFormattingRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
@@ -69,23 +82,30 @@ struct DocumentRangeFormattingRegistrationOptions:
 ///
 struct DocumentRangeFormattingParams: public WorkDoneProgressParams
 {
-
+private:
 	const static String textDocumentKey;
+	const static String rangeKey;
+	const static String optionsKey;
 
+public:
 	/// The document to format.
 	TextDocumentIdentifier textDocument;
-
-
-	const static String rangeKey;
 
 	/// The range to format
 	Range range;
 
-
-	const static String optionsKey;
-
 	/// The format options.
 	FormattingOptions options;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DocumentRangeFormattingParams(optional<ProgressToken> workDoneToken,

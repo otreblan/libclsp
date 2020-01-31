@@ -26,29 +26,70 @@ const String DocumentRangeFormattingClientCapabilities::
 
 DocumentRangeFormattingClientCapabilities::
 	DocumentRangeFormattingClientCapabilities(optional<Boolean> dynamicRegistration):
-			dynamicRegistration(dynamicRegistration)
+		dynamicRegistration(dynamicRegistration)
 {};
 
-DocumentRangeFormattingClientCapabilities::DocumentRangeFormattingClientCapabilities():
-	dynamicRegistration()
+DocumentRangeFormattingClientCapabilities::
+	DocumentRangeFormattingClientCapabilities()
 {};
 
-DocumentRangeFormattingClientCapabilities::~DocumentRangeFormattingClientCapabilities(){};
+DocumentRangeFormattingClientCapabilities::
+	~DocumentRangeFormattingClientCapabilities()
+{};
+
+void DocumentRangeFormattingClientCapabilities::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?:
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 
 DocumentRangeFormattingRegistrationOptions::DocumentRangeFormattingRegistrationOptions(
-		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress):
-			TextDocumentRegistrationOptions(documentSelector),
-			DocumentRangeFormattingOptions(workDoneProgress)
+	variant<DocumentSelector, Null> documentSelector,
+	optional<ProgressToken> workDoneProgress):
+		TextDocumentRegistrationOptions(documentSelector),
+		DocumentRangeFormattingOptions(workDoneProgress)
 {};
 
-DocumentRangeFormattingRegistrationOptions::DocumentRangeFormattingRegistrationOptions():
-	TextDocumentRegistrationOptions(),
-	DocumentRangeFormattingOptions()
+DocumentRangeFormattingRegistrationOptions::
+	DocumentRangeFormattingRegistrationOptions()
 {};
 
-DocumentRangeFormattingRegistrationOptions::~DocumentRangeFormattingRegistrationOptions(){};
+DocumentRangeFormattingRegistrationOptions::
+	~DocumentRangeFormattingRegistrationOptions()
+{};
 
 
 const String DocumentRangeFormattingParams::textDocumentKey = "textDocument";
@@ -66,13 +107,122 @@ DocumentRangeFormattingParams::DocumentRangeFormattingParams(
 		options(options)
 {};
 
-DocumentRangeFormattingParams::DocumentRangeFormattingParams():
-	WorkDoneProgressParams(),
-	textDocument(),
-	range(),
-	options()
-{};
-
+DocumentRangeFormattingParams::DocumentRangeFormattingParams(){};
 DocumentRangeFormattingParams::~DocumentRangeFormattingParams(){};
+
+void DocumentRangeFormattingParams::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Parent
+	WorkDoneProgressParams::fillInitializer(initializer);
+
+	// Value setters
+
+	// textDocument:
+	setterMap.emplace(
+		textDocumentKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+
+				textDocument.fillInitializer(handler->objectStack.top());
+
+				neededMap[textDocumentKey] = true;
+			}
+		}
+	);
+
+	// range:
+	setterMap.emplace(
+		rangeKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+
+				range.fillInitializer(handler->objectStack.top());
+
+				neededMap[rangeKey] = true;
+			}
+		}
+	);
+
+	// options:
+	setterMap.emplace(
+		optionsKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+
+				options.fillInitializer(handler->objectStack.top());
+
+				neededMap[optionsKey] = true;
+			}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(textDocumentKey, 0);
+	neededMap.emplace(rangeKey, 0);
+	neededMap.emplace(optionsKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 }
