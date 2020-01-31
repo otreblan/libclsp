@@ -29,12 +29,46 @@ SelectionRangeClientCapabilities::
 			dynamicRegistration(dynamicRegistration)
 {};
 
-SelectionRangeClientCapabilities::SelectionRangeClientCapabilities():
-	dynamicRegistration()
-{};
-
+SelectionRangeClientCapabilities::SelectionRangeClientCapabilities(){};
 SelectionRangeClientCapabilities::~SelectionRangeClientCapabilities(){};
 
+void SelectionRangeClientCapabilities::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?:
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 SelectionRangeRegistrationOptions::
 	SelectionRangeRegistrationOptions(optional<ProgressToken> workDoneProgress,
@@ -45,12 +79,7 @@ SelectionRangeRegistrationOptions::
 			StaticRegistrationOptions(id)
 {};
 
-SelectionRangeRegistrationOptions::SelectionRangeRegistrationOptions():
-	SelectionRangeOptions(),
-	TextDocumentRegistrationOptions(),
-	StaticRegistrationOptions()
-{};
-
+SelectionRangeRegistrationOptions::SelectionRangeRegistrationOptions(){};
 SelectionRangeRegistrationOptions::~SelectionRangeRegistrationOptions(){};
 
 
@@ -68,14 +97,146 @@ SelectionRangeParams::SelectionRangeParams(
 		positions(positions)
 {};
 
-SelectionRangeParams::SelectionRangeParams():
-	WorkDoneProgressParams(),
-	PartialResultParams(),
-	textDocument(),
-	positions()
+SelectionRangeParams::SelectionRangeParams(){};
+SelectionRangeParams::~SelectionRangeParams(){};
+
+void SelectionRangeParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Parents
+	WorkDoneProgressParams::fillInitializer(initializer);
+	PartialResultParams::fillInitializer(initializer);
+
+	// Value setters
+
+	// textDocument:
+	setterMap.emplace(
+		textDocumentKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+
+				textDocument.fillInitializer(handler->objectStack.top());
+
+				neededMap[textDocumentKey] = true;
+			}
+		}
+	);
+
+	// positions:
+	setterMap.emplace(
+		positionsKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+
+				auto* maker = new PositionsMaker(positions);
+
+				maker->fillInitializer(handler->objectStack.top());
+
+				neededMap[positionsKey] = true;
+			},
+
+			// Object
+			nullopt
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(textDocumentKey, 0);
+	neededMap.emplace(positionsKey, 0);
+
+	// This
+	initializer.object = this;
+}
+
+SelectionRangeParams::PositionsMaker::
+	PositionsMaker(vector<Position> &parentArray):
+		parentArray(parentArray)
 {};
 
-SelectionRangeParams::~SelectionRangeParams(){};
+SelectionRangeParams::PositionsMaker::
+	~PositionsMaker()
+{};
+
+void SelectionRangeParams::PositionsMaker::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	// ObjectMaker
+	initializer.objectMaker = unique_ptr<ObjectT>(this);
+
+	auto* handler = initializer.handler;
+
+	auto& extraSetter = initializer.extraSetter;
+
+	// Value setters
+
+	// Position[]
+	extraSetter =
+	{
+		// String
+		nullopt,
+
+		// Number
+		nullopt,
+
+		// Boolean
+		nullopt,
+
+		// Null
+		nullopt,
+
+		// Array
+		nullopt,
+
+		// Object
+		[this, handler]()
+		{
+			auto &obj = parentArray.emplace_back();
+
+			handler->pushInitializer();
+			obj.fillInitializer(handler->objectStack.top());
+		}
+	};
+
+	// This
+	initializer.object = this;
+}
 
 
 const String SelectionRange::rangeKey  = "range";
@@ -87,11 +248,7 @@ SelectionRange::SelectionRange(Range range,
 		parent(parent)
 {};
 
-SelectionRange::SelectionRange():
-	range(),
-	parent()
-{};
-
+SelectionRange::SelectionRange(){};
 SelectionRange::~SelectionRange(){};
 
 }

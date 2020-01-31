@@ -30,18 +30,28 @@ using namespace std;
 
 /// SelectionRange request client capabilities
 ///
-/// dynamicRegistration?: boolean;
+/// dynamicRegistration?: Boolean
 ///
-struct SelectionRangeClientCapabilities
+struct SelectionRangeClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
 
+public:
 	/// Whether declaration supports dynamic registration. If this is set to
 	/// `true` the client supports the new `SelectionRangeRegistrationOptions`
 	/// return value for the corresponding server capability as well.
 	optional<Boolean> dynamicRegistration;
 
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	SelectionRangeClientCapabilities(optional<Boolean> dynamicRegistration);
@@ -51,13 +61,15 @@ struct SelectionRangeClientCapabilities
 	virtual ~SelectionRangeClientCapabilities();
 };
 
-using SelectionRangeOptions = WorkDoneProgressOptions;
+using SelectionRangeOptions = WorkDoneProgressOptions; // No parsing
 
 struct SelectionRangeRegistrationOptions:
 	public SelectionRangeOptions,
 	public TextDocumentRegistrationOptions,
 	public StaticRegistrationOptions
 {
+
+	// No parsing
 
 	SelectionRangeRegistrationOptions(optional<ProgressToken> workDoneProgress,
 		variant<DocumentSelector, Null> documentSelector,
@@ -78,22 +90,43 @@ struct SelectionRangeParams:
 	public WorkDoneProgressParams,
 	public PartialResultParams
 {
-
-	// FIXME:
-	// Even if the struct is not parseable this function must be declared
-	// because virtual inheritance
-	virtual void fillInitializer(ObjectInitializer&){};
-
+private:
 	const static String textDocumentKey;
+	const static String positionsKey;
 
+	struct PositionsMaker: public ObjectT
+	{
+		vector<Position> &parentArray;
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
+
+		PositionsMaker(vector<Position> &parentArray);
+
+		virtual ~PositionsMaker();
+	};
+public:
 	/// The text document.
 	TextDocumentIdentifier textDocument;
 
-
-	const static String positionsKey;
-
 	/// The positions inside the text document.
 	vector<Position> positions;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	SelectionRangeParams(optional<ProgressToken> workDoneToken,
@@ -114,19 +147,19 @@ struct SelectionRangeParams:
 ///
 struct SelectionRange
 {
-
+private:
 	const static String rangeKey;
+	const static String parentKey;
 
+public:
 	/// The range of this selection range.
 	Range range;
-
-
-	const static String parentKey;
 
 	/// The parent selection range containing this range.
 	/// Therefore `parent.range` must contain `this.range`.
 	optional<reference_wrapper<SelectionRange>> parent;
 
+	// No parsing
 
 	SelectionRange(Range range,
 		optional<reference_wrapper<SelectionRange>> parent);
