@@ -26,28 +26,59 @@ const String DocumentFormattingClientCapabilities::
 
 DocumentFormattingClientCapabilities::
 	DocumentFormattingClientCapabilities(optional<Boolean> dynamicRegistration):
-			dynamicRegistration(dynamicRegistration)
+		dynamicRegistration(dynamicRegistration)
 {};
 
-DocumentFormattingClientCapabilities::DocumentFormattingClientCapabilities():
-	dynamicRegistration()
-{};
-
+DocumentFormattingClientCapabilities::DocumentFormattingClientCapabilities(){};
 DocumentFormattingClientCapabilities::~DocumentFormattingClientCapabilities(){};
+
+void DocumentFormattingClientCapabilities::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?:
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 
 DocumentFormattingRegistrationOptions::DocumentFormattingRegistrationOptions(
-		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress):
-			TextDocumentRegistrationOptions(documentSelector),
-			DocumentFormattingOptions(workDoneProgress)
+	variant<DocumentSelector, Null> documentSelector,
+	optional<ProgressToken> workDoneProgress):
+		TextDocumentRegistrationOptions(documentSelector),
+		DocumentFormattingOptions(workDoneProgress)
 {};
 
-DocumentFormattingRegistrationOptions::DocumentFormattingRegistrationOptions():
-	TextDocumentRegistrationOptions(),
-	DocumentFormattingOptions()
-{};
-
+DocumentFormattingRegistrationOptions::DocumentFormattingRegistrationOptions(){};
 DocumentFormattingRegistrationOptions::~DocumentFormattingRegistrationOptions(){};
 
 
@@ -80,16 +111,194 @@ FormattingOptions::FormattingOptions(Number tabSize,
 		extras(extras)
 {};
 
-FormattingOptions::FormattingOptions():
-	tabSize(),
-	insertSpaces(),
-	trimTrailingWhitespace(),
-	insertFinalNewline(),
-	trimFinalNewlines(),
-	extras()
-{};
-
+FormattingOptions::FormattingOptions(){};
 FormattingOptions::~FormattingOptions(){};
+
+void FormattingOptions::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+	auto& extraSetter = initializer.extraSetter;
+
+	// Value setters
+
+	// tabSize:
+	setterMap.emplace(
+		tabSizeKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			[this, &neededMap](Number n)
+			{
+				tabSize = n;
+				neededMap[tabSizeKey] = true;
+			},
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// insertSpaces:
+	setterMap.emplace(
+		insertSpacesKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this, &neededMap](Boolean b)
+			{
+				insertSpaces = b;
+				neededMap[insertSpacesKey] = true;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// trimTrailingWhitespace?:
+	setterMap.emplace(
+		trimTrailingWhitespaceKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				trimTrailingWhitespace = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// insertFinalNewline?:
+	setterMap.emplace(
+		insertFinalNewlineKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				insertFinalNewline = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// trimFinalNewlines?:
+	setterMap.emplace(
+		trimFinalNewlinesKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				trimFinalNewlines = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// Extra members
+	extraSetter =
+	{
+		// String
+		[this, handler](String str)
+		{
+			extras.emplace(handler->lastKey, str);
+		},
+
+		// Number
+		[this, handler](Number n)
+		{
+			extras.emplace(handler->lastKey, n);
+		},
+
+		// Boolean
+		[this, handler](Boolean b)
+		{
+			extras.emplace(handler->lastKey, b);
+		},
+
+		// Null
+		nullopt,
+
+		// Array
+		nullopt,
+
+		// Object
+		nullopt
+	};
+
+	// Needed members
+	neededMap.emplace(tabSizeKey, 0);
+	neededMap.emplace(insertSpacesKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 
 const String DocumentFormattingParams::textDocumentKey = "textDocument";
@@ -104,13 +313,89 @@ DocumentFormattingParams::DocumentFormattingParams(
 		options(options)
 {};
 
-DocumentFormattingParams::DocumentFormattingParams():
-	WorkDoneProgressParams(),
-	textDocument(),
-	options()
-{};
-
+DocumentFormattingParams::DocumentFormattingParams(){};
 DocumentFormattingParams::~DocumentFormattingParams(){};
 
+void DocumentFormattingParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Parent
+	WorkDoneProgressParams::fillInitializer(initializer);
+
+	// Value setters
+
+	// textDocument:
+	setterMap.emplace(
+		textDocumentKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+
+				textDocument.fillInitializer(handler->objectStack.top());
+
+				neededMap[textDocumentKey] = true;
+			}
+		}
+	);
+
+	// options:
+	setterMap.emplace(
+		optionsKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+
+				options.fillInitializer(handler->objectStack.top());
+
+				neededMap[optionsKey] = true;
+			}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(textDocumentKey, 0);
+	neededMap.emplace(optionsKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 }

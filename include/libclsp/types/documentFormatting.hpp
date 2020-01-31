@@ -30,15 +30,26 @@ using namespace std;
 
 /// DocumentFormatting request client capabilities
 ///
-/// dynamicRegistration?: boolean;
+/// dynamicRegistration?: Boolean
 ///
-struct DocumentFormattingClientCapabilities
+struct DocumentFormattingClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
 
+public:
 	/// Whether declaration supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DocumentFormattingClientCapabilities(optional<Boolean> dynamicRegistration);
@@ -48,12 +59,14 @@ struct DocumentFormattingClientCapabilities
 	virtual ~DocumentFormattingClientCapabilities();
 };
 
-using DocumentFormattingOptions = WorkDoneProgressOptions;
+using DocumentFormattingOptions = WorkDoneProgressOptions; // No parsing
 
 struct DocumentFormattingRegistrationOptions:
 	public TextDocumentRegistrationOptions,
 	public DocumentFormattingOptions
 {
+
+	// No parsing
 
 	DocumentFormattingRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
@@ -78,30 +91,26 @@ struct DocumentFormattingRegistrationOptions:
 ///
 /// [key: String]: Boolean | Number | String
 ///
-struct FormattingOptions
+struct FormattingOptions: public ObjectT
 {
-
+private:
 	const static String tabSizeKey;
+	const static String insertSpacesKey;
+	const static String trimTrailingWhitespaceKey;
+	const static String insertFinalNewlineKey;
+	const static String trimFinalNewlinesKey;
 
+public:
 	/// Size of a tab in spaces.
 	Number tabSize;
 
-
-	const static String insertSpacesKey;
-
 	/// Prefer spaces over tabs.
 	Boolean insertSpaces;
-
-
-	const static String trimTrailingWhitespaceKey;
 
 	/// Trim trailing whitespace on a line.
 	///
 	/// @since 3.15.0
 	optional<Boolean> trimTrailingWhitespace;
-
-
-	const static String insertFinalNewlineKey;
 
 	/// Insert a newline character at the end of the file if one does not
 	/// exist.
@@ -109,17 +118,23 @@ struct FormattingOptions
 	/// @since 3.15.0
 	optional<Boolean> insertFinalNewline;
 
-
-	const static String trimFinalNewlinesKey;
-
 	/// Trim all newlines after the final newline at the end of the file.
 	///
 	/// @since 3.15.0
 	optional<Boolean> trimFinalNewlines;
 
-
 	/// Signature for further properties.
 	map<String, variant<Boolean, Number, String>> extras;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	FormattingOptions(Number tabSize,
@@ -142,17 +157,26 @@ struct FormattingOptions
 ///
 struct DocumentFormattingParams: public WorkDoneProgressParams
 {
-
+private:
 	const static String textDocumentKey;
+	const static String optionsKey;
 
+public:
 	/// The document to format.
 	TextDocumentIdentifier textDocument;
 
-
-	const static String optionsKey;
-
 	/// The format options.
 	FormattingOptions options;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DocumentFormattingParams(optional<ProgressToken> workDoneToken,
