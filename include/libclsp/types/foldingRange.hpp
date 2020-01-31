@@ -39,31 +39,38 @@ using namespace std;
 ///
 /// lineFoldingOnly?: Boolean
 ///
-struct FoldingRangeClientCapabilities
+struct FoldingRangeClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
+	const static String rangeLimitKey;
+	const static String lineFoldingOnlyKey;
 
+public:
 	/// Whether implementation supports dynamic registration. If this is set to
 	/// `true` the client supports the new `FoldingRangeRegistrationOptions`
 	/// return value for the corresponding server capability as well.
 	optional<Boolean> dynamicRegistration;
-
-
-	const static String rangeLimitKey;
 
 	/// The maximum number of folding ranges that the client prefers to receive
 	/// per document. The value serves as a hint, servers are free to follow
 	/// the limit.
 	optional<Number> rangeLimit;
 
-
-	const static String lineFoldingOnlyKey;
-
 	/// If set, the client signals that it only supports folding complete lines.
 	/// If set, client will ignore specified `startCharacter` and `endCharacter`
 	/// properties in a FoldingRange.
 	optional<Boolean> lineFoldingOnly;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	FoldingRangeClientCapabilities(optional<Boolean> dynamicRegistration,
@@ -75,13 +82,15 @@ struct FoldingRangeClientCapabilities
 	virtual ~FoldingRangeClientCapabilities();
 };
 
-using FoldingRangeOptions = WorkDoneProgressOptions;
+using FoldingRangeOptions = WorkDoneProgressOptions; // No parsing
 
 struct FoldingRangeRegistrationOptions:
 	public TextDocumentRegistrationOptions,
 	public FoldingRangeOptions,
 	public StaticRegistrationOptions
 {
+
+	// No parsing
 
 	FoldingRangeRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
@@ -101,16 +110,22 @@ struct FoldingRangeParams:
 	public WorkDoneProgressParams,
 	public PartialResultParams
 {
-
-	// FIXME:
-	// Even if the struct is not parseable this function must be declared
-	// because virtual inheritance
-	virtual void fillInitializer(ObjectInitializer&){};
-
+private:
 	const static String textDocumentKey;
 
+public:
 	/// The text document.
 	TextDocumentIdentifier textDocument;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	FoldingRangeParams(optional<ProgressToken> workDoneToken,
@@ -169,34 +184,27 @@ struct FoldingRangeKind
 ///
 struct FoldingRange
 {
-
+private:
 	const static String startLineKey;
+	const static String startCharacterKey;
+	const static String endLineKey;
+	const static String endCharacterKey;
+	const static String kindKey;
 
+public:
 	/// The zero-based line number from where the folded range starts.
 	Number startLine;
-
-
-	const static String startCharacterKey;
 
 	/// The zero-based character offset from where the folded range starts.
 	/// If not defined, defaults to the length of the start line.
 	optional<Number> startCharacter;
 
-
-	const static String endLineKey;
-
 	/// The zero-based line number where the folded range ends.
 	Number endLine;
-
-
-	const static String endCharacterKey;
 
 	/// The zero-based character offset before the folded range ends.
 	/// If not defined, defaults to the length of the end line.
 	optional<Number> endCharacter;
-
-
-	const static String kindKey;
 
 	/// Describes the kind of the folding range such as `comment` or `region`.
 	/// The kind is used to categorize folding ranges and used by commands like
@@ -204,6 +212,7 @@ struct FoldingRange
 	/// standardized kinds.
 	optional<FoldingRangeKind> kind;
 
+	// No parsing
 
 	FoldingRange(Number startLine,
 		optional<Number> startCharacter,

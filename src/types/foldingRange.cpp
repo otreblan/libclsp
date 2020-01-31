@@ -40,13 +40,100 @@ FoldingRangeClientCapabilities::
 {};
 
 
-FoldingRangeClientCapabilities::FoldingRangeClientCapabilities():
-	dynamicRegistration(),
-	rangeLimit(),
-	lineFoldingOnly()
-{};
-
+FoldingRangeClientCapabilities::FoldingRangeClientCapabilities(){};
 FoldingRangeClientCapabilities::~FoldingRangeClientCapabilities(){};
+
+void FoldingRangeClientCapabilities::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?:
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// rangeLimit?:
+	setterMap.emplace(
+		rangeLimitKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			[this](Number n)
+			{
+				rangeLimit = n;
+			},
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// lineFoldingOnly?:
+	setterMap.emplace(
+		lineFoldingOnlyKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				lineFoldingOnly = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 
 FoldingRangeRegistrationOptions::
@@ -59,14 +146,11 @@ FoldingRangeRegistrationOptions::
 			StaticRegistrationOptions(id)
 {};
 
-FoldingRangeRegistrationOptions::FoldingRangeRegistrationOptions():
-	TextDocumentRegistrationOptions(),
-	FoldingRangeOptions(),
-	StaticRegistrationOptions()
-{};
-
+FoldingRangeRegistrationOptions::FoldingRangeRegistrationOptions(){};
 FoldingRangeRegistrationOptions::~FoldingRangeRegistrationOptions(){};
 
+
+const String FoldingRangeParams::textDocumentKey = "textDocument";
 
 FoldingRangeParams::FoldingRangeParams(optional<ProgressToken> workDoneToken,
 	optional<ProgressToken> partialResultToken,
@@ -76,13 +160,59 @@ FoldingRangeParams::FoldingRangeParams(optional<ProgressToken> workDoneToken,
 		textDocument(textDocument)
 {};
 
-FoldingRangeParams::FoldingRangeParams():
-	WorkDoneProgressParams(),
-	PartialResultParams(),
-	textDocument()
-{};
-
+FoldingRangeParams::FoldingRangeParams(){};
 FoldingRangeParams::~FoldingRangeParams(){};
+
+void FoldingRangeParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Parents
+	WorkDoneProgressParams::fillInitializer(initializer);
+	PartialResultParams::fillInitializer(initializer);
+
+	// Value setters
+
+	// textDocument:
+	setterMap.emplace(
+		textDocumentKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+
+				textDocument.fillInitializer(handler->objectStack.top());
+
+				neededMap[textDocumentKey] = true;
+			}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(textDocumentKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 
 FoldingRangeKind::FoldingRangeKind(String kind):
@@ -115,14 +245,7 @@ FoldingRange::FoldingRange(Number startLine,
 		kind(kind)
 {};
 
-FoldingRange::FoldingRange():
-	startLine(),
-	startCharacter(),
-	endLine(),
-	endCharacter(),
-	kind()
-{};
-
+FoldingRange::FoldingRange(){};
 FoldingRange::~FoldingRange(){};
 
 }
