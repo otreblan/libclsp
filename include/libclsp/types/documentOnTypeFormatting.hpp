@@ -25,15 +25,26 @@ using namespace std;
 
 /// DocumentOnTypeFormatting request client capabilities
 ///
-/// dynamicRegistration?: boolean;
+/// dynamicRegistration?: Boolean
 ///
-struct DocumentOnTypeFormattingClientCapabilities
+struct DocumentOnTypeFormattingClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
 
+public:
 	/// Whether declaration supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DocumentOnTypeFormattingClientCapabilities(
@@ -44,7 +55,7 @@ struct DocumentOnTypeFormattingClientCapabilities
 	virtual ~DocumentOnTypeFormattingClientCapabilities();
 };
 
-/// DocumentOnTypeFormatting request parameters
+/// DocumentOnTypeFormatting server capability
 ///
 /// firstTriggerCharacter: String
 ///
@@ -52,18 +63,18 @@ struct DocumentOnTypeFormattingClientCapabilities
 ///
 struct DocumentOnTypeFormattingOptions
 {
-
+private:
 	const static String firstTriggerCharacterKey;
+	const static String moreTriggerCharacterKey;
 
+public:
 	/// A character on which formatting should be triggered, like `}`.
 	String firstTriggerCharacter;
-
-
-	const static String moreTriggerCharacterKey;
 
 	/// More trigger characters.
 	optional<vector<String>> moreTriggerCharacter;
 
+	// No parsing
 
 	DocumentOnTypeFormattingOptions(String firstTriggerCharacter,
 		optional<vector<String>> moreTriggerCharacter);
@@ -77,6 +88,8 @@ struct DocumentOnTypeFormattingRegistrationOptions:
 	public TextDocumentRegistrationOptions,
 	public DocumentOnTypeFormattingOptions
 {
+
+	// No parsing
 
 	DocumentOnTypeFormattingRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
@@ -98,31 +111,36 @@ struct DocumentOnTypeFormattingRegistrationOptions:
 ///
 /// options: FormattingOptions
 ///
-struct DocumentOnTypeFormattingParams
+struct DocumentOnTypeFormattingParams: public ObjectT
 {
-
+private:
 	const static String textDocumentKey;
+	const static String positionKey;
+	const static String chKey;
+	const static String optionsKey;
 
+public:
 	/// The document to format.
 	TextDocumentIdentifier textDocument;
-
-
-	const static String positionKey;
 
 	/// The position at which this request was sent.
 	Position position;
 
-
-	const static String chKey;
-
 	/// The character that has been typed.
 	String ch;
 
-
-	const static String optionsKey;
-
 	/// The format options.
 	FormattingOptions options;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DocumentOnTypeFormattingParams(TextDocumentIdentifier textDocument,
