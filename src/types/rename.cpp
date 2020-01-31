@@ -34,12 +34,73 @@ RenameClientCapabilities::
 			prepareSupport(prepareSupport)
 {};
 
-RenameClientCapabilities::RenameClientCapabilities():
-	dynamicRegistration(),
-	prepareSupport()
-{};
-
+RenameClientCapabilities::RenameClientCapabilities(){};
 RenameClientCapabilities::~RenameClientCapabilities(){};
+
+void RenameClientCapabilities::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?:
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// prepareSupport?:
+	setterMap.emplace(
+		prepareSupportKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				prepareSupport = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 
 const String RenameOptions::prepareProviderKey = "prepareProvider";
@@ -50,11 +111,7 @@ RenameOptions::RenameOptions(optional<ProgressToken> workDoneProgress,
 		prepareProvider(prepareProvider)
 {};
 
-RenameOptions::RenameOptions():
-	WorkDoneProgressOptions(),
-	prepareProvider()
-{};
-
+RenameOptions::RenameOptions(){};
 RenameOptions::~RenameOptions(){};
 
 
@@ -66,11 +123,7 @@ RenameRegistrationOptions::RenameRegistrationOptions(
 		RenameOptions(workDoneProgress, prepareProvider)
 {};
 
-RenameRegistrationOptions::RenameRegistrationOptions():
-	TextDocumentRegistrationOptions(),
-	RenameOptions()
-{};
-
+RenameRegistrationOptions::RenameRegistrationOptions(){};
 RenameRegistrationOptions::~RenameRegistrationOptions(){};
 
 
@@ -89,13 +142,119 @@ RenameParams::RenameParams(optional<ProgressToken> workDoneToken,
 		newName(newName)
 {};
 
-RenameParams::RenameParams():
-	WorkDoneProgressParams(),
-	textDocument(),
-	position(),
-	newName()
-{};
-
+RenameParams::RenameParams(){};
 RenameParams::~RenameParams(){};
+
+void RenameParams::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Parent
+	WorkDoneProgressParams::fillInitializer(initializer);
+
+	// Value setters
+
+	// textDocument:
+	setterMap.emplace(
+		textDocumentKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+
+				textDocument.fillInitializer(handler->objectStack.top());
+
+				neededMap[textDocumentKey] = true;
+			}
+		}
+	);
+
+	// position:
+	setterMap.emplace(
+		positionKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+
+				position.fillInitializer(handler->objectStack.top());
+
+				neededMap[positionKey] = true;
+			}
+		}
+	);
+
+	// newName:
+	setterMap.emplace(
+		newNameKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				newName = str;
+				neededMap[newNameKey] = true;
+			},
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(textDocumentKey, 0);
+	neededMap.emplace(positionKey, 0);
+	neededMap.emplace(newNameKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 }

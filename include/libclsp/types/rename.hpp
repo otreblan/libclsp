@@ -28,26 +28,35 @@ using namespace std;
 
 /// Rename request client capabilities
 ///
-/// dynamicRegistration?: boolean;
+/// dynamicRegistration?: Boolean
 ///
-/// prepareSupport?: boolean
+/// prepareSupport?: Boolean
 ///
-struct RenameClientCapabilities
+struct RenameClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
+	const static String prepareSupportKey;
 
+public:
 	/// Whether declaration supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
-
-
-	const static String prepareSupportKey;
 
 	/// Client supports testing for validity of rename operations
 	/// before execution.
 	///
 	/// @since version 3.12.0
 	optional<Boolean> prepareSupport;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	RenameClientCapabilities(optional<Boolean> dynamicRegistration,
@@ -65,12 +74,14 @@ struct RenameClientCapabilities
 ///
 struct RenameOptions: public WorkDoneProgressOptions
 {
-
+private:
 	const static String prepareProviderKey;
 
+public:
 	/// Renames should be checked and tested before being executed.
 	optional<Boolean> prepareProvider;
 
+	// No parsing
 
 	RenameOptions(optional<ProgressToken> workDoneProgress,
 		optional<Boolean> prepareProvider);
@@ -84,6 +95,8 @@ struct RenameRegistrationOptions:
 	public TextDocumentRegistrationOptions,
 	public RenameOptions
 {
+
+	// No parsing
 
 	RenameRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
@@ -105,25 +118,32 @@ struct RenameRegistrationOptions:
 ///
 struct RenameParams: public WorkDoneProgressParams
 {
-
+private:
 	const static String textDocumentKey;
+	const static String positionKey;
+	const static String newNameKey;
 
+public:
 	/// The document to format.
 	TextDocumentIdentifier textDocument;
 
-
-	const static String positionKey;
-
 	/// The position at which this request was sent.
 	Position position;
-
-
-	const static String newNameKey;
 
 	/// The new name of the symbol. If the given name is not valid the
 	/// request must return a ResponseError with an
 	/// appropriate message set.
 	String newName;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	RenameParams(optional<ProgressToken> workDoneToken,
