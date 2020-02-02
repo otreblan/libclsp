@@ -29,13 +29,24 @@ using namespace std;
 ///
 /// dynamicRegistration?: Boolean
 ///
-struct ExecuteCommandClientCapabilities
+struct ExecuteCommandClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
 
+public:
 	/// Execute command supports dynamic registration.
 	optional<Boolean> dynamicRegistration;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	ExecuteCommandClientCapabilities(optional<Boolean> dynamicRegistration);
@@ -51,12 +62,14 @@ struct ExecuteCommandClientCapabilities
 ///
 struct ExecuteCommandOptions: public WorkDoneProgressOptions
 {
-
+private:
 	const static String commandsKey;
 
+public:
 	/// The commands to be executed on the server
 	vector<String> commands;
 
+	// No parsing
 
 	ExecuteCommandOptions(optional<Boolean> workDoneProgress,
 		vector<String> commands);
@@ -67,32 +80,41 @@ struct ExecuteCommandOptions: public WorkDoneProgressOptions
 };
 
 /// Execute command registration options.
-using ExecuteCommandRegistrationOptions = ExecuteCommandOptions;
+using ExecuteCommandRegistrationOptions = ExecuteCommandOptions; // No parsing
 
 /// workspace/executeCommand params
 ///
 /// command: String
 ///
-/// arguments?: Any[]
+/// arguments?: Array
 ///
 struct ExecuteCommandParams: public WorkDoneProgressParams
 {
-
+private:
 	const static String commandKey;
+	const static String argumentsKey;
 
+public:
 	/// The identifier of the actual command handler.
 	String command;
 
-
-	const static String argumentsKey;
-
 	/// Arguments that the command should be invoked with.
-	optional<vector<Any>> arguments;
+	optional<Array> arguments;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	ExecuteCommandParams(optional<ProgressToken> workDoneToken,
 		String command,
-		optional<vector<Any>> arguments);
+		optional<Array> arguments);
 
 	ExecuteCommandParams();
 
