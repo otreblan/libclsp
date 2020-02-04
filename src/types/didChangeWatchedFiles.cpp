@@ -30,13 +30,50 @@ DidChangeWatchedFilesClientCapabilities::
 {};
 
 DidChangeWatchedFilesClientCapabilities::
-	DidChangeWatchedFilesClientCapabilities():
-		dynamicRegistration()
+	DidChangeWatchedFilesClientCapabilities()
 {};
 
 DidChangeWatchedFilesClientCapabilities::
 	~DidChangeWatchedFilesClientCapabilities()
 {};
+
+void DidChangeWatchedFilesClientCapabilities::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// dynamicRegistration?:
+	setterMap.emplace(
+		dynamicRegistrationKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				dynamicRegistration = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
 
 
 const String FileSystemWatcher::globPatternKey = "globPattern";
@@ -47,11 +84,7 @@ FileSystemWatcher::FileSystemWatcher(String globPattern, optional<Number> key):
 	key(key)
 {};
 
-FileSystemWatcher::FileSystemWatcher():
-	globPattern(),
-	key()
-{};
-
+FileSystemWatcher::FileSystemWatcher(){};
 FileSystemWatcher::~FileSystemWatcher(){};
 
 
@@ -63,8 +96,7 @@ DidChangeWatchedFilesRegistrationOptions::
 {};
 
 DidChangeWatchedFilesRegistrationOptions::
-	DidChangeWatchedFilesRegistrationOptions():
-		watchers()
+	DidChangeWatchedFilesRegistrationOptions()
 {};
 
 DidChangeWatchedFilesRegistrationOptions::
@@ -80,12 +112,88 @@ FileEvent::FileEvent(DocumentUri uri, FileChangeType type):
 	type(type)
 {};
 
-FileEvent::FileEvent():
-	uri(),
-	type()
-{};
-
+FileEvent::FileEvent(){};
 FileEvent::~FileEvent(){};
+
+void FileEvent::fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Value setters
+
+	// uri:
+	setterMap.emplace(
+		uriKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				uri = str;
+				neededMap[uriKey] = true;
+			},
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// type:
+	setterMap.emplace(
+		typeKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			[this, &neededMap](Number n)
+			{
+				if(holds_alternative<int>(n))
+				{
+					int i = get<int>(n);
+
+					type = (FileChangeType)i;
+					neededMap[typeKey] = true;
+				}
+				else
+				{
+					// TODO: An exception or something
+				}
+			},
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(uriKey, 0);
+	neededMap.emplace(typeKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 
 const String DidChangeWatchedFilesParams::changesKey = "changes";
@@ -94,10 +202,109 @@ DidChangeWatchedFilesParams::DidChangeWatchedFilesParams(vector<FileEvent> chang
 	changes(changes)
 {};
 
-DidChangeWatchedFilesParams::DidChangeWatchedFilesParams():
-	changes()
+DidChangeWatchedFilesParams::DidChangeWatchedFilesParams(){};
+DidChangeWatchedFilesParams::~DidChangeWatchedFilesParams(){};
+
+void DidChangeWatchedFilesParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Value setters
+
+	// changes:
+	setterMap.emplace(
+		changesKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+
+				auto *maker = new ChangesMaker(changes);
+
+				maker->fillInitializer(handler->objectStack.top());
+
+				neededMap[changesKey] = true;
+			},
+
+			// Object
+			nullopt
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(changesKey, 0);
+
+	// This
+	initializer.object = this;
+}
+
+
+DidChangeWatchedFilesParams::ChangesMaker::
+	ChangesMaker(vector<FileEvent> &parentArray):
+		parentArray(parentArray)
 {};
 
-DidChangeWatchedFilesParams::~DidChangeWatchedFilesParams(){};
+DidChangeWatchedFilesParams::ChangesMaker::~ChangesMaker(){};
+
+
+void DidChangeWatchedFilesParams::ChangesMaker::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	// ObjectMaker
+	initializer.objectMaker = unique_ptr<ObjectT>(this);
+
+	auto* handler = initializer.handler;
+
+	auto& extraSetter = initializer.extraSetter;
+
+	// Value setters
+
+	// FileEvent[]
+	extraSetter =
+	{
+		// String
+		nullopt,
+
+		// Number
+		nullopt,
+
+		// Boolean
+		nullopt,
+
+		// Null
+		nullopt,
+
+		// Array
+		nullopt,
+
+		// Object
+		[this, handler]()
+		{
+			auto& obj = parentArray.emplace_back();
+
+			handler->pushInitializer();
+			obj.fillInitializer(handler->objectStack.top());
+		}
+	};
+
+	// This
+	initializer.object = this;
+}
 
 }

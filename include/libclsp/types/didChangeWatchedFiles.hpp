@@ -19,6 +19,7 @@
 #include <optional>
 
 #include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace clsp
 {
@@ -29,15 +30,26 @@ using namespace std;
 ///
 /// dynamicRegistration?: Boolean
 ///
-struct DidChangeWatchedFilesClientCapabilities
+struct DidChangeWatchedFilesClientCapabilities: public ObjectT
 {
-
+private:
 	const static String dynamicRegistrationKey;
 
+public:
 	/// Did change watched files notification supports dynamic registration.
 	/// Please note that the current protocol doesn't support static
 	/// configuration for file changes from the server side.
 	optional<Boolean> dynamicRegistration;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DidChangeWatchedFilesClientCapabilities(optional<Boolean> dynamicRegistration);
@@ -47,6 +59,7 @@ struct DidChangeWatchedFilesClientCapabilities
 	virtual ~DidChangeWatchedFilesClientCapabilities();
 };
 
+// TODO: Make this bitmask better
 namespace WatchKind
 {
 	/// Interested in create events.
@@ -67,8 +80,11 @@ namespace WatchKind
 ///
 struct FileSystemWatcher
 {
+private:
 	const static String globPatternKey;
+	const static String kindKey;
 
+public:
 	/// The  glob pattern to watch.
 	///
 	/// Glob patterns can have the following syntax:
@@ -80,14 +96,12 @@ struct FileSystemWatcher
 	/// - `[!...]` to negate a range of characters to match in a path segment
 	String globPattern;
 
-
-	const static String kindKey;
-
 	/// The kind of events of interest. If omitted it defaults
 	/// to WatchKind::Create | WatchKind::Change | WatchKind::Delete
 	/// which is 7.
 	optional<Number> key;
 
+	// No parsing
 
 	FileSystemWatcher(String globPattern, optional<Number> key);
 
@@ -103,11 +117,14 @@ struct FileSystemWatcher
 ///
 struct DidChangeWatchedFilesRegistrationOptions
 {
-
+private:
 	const static String watchersKey;
 
+public:
 	/// The watchers to register.
 	vector<FileSystemWatcher> watchers;
+
+	// No parsing
 
 	DidChangeWatchedFilesRegistrationOptions(vector<FileSystemWatcher> watchers);
 
@@ -135,19 +152,28 @@ enum class FileChangeType
 ///
 /// type: Number
 ///
-struct FileEvent
+struct FileEvent: public ObjectT
 {
-
+private:
 	const static String uriKey;
+	const static String typeKey;
 
+public:
 	/// The file's URI.
 	DocumentUri uri;
 
-
-	const static String typeKey;
-
 	/// The change type.
 	FileChangeType type;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	FileEvent(DocumentUri uri, FileChangeType type);
@@ -161,12 +187,42 @@ struct FileEvent
 ///
 /// changes: FileEvent[]
 ///
-struct DidChangeWatchedFilesParams
+struct DidChangeWatchedFilesParams: public ObjectT
 {
+private:
 	const static String changesKey;
 
+	struct ChangesMaker: public ObjectT
+	{
+		vector<FileEvent> &parentArray;
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
+
+		ChangesMaker(vector<FileEvent> &parentArray);
+
+		virtual ~ChangesMaker();
+
+	};
+public:
 	/// The actual file events.
 	vector<FileEvent> changes;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	DidChangeWatchedFilesParams(vector<FileEvent> changes);
