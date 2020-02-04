@@ -15,6 +15,7 @@
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <libclsp/types/command.hpp>
+#include <libclsp/types/genericObject.hpp>
 
 namespace clsp
 {
@@ -25,18 +26,119 @@ const String Command::titleKey     = "title";
 const String Command::commandKey   = "command";
 const String Command::argumentsKey = "arguments";
 
-Command::Command(String title, String command, optional<vector<Any>> arguments):
+Command::Command(String title, String command, optional<Array> arguments):
 	title(title),
 	command(command),
 	arguments(arguments)
 {};
 
-Command::Command():
-	title(),
-	command(),
-	arguments()
-{};
-
+Command::Command(){};
 Command::~Command(){};
+
+void Command::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Value setters
+
+	// title:
+	setterMap.emplace(
+		titleKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				title = str;
+				neededMap[titleKey] = true;
+			},
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// command:
+	setterMap.emplace(
+		commandKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				command = str;
+				neededMap[commandKey] = true;
+			},
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// arguments?:
+	setterMap.emplace(
+		argumentsKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			[this, handler]()
+			{
+				arguments.emplace();
+
+				handler->pushInitializer();
+
+				auto* maker = new ArrayMaker(arguments.value());
+
+				maker->fillInitializer(handler->objectStack.top());
+			},
+
+			// Object
+			nullopt
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(titleKey, 0);
+	neededMap.emplace(commandKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 }

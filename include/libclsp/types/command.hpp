@@ -19,6 +19,7 @@
 #include <optional>
 
 #include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace clsp
 {
@@ -31,31 +32,38 @@ using namespace std;
 ///
 /// command: String
 ///
-/// arguments?: Any[]
+/// arguments?: Array
 ///
-struct Command
+struct Command: public ObjectT
 {
-
+private:
 	const static String titleKey;
+	const static String commandKey;
+	const static String argumentsKey;
 
+public:
 	/// Title of the command, like `save`.
 	String title;
-
-
-	const static String commandKey;
 
 	/// The identifier of the actual command handler.
 	String command;
 
-
-	const static String argumentsKey;
-
 	/// Arguments that the command handler should be
 	/// invoked with.
-	optional<vector<Any>> arguments;
+	optional<Array> arguments;
 
 
-	Command(String title, String command, optional<vector<Any>> arguments);
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
+
+	Command(String title, String command, optional<Array> arguments);
 
 	Command();
 
