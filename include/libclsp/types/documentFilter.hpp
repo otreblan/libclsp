@@ -36,20 +36,17 @@ using namespace std;
 ///
 struct DocumentFilter
 {
-
+private:
 	const static String languageKey;
+	const static String schemeKey;
+	const static String patternKey;
 
+public:
 	/// A language id, like `typescript`.
 	optional<String> language;
 
-
-	const static String schemeKey;
-
 	/// A Uri [scheme](#Uri.scheme), like `file` or `untitled`.
 	optional<String> scheme;
-
-
-	const static String patternKey;
 
 	/// A glob pattern, like `*.{ts,js}`.
 	///
@@ -61,6 +58,8 @@ struct DocumentFilter
 	/// - `[]` to declare a range of characters to match in a path segment
 	/// - `[!...]` to negate a range of characters to match in a path segment
 	optional<String> pattern;
+
+	// No parsing
 
 	DocumentFilter(optional<String> language,
 		optional<String> scheme,
