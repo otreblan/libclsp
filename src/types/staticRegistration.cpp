@@ -27,10 +27,7 @@ StaticRegistrationOptions::StaticRegistrationOptions(optional<String> id):
 	id(id)
 {};
 
-StaticRegistrationOptions::StaticRegistrationOptions():
-	id()
-{};
-
+StaticRegistrationOptions::StaticRegistrationOptions(){};
 StaticRegistrationOptions::~StaticRegistrationOptions(){};
 
 }

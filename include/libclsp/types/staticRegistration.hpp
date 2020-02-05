@@ -33,13 +33,15 @@ using namespace std;
 ///
 struct StaticRegistrationOptions
 {
-
+private:
 	const static String idKey;
 
+public:
 	/// The id used to register the request. The id can be used to deregister
 	/// the request again. See also Registration#id.
 	optional<String> id;
 
+	// No parsing
 
 	StaticRegistrationOptions(optional<String> id);
 
