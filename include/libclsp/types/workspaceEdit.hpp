@@ -32,15 +32,17 @@ using namespace std;
 /// A workspace edit represents changes to many resources
 /// managed in the workspace.
 ///
-/// changes?: { [uri: DocumentUri]: TextEdit[]; }
+/// changes?: { [uri: DocumentUri]: TextEdit[] }
 ///
 /// documentChanges?: (TextDocumentEdit[] | (TextDocumentEdit | CreateFile | RenameFile | DeleteFile)[])
 ///
 struct WorkspaceEdit
 {
-
+private:
 	const static String changesKey;
+	const static String documentChangesKey;
 
+public:
 	/// Holds changes to existing resources.
 	struct Changes
 	{
@@ -56,9 +58,6 @@ struct WorkspaceEdit
 
 	/// Holds changes to existing resources.
 	optional<Changes> changes;
-
-
-	const static String documentChangesKey;
 
 	/// Depending on the client capability `workspace.workspaceEdit.resourceOperations`
 	/// document changes are either an array of `TextDocumentEdit`s to express
@@ -82,6 +81,7 @@ struct WorkspaceEdit
 		>
 	> documentChanges;
 
+	// No parsing
 
 	WorkspaceEdit(optional<Changes> changes,
 		optional<
@@ -199,16 +199,44 @@ public:
 	}
 };
 
-struct WorkspaceEditClientCapabilities
+/// The capabilities of a workspace edit has evolved over the time.
+/// Clients can describe their support using the following client capability
+///
+/// documentChanges?: Boolean
+///
+/// resourceOperations?: ResourceOperationKind[]
+///
+/// failureHandling?: FailureHandlingKind
+///
+struct WorkspaceEditClientCapabilities: public ObjectT
 {
-
+private:
 	const static String documentChangesKey;
+	const static String resourceOperationsKey;
+	const static String failureHandlingKey;
 
+	struct ResourceOperationsMaker: public ObjectT
+	{
+		vector<ResourceOperationKind> &parentArray;
+
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
+
+
+		ResourceOperationsMaker(vector<ResourceOperationKind> &parentArray);
+
+		virtual ~ResourceOperationsMaker();
+	};
+public:
 	/// The client supports versioned document changes in `WorkspaceEdit`s
 	optional<Boolean> documentChanges;
-
-
-	const static String resourceOperationsKey;
 
 	/// The resource operations the client supports. Clients should at least
 	/// support 'create', 'rename' and 'delete' files and folders.
@@ -216,14 +244,21 @@ struct WorkspaceEditClientCapabilities
 	/// @since 3.13.0
 	optional<vector<ResourceOperationKind>> resourceOperations;
 
-
-	const static String failureHandlingKey;
-
 	/// The failure handling strategy of a client if applying the workspace
 	/// edit fails.
 	///
 	/// @since 3.13.0
 	optional<FailureHandlingKind> failureHandling;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	WorkspaceEditClientCapabilities(optional<Boolean> documentChanges,

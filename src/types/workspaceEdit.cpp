@@ -39,11 +39,7 @@ WorkspaceEdit::WorkspaceEdit(optional<Changes> changes,
 		documentChanges(documentChanges)
 {};
 
-WorkspaceEdit::WorkspaceEdit():
-	changes(),
-	documentChanges()
-{};
-
+WorkspaceEdit::WorkspaceEdit(){};
 WorkspaceEdit::~WorkspaceEdit(){};
 
 
@@ -117,10 +113,7 @@ WorkspaceEdit::Changes::Changes(map<DocumentUri, vector<TextEdit>> changes):
 	changes(changes)
 {};
 
-WorkspaceEdit::Changes::Changes():
-	changes()
-{};
-
+WorkspaceEdit::Changes::Changes(){};
 WorkspaceEdit::Changes::~Changes(){};
 
 
@@ -142,12 +135,155 @@ WorkspaceEditClientCapabilities::
 			failureHandling(failureHandling)
 {};
 
-WorkspaceEditClientCapabilities::WorkspaceEditClientCapabilities():
-	documentChanges(),
-	resourceOperations(),
-	failureHandling()
+WorkspaceEditClientCapabilities::WorkspaceEditClientCapabilities(){};
+WorkspaceEditClientCapabilities::~WorkspaceEditClientCapabilities(){};
+
+void WorkspaceEditClientCapabilities::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// documentChanges?:
+	setterMap.emplace(
+		documentChangesKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				documentChanges = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// resourceOperations?:
+	setterMap.emplace(
+		resourceOperationsKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			[this, handler]()
+			{
+				resourceOperations.emplace();
+
+				handler->pushInitializer();
+
+				auto* maker = new ResourceOperationsMaker(resourceOperations.value());
+
+				maker->fillInitializer(handler->objectStack.top());
+
+			},
+
+			// Object
+			nullopt
+		}
+	);
+
+	// failureHandling?:
+	setterMap.emplace(
+		failureHandlingKey,
+		ValueSetter{
+			// String
+			[this](String str)
+			{
+				failureHandling = str;
+			},
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
+
+WorkspaceEditClientCapabilities::ResourceOperationsMaker::
+	ResourceOperationsMaker(vector<ResourceOperationKind> &parentArray):
+		parentArray(parentArray)
 {};
 
-WorkspaceEditClientCapabilities::~WorkspaceEditClientCapabilities(){};
+WorkspaceEditClientCapabilities::ResourceOperationsMaker::
+	~ResourceOperationsMaker()
+{};
+
+void WorkspaceEditClientCapabilities::ResourceOperationsMaker::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	// ObjectMaker
+	initializer.objectMaker = unique_ptr<ObjectT>(this);
+
+	auto& extraSetter = initializer.extraSetter;
+
+	// Value setters
+
+	// ResourceOperationKind[]
+	extraSetter =
+	{
+		// String
+		[this](String str)
+		{
+			parentArray.emplace_back(str);
+		},
+
+		// Number
+		nullopt,
+
+		// Boolean
+		nullopt,
+
+		// Null
+		nullopt,
+
+		// Array
+		nullopt,
+
+		// Object
+		nullopt
+	};
+
+	// This
+	initializer.object = this;
+}
 
 }
