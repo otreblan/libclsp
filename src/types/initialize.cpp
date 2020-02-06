@@ -129,30 +129,7 @@ TextDocumentClientCapabilities::TextDocumentClientCapabilities(
 		foldingRange(foldingRange)
 {};
 
-TextDocumentClientCapabilities::TextDocumentClientCapabilities():
-	synchronization(),
-	completion(),
-	hover(),
-	signatureHelp(),
-	declaration(),
-	definition(),
-	typeDefinition(),
-	implementation(),
-	references(),
-	documentHighlight(),
-	documentSymbol(),
-	codeAction(),
-	codeLens(),
-	documentLink(),
-	colorProvider(),
-	formatting(),
-	rangeFormatting(),
-	onTypeFormatting(),
-	rename(),
-	publishDiagnostics(),
-	foldingRange()
-{};
-
+TextDocumentClientCapabilities::TextDocumentClientCapabilities(){};
 TextDocumentClientCapabilities::~TextDocumentClientCapabilities(){};
 
 
@@ -162,18 +139,15 @@ const String ClientCapabilities::experimentalKey = "experimental";
 
 ClientCapabilities::ClientCapabilities(optional<Workspace> workspace,
 	optional<TextDocumentClientCapabilities> textDocument,
-	optional<Any> experimental):
+	optional<Any> experimental,
+	map<Key, Any> extra):
 		workspace(workspace),
 		textDocument(textDocument),
-		experimental(experimental)
+		experimental(experimental),
+		extra(extra)
 {};
 
-ClientCapabilities::ClientCapabilities():
-	workspace(),
-	textDocument(),
-	experimental()
-{};
-
+ClientCapabilities::ClientCapabilities(){};
 ClientCapabilities::~ClientCapabilities(){};
 
 
@@ -209,15 +183,7 @@ ClientCapabilities::Workspace::Workspace(optional<Boolean> applyEdit,
 		executeCommand(executeCommand)
 {};
 
-ClientCapabilities::Workspace::Workspace():
-	applyEdit(),
-	workspaceEdit(),
-	didChangeConfiguration(),
-	didChangeWatchedFiles(),
-	symbol(),
-	executeCommand()
-{};
-
+ClientCapabilities::Workspace::Workspace(){};
 ClientCapabilities::Workspace::~Workspace(){};
 
 
@@ -305,17 +271,7 @@ InitializeParams::InitializeParams(variant<Number, Null> processId,
 		workspaceFolders(workspaceFolders)
 {};
 
-InitializeParams::InitializeParams():
-	processId(),
-	clientInfo(),
-	rootPath(),
-	rootUri(),
-	initializationOptions(),
-	capabilities(),
-	trace(),
-	workspaceFolders()
-{};
-
+InitializeParams::InitializeParams(){};
 InitializeParams::~InitializeParams(){};
 
 #pragma GCC diagnostic pop
@@ -328,11 +284,7 @@ InitializeParams::ClientInfo::ClientInfo(String name, optional<String> version):
 	version(version)
 {};
 
-InitializeParams::ClientInfo::ClientInfo():
-	name(),
-	version()
-{};
-
+InitializeParams::ClientInfo::ClientInfo(){};
 InitializeParams::ClientInfo::~ClientInfo(){};
 
 
@@ -472,33 +424,7 @@ ServerCapabilities::ServerCapabilities(
 		experimental(experimental)
 {};
 
-ServerCapabilities::ServerCapabilities():
-	textDocumentSync(),
-	completionProvider(),
-	hoverProvider(),
-	signatureHelpProvider(),
-	declarationProvider(),
-	definitionProvider(),
-	typeDefinitionProvider(),
-	implementationProvider(),
-	referencesProvider(),
-	documentHighlightProvider(),
-	documentSymbolProvider(),
-	codeActionProvider(),
-	codeLensProvider(),
-	documentLinkProvider(),
-	colorProvider(),
-	documentFormattingProvider(),
-	documentRangeFormattingProvider(),
-	documentOnTypeFormattingProvider(),
-	renameProvider(),
-	foldingRangeProvider(),
-	executeCommandProvider(),
-	workspaceSymbolProvider(),
-	workspace(),
-	experimental()
-{};
-
+ServerCapabilities::ServerCapabilities(){};
 ServerCapabilities::~ServerCapabilities(){};
 
 
@@ -510,10 +436,7 @@ ServerCapabilities::Workspace::
 		workspaceFolders(workspaceFolders)
 {};
 
-ServerCapabilities::Workspace::Workspace():
-	workspaceFolders()
-{};
-
+ServerCapabilities::Workspace::Workspace(){};
 ServerCapabilities::Workspace::~Workspace(){};
 
 
@@ -547,11 +470,7 @@ InitializeResult::ServerInfo::
 		version(version)
 {};
 
-InitializeResult::ServerInfo::ServerInfo():
-	name(),
-	version()
-{};
-
+InitializeResult::ServerInfo::ServerInfo(){};
 InitializeResult::ServerInfo::~ServerInfo(){};
 
 
@@ -561,10 +480,7 @@ InitializeError::InitializeError(Boolean retry):
 	retry(retry)
 {};
 
-InitializeError::InitializeError():
-	retry()
-{};
-
+InitializeError::InitializeError(){};
 InitializeError::~InitializeError(){};
 
 }

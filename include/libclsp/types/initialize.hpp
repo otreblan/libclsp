@@ -98,97 +98,76 @@ using namespace std;
 ///
 struct TextDocumentClientCapabilities
 {
-
+private:
 	const static String synchronizationKey;
-
-	optional<TextDocumentSyncClientCapabilities> synchronization;
-
-
 	const static String completionKey;
+	const static String hoverKey;
+	const static String signatureHelpKey;
+	const static String declarationKey;
+	const static String definitionKey;
+	const static String typeDefinitionKey;
+	const static String implementationKey;
+	const static String referencesKey;
+	const static String documentHighlightKey;
+	const static String documentSymbolKey;
+	const static String codeActionKey;
+	const static String codeLensKey;
+	const static String documentLinkKey;
+	const static String colorProviderKey;
+	const static String formattingKey;
+	const static String rangeFormattingKey;
+	const static String onTypeFormattingKey;
+	const static String renameKey;
+	const static String publishDiagnosticsKey;
+	const static String foldingRangeKey;
+
+public:
+	optional<TextDocumentSyncClientCapabilities> synchronization;
 
 	/// Capabilities specific to the `textDocument/completion` request.
 	optional<CompletionClientCapabilities> completion;
 
-
-	const static String hoverKey;
-
 	/// Capabilities specific to the `textDocument/hover` request.
 	optional<HoverClientCapabilities> hover;
 
-
-	const static String signatureHelpKey;
-
 	/// Capabilities specific to the `textDocument/signatureHelp` request.
 	optional<SignatureHelpClientCapabilities> signatureHelp;
-
-
-	const static String declarationKey;
 
 	/// Capabilities specific to the `textDocument/declaration` request.
 	///
 	/// @since 3.14.0
 	optional<DeclarationClientCapabilities> declaration;
 
-
-	const static String definitionKey;
-
 	/// Capabilities specific to the `textDocument/definition` request.
 	optional<DefinitionClientCapabilities> definition;
-
-
-	const static String typeDefinitionKey;
 
 	/// Capabilities specific to the `textDocument/typeDefinition` request.
 	///
 	/// @since 3.6.0
 	optional<TypeDefinitionClientCapabilities> typeDefinition;
 
-
-	const static String implementationKey;
-
 	/// Capabilities specific to the `textDocument/implementation` request.
 	///
 	/// @since 3.6.0
 	optional<ImplementationClientCapabilities> implementation;
 
-
-	const static String referencesKey;
-
 	/// Capabilities specific to the `textDocument/references` request.
 	optional<ReferenceClientCapabilities> references;
-
-
-	const static String documentHighlightKey;
 
 	/// Capabilities specific to the `textDocument/documentHighlight` request.
 	optional<DocumentHighlightClientCapabilities> documentHighlight;
 
-
-	const static String documentSymbolKey;
-
 	/// Capabilities specific to the `textDocument/documentSymbol` request.
 	optional<DocumentSymbolClientCapabilities> documentSymbol;
-
-
-	const static String codeActionKey;
 
 	/// Capabilities specific to the `textDocument/codeAction` request.
 	optional<CodeActionClientCapabilities> codeAction;
 
-
-	const static String codeLensKey;
-
 	/// Capabilities specific to the `textDocument/codeLens` request.
 	optional<CodeLensClientCapabilities> codeLens;
 
-
-	const static String documentLinkKey;
-
 	/// Capabilities specific to the `textDocument/documentLink` request.
 	optional<DocumentLinkClientCapabilities> documentLink;
-
-
-	const static String colorProviderKey;
 
 	/// Capabilities specific to the `textDocument/documentColor` and the
 	/// `textDocument/colorPresentation` request.
@@ -196,38 +175,20 @@ struct TextDocumentClientCapabilities
 	/// @since 3.6.0
 	optional<DocumentColorClientCapabilities> colorProvider;
 
-
-	const static String formattingKey;
-
 	/// Capabilities specific to the `textDocument/formatting` request.
 	optional<DocumentFormattingClientCapabilities> formatting;
-
-
-	const static String rangeFormattingKey;
 
 	/// Capabilities specific to the `textDocument/rangeFormatting` request.
 	optional<DocumentRangeFormattingClientCapabilities> rangeFormatting;
 
-
-	const static String onTypeFormattingKey;
-
 	/// Capabilities specific to the `textDocument/onTypeFormatting` request.
 	optional<DocumentOnTypeFormattingClientCapabilities> onTypeFormatting;
-
-
-	const static String renameKey;
 
 	/// Capabilities specific to the `textDocument/rename` request.
 	optional<RenameClientCapabilities> rename;
 
-
-	const static String publishDiagnosticsKey;
-
 	/// Capabilities specific to the `textDocument/publishDiagnostics` notification.
 	optional<PublishDiagnosticsClientCapabilities> publishDiagnostics;
-
-
-	const static String foldingRangeKey;
 
 	/// Capabilities specific to the `textDocument/foldingRange` request.
 	///
@@ -287,52 +248,45 @@ struct TextDocumentClientCapabilities
 ///
 struct ClientCapabilities
 {
-
+private:
 	const static String workspaceKey;
+	const static String textDocumentKey;
+	const static String experimentalKey;
 
+public:
 	/// Workspace specific client capabilities.
 	struct Workspace
 	{
-
+	private:
 		const static String applyEditKey;
+		const static String workspaceEditKey;
+		const static String didChangeConfigurationKey;
+		const static String didChangeWatchedFilesKey;
+		const static String symbolKey;
+		const static String executeCommandKey;
 
+	public:
 		/// The client supports applying batch edits
 		/// to the workspace by supporting the request
 		/// 'workspace/applyEdit'
 		optional<Boolean> applyEdit;
 
-
-		const static String workspaceEditKey;
-
 		/// Capabilities specific to `WorkspaceEdit`s
 		optional<WorkspaceEditClientCapabilities> workspaceEdit;
-
-
-		const static String didChangeConfigurationKey;
 
 		/// Capabilities specific to the `workspace/didChangeConfiguration`
 		/// notification.
 		optional<DidChangeConfigurationClientCapabilities> didChangeConfiguration;
 
-
-		const static String didChangeWatchedFilesKey;
-
 		/// Capabilities specific to the `workspace/didChangeWatchedFiles`
 		/// notification.
 		optional<DidChangeWatchedFilesClientCapabilities> didChangeWatchedFiles;
 
-
-		const static String symbolKey;
-
 		/// Capabilities specific to the `workspace/symbol` request.
 		optional<WorkspaceSymbolClientCapabilities> symbol;
 
-
-		const static String executeCommandKey;
-
 		/// Capabilities specific to the `workspace/executeCommand` request.
 		optional<ExecuteCommandClientCapabilities> executeCommand;
-
 
 		Workspace(optional<Boolean> applyEdit,
 			optional<WorkspaceEditClientCapabilities> workspaceEdit,
@@ -349,22 +303,20 @@ struct ClientCapabilities
 	/// Workspace specific client capabilities.
 	optional<Workspace> workspace;
 
-
-	const static String textDocumentKey;
-
 	/// Text document specific client capabilities.
 	optional<TextDocumentClientCapabilities> textDocument;
-
-
-	const static String experimentalKey;
 
 	/// Experimental client capabilities.
 	optional<Any> experimental;
 
+	/// Extra capabilities
+	map<Key, Any> extra;
+
 
 	ClientCapabilities(optional<Workspace> workspace,
 		optional<TextDocumentClientCapabilities> textDocument,
-		optional<Any> experimental);
+		optional<Any> experimental,
+		map<Key, Any> extra);
 
 	ClientCapabilities();
 
@@ -440,9 +392,17 @@ public:
 ///
 struct InitializeParams
 {
-
+private:
 	const static String processIdKey;
+	const static String clientInfoKey;
+	const static String rootPathKey;
+	const static String rootUriKey;
+	const static String initializationOptionsKey;
+	const static String capabilitiesKey;
+	const static String traceKey;
+	const static String workspaceFoldersKey;
 
+public:
 	/// The process Id of the parent process that started
 	/// the server. Is null if the process has not been started by another
 	/// process.
@@ -450,22 +410,18 @@ struct InitializeParams
 	/// (see exit notification) its process.
 	variant<Number, Null> processId;
 
-
-	const static String clientInfoKey;
-
 	/// Information about the client
 	///
 	/// @since 3.15.0
 	struct ClientInfo
 	{
-
+	private:
 		const static String nameKey;
+		const static String versionKey;
 
+	public:
 		/// The name of the client as defined by the client.
 		String name;
-
-
-		const static String versionKey;
 
 		/// The client's version as defined by the client.
 		optional<String> version;
@@ -483,9 +439,6 @@ struct InitializeParams
 	/// @since 3.15.0
 	optional<ClientInfo> clientInfo;
 
-
-	const static String rootPathKey;
-
 	/// The rootPath of the workspace. Is null
 	/// if no folder is open.
 	///
@@ -493,34 +446,19 @@ struct InitializeParams
 	[[deprecated("Deprecated in favour of rootUri")]]
 	optional<variant<String, Null>> rootPath;
 
-
-	const static String rootUriKey;
-
 	/// The rootUri of the workspace. Is null if no
 	/// folder is open. If both `rootPath` and `rootUri` are set
 	/// `rootUri` wins.
 	variant<DocumentUri, Null> rootUri;
 
-
-	const static String initializationOptionsKey;
-
 	/// User provided initialization options.
 	optional<Any> initializationOptions;
-
-
-	const static String capabilitiesKey;
 
 	/// The capabilities provided by the client (editor or tool)
 	ClientCapabilities capabilities;
 
-
-	const static String traceKey;
-
 	/// The initial trace setting. If omitted trace is disabled ('off').
 	optional<TraceKind> trace;
-
-
-	const static String workspaceFoldersKey;
 
 	/// The workspace folders configured in the client when the server starts.
 	/// This property is only available if the client supports workspace
@@ -609,35 +547,47 @@ struct InitializeParams
 /// experimental?: Any
 struct ServerCapabilities
 {
-
+private:
 	const static String textDocumentSyncKey;
+	const static String completionProviderKey;
+	const static String hoverProviderKey;
+	const static String signatureHelpProviderKey;
+	const static String declarationProviderKey;
+	const static String definitionProviderKey;
+	const static String typeDefinitionProviderKey;
+	const static String implementationProviderKey;
+	const static String referencesProviderKey;
+	const static String documentHighlightProviderKey;
+	const static String documentSymbolProviderKey;
+	const static String codeActionProviderKey;
+	const static String codeLensProviderKey;
+	const static String documentLinkProviderKey;
+	const static String colorProviderKey;
+	const static String documentFormattingProviderKey;
+	const static String documentRangeFormattingProviderKey;
+	const static String documentOnTypeFormattingProviderKey;
+	const static String renameProviderKey;
+	const static String foldingRangeProviderKey;
+	const static String executeCommandProviderKey;
+	const static String workspaceSymbolProviderKey;
+	const static String workspaceKey;
+	const static String experimentalKey;
 
+public:
 	/// Defines how text documents are synced. Is either a detailed structure
 	/// defining each notification or for backwards compatibility the
 	/// TextDocumentSyncKind number. If omitted it defaults to
 	/// `TextDocumentSyncKind.None`.
 	optional<variant<TextDocumentSyncOptions, Number>> textDocumentSync;
 
-
-	const static String completionProviderKey;
-
 	/// The server provides completion support.
 	optional<CompletionOptions> completionProvider;
-
-
-	const static String hoverProviderKey;
 
 	/// The server provides hover support.
 	optional<variant<Boolean, HoverOptions>> hoverProvider;
 
-
-	const static String signatureHelpProviderKey;
-
 	/// The server provides signature help support.
 	optional<SignatureHelpOptions> signatureHelpProvider;
-
-
-	const static String declarationProviderKey;
 
 	/// The server provides go to declaration support.
 	///
@@ -646,14 +596,8 @@ struct ServerCapabilities
 		DeclarationOptions,
 		DeclarationRegistrationOptions>> declarationProvider;
 
-
-	const static String definitionProviderKey;
-
 	/// The server provides goto definition support.
 	optional<variant<Boolean, DefinitionOptions>> definitionProvider;
-
-
-	const static String typeDefinitionProviderKey;
 
 	/// The server provides goto type definition support.
 	///
@@ -662,9 +606,6 @@ struct ServerCapabilities
 		TypeDefinitionOptions,
 		TypeDefinitionRegistrationOptions>> typeDefinitionProvider;
 
-
-	const static String implementationProviderKey;
-
 	/// The server provides goto implementation support.
 	///
 	/// @since 3.6.0
@@ -672,47 +613,26 @@ struct ServerCapabilities
 		ImplementationOptions,
 		ImplementationRegistrationOptions>> implementationProvider;
 
-
-	const static String referencesProviderKey;
-
 	/// The server provides find references support.
 	optional<variant<Boolean, ReferenceOptions>> referencesProvider;
-
-
-	const static String documentHighlightProviderKey;
 
 	/// The server provides document highlight support.
 	optional<variant<Boolean,
 		DocumentHighlightOptions>> documentHighlightProvider;
 
-
-	const static String documentSymbolProviderKey;
-
 	/// The server provides document symbol support.
 	optional<variant<Boolean, DocumentSymbolOptions>> documentSymbolProvider;
-
-
-	const static String codeActionProviderKey;
 
 	/// The server provides code actions. The `CodeActionOptions` return type
 	/// is only valid if the client signals code action literal support via the
 	/// property `textDocument.codeAction.codeActionLiteralSupport`.
 	optional<variant<Boolean, CodeActionOptions>> codeActionProvider;
 
-
-	const static String codeLensProviderKey;
-
 	/// The server provides code lens.
 	optional<CodeLensOptions> codeLensProvider;
 
-
-	const static String documentLinkProviderKey;
-
 	/// The server provides document link support.
 	optional<DocumentLinkOptions> documentLinkProvider;
-
-
-	const static String colorProviderKey;
 
 	/// The server provides color provider support.
 	///
@@ -721,36 +641,21 @@ struct ServerCapabilities
 		DocumentColorOptions,
 		DocumentColorRegistrationOptions>> colorProvider;
 
-
-	const static String documentFormattingProviderKey;
-
 	/// The server provides document formatting.
 	optional<variant<Boolean,
 		DocumentFormattingOptions>> documentFormattingProvider;
-
-
-	const static String documentRangeFormattingProviderKey;
 
 	/// The server provides document range formatting.
 	optional<variant<Boolean,
 		DocumentRangeFormattingOptions>> documentRangeFormattingProvider;
 
-
-	const static String documentOnTypeFormattingProviderKey;
-
 	/// The server provides document formatting on typing.
 	optional<DocumentOnTypeFormattingOptions> documentOnTypeFormattingProvider;
-
-
-	const static String renameProviderKey;
 
 	/// The server provides rename support. RenameOptions may only be
 	/// specified if the client states that it supports
 	/// `prepareSupport` in its initial `initialize` request.
 	optional<variant<Boolean, RenameOptions>> renameProvider;
-
-
-	const static String foldingRangeProviderKey;
 
 	/// The server provides folding provider support.
 	///
@@ -759,32 +664,25 @@ struct ServerCapabilities
 		FoldingRangeOptions,
 		FoldingRangeRegistrationOptions>> foldingRangeProvider;
 
-
-	const static String executeCommandProviderKey;
-
 	/// The server provides execute command support.
 	optional<ExecuteCommandOptions> executeCommandProvider;
-
-
-	const static String workspaceSymbolProviderKey;
 
 	/// The server provides workspace symbol support.
 	optional<Boolean> workspaceSymbolProvider;
 
-
-	const static String workspaceKey;
-
 	/// Workspace specific server capabilities
 	struct Workspace
 	{
-
+	private:
 		const static String workspaceFoldersKey;
 
+	public:
 		/// The server supports workspace folder.
 		///
 		/// @since 3.6.0
 		optional<WorkspaceFoldersServerCapabilities> workspaceFolders;
 
+		// No parsing
 
 		Workspace(optional<WorkspaceFoldersServerCapabilities> workspaceFolders);
 
@@ -796,12 +694,10 @@ struct ServerCapabilities
 	/// Workspace specific server capabilities
 	optional<Workspace> workspace;
 
-
-	const static String experimentalKey;
-
 	/// Experimental server capabilities.
 	optional<Any> experimental;
 
+	// No parsing
 
 	ServerCapabilities(
 		optional<variant<TextDocumentSyncOptions, Number>> textDocumentSync,
@@ -867,32 +763,31 @@ struct InitializedParams
 ///
 struct InitializeResult
 {
-
+private:
 	const static String capabilitiesKey;
+	const static String serverInfoKey;
 
+public:
 	/// The capabilities the language server provides.
 	ServerCapabilities capabilities;
-
-
-	const static String serverInfoKey;
 
 	/// Information about the server.
 	///
 	/// @since 3.15.0
 	struct ServerInfo
 	{
-
+	private:
 		const static String nameKey;
+		const static String versionKey;
 
+	public:
 		/// The name of the server as defined by the server.
 		String name;
-
-
-		const static String versionKey;
 
 		/// The server's version as defined by the server.
 		optional<String> version;
 
+		// No parsing
 
 		ServerInfo(String name, optional<String> version);
 
@@ -906,6 +801,7 @@ struct InitializeResult
 	/// @since 3.15.0
 	optional<ServerInfo> serverInfo;
 
+	// No parsing
 
 	InitializeResult(ServerCapabilities capabilities,
 		optional<ServerInfo> serverInfo);
@@ -921,15 +817,17 @@ struct InitializeResult
 ///
 struct InitializeError
 {
-
+private:
 	const static String retryKey;
 
+public:
 	/// Indicates whether the client execute the following retry logic:
 	/// (1) show the message provided by the ResponseError to the user
 	/// (2) user selects retry or cancel
 	/// (3) if user selected retry the initialize method is sent again.
 	Boolean retry;
 
+	// No parsing
 
 	InitializeError(Boolean retry);
 
