@@ -96,7 +96,7 @@ using namespace std;
 ///
 /// foldingRange?: FoldingRangeClientCapabilities
 ///
-struct TextDocumentClientCapabilities
+struct TextDocumentClientCapabilities: public ObjectT
 {
 private:
 	const static String synchronizationKey;
@@ -196,6 +196,16 @@ public:
 	optional<FoldingRangeClientCapabilities> foldingRange;
 
 
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
+
 	TextDocumentClientCapabilities(
 		optional<TextDocumentSyncClientCapabilities> synchronization,
 		optional<CompletionClientCapabilities> completion,
@@ -246,7 +256,9 @@ public:
 ///
 /// experimental?: Any
 ///
-struct ClientCapabilities
+/// [String: key]: extra
+///
+struct ClientCapabilities: public ObjectT
 {
 private:
 	const static String workspaceKey;
@@ -255,7 +267,7 @@ private:
 
 public:
 	/// Workspace specific client capabilities.
-	struct Workspace
+	struct Workspace: public ObjectT
 	{
 	private:
 		const static String applyEditKey;
@@ -288,6 +300,17 @@ public:
 		/// Capabilities specific to the `workspace/executeCommand` request.
 		optional<ExecuteCommandClientCapabilities> executeCommand;
 
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
+
+
 		Workspace(optional<Boolean> applyEdit,
 			optional<WorkspaceEditClientCapabilities> workspaceEdit,
 			optional<DidChangeConfigurationClientCapabilities> didChangeConfiguration,
@@ -311,6 +334,16 @@ public:
 
 	/// Extra capabilities
 	map<Key, Any> extra;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 
 	ClientCapabilities(optional<Workspace> workspace,
@@ -343,8 +376,6 @@ private:
 
 public:
 	TraceKind(String kind);
-
-	TraceKind();
 
 
 	const static TraceKind Off;
@@ -390,7 +421,7 @@ public:
 ///
 /// workspaceFolders?: WorkspaceFolder[] | Null
 ///
-struct InitializeParams
+struct InitializeParams: public WorkDoneProgressParams
 {
 private:
 	const static String processIdKey;
@@ -402,6 +433,23 @@ private:
 	const static String traceKey;
 	const static String workspaceFoldersKey;
 
+	struct WorkspaceFoldersMaker: public ObjectT
+	{
+		vector<WorkspaceFolder> &parentArray;
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
+
+		WorkspaceFoldersMaker(vector<WorkspaceFolder> &parentArray);
+
+		virtual ~WorkspaceFoldersMaker();
+	};
 public:
 	/// The process Id of the parent process that started
 	/// the server. Is null if the process has not been started by another
@@ -413,7 +461,7 @@ public:
 	/// Information about the client
 	///
 	/// @since 3.15.0
-	struct ClientInfo
+	struct ClientInfo: public ObjectT
 	{
 	private:
 		const static String nameKey;
@@ -425,6 +473,16 @@ public:
 
 		/// The client's version as defined by the client.
 		optional<String> version;
+
+
+		//====================   Parsing   ==================================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===================================================================//
 
 
 		ClientInfo(String name, optional<String> version);
@@ -469,7 +527,18 @@ public:
 	optional<variant<vector<WorkspaceFolder>, Null>> workspaceFolders;
 
 
-	InitializeParams(variant<Number, Null> processId,
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
+
+	InitializeParams(optional<ProgressToken> workDoneToken,
+		variant<Number, Null> processId,
 		optional<ClientInfo> clientInfo,
 		optional<variant<String, Null>> rootPath,
 		variant<DocumentUri, Null> rootUri,
@@ -478,7 +547,8 @@ public:
 		optional<TraceKind> trace,
 		optional<variant<vector<WorkspaceFolder>, Null>> workspaceFolders);
 
-	InitializeParams(variant<Number, Null> processId,
+	InitializeParams(optional<ProgressToken> workDoneToken,
+		variant<Number, Null> processId,
 		optional<ClientInfo> clientInfo,
 		variant<DocumentUri, Null> rootUri,
 		optional<Any> initializationOptions,
@@ -743,8 +813,20 @@ public:
 	virtual ~ServerCapabilities();
 };
 
-struct InitializedParams
+struct InitializedParams: public ObjectT
 {
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+
+	// Using default fillInitializer
+
+	// Using default isValid()
+
+	//=======================================================================//
+
 	InitializedParams();
 
 	virtual ~InitializedParams();

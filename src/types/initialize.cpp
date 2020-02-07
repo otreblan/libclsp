@@ -132,6 +132,649 @@ TextDocumentClientCapabilities::TextDocumentClientCapabilities(
 TextDocumentClientCapabilities::TextDocumentClientCapabilities(){};
 TextDocumentClientCapabilities::~TextDocumentClientCapabilities(){};
 
+void TextDocumentClientCapabilities::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// synchronization?:
+	setterMap.emplace(
+		synchronizationKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				synchronization.emplace();
+
+				handler->pushInitializer();
+				synchronization->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// completion?:
+	setterMap.emplace(
+		completionKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				completion.emplace();
+
+				handler->pushInitializer();
+				completion->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// hover?:
+	setterMap.emplace(
+		hoverKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				hover.emplace();
+
+				handler->pushInitializer();
+				hover->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// signatureHelp?:
+	setterMap.emplace(
+		signatureHelpKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				signatureHelp.emplace();
+
+				handler->pushInitializer();
+				signatureHelp->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// declaration?:
+	setterMap.emplace(
+		declarationKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				declaration.emplace();
+
+				handler->pushInitializer();
+				declaration->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// definition?:
+	setterMap.emplace(
+		definitionKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				definition.emplace();
+
+				handler->pushInitializer();
+				definition->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// typeDefinition?:
+	setterMap.emplace(
+		typeDefinitionKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				typeDefinition.emplace();
+
+				handler->pushInitializer();
+				typeDefinition->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// implementation?:
+	setterMap.emplace(
+		implementationKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				implementation.emplace();
+
+				handler->pushInitializer();
+				implementation->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// references?:
+	setterMap.emplace(
+		referencesKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				references.emplace();
+
+				handler->pushInitializer();
+				references->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// documentHighlight?:
+	setterMap.emplace(
+		documentHighlightKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				documentHighlight.emplace();
+
+				handler->pushInitializer();
+				documentHighlight->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// documentSymbol?:
+	setterMap.emplace(
+		documentSymbolKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				documentSymbol.emplace();
+
+				handler->pushInitializer();
+				documentSymbol->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// codeAction?:
+	setterMap.emplace(
+		codeActionKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				codeAction.emplace();
+
+				handler->pushInitializer();
+				codeAction->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// codeLens?:
+	setterMap.emplace(
+		codeLensKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				codeLens.emplace();
+
+				handler->pushInitializer();
+				codeLens->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// documentLink?:
+	setterMap.emplace(
+		documentLinkKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				documentLink.emplace();
+
+				handler->pushInitializer();
+				documentLink->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// colorProvider?:
+	setterMap.emplace(
+		colorProviderKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				colorProvider.emplace();
+
+				handler->pushInitializer();
+				colorProvider->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// formatting?:
+	setterMap.emplace(
+		formattingKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				formatting.emplace();
+
+				handler->pushInitializer();
+				formatting->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// rangeFormatting?:
+	setterMap.emplace(
+		rangeFormattingKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				rangeFormatting.emplace();
+
+				handler->pushInitializer();
+				rangeFormatting->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// onTypeFormatting?:
+	setterMap.emplace(
+		onTypeFormattingKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				onTypeFormatting.emplace();
+
+				handler->pushInitializer();
+				onTypeFormatting->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// rename?:
+	setterMap.emplace(
+		renameKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				rename.emplace();
+
+				handler->pushInitializer();
+				rename->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// publishDiagnostics?:
+	setterMap.emplace(
+		publishDiagnosticsKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				publishDiagnostics.emplace();
+
+				handler->pushInitializer();
+				publishDiagnostics->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// foldingRange?:
+	setterMap.emplace(
+		foldingRangeKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				foldingRange.emplace();
+
+				handler->pushInitializer();
+				foldingRange->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
+
 
 const String ClientCapabilities::workspaceKey    = "workspace";
 const String ClientCapabilities::textDocumentKey = "textDocument";
@@ -150,6 +793,181 @@ ClientCapabilities::ClientCapabilities(optional<Workspace> workspace,
 ClientCapabilities::ClientCapabilities(){};
 ClientCapabilities::~ClientCapabilities(){};
 
+void ClientCapabilities::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& extraSetter = initializer.extraSetter;
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// workspace?:
+	setterMap.emplace(
+		workspaceKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				workspace.emplace();
+
+				handler->pushInitializer();
+				workspace->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// textDocument?:
+	setterMap.emplace(
+		textDocumentKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				textDocument.emplace();
+
+				handler->pushInitializer();
+				textDocument->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// experimental?:
+	setterMap.emplace(
+		experimentalKey,
+		ValueSetter{
+			// String
+			[this](String str)
+			{
+				experimental = str;
+			},
+
+			// Number
+			[this](Number n)
+			{
+				experimental = n;
+			},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				experimental = b;
+			},
+
+			// Null
+			[this]()
+			{
+				experimental = Null();
+			},
+
+			// Array
+			[this, handler]()
+			{
+				auto& arr = experimental.emplace().emplace<Array>();
+
+				handler->pushInitializer();
+
+				auto* maker = new ArrayMaker(arr);
+
+				maker->fillInitializer(handler->objectStack.top());
+			},
+
+			// Object
+			[this, handler]()
+			{
+				auto& obj = experimental.emplace().
+					emplace<Object>(make_shared<GenericObject>());
+
+				handler->pushInitializer();
+				obj->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// Extra
+	extraSetter =
+	{
+		// String
+		[this, handler](String str)
+		{
+			extra.emplace(handler->lastKey, str);
+		},
+
+		// Number
+		[this, handler](Number n)
+		{
+			extra.emplace(handler->lastKey, n);
+		},
+
+		// Boolean
+		[this, handler](Boolean b)
+		{
+			extra.emplace(handler->lastKey, b);
+		},
+
+		// Null
+		[this, handler]()
+		{
+			extra.emplace(handler->lastKey, Null());
+		},
+
+		// Array
+		[this, handler]()
+		{
+			auto& arr = get<Array>(
+				extra.emplace(handler->lastKey, Array()).first->second);
+
+			handler->pushInitializer();
+
+			auto* maker = new ArrayMaker(arr);
+
+			maker->fillInitializer(handler->objectStack.top());
+		},
+
+		// Object
+		[this, handler]()
+		{
+			auto& obj = get<Object>(extra.emplace(
+				handler->lastKey, make_shared<GenericObject>()).first->second);
+
+			handler->pushInitializer();
+			obj->fillInitializer(handler->objectStack.top());
+		}
+	};
+
+	// This
+	initializer.object = this;
+}
 
 const String ClientCapabilities::Workspace::
 	applyEditKey              = "applyEdit";
@@ -186,6 +1004,196 @@ ClientCapabilities::Workspace::Workspace(optional<Boolean> applyEdit,
 ClientCapabilities::Workspace::Workspace(){};
 ClientCapabilities::Workspace::~Workspace(){};
 
+void ClientCapabilities::Workspace::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+
+	// Value setters
+
+	// applyEdit?:
+	setterMap.emplace(
+		applyEditKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				applyEdit = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// workspaceEdit?:
+	setterMap.emplace(
+		workspaceEditKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				workspaceEdit.emplace();
+
+				handler->pushInitializer();
+				workspaceEdit->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// didChangeConfiguration?:
+	setterMap.emplace(
+		didChangeConfigurationKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				didChangeConfiguration.emplace();
+
+				handler->pushInitializer();
+				didChangeConfiguration->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// didChangeWatchedFiles?:
+	setterMap.emplace(
+		didChangeWatchedFilesKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				didChangeWatchedFiles.emplace();
+
+				handler->pushInitializer();
+				didChangeWatchedFiles->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// symbol?:
+	setterMap.emplace(
+		symbolKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				symbol.emplace();
+
+				handler->pushInitializer();
+				symbol->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// executeCommand?:
+	setterMap.emplace(
+		executeCommandKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				executeCommand.emplace();
+
+				handler->pushInitializer();
+				executeCommand->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// This
+	initializer.object = this;
+}
+
 
 TraceKind::TraceKind(String kind)
 {
@@ -205,10 +1213,6 @@ TraceKind::TraceKind(String kind)
 
 TraceKind::TraceKind(_TraceKind kind):
 	kind(kind)
-{};
-
-TraceKind::TraceKind():
-	kind(_TraceKind::Off) // Off by default
 {};
 
 TraceKind::~TraceKind(){};
@@ -237,7 +1241,8 @@ const String InitializeParams::workspaceFoldersKey      = "workspaceFolders";
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 
-InitializeParams::InitializeParams(variant<Number, Null> processId,
+InitializeParams::InitializeParams(optional<ProgressToken> workDoneToken,
+	variant<Number, Null> processId,
 	optional<ClientInfo> clientInfo,
 	optional<variant<String, Null>> rootPath,
 	variant<DocumentUri, Null> rootUri,
@@ -245,6 +1250,7 @@ InitializeParams::InitializeParams(variant<Number, Null> processId,
 	ClientCapabilities capabilities,
 	optional<TraceKind> trace,
 	optional<variant<vector<WorkspaceFolder>, Null>> workspaceFolders):
+		WorkDoneProgressParams(workDoneToken),
 		processId(processId),
 		clientInfo(clientInfo),
 		rootPath(rootPath),
@@ -255,13 +1261,15 @@ InitializeParams::InitializeParams(variant<Number, Null> processId,
 		workspaceFolders(workspaceFolders)
 {};
 
-InitializeParams::InitializeParams(variant<Number, Null> processId,
+InitializeParams::InitializeParams(optional<ProgressToken> workDoneToken,
+	variant<Number, Null> processId,
 	optional<ClientInfo> clientInfo,
 	variant<DocumentUri, Null> rootUri,
 	optional<Any> initializationOptions,
 	ClientCapabilities capabilities,
 	optional<TraceKind> trace,
 	optional<variant<vector<WorkspaceFolder>, Null>> workspaceFolders):
+		WorkDoneProgressParams(workDoneToken),
 		processId(processId),
 		clientInfo(clientInfo),
 		rootUri(rootUri),
@@ -274,7 +1282,348 @@ InitializeParams::InitializeParams(variant<Number, Null> processId,
 InitializeParams::InitializeParams(){};
 InitializeParams::~InitializeParams(){};
 
+void InitializeParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto* handler = initializer.handler;
+
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Value setters
+
+	// processId:
+	setterMap.emplace(
+		processIdKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			[this, &neededMap](Number n)
+			{
+				processId = n;
+				neededMap[processIdKey] = true;
+			},
+
+			// Boolean
+			nullopt,
+
+			// Null
+			[this, &neededMap]()
+			{
+				processId = Null();
+				neededMap[processIdKey] = true;
+			},
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// clientInfo?:
+	setterMap.emplace(
+		clientInfoKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				clientInfo.emplace();
+
+				handler->pushInitializer();
+				clientInfo->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// rootPath?:
+	setterMap.emplace(
+		rootPathKey,
+		ValueSetter{
+			// String
+			[this](String str)
+			{
+				rootPath = str;
+			},
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			[this]()
+			{
+				rootPath = Null();
+			},
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// rootUri:
+	setterMap.emplace(
+		rootUriKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				rootUri = str;
+				neededMap[rootUriKey] = true;
+			},
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			[this, &neededMap]()
+			{
+				rootUri = Null();
+				neededMap[rootUriKey] = true;
+			},
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// initializationOptions?:
+	setterMap.emplace(
+		initializationOptionsKey,
+		ValueSetter{
+			// String
+			[this](String str)
+			{
+				initializationOptions = str;
+			},
+
+			// Number
+			[this](Number n)
+			{
+				initializationOptions = n;
+			},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				initializationOptions = b;
+			},
+
+			// Null
+			[this]()
+			{
+				initializationOptions = Null();
+			},
+
+			// Array
+			[this, handler]()
+			{
+				auto& arr = initializationOptions.emplace().emplace<Array>();
+
+				handler->pushInitializer();
+
+				auto* maker = new ArrayMaker(arr);
+
+				maker->fillInitializer(handler->objectStack.top());
+			},
+
+			// Object
+			[this, handler]()
+			{
+				auto& obj = initializationOptions.emplace().
+					emplace<Object>(make_shared<GenericObject>());
+
+				handler->pushInitializer();
+				obj->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// capabilities:
+	setterMap.emplace(
+		capabilitiesKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler, &neededMap]()
+			{
+				handler->pushInitializer();
+				capabilities.fillInitializer(handler->objectStack.top());
+
+				neededMap[capabilitiesKey] = true;
+			}
+		}
+	);
+
+	// trace?:
+	setterMap.emplace(
+		traceKey,
+		ValueSetter{
+			// String
+			[this](String str)
+			{
+				trace = TraceKind(str);
+			},
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// workspaceFolders?:
+	setterMap.emplace(
+		workspaceFoldersKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			[this]()
+			{
+				workspaceFolders = Null();
+			},
+
+			// Array
+			[this, handler]()
+			{
+				auto& arr = workspaceFolders.emplace().emplace<vector<WorkspaceFolder>>();
+
+				handler->pushInitializer();
+
+				auto* maker = new WorkspaceFoldersMaker(arr);
+
+				maker->fillInitializer(handler->objectStack.top());
+			},
+
+			// Object
+			nullopt
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(processIdKey, 0);
+	neededMap.emplace(rootUriKey, 0);
+	neededMap.emplace(capabilitiesKey, 0);
+
+	// This
+	initializer.object = this;
+}
+
 #pragma GCC diagnostic pop
+
+InitializeParams::WorkspaceFoldersMaker::
+	WorkspaceFoldersMaker(vector<WorkspaceFolder> &parentArray):
+		parentArray(parentArray)
+{};
+
+InitializeParams::WorkspaceFoldersMaker::
+	~WorkspaceFoldersMaker()
+{};
+
+void InitializeParams::WorkspaceFoldersMaker::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	// ObjectMaker
+	initializer.objectMaker = unique_ptr<ObjectT>(this);
+
+	auto* handler = initializer.handler;
+
+	auto& extraSetter = initializer.extraSetter;
+
+	// Value setters
+
+	// WorkspaceFolder[]
+	extraSetter =
+	{
+		// String
+		nullopt,
+
+		// Number
+		nullopt,
+
+		// Boolean
+		nullopt,
+
+		// Null
+		nullopt,
+
+		// Array
+		nullopt,
+
+		// Object
+		[this, handler]()
+		{
+			auto& obj = parentArray.emplace_back();
+
+			handler->pushInitializer();
+			obj.fillInitializer(handler->objectStack.top());
+		}
+	};
+
+	// This
+	initializer.object = this;
+}
+
 
 const String InitializeParams::ClientInfo::nameKey    = "name";
 const String InitializeParams::ClientInfo::versionKey = "version";
@@ -287,6 +1636,75 @@ InitializeParams::ClientInfo::ClientInfo(String name, optional<String> version):
 InitializeParams::ClientInfo::ClientInfo(){};
 InitializeParams::ClientInfo::~ClientInfo(){};
 
+void InitializeParams::ClientInfo::
+	fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Value setters
+
+	// name:
+	setterMap.emplace(
+		nameKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				name = str;
+				neededMap[nameKey] = true;
+			},
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// version?:
+	setterMap.emplace(
+		versionKey,
+		ValueSetter{
+			// String
+			[this](String str)
+			{
+				version = str;
+			},
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(nameKey, 0);
+
+	// This
+	initializer.object = this;
+}
 
 const String ServerCapabilities::
 	textDocumentSyncKey                 = "textDocumentSync";
