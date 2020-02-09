@@ -28,8 +28,6 @@ using namespace std;
 
 struct Message: public ObjectT
 {
-	/// This is for writing the json
-	virtual void write(JsonWriter &writer);
 
 	const static pair<String, String> jsonrpc;
 

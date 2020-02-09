@@ -76,15 +76,6 @@ void CancelParams::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
-void CancelParams::write(JsonWriter &writer)
-{
-	writer.StartObject();
-
-	partialWrite(writer);
-
-	writer.EndObject();
-}
-
 void CancelParams::partialWrite(JsonWriter &writer)
 {
 	// id:

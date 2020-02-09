@@ -63,11 +63,6 @@ public:
 
 	// Using default isValid()
 
-	//====================   Writing   ======================================//
-
-	/// This is for writing the json
-	virtual void write(JsonWriter &writer);
-
 	//====================   Reparsing   ====================================//
 
 	/// This calls events on the handler with its children

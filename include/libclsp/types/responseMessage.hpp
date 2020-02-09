@@ -84,9 +84,6 @@ struct ResponseError: public ObjectT
 
 	virtual ~ResponseError();
 
-	/// This is for writing the json
-	virtual void write(JsonWriter &writer);
-
 private:
 
 	/// This is like write() but without the object bounds.
@@ -141,9 +138,6 @@ struct ResponseMessage: public Message
 
 	virtual ~ResponseMessage();
 
-
-	/// This is for writing the json
-	virtual void write(JsonWriter &writer);
 
 private:
 	/// This is like write() but without the object bounds.

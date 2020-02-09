@@ -44,18 +44,11 @@ ResponseMessage::ResponseMessage(){};
 ResponseMessage::~ResponseMessage(){};
 
 
-void ResponseMessage::write(JsonWriter &writer)
-{
-	writer.StartObject();
-
-	Message::partialWrite(writer);
-	partialWrite(writer);
-
-	writer.EndObject();
-}
-
 void ResponseMessage::partialWrite(JsonWriter &writer)
 {
+	// Parent
+	Message::partialWrite(writer);
+
 	// id
 	writer.Key(idKey);
 	visit(overload
@@ -108,15 +101,6 @@ ResponseError::ResponseError(ErrorCodes code, String message,
 
 ResponseError::ResponseError(){};
 ResponseError::~ResponseError(){};
-
-void ResponseError::write(JsonWriter &writer)
-{
-	writer.StartObject();
-
-	partialWrite(writer);
-
-	writer.EndObject();
-}
 
 void ResponseError::partialWrite(JsonWriter &writer)
 {

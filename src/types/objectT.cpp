@@ -25,7 +25,14 @@ using namespace rapidjson;
 
 void ObjectT::fillInitializer(ObjectInitializer&){};
 void ObjectT::partialWrite(JsonWriter&){};
-void ObjectT::write(JsonWriter&){};
+void ObjectT::write(JsonWriter& writer)
+{
+	writer.StartObject();
+
+	partialWrite(writer);
+
+	writer.EndObject();
+}
 
 bool ObjectT::isValid(JsonHandler& handler)
 {

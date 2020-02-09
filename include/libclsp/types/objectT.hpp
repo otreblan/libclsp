@@ -41,7 +41,7 @@ public:
 	virtual void fillInitializer(ObjectInitializer& initializer);
 
 	/// This is for writing the json
-	virtual void write(JsonWriter &writer);
+	void write(JsonWriter &writer);
 
 	/// This checks if the JsonHandler called all necesary keys
 	virtual bool isValid(JsonHandler& handler);

@@ -157,15 +157,6 @@ void ArrayMaker::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
-void GenericObject::write(JsonWriter &writer)
-{
-	writer.StartObject();
-
-	partialWrite(writer);
-
-	writer.EndObject();
-}
-
 void GenericObject::partialWrite(JsonWriter &writer)
 {
 	for(auto &i: children)

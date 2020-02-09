@@ -26,15 +26,6 @@ const pair<String, String> Message::jsonrpc = {"jsonrpc", "2.0"};
 Message::Message(){};
 Message::~Message(){};
 
-void Message::write(JsonWriter &writer)
-{
-	writer.StartObject();
-
-	partialWrite(writer);
-
-	writer.EndObject();
-}
-
 void Message::partialWrite(JsonWriter &writer)
 {
 	writer.Key(jsonrpc.first);
