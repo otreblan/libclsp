@@ -109,4 +109,15 @@ void Location::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
+void Location::partialWrite(JsonWriter &writer)
+{
+	// uri
+	writer.Key(uriKey);
+	writer.String(uri);
+
+	// range
+	writer.Key(rangeKey);
+	writer.Object(range);
+}
+
 }

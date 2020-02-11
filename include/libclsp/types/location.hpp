@@ -34,14 +34,16 @@ using namespace std;
 ///
 struct Location: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String uriKey;
 	const static String rangeKey;
 
 public:
-
 	DocumentUri uri;
-
 
 	Range range;
 
