@@ -179,4 +179,26 @@ void LocationLink::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
+void LocationLink::partialWrite(JsonWriter &writer)
+{
+	// originSelectionRange?
+	if(originSelectionRange.has_value())
+	{
+		writer.Key(originSelectionRangeKey);
+		writer.Object(*originSelectionRange);
+	}
+
+	// targetUri
+	writer.Key(targetUriKey);
+	writer.String(targetUri);
+
+	// targetRange
+	writer.Key(targetRangeKey);
+	writer.Object(targetRange);
+
+	// targetSelectionRange
+	writer.Key(targetSelectionRangeKey);
+	writer.Object(targetSelectionRange);
+}
+
 }
