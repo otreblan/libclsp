@@ -54,6 +54,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	TextDocumentPositionParams(TextDocumentIdentifier textDocument,
 		Position position);
