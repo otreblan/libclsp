@@ -36,6 +36,10 @@ using namespace std;
 ///
 struct Command: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String titleKey;
 	const static String commandKey;

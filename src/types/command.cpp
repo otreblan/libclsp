@@ -141,4 +141,22 @@ void Command::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
+void Command::partialWrite(JsonWriter &writer)
+{
+	// title
+	writer.Key(titleKey);
+	writer.String(title);
+
+	// command
+	writer.Key(commandKey);
+	writer.String(command);
+
+	// arguments?
+	if(arguments.has_value())
+	{
+		writer.Key(argumentsKey);
+		writer.Array(*arguments);
+	}
+}
+
 }
