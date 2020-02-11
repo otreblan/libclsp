@@ -168,4 +168,23 @@ void TextDocumentItem::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
+void TextDocumentItem::partialWrite(JsonWriter &writer)
+{
+	// uri
+	writer.Key(uriKey);
+	writer.String(uri);
+
+	// languageId
+	writer.Key(languageIdKey);
+	writer.String(languageId);
+
+	// version
+	writer.Key(versionKey);
+	writer.Number(version);
+
+	// text
+	writer.Key(textKey);
+	writer.String(text);
+}
+
 }
