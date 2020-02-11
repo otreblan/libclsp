@@ -72,6 +72,13 @@ void TextDocumentIdentifier::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
+void TextDocumentIdentifier::partialWrite(JsonWriter &writer)
+{
+	// uri
+	writer.Key(uriKey);
+	writer.String(uri);
+}
+
 
 const String VersionedTextDocumentIdentifier::versionKey = "version";
 
@@ -133,6 +140,25 @@ void VersionedTextDocumentIdentifier::
 
 	// This
 	initializer.object = this;
+}
+
+void VersionedTextDocumentIdentifier::partialWrite(JsonWriter &writer)
+{
+	// Parent
+	TextDocumentIdentifier::partialWrite(writer);
+
+	// version
+	writer.Key(versionKey);
+	visit(overload(
+		[&writer](Number n)
+		{
+			writer.Number(n);
+		},
+		[&writer](Null)
+		{
+			writer.Null();
+		}
+	), version);
 }
 
 }

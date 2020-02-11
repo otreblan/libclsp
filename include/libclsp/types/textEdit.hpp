@@ -34,6 +34,10 @@ using namespace std;
 ///
 struct TextEdit: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 
 	const static String rangeKey;
@@ -75,6 +79,10 @@ public:
 ///
 struct TextDocumentEdit: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String textDocumentKey;
 	const static String editsKey;

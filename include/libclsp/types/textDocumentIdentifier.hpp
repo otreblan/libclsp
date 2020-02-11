@@ -29,6 +29,10 @@ using namespace std;
 ///
 struct TextDocumentIdentifier: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String uriKey;
 
@@ -61,6 +65,10 @@ public:
 ///
 struct VersionedTextDocumentIdentifier: public TextDocumentIdentifier
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String versionKey;
 

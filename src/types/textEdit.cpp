@@ -108,6 +108,18 @@ void TextEdit::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
+void TextEdit::partialWrite(JsonWriter &writer)
+{
+	// range
+	writer.Key(rangeKey);
+	writer.Object(range);
+
+	// newText
+	writer.Key(newTextKey);
+	writer.String(newText);
+}
+
+
 const String TextDocumentEdit::textDocumentKey = "textDocument";
 const String TextDocumentEdit::editsKey        = "edits";
 
@@ -198,6 +210,22 @@ void TextDocumentEdit::fillInitializer(ObjectInitializer& initializer)
 
 	// This
 	initializer.object = this;
+}
+
+void TextDocumentEdit::partialWrite(JsonWriter &writer)
+{
+	// textDocument
+	writer.Key(textDocumentKey);
+	writer.Object(textDocument);
+
+	// edits
+	writer.Key(editsKey);
+	writer.StartArray();
+	for(auto& i: edits)
+	{
+		writer.Object(i);
+	}
+	writer.EndArray();
 }
 
 void TextDocumentEdit::EditsMaker::fillInitializer(ObjectInitializer& initializer)
