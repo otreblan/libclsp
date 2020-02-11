@@ -18,7 +18,7 @@
 
 #include <optional>
 
-#include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace clsp
 {
@@ -31,19 +31,24 @@ using namespace std;
 ///
 /// ignoreIfExists?: Boolean
 ///
-struct CreateFileOptions
+struct CreateFileOptions: public ObjectT
 {
-	const static String overwriteKey;
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
+private:
+	const static String overwriteKey;
+	const static String ignoreIfExistsKey;
+
+public:
 	/// Overwrite existing file. Overwrite wins over `ignoreIfExists`
 	optional<Boolean> overwrite;
-
-
-	const static String ignoreIfExistsKey;
 
 	/// Ignore if exists.
 	optional<Boolean> ignoreIfExists;
 
+	// No parsing
 
 	CreateFileOptions(optional<Boolean> overwrite, optional<Boolean> ignoreIfExists);
 
@@ -60,24 +65,27 @@ struct CreateFileOptions
 ///
 /// options?: CreateFileOptions
 ///
-struct CreateFile
+struct CreateFile: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
+private:
+	const static String uriKey;
+	const static String optionsKey;
+
+public:
 	/// A create
 	const static pair<String, String> kind;
-
-
-	const static String uriKey;
 
 	/// The resource to create.
 	DocumentUri uri;
 
-
-	const static String optionsKey;
-
 	/// Additional options
 	optional<CreateFileOptions> options;
 
+	// No parsing
 
 	CreateFile(DocumentUri uri, optional<CreateFileOptions> options);
 
@@ -92,19 +100,24 @@ struct CreateFile
 ///
 /// ignoreIfExists?: Boolean
 ///
-struct RenameFileOptions
+struct RenameFileOptions: public ObjectT
 {
-	const static String overwriteKey;
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
+private:
+	const static String overwriteKey;
+	const static String ignoreIfExistsKey;
+
+public:
 	/// Overwrite existing file. Overwrite wins over `ignoreIfExists`
 	optional<Boolean> overwrite;
-
-
-	const static String ignoreIfExistsKey;
 
 	/// Ignore if exists.
 	optional<Boolean> ignoreIfExists;
 
+	// No parsing
 
 	RenameFileOptions(optional<Boolean> overwrite, optional<Boolean> ignoreIfExists);
 
@@ -123,29 +136,31 @@ struct RenameFileOptions
 ///
 /// options?: RenameFileOptions
 ///
-struct RenameFile
+struct RenameFile: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
+private:
+	const static String oldUriKey;
+	const static String newUriKey;
+	const static String optionsKey;
+
+public:
 	/// A rename
 	const static pair<String, String> kind;
-
-
-	const static String oldUriKey;
 
 	/// The old (existing) location.
 	DocumentUri oldUri;
 
-
-	const static String newUriKey;
-
 	/// The new location.
 	DocumentUri newUri;
-
-
-	const static String optionsKey;
 
 	/// Rename options.
 	optional<RenameFileOptions> options;
 
+	// No parsing
 
 	RenameFile(DocumentUri oldUri,
 		DocumentUri newUri,
@@ -162,20 +177,24 @@ struct RenameFile
 ///
 /// ignoreIfNotExists?: Boolean
 ///
-struct DeleteFileOptions
+struct DeleteFileOptions: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
+private:
 	const static String recursiveKey;
+	const static String ignoreIfNotExistsKey;
 
+public:
 	/// Delete the content recursively if a folder is denoted.
 	optional<Boolean> recursive;
-
-
-	const static String ignoreIfNotExistsKey;
 
 	/// Ignore the operation if the file doesn't exist.
 	optional<Boolean> ignoreIfNotExists;
 
+	// No parsing
 
 	DeleteFileOptions(optional<Boolean> recursive,
 		optional<Boolean> ignoreIfNotExists);
@@ -193,24 +212,27 @@ struct DeleteFileOptions
 ///
 /// options?: DeleteFileOptions
 ///
-struct DeleteFile
+struct DeleteFile: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
+private:
+	const static String uriKey;
+	const static String optionsKey;
+
+public:
 	/// A delete
 	const static pair<String, String> kind;
-
-
-	const static String uriKey;
 
 	/// The file to delete.
 	DocumentUri uri;
 
-
-	const static String optionsKey;
-
 	/// Delete options.
 	optional<DeleteFileOptions> options;
 
+	// No parsing
 
 	DeleteFile(DocumentUri uri, optional<DeleteFileOptions> options);
 

@@ -30,12 +30,25 @@ CreateFileOptions::CreateFileOptions(optional<Boolean> overwrite,
 		ignoreIfExists(ignoreIfExists)
 {};
 
-CreateFileOptions::CreateFileOptions():
-	overwrite(),
-	ignoreIfExists()
-{};
-
+CreateFileOptions::CreateFileOptions(){};
 CreateFileOptions::~CreateFileOptions(){};
+
+void CreateFileOptions::partialWrite(JsonWriter &writer)
+{
+	// overwrite?
+	if(overwrite.has_value())
+	{
+		writer.Key(overwriteKey);
+		writer.Bool(*overwrite);
+	}
+
+	// ignoreIfExists?
+	if(ignoreIfExists.has_value())
+	{
+		writer.Key(ignoreIfExistsKey);
+		writer.Bool(*ignoreIfExists);
+	}
+}
 
 
 const pair<String, String> CreateFile::kind = {"kind", "create"};
@@ -48,12 +61,26 @@ CreateFile::CreateFile(DocumentUri uri, optional<CreateFileOptions> options):
 	options(options)
 {};
 
-CreateFile::CreateFile():
-	uri(),
-	options()
-{};
-
+CreateFile::CreateFile(){};
 CreateFile::~CreateFile(){};
+
+void CreateFile::partialWrite(JsonWriter &writer)
+{
+	// kind
+	writer.Key(kind.first);
+	writer.String(kind.second);
+
+	// uri
+	writer.Key(uriKey);
+	writer.String(uri);
+
+	// options?
+	if(options.has_value())
+	{
+		writer.Key(optionsKey);
+		writer.Object(*options);
+	}
+}
 
 
 const String RenameFileOptions::overwriteKey      = "overwrite";
@@ -65,12 +92,25 @@ RenameFileOptions::RenameFileOptions(optional<Boolean> overwrite,
 		ignoreIfExists(ignoreIfExists)
 {};
 
-RenameFileOptions::RenameFileOptions():
-		overwrite(),
-		ignoreIfExists()
-{};
-
+RenameFileOptions::RenameFileOptions(){};
 RenameFileOptions::~RenameFileOptions(){};
+
+void RenameFileOptions::partialWrite(JsonWriter &writer)
+{
+	// overwrite?
+	if(overwrite.has_value())
+	{
+		writer.Key(overwriteKey);
+		writer.Bool(*overwrite);
+	}
+
+	// ignoreIfExists?
+	if(ignoreIfExists.has_value())
+	{
+		writer.Key(ignoreIfExistsKey);
+		writer.Bool(*ignoreIfExists);
+	}
+}
 
 
 const pair<String, String> RenameFile::kind = {"kind", "rename"};
@@ -87,13 +127,30 @@ RenameFile::RenameFile(DocumentUri oldUri,
 		options(options)
 {};
 
-RenameFile::RenameFile():
-	oldUri(),
-	newUri(),
-	options()
-{};
-
+RenameFile::RenameFile(){};
 RenameFile::~RenameFile(){};
+
+void RenameFile::partialWrite(JsonWriter &writer)
+{
+	// kind
+	writer.Key(kind.first);
+	writer.String(kind.second);
+
+	// oldUri
+	writer.Key(oldUriKey);
+	writer.String(oldUri);
+
+	// newUri
+	writer.Key(newUriKey);
+	writer.String(newUri);
+
+	// options?
+	if(options.has_value())
+	{
+		writer.Key(optionsKey);
+		writer.Object(*options);
+	}
+}
 
 
 const String DeleteFileOptions::recursiveKey         = "recursive";
@@ -105,12 +162,25 @@ DeleteFileOptions::DeleteFileOptions(optional<Boolean> recursive,
 		ignoreIfNotExists(ignoreIfNotExists)
 {};
 
-DeleteFileOptions::DeleteFileOptions():
-	recursive(),
-	ignoreIfNotExists()
-{};
-
+DeleteFileOptions::DeleteFileOptions(){};
 DeleteFileOptions::~DeleteFileOptions(){};
+
+void DeleteFileOptions::partialWrite(JsonWriter &writer)
+{
+	// recursive?
+	if(recursive.has_value())
+	{
+		writer.Key(recursiveKey);
+		writer.Bool(*recursive);
+	}
+
+	// ignoreIfNotExists?
+	if(ignoreIfNotExists.has_value())
+	{
+		writer.Key(ignoreIfNotExistsKey);
+		writer.Bool(*ignoreIfNotExists);
+	}
+}
 
 
 const pair<String, String> DeleteFile::kind = {"kind", "delete"};
@@ -123,11 +193,25 @@ DeleteFile::DeleteFile(DocumentUri uri, optional<DeleteFileOptions> options):
 	options(options)
 {};
 
-DeleteFile::DeleteFile():
-	uri(),
-	options()
-{};
-
+DeleteFile::DeleteFile(){};
 DeleteFile::~DeleteFile(){};
+
+void DeleteFile::partialWrite(JsonWriter &writer)
+{
+	// kind
+	writer.Key(kind.first);
+	writer.String(kind.second);
+
+	// uri
+	writer.Key(uriKey);
+	writer.String(uri);
+
+	// options?
+	if(options.has_value())
+	{
+		writer.Key(optionsKey);
+		writer.Object(*options);
+	}
+}
 
 }

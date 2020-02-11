@@ -162,8 +162,6 @@ private:
 	FailureHandlingKind(Kind kind);
 
 public:
-
-
 	/// Applying the workspace change is simply aborted if one of the changes
 	/// provided fails.
 	/// All operations executed before the failing operation stay executed.
