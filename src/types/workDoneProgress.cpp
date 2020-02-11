@@ -165,6 +165,38 @@ void WorkDoneProgressBegin::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
+void WorkDoneProgressBegin::partialWrite(JsonWriter &writer)
+{
+	// kind
+	writer.Key(kind.first);
+	writer.String(kind.second);
+
+	// title
+	writer.Key(titleKey);
+	writer.String(title);
+
+	// cancellable?
+	if(cancellable.has_value())
+	{
+		writer.Key(cancellableKey);
+		writer.Bool(*cancellable);
+	}
+
+	// message?
+	if(message.has_value())
+	{
+		writer.Key(messageKey);
+		writer.String(*message);
+	}
+
+	// percentage?
+	if(percentage.has_value())
+	{
+		writer.Key(percentageKey);
+		writer.Number(*percentage);
+	}
+}
+
 
 const pair<String, String> WorkDoneProgressReport::kind = {"kind", "report"};
 
@@ -274,6 +306,34 @@ void WorkDoneProgressReport::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
+void WorkDoneProgressReport::partialWrite(JsonWriter &writer)
+{
+	// kind
+	writer.Key(kind.first);
+	writer.String(kind.second);
+
+	// cancellable?
+	if(cancellable.has_value())
+	{
+		writer.Key(cancellableKey);
+		writer.Bool(*cancellable);
+	}
+
+	// message?
+	if(message.has_value())
+	{
+		writer.Key(messageKey);
+		writer.String(*message);
+	}
+
+	// percentage?
+	if(percentage.has_value())
+	{
+		writer.Key(percentageKey);
+		writer.Number(*percentage);
+	}
+}
+
 
 const pair<String, String> WorkDoneProgressEnd::kind = {"kind", "end"};
 
@@ -321,6 +381,20 @@ void WorkDoneProgressEnd::fillInitializer(ObjectInitializer& initializer)
 
 	// This
 	initializer.object = this;
+}
+
+void WorkDoneProgressEnd::partialWrite(JsonWriter &writer)
+{
+	// kind
+	writer.Key(kind.first);
+	writer.String(kind.second);
+
+	// message?
+	if(message.has_value())
+	{
+		writer.Key(messageKey);
+		writer.String(*message);
+	}
 }
 
 const String WorkDoneProgressParams::workDoneTokenKey = "workDoneToken";
@@ -384,6 +458,16 @@ WorkDoneProgressOptions::
 WorkDoneProgressOptions::WorkDoneProgressOptions(){};
 WorkDoneProgressOptions::~WorkDoneProgressOptions(){};
 
+void WorkDoneProgressOptions::partialWrite(JsonWriter &writer)
+{
+	// workDoneProgress?
+	if(workDoneProgress.has_value())
+	{
+		writer.Key(workDoneProgressKey);
+		writer.Bool(*workDoneProgress);
+	}
+}
+
 
 const String WorkDoneProgressCreateParams::tokenKey = "token";
 
@@ -393,6 +477,22 @@ WorkDoneProgressCreateParams::WorkDoneProgressCreateParams(ProgressToken token):
 
 WorkDoneProgressCreateParams::WorkDoneProgressCreateParams(){};
 WorkDoneProgressCreateParams::~WorkDoneProgressCreateParams(){};
+
+void WorkDoneProgressCreateParams::partialWrite(JsonWriter &writer)
+{
+	// token
+	writer.Key(tokenKey);
+	visit(overload(
+		[&writer](Number n)
+		{
+			writer.Number(n);
+		},
+		[&writer](String& str)
+		{
+			writer.String(str);
+		}
+	), token);
+}
 
 
 const String ProgressParams::tokenKey = "token";
@@ -591,6 +691,39 @@ void ProgressParams::ValueMaker::fillInitializer(ObjectInitializer& initializer)
 
 	// This
 	initializer.object = this;
+}
+
+void ProgressParams::partialWrite(JsonWriter &writer)
+{
+	// token
+	writer.Key(tokenKey);
+	visit(overload(
+		[&writer](Number n)
+		{
+			writer.Number(n);
+		},
+		[&writer](String& str)
+		{
+			writer.String(str);
+		}
+	), token);
+
+	// value
+	writer.Key(valueKey);
+	visit(overload(
+		[&writer](WorkDoneProgressBegin& obj)
+		{
+			writer.Object(obj);
+		},
+		[&writer](WorkDoneProgressReport& obj)
+		{
+			writer.Object(obj);
+		},
+		[&writer](WorkDoneProgressEnd& obj)
+		{
+			writer.Object(obj);
+		}
+	), value);
 }
 
 }

@@ -42,6 +42,10 @@ using namespace std;
 ///
 struct WorkDoneProgressBegin: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String titleKey;
 	const static String cancellableKey;
@@ -112,6 +116,10 @@ public:
 ///
 struct WorkDoneProgressReport: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String cancellableKey;
 	const static String messageKey;
@@ -171,6 +179,10 @@ public:
 ///
 struct WorkDoneProgressEnd: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String messageKey;
 
@@ -222,6 +234,8 @@ public:
 
 	//=======================================================================//
 
+	// No writing
+
 
 	WorkDoneProgressParams(optional<ProgressToken> workDoneToken);
 
@@ -234,10 +248,16 @@ public:
 ///
 /// workDoneProgress?: boolean
 ///
-struct WorkDoneProgressOptions
+struct WorkDoneProgressOptions: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
+private:
 	const static String workDoneProgressKey;
 
+public:
 	optional<Boolean> workDoneProgress;
 
 	// No parsing
@@ -255,11 +275,16 @@ struct WorkDoneProgressOptions
 ///
 /// token: ProgressToken
 ///
-struct WorkDoneProgressCreateParams
+struct WorkDoneProgressCreateParams: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
+private:
 	const static String tokenKey;
 
+public:
 	/// The token to be used to report progress.
 	ProgressToken token;
 
@@ -281,6 +306,10 @@ struct WorkDoneProgressCreateParams
 ///
 struct ProgressParams: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String tokenKey;
 	const static String valueKey;
