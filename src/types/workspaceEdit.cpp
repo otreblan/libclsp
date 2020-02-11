@@ -42,6 +42,77 @@ WorkspaceEdit::WorkspaceEdit(optional<Changes> changes,
 WorkspaceEdit::WorkspaceEdit(){};
 WorkspaceEdit::~WorkspaceEdit(){};
 
+void WorkspaceEdit::partialWrite(JsonWriter &writer)
+{
+	// changes?
+	if(changes.has_value())
+	{
+		writer.Key(changesKey);
+		writer.Object(*changes);
+	}
+
+	// documentChanges?
+	if(documentChanges.has_value())
+	{
+		writer.Key(documentChangesKey);
+		visit(overload(
+			[&writer](vector<TextDocumentEdit>& vec)
+			{
+				writer.StartArray();
+				for(auto& i: vec)
+				{
+					writer.Object(i);
+				}
+				writer.EndArray();
+			},
+			[&writer](vector<variant<TextDocumentEdit,
+				CreateFile,
+				RenameFile,
+				DeleteFile>>& vec)
+			{
+				writer.StartArray();
+				for(auto& i: vec)
+				{
+					visit(overload(
+						[&writer](TextDocumentEdit& obj)
+						{
+							writer.Object(obj);
+						},
+						[&writer](CreateFile& obj)
+						{
+							writer.Object(obj);
+						},
+						[&writer](RenameFile& obj)
+						{
+							writer.Object(obj);
+						},
+						[&writer](DeleteFile& obj)
+						{
+							writer.Object(obj);
+						}
+					), i);
+				}
+				writer.EndArray();
+			}
+		), *documentChanges);
+	}
+}
+
+void WorkspaceEdit::Changes::partialWrite(JsonWriter &writer)
+{
+	// changes
+	for(auto& i: changes)
+	{
+		writer.Key(i.first);
+		writer.StartArray();
+		for(auto& j: i.second)
+		{
+			writer.Object(j);
+		}
+		writer.EndArray();
+	}
+}
+
 
 const boost::bimap<ResourceOperationKind::Kind, String>
 ResourceOperationKind::kindMap =

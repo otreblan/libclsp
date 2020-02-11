@@ -36,16 +36,25 @@ using namespace std;
 ///
 /// documentChanges?: (TextDocumentEdit[] | (TextDocumentEdit | CreateFile | RenameFile | DeleteFile)[])
 ///
-struct WorkspaceEdit
+struct WorkspaceEdit: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String changesKey;
 	const static String documentChangesKey;
 
 public:
 	/// Holds changes to existing resources.
-	struct Changes
+	struct Changes: public ObjectT
 	{
+	protected:
+		/// This is like write() but without the object bounds.
+		virtual void partialWrite(JsonWriter &writer);
+
+	public:
 		map<DocumentUri, vector<TextEdit>> changes;
 
 
@@ -258,6 +267,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	WorkspaceEditClientCapabilities(optional<Boolean> documentChanges,
 		optional<vector<ResourceOperationKind>> resourceOperations,
