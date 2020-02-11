@@ -288,6 +288,71 @@ void Diagnostic::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
+void Diagnostic::partialWrite(JsonWriter &writer)
+{
+	// range
+	writer.Key(rangeKey);
+	writer.Object(range);
+
+	// severity?
+	if(severity.has_value())
+	{
+		writer.Key(severityKey);
+		writer.Int((int)(*severity));
+	}
+
+	// code?
+	if(code.has_value())
+	{
+		writer.Key(codeKey);
+		visit(overload(
+			[&writer](Number n)
+			{
+				writer.Number(n);
+			},
+			[&writer](String& str)
+			{
+				writer.String(str);
+			}
+		), *code);
+	}
+
+	// source?
+	if(source.has_value())
+	{
+		writer.Key(sourceKey);
+		writer.String(*source);
+	}
+
+	// message
+	writer.Key(messageKey);
+	writer.String(message);
+
+	// tags?
+	if(tags.has_value())
+	{
+		writer.Key(tagsKey);
+		writer.StartArray();
+		for(auto& i: *tags)
+		{
+			writer.Int((int)i);
+		}
+		writer.EndArray();
+	}
+
+	// relatedInformation?
+	if(relatedInformation.has_value())
+	{
+		writer.Key(relatedInformationKey);
+		writer.StartArray();
+		for(auto& i: *relatedInformation)
+		{
+			writer.Object(i);
+		}
+		writer.EndArray();
+	}
+}
+
 void Diagnostic::TagsMaker::fillInitializer(ObjectInitializer& initializer)
 {
 	// ObjectMaker
@@ -473,6 +538,17 @@ void DiagnosticRelatedInformation::fillInitializer(ObjectInitializer& initialize
 
 	// This
 	initializer.object = this;
+}
+
+void DiagnosticRelatedInformation::partialWrite(JsonWriter &writer)
+{
+	// location
+	writer.Key(locationKey);
+	writer.Object(location);
+
+	// message
+	writer.Key(messageKey);
+	writer.String(message);
 }
 
 }

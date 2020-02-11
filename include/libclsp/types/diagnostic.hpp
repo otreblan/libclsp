@@ -34,12 +34,15 @@ using namespace std;
 ///
 struct DiagnosticRelatedInformation: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String locationKey;
 	const static String messageKey;
 
 public:
-
 	/// The location of this related diagnostic information.
 	Location location;
 
@@ -111,6 +114,10 @@ enum class DiagnosticTag
 ///
 struct Diagnostic: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String rangeKey;
 	const static String severityKey;
@@ -153,7 +160,6 @@ private:
 	};
 
 public:
-
 	/// The range at which the message applies.
 	Range range;
 
