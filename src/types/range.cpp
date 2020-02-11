@@ -110,4 +110,15 @@ void Range::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
+void Range::partialWrite(JsonWriter &writer)
+{
+	// start
+	writer.Key(startKey);
+	writer.Object(start);
+
+	// end
+	writer.Key(endKey);
+	writer.Object(end);
+}
+
 }
