@@ -104,4 +104,15 @@ void Position::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
+void Position::partialWrite(JsonWriter &writer)
+{
+	// line
+	writer.Key(lineKey);
+	writer.Number(line);
+
+	// character
+	writer.Key(characterKey);
+	writer.Number(character);
+}
+
 }

@@ -35,6 +35,10 @@ using namespace std;
 ///
 struct Position: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String lineKey;
 	const static String characterKey;
@@ -43,7 +47,6 @@ public:
 
 	/// Line position in a document (zero-based).
 	Number line;
-
 
 	/// Character offset on a line in a document (zero-based). Assuming that the line is
 	/// represented as a string, the `character` value represents the gap between the
