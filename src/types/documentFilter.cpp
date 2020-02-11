@@ -36,4 +36,28 @@ DocumentFilter::DocumentFilter(optional<String> language,
 DocumentFilter::DocumentFilter(){};
 DocumentFilter::~DocumentFilter(){};
 
+void DocumentFilter::partialWrite(JsonWriter &writer)
+{
+	// language?
+	if(language.has_value())
+	{
+		writer.Key(languageKey);
+		writer.String(*language);
+	}
+
+	// scheme?
+	if(scheme.has_value())
+	{
+		writer.Key(schemeKey);
+		writer.String(*scheme);
+	}
+
+	// pattern?
+	if(pattern.has_value())
+	{
+		writer.Key(patternKey);
+		writer.String(*pattern);
+	}
+}
+
 }

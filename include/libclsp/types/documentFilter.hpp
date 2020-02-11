@@ -18,7 +18,7 @@
 
 #include <optional>
 
-#include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace clsp
 {
@@ -34,8 +34,12 @@ using namespace std;
 ///
 /// pattern?: String
 ///
-struct DocumentFilter
+struct DocumentFilter: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String languageKey;
 	const static String schemeKey;
