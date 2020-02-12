@@ -31,4 +31,26 @@ TextDocumentRegistrationOptions::
 
 TextDocumentRegistrationOptions::TextDocumentRegistrationOptions(){};
 TextDocumentRegistrationOptions::~TextDocumentRegistrationOptions(){};
+
+void TextDocumentRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// documentSelector
+	writer.Key(documentSelectorKey);
+	visit(overload(
+		[&writer](DocumentSelector& arr)
+		{
+			writer.StartArray();
+			for(auto& i: arr)
+			{
+				writer.Object(i);
+			}
+			writer.EndArray();
+		},
+		[&writer](Null)
+		{
+			writer.Null();
+		}
+	), documentSelector);
+}
+
 }

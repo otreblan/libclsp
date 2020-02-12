@@ -65,7 +65,12 @@ struct DocumentFormattingRegistrationOptions:
 	public TextDocumentRegistrationOptions,
 	public DocumentFormattingOptions
 {
+protected:
+	// TODO
+	// without this the compilation fails
+	virtual void partialWrite(JsonWriter&){};
 
+public:
 	// No parsing
 
 	DocumentFormattingRegistrationOptions(

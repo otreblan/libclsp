@@ -96,6 +96,12 @@ struct DocumentLinkRegistrationOptions:
 	public TextDocumentRegistrationOptions,
 	public DocumentLinkOptions
 {
+protected:
+	// TODO
+	// without this the compilation fails
+	virtual void partialWrite(JsonWriter&){};
+
+public:
 
 	// No parsing
 

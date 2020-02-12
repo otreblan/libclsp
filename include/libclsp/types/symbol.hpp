@@ -168,6 +168,12 @@ struct DocumentSymbolRegistrationOptions:
 	public TextDocumentRegistrationOptions,
 	public DocumentSymbolOptions
 {
+protected:
+	// TODO
+	// without this the compilation fails
+	virtual void partialWrite(JsonWriter&){};
+
+public:
 
 	// No parsing
 

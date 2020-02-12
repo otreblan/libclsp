@@ -37,6 +37,11 @@ using namespace std;
 struct TextDocumentChangeRegistrationOptions:
 	public TextDocumentRegistrationOptions
 {
+protected:
+	// TODO
+	// without this the compilation fails
+	virtual void partialWrite(JsonWriter&){};
+
 private:
 	const static String syncKindKey;
 

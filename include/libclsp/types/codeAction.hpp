@@ -268,6 +268,12 @@ struct CodeActionRegistrationOptions:
 	public TextDocumentRegistrationOptions,
 	public CodeActionOptions
 {
+protected:
+	// TODO
+	// without this the compilation fails
+	virtual void partialWrite(JsonWriter&){};
+
+public:
 
 	// No parsing
 
