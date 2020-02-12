@@ -45,7 +45,6 @@ private:
 	MarkupKind(_MarkupKind kind);
 
 public:
-
 	/// Plain text is supported as a content format
 	const static MarkupKind PlainText;
 
@@ -85,6 +84,10 @@ public:
 ///
 struct MarkupContent: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String kindKey;
 	const static String valueKey;

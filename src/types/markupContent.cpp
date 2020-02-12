@@ -138,5 +138,16 @@ void MarkupContent::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
+void MarkupContent::partialWrite(JsonWriter &writer)
+{
+	// kind
+	writer.Key(kindKey);
+	writer.String(kind);
+
+	// value
+	writer.Key(valueKey);
+	writer.String(value);
+}
+
 }
 
