@@ -77,6 +77,12 @@ struct TypeDefinitionRegistrationOptions:
 	public TypeDefinitionOptions,
 	public StaticRegistrationOptions
 {
+protected:
+	// TODO
+	// without this the compilation fails
+	virtual void partialWrite(JsonWriter&){};
+
+public:
 
 	// No parsing
 

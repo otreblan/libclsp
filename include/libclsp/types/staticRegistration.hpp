@@ -18,7 +18,7 @@
 
 #include <optional>
 
-#include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace clsp
 {
@@ -31,8 +31,12 @@ using namespace std;
 ///
 /// id?: String
 ///
-struct StaticRegistrationOptions
+struct StaticRegistrationOptions: public virtual ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String idKey;
 

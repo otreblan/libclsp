@@ -27,7 +27,7 @@ using namespace std;
 ///
 /// documentSelector: DocumentSelector | Null
 ///
-struct TextDocumentRegistrationOptions
+struct TextDocumentRegistrationOptions: public virtual ObjectT
 {
 private:
 	const static String documentSelectorKey;

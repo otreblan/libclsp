@@ -248,7 +248,7 @@ public:
 ///
 /// workDoneProgress?: boolean
 ///
-struct WorkDoneProgressOptions: public ObjectT
+struct WorkDoneProgressOptions: public virtual ObjectT
 {
 protected:
 	/// This is like write() but without the object bounds.

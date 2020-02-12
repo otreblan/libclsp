@@ -30,4 +30,14 @@ StaticRegistrationOptions::StaticRegistrationOptions(optional<String> id):
 StaticRegistrationOptions::StaticRegistrationOptions(){};
 StaticRegistrationOptions::~StaticRegistrationOptions(){};
 
+void StaticRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// id?
+	if(id.has_value())
+	{
+		writer.Key(idKey);
+		writer.String(*id);
+	}
+}
+
 }
