@@ -71,4 +71,23 @@ void PartialResultParams::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
+void PartialResultParams::partialWrite(JsonWriter &writer)
+{
+	// partialResultToken?
+	if(partialResultToken.has_value())
+	{
+		writer.Key(partialResultTokenKey);
+		visit(overload(
+			[&writer](String& str)
+			{
+				writer.String(str);
+			},
+			[&writer](Number n)
+			{
+				writer.Number(n);
+			}
+		), *partialResultToken);
+	}
+}
+
 }
