@@ -1289,6 +1289,9 @@ void InitializeParams::fillInitializer(ObjectInitializer& initializer)
 	auto& setterMap = initializer.setterMap;
 	auto& neededMap = initializer.neededMap;
 
+	// Parent
+	WorkDoneProgressParams::fillInitializer(initializer);
+
 	// Value setters
 
 	// processId:
