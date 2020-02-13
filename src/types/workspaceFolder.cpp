@@ -36,6 +36,32 @@ WorkspaceFoldersServerCapabilities::
 WorkspaceFoldersServerCapabilities::WorkspaceFoldersServerCapabilities(){};
 WorkspaceFoldersServerCapabilities::~WorkspaceFoldersServerCapabilities(){};
 
+void WorkspaceFoldersServerCapabilities::partialWrite(JsonWriter &writer)
+{
+	// supported?
+	if(supported.has_value())
+	{
+		writer.Key(supportedKey);
+		writer.Bool(*supported);
+	}
+
+	// changeNotifications?
+	if(changeNotifications.has_value())
+	{
+		writer.Key(changeNotificationsKey);
+		visit(overload(
+			[&writer](String& str)
+			{
+				writer.String(str);
+			},
+			[&writer](Boolean b)
+			{
+				writer.Bool(b);
+			}
+		), *changeNotifications);
+	}
+}
+
 
 const String WorkspaceFolder::uriKey  = "uri";
 const String WorkspaceFolder::nameKey = "name";

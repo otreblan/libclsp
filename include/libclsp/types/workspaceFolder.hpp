@@ -32,8 +32,12 @@ using namespace std;
 ///
 /// changeNotifications?: String | Boolean
 ///
-struct WorkspaceFoldersServerCapabilities
+struct WorkspaceFoldersServerCapabilities: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String supportedKey;
 	const static String changeNotificationsKey;
@@ -91,6 +95,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	WorkspaceFolder(DocumentUri uri, String name);
 
