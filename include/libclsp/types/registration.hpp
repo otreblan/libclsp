@@ -18,7 +18,7 @@
 
 #include <optional>
 
-#include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace clsp
 {
@@ -33,8 +33,12 @@ using namespace std;
 ///
 /// registerOptions?: Any
 ///
-struct Registration
+struct Registration: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String idKey;
 	const static String methodKey;
@@ -70,8 +74,12 @@ public:
 ///
 /// registrations: Registration[]
 ///
-struct RegistrationParams
+struct RegistrationParams: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String registrationsKey;
 
@@ -94,8 +102,12 @@ public:
 ///
 /// method: String
 ///
-struct UnRegistration
+struct UnRegistration: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String idKey;
 	const static String methodKey;
@@ -122,8 +134,12 @@ public:
 ///
 /// unregisterations: UnRegistration[]
 ///
-struct UnRegistrationParams
+struct UnRegistrationParams: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String unregisterationsKey;
 

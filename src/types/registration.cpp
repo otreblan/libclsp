@@ -34,6 +34,24 @@ Registration::Registration(String id, String method, optional<Any> registerOptio
 Registration::Registration(){};
 Registration::~Registration(){};
 
+void Registration::partialWrite(JsonWriter &writer)
+{
+	// id
+	writer.Key(idKey);
+	writer.String(id);
+
+	// method
+	writer.Key(methodKey);
+	writer.String(method);
+
+	// registerOptions?
+	if(registerOptions.has_value())
+	{
+		writer.Key(registerOptionsKey);
+		writer.Any(*registerOptions);
+	}
+}
+
 
 const String RegistrationParams::registrationsKey = "registrations";
 
@@ -43,6 +61,18 @@ RegistrationParams::RegistrationParams(vector<Registration> registrations):
 
 RegistrationParams::RegistrationParams(){};
 RegistrationParams::~RegistrationParams(){};
+
+void RegistrationParams::partialWrite(JsonWriter &writer)
+{
+	// registrations
+	writer.Key(registrationsKey);
+	writer.StartArray();
+	for(auto& i: registrations)
+	{
+		writer.Object(i);
+	}
+	writer.EndArray();
+}
 
 
 const String UnRegistration::idKey              = "id";
@@ -56,6 +86,17 @@ UnRegistration::UnRegistration(String id, String method):
 UnRegistration::UnRegistration(){};
 UnRegistration::~UnRegistration(){};
 
+void UnRegistration::partialWrite(JsonWriter &writer)
+{
+	// id
+	writer.Key(idKey);
+	writer.String(id);
+
+	// method
+	writer.Key(methodKey);
+	writer.String(method);
+}
+
 
 const String UnRegistrationParams::unregisterationsKey = "unregisterations";
 
@@ -65,5 +106,17 @@ UnRegistrationParams::UnRegistrationParams(vector<UnRegistration> unregisteratio
 
 UnRegistrationParams::UnRegistrationParams(){};
 UnRegistrationParams::~UnRegistrationParams(){};
+
+void UnRegistrationParams::partialWrite(JsonWriter &writer)
+{
+	// registrations
+	writer.Key(unregisterationsKey);
+	writer.StartArray();
+	for(auto& i: unregisterations)
+	{
+		writer.Object(i);
+	}
+	writer.EndArray();
+}
 
 }
