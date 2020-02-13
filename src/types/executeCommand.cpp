@@ -82,6 +82,21 @@ ExecuteCommandOptions::ExecuteCommandOptions(optional<Boolean> workDoneProgress,
 ExecuteCommandOptions::ExecuteCommandOptions(){};
 ExecuteCommandOptions::~ExecuteCommandOptions(){};
 
+void ExecuteCommandOptions::partialWrite(JsonWriter &writer)
+{
+	// Parent
+	WorkDoneProgressOptions::partialWrite(writer);
+
+	// commands
+	writer.Key(commandsKey);
+	writer.StartArray();
+	for(auto& i: commands)
+	{
+		writer.String(i);
+	}
+	writer.EndArray();
+}
+
 
 const String ExecuteCommandParams::commandKey   = "command";
 const String ExecuteCommandParams::argumentsKey = "arguments";

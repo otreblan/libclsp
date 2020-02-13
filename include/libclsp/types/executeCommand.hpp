@@ -48,6 +48,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	ExecuteCommandClientCapabilities(optional<Boolean> dynamicRegistration);
 
@@ -62,6 +63,10 @@ public:
 ///
 struct ExecuteCommandOptions: public WorkDoneProgressOptions
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String commandsKey;
 
@@ -111,6 +116,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	ExecuteCommandParams(optional<ProgressToken> workDoneToken,
 		String command,
