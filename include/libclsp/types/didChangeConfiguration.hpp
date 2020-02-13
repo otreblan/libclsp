@@ -49,6 +49,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DidChangeConfigurationClientCapabilities(optional<Boolean> dynamicRegistration);
 
@@ -81,6 +82,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DidChangeConfigurationParams(Any settings);
 
