@@ -48,8 +48,12 @@ enum class MessageType
 ///
 /// message: String
 ///
-struct ShowMessageParams
+struct ShowMessageParams: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String typeKey;
 	const static String messageKey;
@@ -78,6 +82,10 @@ public:
 ///
 struct MessageActionItem: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String titleKey;
 
@@ -103,8 +111,12 @@ public:
 	virtual ~MessageActionItem();
 };
 
-struct ShowMessageRequestParams
+struct ShowMessageRequestParams: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String typeKey;
 	const static String messageKey;
