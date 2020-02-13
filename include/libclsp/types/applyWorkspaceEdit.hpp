@@ -29,8 +29,12 @@ using namespace std;
 ///
 /// edit: WorkspaceEdit
 ///
-struct ApplyWorkspaceEditParams
+struct ApplyWorkspaceEditParams: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String labelKey;
 	const static String editKey;
@@ -85,6 +89,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	ApplyWorkspaceEditResponse(Boolean applied, optional<String> failureReason);
 

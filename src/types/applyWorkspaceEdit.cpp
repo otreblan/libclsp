@@ -33,6 +33,20 @@ ApplyWorkspaceEditParams::ApplyWorkspaceEditParams(optional<String> label,
 ApplyWorkspaceEditParams::ApplyWorkspaceEditParams(){};
 ApplyWorkspaceEditParams::~ApplyWorkspaceEditParams(){};
 
+void ApplyWorkspaceEditParams::partialWrite(JsonWriter &writer)
+{
+	// label?
+	if(label.has_value())
+	{
+		writer.Key(labelKey);
+		writer.String(*label);
+	}
+
+	// edit
+	writer.Key(editKey);
+	writer.Object(edit);
+}
+
 
 const String ApplyWorkspaceEditResponse::appliedKey       = "applied";
 const String ApplyWorkspaceEditResponse::failureReasonKey = "failureReason";
