@@ -18,15 +18,19 @@
 
 #include <optional>
 
-#include <libclsp/types/jsonTypes.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace clsp
 {
 
 using namespace std;
 
-struct ConfigurationItem
+struct ConfigurationItem: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String scopeUriKey;
 	const static String sectionKey;
@@ -47,8 +51,12 @@ public:
 	virtual ~ConfigurationItem();
 };
 
-struct ConfigurationParams
+struct ConfigurationParams: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String itemsKey;
 

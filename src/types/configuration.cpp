@@ -33,6 +33,23 @@ ConfigurationItem::ConfigurationItem(optional<DocumentUri> scopeUri,
 ConfigurationItem::ConfigurationItem(){};
 ConfigurationItem::~ConfigurationItem(){};
 
+void ConfigurationItem::partialWrite(JsonWriter &writer)
+{
+	// scopeUri?
+	if(scopeUri.has_value())
+	{
+		writer.Key(scopeUriKey);
+		writer.String(*scopeUri);
+	}
+
+	// section?
+	if(section.has_value())
+	{
+		writer.Key(sectionKey);
+		writer.String(*section);
+	}
+}
+
 
 const String ConfigurationParams::itemsKey = "items";
 
@@ -42,5 +59,17 @@ ConfigurationParams::ConfigurationParams(vector<ConfigurationItem> items):
 
 ConfigurationParams::ConfigurationParams(){};
 ConfigurationParams::~ConfigurationParams(){};
+
+void ConfigurationParams::partialWrite(JsonWriter &writer)
+{
+	// items
+	writer.Key(itemsKey);
+	writer.StartArray();
+	for(auto& i: items)
+	{
+		writer.Object(i);
+	}
+	writer.EndArray();
+}
 
 }
