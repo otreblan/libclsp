@@ -71,6 +71,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	WorkspaceFoldersChangeEvent(vector<WorkspaceFolder> added,
 		vector<WorkspaceFolder> removed);
@@ -106,6 +107,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DidChangeWorkspaceFoldersParams(WorkspaceFoldersChangeEvent event);
 
