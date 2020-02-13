@@ -92,6 +92,8 @@ public:
 
 		//===================================================================//
 
+		// No writing
+
 		SymbolKind(optional<vector<clsp::SymbolKind>> valueSet);
 
 		SymbolKind();
@@ -113,6 +115,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	WorkspaceSymbolClientCapabilities(optional<Boolean> dynamicRegistration,
 		optional<SymbolKind> symbolKind);
@@ -123,11 +126,9 @@ public:
 	virtual ~WorkspaceSymbolClientCapabilities();
 };
 
-using WorkspaceSymbolOptions = WorkDoneProgressOptions;
-// No parsing
+using WorkspaceSymbolOptions = WorkDoneProgressOptions;// No parsing
 
-using WorkspaceSymbolRegistrationOptions = WorkspaceSymbolOptions;
-// No parsing
+using WorkspaceSymbolRegistrationOptions = WorkspaceSymbolOptions;// No parsing
 
 /// The parameters of a Workspace Symbol Request.
 ///
@@ -155,6 +156,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	WorkspaceSymbolParams(optional<ProgressToken> workDoneToken,
 		optional<ProgressToken> partialResultToken,
