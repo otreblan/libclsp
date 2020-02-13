@@ -30,8 +30,12 @@ using namespace std;
 ///
 /// message: String
 ///
-struct LogMessageParams
+struct LogMessageParams: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String typeKey;
 	const static String messageKey;

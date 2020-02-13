@@ -32,4 +32,15 @@ LogMessageParams::LogMessageParams(MessageType type, String message):
 LogMessageParams::LogMessageParams(){};
 LogMessageParams::~LogMessageParams(){};
 
+void LogMessageParams::partialWrite(JsonWriter &writer)
+{
+	// type
+	writer.Key(typeKey);
+	writer.Int((int)type);
+
+	// message
+	writer.Key(messageKey);
+	writer.String(message);
+}
+
 }
