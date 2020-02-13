@@ -288,6 +288,7 @@ public:
 	/// The token to be used to report progress.
 	ProgressToken token;
 
+
 	// No parsing
 
 
@@ -296,6 +297,42 @@ public:
 	WorkDoneProgressCreateParams();
 
 	virtual ~WorkDoneProgressCreateParams();
+};
+
+
+/// The window/workDoneProgress/cancel notification is sent from the client to
+/// the server to cancel a progress initiated on the server side using the
+/// window/workDoneProgress/create.
+///
+/// token: ProgressToken
+///
+struct WorkDoneProgressCancelParams: public ObjectT
+{
+private:
+	const static String tokenKey;
+
+public:
+	/// The token to be used to report progress.
+	ProgressToken token;
+
+
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
+
+	// No writing
+
+
+	WorkDoneProgressCancelParams(ProgressToken token);
+
+	WorkDoneProgressCancelParams();
+
+	virtual ~WorkDoneProgressCancelParams();
 };
 
 /// $/progress parameters

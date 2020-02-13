@@ -495,6 +495,58 @@ void WorkDoneProgressCreateParams::partialWrite(JsonWriter &writer)
 }
 
 
+const String WorkDoneProgressCancelParams::tokenKey = "token";
+
+WorkDoneProgressCancelParams::WorkDoneProgressCancelParams(ProgressToken token):
+	token(token)
+{};
+
+WorkDoneProgressCancelParams::WorkDoneProgressCancelParams(){};
+WorkDoneProgressCancelParams::~WorkDoneProgressCancelParams(){};
+
+void WorkDoneProgressCancelParams::fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	// Value setters
+
+	// token:
+	setterMap.emplace(
+		tokenKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				token = str;
+				neededMap[tokenKey] = true;
+			},
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(tokenKey, 0);
+
+	// This
+	initializer.object = this;
+}
+
+
 const String ProgressParams::tokenKey = "token";
 const String ProgressParams::valueKey = "value";
 
