@@ -37,6 +37,16 @@ TextDocumentChangeRegistrationOptions::
 	~TextDocumentChangeRegistrationOptions()
 {};
 
+void TextDocumentChangeRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parent
+	TextDocumentRegistrationOptions::partialWrite(writer);
+
+	// syncKind
+	writer.Key(syncKindKey);
+	writer.Int((int)syncKind);
+}
+
 
 const String TextDocumentContentChangeEvent::rangeKey       = "range";
 const String TextDocumentContentChangeEvent::rangeLengthKey = "rangeLength";
@@ -51,6 +61,12 @@ TextDocumentContentChangeEvent::
 		text(text)
 {};
 
+TextDocumentContentChangeEvent::
+	TextDocumentContentChangeEvent(String text):
+		text(text)
+{};
+
+
 TextDocumentContentChangeEvent::TextDocumentContentChangeEvent(){};
 TextDocumentContentChangeEvent::~TextDocumentContentChangeEvent(){};
 
@@ -64,7 +80,7 @@ void TextDocumentContentChangeEvent::
 
 	// Value setters
 
-	// range:
+	// range?:
 	setterMap.emplace(
 		rangeKey,
 		ValueSetter{
@@ -84,12 +100,12 @@ void TextDocumentContentChangeEvent::
 			nullopt,
 
 			// Object
-			[this, handler, &neededMap]()
+			[this, handler]()
 			{
-				handler->pushInitializer();
-				range.fillInitializer(handler->objectStack.top());
+				range.emplace();
 
-				neededMap[rangeKey] = true;
+				handler->pushInitializer();
+				range->fillInitializer(handler->objectStack.top());
 			}
 		}
 	);
@@ -151,7 +167,6 @@ void TextDocumentContentChangeEvent::
 	);
 
 	// Needed members
-	neededMap.emplace(rangeKey, 0);
 	neededMap.emplace(textKey, 0);
 
 	// This

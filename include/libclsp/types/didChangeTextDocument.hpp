@@ -38,9 +38,8 @@ struct TextDocumentChangeRegistrationOptions:
 	public TextDocumentRegistrationOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 private:
 	const static String syncKindKey;
@@ -68,7 +67,7 @@ public:
 /// are omitted the new text is considered to be the full content
 /// of the document.
 ///
-/// range: Range
+/// range?: Range
 ///
 /// rangeLength?: Number
 ///
@@ -83,7 +82,7 @@ private:
 
 public:
 	/// The range of the document that changed.
-	Range range;
+	optional<Range> range;
 
 	/// The optional length of the range that got replaced.
 	///
@@ -105,8 +104,11 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	TextDocumentContentChangeEvent(Range range, String text);
+
+	TextDocumentContentChangeEvent(String text);
 
 	TextDocumentContentChangeEvent();
 
@@ -169,6 +171,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DidChangeTextDocumentParams(VersionedTextDocumentIdentifier textDocument,
 		vector<TextDocumentContentChangeEvent> contentChanges);
