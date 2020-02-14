@@ -55,8 +55,12 @@ enum class TextDocumentSyncKind
 ///
 /// save?: SaveOptions
 ///
-struct TextDocumentSyncOptions
+struct TextDocumentSyncOptions: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String openCloseKey;
 	const static String changeKey;
@@ -142,6 +146,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	TextDocumentSyncClientCapabilities(optional<Boolean> dynamicRegistration,
 		optional<Boolean> willSave,

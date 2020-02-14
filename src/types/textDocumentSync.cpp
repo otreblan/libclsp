@@ -44,6 +44,44 @@ TextDocumentSyncOptions::TextDocumentSyncOptions(optional<Boolean> openClose,
 TextDocumentSyncOptions::TextDocumentSyncOptions(){};
 TextDocumentSyncOptions::~TextDocumentSyncOptions(){};
 
+void TextDocumentSyncOptions::partialWrite(JsonWriter &writer)
+{
+	// openClose?
+	if(openClose.has_value())
+	{
+		writer.Key(openCloseKey);
+		writer.Bool(*openClose);
+	}
+
+	// change?
+	if(change.has_value())
+	{
+		writer.Key(changeKey);
+		writer.Int((int)(*change));
+	}
+
+	// willSave?
+	if(willSave.has_value())
+	{
+		writer.Key(willSaveKey);
+		writer.Bool(*willSave);
+	}
+
+	// willSaveWaitUntil?
+	if(willSaveWaitUntil.has_value())
+	{
+		writer.Key(willSaveWaitUntilKey);
+		writer.Bool(*willSaveWaitUntil);
+	}
+
+	// save?
+	if(save.has_value())
+	{
+		writer.Key(saveKey);
+		writer.Object(*save);
+	}
+}
+
 
 const String TextDocumentSyncClientCapabilities::
 	dynamicRegistrationKey = "dynamicRegistration";

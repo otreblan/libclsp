@@ -30,6 +30,16 @@ SaveOptions::SaveOptions(optional<Boolean> includeText):
 SaveOptions::SaveOptions(){};
 SaveOptions::~SaveOptions(){};
 
+void SaveOptions::partialWrite(JsonWriter &writer)
+{
+	// includeText?
+	if(includeText.has_value())
+	{
+		writer.Key(includeTextKey);
+		writer.Bool(*includeText);
+	}
+}
+
 
 const String TextDocumentSaveRegistrationOptions::includeTextKey = "includeText";
 

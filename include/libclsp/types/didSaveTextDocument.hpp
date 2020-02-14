@@ -28,8 +28,12 @@ using namespace std;
 ///
 /// includeText?: Boolean
 ///
-struct SaveOptions
+struct SaveOptions: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String includeTextKey;
 
