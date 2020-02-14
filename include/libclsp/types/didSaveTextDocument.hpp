@@ -56,6 +56,10 @@ public:
 ///
 struct TextDocumentSaveRegistrationOptions: public TextDocumentRegistrationOptions
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String includeTextKey;
 
@@ -104,6 +108,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DidSaveTextDocumentParams(TextDocumentIdentifier textDocument,
 		optional<String> text);

@@ -53,6 +53,19 @@ TextDocumentSaveRegistrationOptions::TextDocumentSaveRegistrationOptions(
 TextDocumentSaveRegistrationOptions::TextDocumentSaveRegistrationOptions(){};
 TextDocumentSaveRegistrationOptions::~TextDocumentSaveRegistrationOptions(){};
 
+void TextDocumentSaveRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parent
+	TextDocumentRegistrationOptions::partialWrite(writer);
+
+	// includeText?
+	if(includeText.has_value())
+	{
+		writer.Key(includeTextKey);
+		writer.Bool(*includeText);
+	}
+}
+
 
 const String DidSaveTextDocumentParams::textDocumentKey = "textDocument";
 const String DidSaveTextDocumentParams::textKey         = "text";
