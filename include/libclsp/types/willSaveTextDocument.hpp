@@ -68,6 +68,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	WillSaveTextDocumentParams(TextDocumentIdentifier textDocument,
 		TextDocumentSaveReason reason);
