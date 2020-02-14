@@ -38,6 +38,43 @@ CompletionOptions::CompletionOptions(optional<ProgressToken> workDoneProgress,
 CompletionOptions::CompletionOptions(){};
 CompletionOptions::~CompletionOptions(){};
 
+void CompletionOptions::partialWrite(JsonWriter &writer)
+{
+	// Parent
+	WorkDoneProgressOptions::partialWrite(writer);
+
+	// triggerCharacters?
+	if(triggerCharacters.has_value())
+	{
+		writer.Key(triggerCharactersKey);
+		writer.StartArray();
+		for(auto& i: *triggerCharacters)
+		{
+			writer.String(i);
+		}
+		writer.EndArray();
+	}
+
+	// allCommitCharacters?
+	if(allCommitCharacters.has_value())
+	{
+		writer.Key(allCommitCharactersKey);
+		writer.StartArray();
+		for(auto& i: *allCommitCharacters)
+		{
+			writer.String(i);
+		}
+		writer.EndArray();
+	}
+
+	// resolveProvider?
+	if(resolveProvider.has_value())
+	{
+		writer.Key(resolveProviderKey);
+		writer.Bool(*resolveProvider);
+	}
+}
+
 
 CompletionRegistrationOptions::
 	CompletionRegistrationOptions(
@@ -55,6 +92,13 @@ CompletionRegistrationOptions::
 
 CompletionRegistrationOptions::CompletionRegistrationOptions(){};
 CompletionRegistrationOptions::~CompletionRegistrationOptions(){};
+
+void CompletionRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	CompletionOptions::partialWrite(writer);
+}
 
 
 const String CompletionContext::triggerKindKey      = "triggerKind";
@@ -268,6 +312,142 @@ CompletionItem::CompletionItem(String label,
 CompletionItem::CompletionItem(){};
 CompletionItem::~CompletionItem(){};
 
+void CompletionItem::partialWrite(JsonWriter &writer)
+{
+	// label
+	writer.Key(labelKey);
+	writer.String(label);
+
+	// kind?
+	if(kind.has_value())
+	{
+		writer.Key(kindKey);
+		writer.Int((int)(*kind));
+	}
+
+	// tags?
+	if(tags.has_value())
+	{
+		writer.Key(tagsKey);
+		writer.StartArray();
+		for(auto i: *tags)
+		{
+			writer.Int((int)i);
+		}
+		writer.EndArray();
+	}
+
+	// detail?
+	if(detail.has_value())
+	{
+		writer.Key(detailKey);
+		writer.String(*detail);
+	}
+
+	// documentation?
+	if(documentation.has_value())
+	{
+		writer.Key(documentationKey);
+		visit(overload(
+			[&writer](String& str)
+			{
+				writer.String(str);
+			},
+			[&writer](MarkupContent& obj)
+			{
+				writer.Object(obj);
+			}
+		), *documentation);
+	}
+
+	// deprecated?
+	if(deprecated.has_value())
+	{
+		writer.Key(deprecatedKey);
+		writer.Bool(*deprecated);
+	}
+
+	// preselect?
+	if(preselect.has_value())
+	{
+		writer.Key(preselectKey);
+		writer.Bool(*preselect);
+	}
+
+	// sortText?
+	if(sortText.has_value())
+	{
+		writer.Key(sortTextKey);
+		writer.String(*sortText);
+	}
+
+	// filterText?
+	if(filterText.has_value())
+	{
+		writer.Key(filterTextKey);
+		writer.String(*filterText);
+	}
+
+	// insertText?
+	if(insertText.has_value())
+	{
+		writer.Key(insertTextKey);
+		writer.String(*insertText);
+	}
+
+	// insertTextFormat?
+	if(insertTextFormat.has_value())
+	{
+		writer.Key(insertTextFormatKey);
+		writer.Int((int)(*insertTextFormat));
+	}
+
+	// textEdit?
+	if(textEdit.has_value())
+	{
+		writer.Key(textEditKey);
+		writer.Object(*textEdit);
+	}
+
+	// additionalTextEdits?
+	if(additionalTextEdits.has_value())
+	{
+		writer.Key(additionalTextEditsKey);
+		writer.StartArray();
+		for(auto i: *additionalTextEdits)
+		{
+			writer.Object(i);
+		}
+		writer.EndArray();
+	}
+
+	// commitCharacters?
+	if(commitCharacters.has_value())
+	{
+		writer.Key(commitCharactersKey);
+		writer.StartArray();
+		for(auto i: *commitCharacters)
+		{
+			writer.String(i);
+		}
+		writer.EndArray();
+	}
+
+	// command?
+	if(command.has_value())
+	{
+		writer.Key(commandKey);
+		writer.Object(*command);
+	}
+
+	// data?
+	if(data.has_value())
+	{
+		writer.Key(dataKey);
+		writer.Any(*data);
+	}
+}
+
 #pragma GCC diagnostic pop
 
 
@@ -283,6 +463,21 @@ CompletionList::CompletionList(Boolean isIncomplete,
 CompletionList::CompletionList(){};
 CompletionList::~CompletionList(){};
 
+void CompletionList::partialWrite(JsonWriter &writer)
+{
+	// isIncomplete
+	writer.Key(isIncompleteKey);
+	writer.Bool(isIncomplete);
+
+	// items
+	writer.Key(itemsKey);
+	writer.StartArray();
+	for(auto& i: items)
+	{
+		writer.Object(i);
+	}
+	writer.EndArray();
+}
 
 const String CompletionClientCapabilities::
 	dynamicRegistrationKey = "dynamicRegistration";

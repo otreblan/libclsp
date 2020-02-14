@@ -39,6 +39,10 @@ using namespace std;
 ///
 struct CompletionOptions: public WorkDoneProgressOptions
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String triggerCharactersKey;
 	const static String allCommitCharactersKey;
@@ -89,9 +93,8 @@ struct CompletionRegistrationOptions:
 	public CompletionOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
 
@@ -157,6 +160,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	CompletionContext(CompletionTriggerKind triggerKind,
 		optional<String> triggerCharacter);
@@ -194,6 +198,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	CompletionParams(TextDocumentIdentifier textDocument,
 		Position position,
@@ -270,7 +275,7 @@ enum class CompletionItemKind
 ///
 /// label: String
 ///
-/// kind?: Number
+/// kind?: CompletionItemKind
 ///
 /// tags?: CompletionItemTag[]
 ///
@@ -300,8 +305,12 @@ enum class CompletionItemKind
 ///
 /// data?: Any
 ///
-struct CompletionItem
+struct CompletionItem: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String labelKey;
 	const static String kindKey;
@@ -438,12 +447,16 @@ public:
 /// Represents a collection of [completion items](#CompletionItem) to be presented
 /// in the editor.
 ///
-/// isIncomplete: boolean;
+/// isIncomplete: Boolean
 ///
-/// items: CompletionItem[];
+/// items: CompletionItem[]
 ///
-struct CompletionList
+struct CompletionList: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String isIncompleteKey;
 	const static String itemsKey;
@@ -713,6 +726,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	CompletionClientCapabilities(optional<Boolean> dynamicRegistration,
 		optional<CompletionItem> completionItem,
