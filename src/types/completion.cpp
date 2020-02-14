@@ -213,6 +213,9 @@ void CompletionParams::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 const String CompletionItem::labelKey               = "label";
 const String CompletionItem::kindKey                = "kind";
 const String CompletionItem::tagsKey                = "tags";
@@ -235,7 +238,6 @@ CompletionItem::CompletionItem(String label,
 	optional<vector<CompletionItemTag>> tags,
 	optional<String> detail,
 	optional<variant<String,MarkupContent>> documentation,
-	optional<Boolean> deprecated,
 	optional<Boolean> preselect,
 	optional<String> sortText,
 	optional<String> filterText,
@@ -251,7 +253,6 @@ CompletionItem::CompletionItem(String label,
 		tags(tags),
 		detail(detail),
 		documentation(documentation),
-		deprecated(deprecated),
 		preselect(preselect),
 		sortText(sortText),
 		filterText(filterText),
@@ -266,6 +267,8 @@ CompletionItem::CompletionItem(String label,
 
 CompletionItem::CompletionItem(){};
 CompletionItem::~CompletionItem(){};
+
+#pragma GCC diagnostic pop
 
 
 const String CompletionList::isIncompleteKey = "isIncomplete";

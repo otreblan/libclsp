@@ -263,6 +263,9 @@ enum class CompletionItemKind
 	TypeParameter = 25
 };
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 /// Part of the completion response
 ///
 /// label: String
@@ -341,6 +344,7 @@ public:
 	optional<variant<String, MarkupContent>> documentation;
 
 	/// Indicates if this item is deprecated.
+	[[deprecated("Use tags instead")]]
 	optional<Boolean> deprecated;
 
 	/// Select this item when showing.
@@ -413,7 +417,6 @@ public:
 		optional<vector<CompletionItemTag>> tags,
 		optional<String> detail,
 		optional<variant<String, MarkupContent>> documentation,
-		optional<Boolean> deprecated,
 		optional<Boolean> preselect,
 		optional<String> sortText,
 		optional<String> filterText,
@@ -429,6 +432,8 @@ public:
 
 	virtual ~CompletionItem();
 };
+
+#pragma GCC diagnostic pop
 
 /// Represents a collection of [completion items](#CompletionItem) to be presented
 /// in the editor.
