@@ -127,18 +127,15 @@ RenameRegistrationOptions::RenameRegistrationOptions(){};
 RenameRegistrationOptions::~RenameRegistrationOptions(){};
 
 
-const String RenameParams::textDocumentKey = "textDocument";
-const String RenameParams::positionKey     = "position";
 const String RenameParams::newNameKey      = "newName";
 
 
-RenameParams::RenameParams(optional<ProgressToken> workDoneToken,
-	TextDocumentIdentifier textDocument,
+RenameParams::RenameParams( TextDocumentIdentifier textDocument,
 	Position position,
+	optional<ProgressToken> workDoneToken,
 	String newName):
+		TextDocumentPositionParams(textDocument, position),
 		WorkDoneProgressParams(workDoneToken),
-		textDocument(textDocument),
-		position(position),
 		newName(newName)
 {};
 
@@ -148,77 +145,14 @@ RenameParams::~RenameParams(){};
 void RenameParams::
 	fillInitializer(ObjectInitializer& initializer)
 {
-	auto* handler = initializer.handler;
-
 	auto& setterMap = initializer.setterMap;
 	auto& neededMap = initializer.neededMap;
 
-	// Parent
+	// Parents
+	TextDocumentPositionParams::fillInitializer(initializer);
 	WorkDoneProgressParams::fillInitializer(initializer);
 
 	// Value setters
-
-	// textDocument:
-	setterMap.emplace(
-		textDocumentKey,
-		ValueSetter{
-			// String
-			nullopt,
-
-			// Number
-			nullopt,
-
-			// Boolean
-			nullopt,
-
-			// Null
-			nullopt,
-
-			// Array
-			nullopt,
-
-			// Object
-			[this, handler, &neededMap]()
-			{
-				handler->pushInitializer();
-
-				textDocument.fillInitializer(handler->objectStack.top());
-
-				neededMap[textDocumentKey] = true;
-			}
-		}
-	);
-
-	// position:
-	setterMap.emplace(
-		positionKey,
-		ValueSetter{
-			// String
-			nullopt,
-
-			// Number
-			nullopt,
-
-			// Boolean
-			nullopt,
-
-			// Null
-			nullopt,
-
-			// Array
-			nullopt,
-
-			// Object
-			[this, handler, &neededMap]()
-			{
-				handler->pushInitializer();
-
-				position.fillInitializer(handler->objectStack.top());
-
-				neededMap[positionKey] = true;
-			}
-		}
-	);
 
 	// newName:
 	setterMap.emplace(
@@ -249,8 +183,6 @@ void RenameParams::
 	);
 
 	// Needed members
-	neededMap.emplace(textDocumentKey, 0);
-	neededMap.emplace(positionKey, 0);
 	neededMap.emplace(newNameKey, 0);
 
 	// This

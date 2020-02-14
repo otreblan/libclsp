@@ -18,6 +18,7 @@
 
 #include <libclsp/types/position.hpp>
 #include <libclsp/types/textDocumentIdentifier.hpp>
+#include <libclsp/types/textDocumentPosition.hpp>
 #include <libclsp/types/textDocumentRegistration.hpp>
 #include <libclsp/types/workDoneProgress.hpp>
 
@@ -116,26 +117,15 @@ public:
 
 /// Document range formatting request parameters
 ///
-/// textDocument: TextDocumentIdentifier
-///
-/// position: Position
-///
 /// newName: String
 ///
-struct RenameParams: public WorkDoneProgressParams
+struct RenameParams: public TextDocumentPositionParams,
+	public WorkDoneProgressParams
 {
 private:
-	const static String textDocumentKey;
-	const static String positionKey;
 	const static String newNameKey;
 
 public:
-	/// The document to format.
-	TextDocumentIdentifier textDocument;
-
-	/// The position at which this request was sent.
-	Position position;
-
 	/// The new name of the symbol. If the given name is not valid the
 	/// request must return a ResponseError with an
 	/// appropriate message set.
@@ -152,9 +142,9 @@ public:
 	//=======================================================================//
 
 
-	RenameParams(optional<ProgressToken> workDoneToken,
-		TextDocumentIdentifier textDocument,
+	RenameParams(TextDocumentIdentifier textDocument,
 		Position position,
+		optional<ProgressToken> workDoneToken,
 		String newName);
 
 	RenameParams();

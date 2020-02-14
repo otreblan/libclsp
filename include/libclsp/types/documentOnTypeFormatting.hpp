@@ -109,29 +109,17 @@ public:
 
 /// Document on type formatting request parameters
 ///
-/// textDocument: TextDocumentIdentifier
-///
-/// position: Position
-///
 /// ch: String
 ///
 /// options: FormattingOptions
 ///
-struct DocumentOnTypeFormattingParams: public ObjectT
+struct DocumentOnTypeFormattingParams: public TextDocumentPositionParams
 {
 private:
-	const static String textDocumentKey;
-	const static String positionKey;
 	const static String chKey;
 	const static String optionsKey;
 
 public:
-	/// The document to format.
-	TextDocumentIdentifier textDocument;
-
-	/// The position at which this request was sent.
-	Position position;
-
 	/// The character that has been typed.
 	String ch;
 

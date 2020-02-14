@@ -112,8 +112,6 @@ DocumentOnTypeFormattingRegistrationOptions::
 {};
 
 
-const String DocumentOnTypeFormattingParams::textDocumentKey = "textDocument";
-const String DocumentOnTypeFormattingParams::positionKey     = "position";
 const String DocumentOnTypeFormattingParams::chKey           = "ch";
 const String DocumentOnTypeFormattingParams::optionsKey      = "options";
 
@@ -122,8 +120,7 @@ DocumentOnTypeFormattingParams::DocumentOnTypeFormattingParams(
 	Position position,
 	String ch,
 	FormattingOptions options):
-		textDocument(textDocument),
-		position(position),
+		TextDocumentPositionParams(textDocument, position),
 		ch(ch),
 		options(options)
 {};
@@ -139,69 +136,10 @@ void DocumentOnTypeFormattingParams::
 	auto& setterMap = initializer.setterMap;
 	auto& neededMap = initializer.neededMap;
 
+	// Parent
+	TextDocumentPositionParams::fillInitializer(initializer);
+
 	// Value setters
-
-	// textDocument:
-	setterMap.emplace(
-		textDocumentKey,
-		ValueSetter{
-			// String
-			nullopt,
-
-			// Number
-			nullopt,
-
-			// Boolean
-			nullopt,
-
-			// Null
-			nullopt,
-
-			// Array
-			nullopt,
-
-			// Object
-			[this, handler, &neededMap]()
-			{
-				handler->pushInitializer();
-
-				textDocument.fillInitializer(handler->objectStack.top());
-
-				neededMap[textDocumentKey] = true;
-			}
-		}
-	);
-
-	// position:
-	setterMap.emplace(
-		positionKey,
-		ValueSetter{
-			// String
-			nullopt,
-
-			// Number
-			nullopt,
-
-			// Boolean
-			nullopt,
-
-			// Null
-			nullopt,
-
-			// Array
-			nullopt,
-
-			// Object
-			[this, handler, &neededMap]()
-			{
-				handler->pushInitializer();
-
-				position.fillInitializer(handler->objectStack.top());
-
-				neededMap[positionKey] = true;
-			}
-		}
-	);
 
 	// ch:
 	setterMap.emplace(
@@ -263,8 +201,6 @@ void DocumentOnTypeFormattingParams::
 	);
 
 	// Needed members
-	neededMap.emplace(textDocumentKey, 0);
-	neededMap.emplace(positionKey, 0);
 	neededMap.emplace(chKey, 0);
 	neededMap.emplace(optionsKey, 0);
 
