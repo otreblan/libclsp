@@ -48,6 +48,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DidOpenTextDocumentParams(TextDocumentItem textDocument);
 
