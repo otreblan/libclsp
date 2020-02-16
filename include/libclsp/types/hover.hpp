@@ -76,6 +76,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	HoverClientCapabilities(optional<Boolean> dynamicRegistration,
 		optional<vector<MarkupKind>> contentFormat);
@@ -94,9 +95,8 @@ struct HoverRegistrationOptions:
 	public HoverOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
 
@@ -125,6 +125,7 @@ struct HoverParams:
 
 	//=======================================================================//
 
+	// No writing
 
 	HoverParams(TextDocumentIdentifier textDocument,
 		Position position,
@@ -135,8 +136,12 @@ struct HoverParams:
 	virtual ~HoverParams();
 };
 
-struct [[deprecated("Use MarkupContent instead.")]] _MarkedString
+struct [[deprecated("Use MarkupContent instead.")]] _MarkedString: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String languageKey;
 	const static String valueKey;
@@ -180,8 +185,12 @@ using MarkedString [[deprecated("Use MarkupContent instead.")]] = variant<String
 ///
 /// range?: Range
 ///
-struct Hover
+struct Hover: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String contentsKey;
 	const static String rangeKey;

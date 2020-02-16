@@ -170,6 +170,13 @@ HoverRegistrationOptions::
 HoverRegistrationOptions::HoverRegistrationOptions(){};
 HoverRegistrationOptions::~HoverRegistrationOptions(){};
 
+void HoverRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	HoverOptions::partialWrite(writer);
+}
+
 
 HoverParams::HoverParams(TextDocumentIdentifier textDocument,
 	Position position,
@@ -202,12 +209,23 @@ _MarkedString::_MarkedString(String language, String value):
 _MarkedString::_MarkedString(){};
 _MarkedString::~_MarkedString(){};
 
+void _MarkedString::partialWrite(JsonWriter &writer)
+{
+	// language
+	writer.Key(languageKey);
+	writer.String(language);
 
-const String Hover::contentsKey = "contents";
-const String Hover::rangeKey    = "range";
+	// value
+	writer.Key(valueKey);
+	writer.String(value);
+}
+
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
+const String Hover::contentsKey = "contents";
+const String Hover::rangeKey    = "range";
 
 Hover::
 	Hover(variant<MarkedString, vector<MarkedString>, MarkupContent> contents,
@@ -216,7 +234,6 @@ Hover::
 		range(range)
 {};
 
-#pragma GCC diagnostic pop
 
 Hover::Hover(MarkupContent contents, optional<Range> range):
 	contents(contents),
@@ -225,5 +242,53 @@ Hover::Hover(MarkupContent contents, optional<Range> range):
 
 Hover::Hover(){};
 Hover::~Hover(){};
+
+void MarkedStringWriter(JsonWriter& writer, MarkedString& obj)
+{
+	visit(overload(
+		[&writer](String& str)
+		{
+			writer.String(str);
+		},
+		[&writer](_MarkedString& obj)
+		{
+			writer.Object(obj);
+		}
+	), obj);
+}
+
+void Hover::partialWrite(JsonWriter &writer)
+{
+	// contents
+	writer.Key(contentsKey);
+	visit(overload(
+		[&writer](MarkedString &obj)
+		{
+			MarkedStringWriter(writer, obj);
+		},
+		[&writer](vector<MarkedString> &arr)
+		{
+			writer.StartArray();
+			for(auto& i: arr)
+			{
+				MarkedStringWriter(writer, i);
+			}
+			writer.EndArray();
+		},
+		[&writer](MarkupContent &obj)
+		{
+			writer.Object(obj);
+		}
+	), contents);
+
+	// range?
+	if(range.has_value())
+	{
+		writer.Key(rangeKey);
+		writer.Object(*range);
+	}
+}
+
+#pragma GCC diagnostic pop
 
 }
