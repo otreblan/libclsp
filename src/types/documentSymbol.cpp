@@ -263,6 +263,13 @@ DocumentSymbolRegistrationOptions::DocumentSymbolRegistrationOptions(
 DocumentSymbolRegistrationOptions::DocumentSymbolRegistrationOptions(){};
 DocumentSymbolRegistrationOptions::~DocumentSymbolRegistrationOptions(){};
 
+void DocumentSymbolRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	DocumentSymbolOptions::partialWrite(writer);
+}
+
 
 const String DocumentSymbolParams::textDocumentKey = "textDocument";
 
@@ -357,6 +364,51 @@ DocumentSymbol::DocumentSymbol(String name,
 DocumentSymbol::DocumentSymbol(){};
 DocumentSymbol::~DocumentSymbol(){};
 
+void DocumentSymbol::partialWrite(JsonWriter &writer)
+{
+	// name
+	writer.Key(nameKey);
+	writer.String(name);
+
+	// detail?
+	if(detail.has_value())
+	{
+		writer.Key(detailKey);
+		writer.String(*detail);
+	}
+
+	// kind
+	writer.Key(kindKey);
+	writer.Int((int)kind);
+
+	// deprecated?
+	if(deprecated.has_value())
+	{
+		writer.Key(deprecatedKey);
+		writer.Bool(*deprecated);
+	}
+
+	// range
+	writer.Key(rangeKey);
+	writer.Object(range);
+
+	// selectionRange
+	writer.Key(selectionRangeKey);
+	writer.Object(selectionRange);
+
+	// children?
+	if(children.has_value())
+	{
+		writer.Key(childrenKey);
+		writer.StartArray();
+		for(auto& i: *children)
+		{
+			writer.Object(i);
+		}
+		writer.EndArray();
+	}
+}
+
 
 const String SymbolInformation::nameKey          = "name";
 const String SymbolInformation::kindKey          = "kind";
@@ -378,5 +430,34 @@ SymbolInformation::SymbolInformation(String name,
 
 SymbolInformation::SymbolInformation(){};
 SymbolInformation::~SymbolInformation(){};
+
+void SymbolInformation::partialWrite(JsonWriter &writer)
+{
+	// name
+	writer.Key(nameKey);
+	writer.String(name);
+
+	// kind
+	writer.Key(kindKey);
+	writer.Int((int)kind);
+
+	// deprecated?
+	if(deprecated.has_value())
+	{
+		writer.Key(deprecatedKey);
+		writer.Bool(*deprecated);
+	}
+
+	// location
+	writer.Key(locationKey);
+	writer.Object(location);
+
+	// containerName?
+	if(containerName.has_value())
+	{
+		writer.Key(containerNameKey);
+		writer.String(*containerName);
+	}
+}
 
 }

@@ -151,6 +151,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DocumentSymbolClientCapabilities(optional<Boolean> dynamicRegistration,
 		optional<SymbolKind> symbolKind,
@@ -169,12 +170,10 @@ struct DocumentSymbolRegistrationOptions:
 	public DocumentSymbolOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
-
 	// No parsing
 
 	DocumentSymbolRegistrationOptions(
@@ -211,6 +210,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DocumentSymbolParams(optional<ProgressToken> workDoneToken,
 		optional<ProgressToken> partialResultToken,
@@ -241,8 +241,12 @@ public:
 ///
 /// children?: DocumentSymbol[]
 ///
-struct DocumentSymbol
+struct DocumentSymbol: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String nameKey;
 	const static String detailKey;
@@ -308,8 +312,12 @@ public:
 ///
 /// containerName?: String
 ///
-struct SymbolInformation
+struct SymbolInformation: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String nameKey;
 	const static String kindKey;
