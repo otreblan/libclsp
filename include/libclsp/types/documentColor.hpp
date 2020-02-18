@@ -51,6 +51,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DocumentColorClientCapabilities(optional<Boolean> dynamicRegistration);
 
@@ -67,9 +68,8 @@ struct DocumentColorRegistrationOptions:
 	public DocumentColorOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
 	// No parsing
@@ -109,6 +109,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DocumentColorParams(optional<ProgressToken> workDoneToken,
 		optional<ProgressToken> partialResultToken,
@@ -131,6 +132,10 @@ public:
 ///
 struct Color: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String redKey;
 	const static String greenKey;
@@ -174,8 +179,12 @@ public:
 ///
 /// color: Color
 ///
-struct ColorInformation
+struct ColorInformation: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String rangeKey;
 	const static String colorKey;

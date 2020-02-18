@@ -83,6 +83,14 @@ DocumentColorRegistrationOptions::DocumentColorRegistrationOptions(
 DocumentColorRegistrationOptions::DocumentColorRegistrationOptions(){};
 DocumentColorRegistrationOptions::~DocumentColorRegistrationOptions(){};
 
+void DocumentColorRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	StaticRegistrationOptions::partialWrite(writer);
+	DocumentColorOptions::partialWrite(writer);
+}
+
 
 const String DocumentColorParams::textDocumentKey = "textDocument";
 
@@ -293,6 +301,25 @@ void Color::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
+void Color::partialWrite(JsonWriter &writer)
+{
+	// red
+	writer.Key(redKey);
+	writer.Number(red);
+
+	// green
+	writer.Key(greenKey);
+	writer.Number(green);
+
+	// blue
+	writer.Key(blueKey);
+	writer.Number(blue);
+
+	// alpha
+	writer.Key(alphaKey);
+	writer.Number(alpha);
+}
+
 
 const String ColorInformation::rangeKey = "range";
 const String ColorInformation::colorKey = "color";
@@ -304,5 +331,16 @@ ColorInformation::ColorInformation(Range range, Color color):
 
 ColorInformation::ColorInformation(){};
 ColorInformation::~ColorInformation(){};
+
+void ColorInformation::partialWrite(JsonWriter &writer)
+{
+	// range
+	writer.Key(rangeKey);
+	writer.Object(range);
+
+	// color
+	writer.Key(colorKey);
+	writer.Object(color);
+}
 
 }
