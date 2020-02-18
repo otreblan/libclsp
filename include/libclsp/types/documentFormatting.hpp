@@ -51,6 +51,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DocumentFormattingClientCapabilities(optional<Boolean> dynamicRegistration);
 
@@ -66,9 +67,8 @@ struct DocumentFormattingRegistrationOptions:
 	public DocumentFormattingOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
 	// No parsing
@@ -141,6 +141,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	FormattingOptions(Number tabSize,
 		Boolean insertSpaces,
@@ -183,6 +184,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DocumentFormattingParams(optional<ProgressToken> workDoneToken,
 		TextDocumentIdentifier textDocument,

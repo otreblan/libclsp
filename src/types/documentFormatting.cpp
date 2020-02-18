@@ -81,6 +81,13 @@ DocumentFormattingRegistrationOptions::DocumentFormattingRegistrationOptions(
 DocumentFormattingRegistrationOptions::DocumentFormattingRegistrationOptions(){};
 DocumentFormattingRegistrationOptions::~DocumentFormattingRegistrationOptions(){};
 
+void DocumentFormattingRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	DocumentFormattingOptions::partialWrite(writer);
+}
+
 
 const String FormattingOptions::
 	tabSizeKey                = "tabSize";
