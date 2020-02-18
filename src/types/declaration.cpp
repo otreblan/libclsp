@@ -115,6 +115,14 @@ DeclarationRegistrationOptions::
 DeclarationRegistrationOptions::DeclarationRegistrationOptions(){};
 DeclarationRegistrationOptions::~DeclarationRegistrationOptions(){};
 
+void DeclarationRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	DeclarationOptions::partialWrite(writer);
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	StaticRegistrationOptions::partialWrite(writer);
+}
+
 
 DeclarationParams::DeclarationParams(TextDocumentIdentifier textDocument,
 	Position position,

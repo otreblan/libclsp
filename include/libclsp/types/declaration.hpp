@@ -61,6 +61,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DeclarationClientCapabilities(optional<Boolean> dynamicRegistration,
 		optional<Boolean> linkSupport);
@@ -78,9 +79,8 @@ struct DeclarationRegistrationOptions:
 	public StaticRegistrationOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
 	// No parsing
@@ -108,6 +108,8 @@ struct DeclarationParams:
 	// Using default isValid()
 
 	//=======================================================================//
+
+	// No writing
 
 	DeclarationParams(TextDocumentIdentifier textDocument,
 		Position position,
