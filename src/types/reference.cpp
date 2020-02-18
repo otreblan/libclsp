@@ -26,7 +26,7 @@ const String ReferenceClientCapabilities::
 
 ReferenceClientCapabilities::
 	ReferenceClientCapabilities(optional<Boolean> dynamicRegistration):
-			dynamicRegistration(dynamicRegistration)
+		dynamicRegistration(dynamicRegistration)
 {};
 
 ReferenceClientCapabilities::ReferenceClientCapabilities(){};
@@ -78,6 +78,13 @@ ReferenceRegistrationOptions::ReferenceRegistrationOptions(
 
 ReferenceRegistrationOptions::ReferenceRegistrationOptions(){};
 ReferenceRegistrationOptions::~ReferenceRegistrationOptions(){};
+
+void ReferenceRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	ReferenceOptions::partialWrite(writer);
+}
 
 
 const String ReferenceContext::includeDeclarationKey = "includeDeclaration";

@@ -49,6 +49,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	ReferenceClientCapabilities(optional<Boolean> dynamicRegistration);
 
@@ -65,12 +66,10 @@ struct ReferenceRegistrationOptions:
 	public ReferenceOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
-
 	// No parsing
 
 	ReferenceRegistrationOptions(
@@ -104,6 +103,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	ReferenceContext(Boolean includeDeclaration);
 
@@ -137,6 +137,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	ReferenceParams(TextDocumentIdentifier textDocument,
 		Position position,
