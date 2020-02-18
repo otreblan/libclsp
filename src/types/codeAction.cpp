@@ -357,6 +357,24 @@ CodeActionOptions::CodeActionOptions(optional<Boolean> workDoneProgress,
 CodeActionOptions::CodeActionOptions(){};
 CodeActionOptions::~CodeActionOptions(){};
 
+void CodeActionOptions::partialWrite(JsonWriter &writer)
+{
+	// Parent
+	WorkDoneProgressOptions::partialWrite(writer);
+
+	// codeActionKinds?
+	if(codeActionKinds.has_value())
+	{
+		writer.Key(codeActionKindsKey);
+		writer.StartArray();
+		for(auto& i: *codeActionKinds)
+		{
+			writer.String(i);
+		}
+		writer.EndArray();
+	}
+}
+
 
 CodeActionRegistrationOptions::CodeActionRegistrationOptions(
 	variant<DocumentSelector, Null> documentSelector,
@@ -368,6 +386,13 @@ CodeActionRegistrationOptions::CodeActionRegistrationOptions(
 
 CodeActionRegistrationOptions::CodeActionRegistrationOptions(){};
 CodeActionRegistrationOptions::~CodeActionRegistrationOptions(){};
+
+void CodeActionRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	CodeActionOptions::partialWrite(writer);
+}
 
 
 const String CodeActionContext::diagnosticsKey = "diagnostics";
@@ -700,6 +725,14 @@ void CodeActionParams::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
+
+const String CodeAction::titleKey       = "title";
+const String CodeAction::kindKey        = "kind";
+const String CodeAction::diagnosticsKey = "diagnostics";
+const String CodeAction::isPreferredKey = "isPreferred";
+const String CodeAction::editKey        = "edit";
+const String CodeAction::commandKey     = "command";
+
 CodeAction::CodeAction(String title,
 	optional<CodeActionKind> kind,
 	optional<vector<Diagnostic>> diagnostics,
@@ -716,5 +749,52 @@ CodeAction::CodeAction(String title,
 
 CodeAction::CodeAction(){};
 CodeAction::~CodeAction(){};
+
+void CodeAction::partialWrite(JsonWriter &writer)
+{
+	// title
+	writer.Key(titleKey);
+	writer.String(title);
+
+	// kind?
+	if(kind.has_value())
+	{
+		writer.Key(kindKey);
+		writer.String(*kind);
+	}
+
+	// diagnostics?
+	if(diagnostics.has_value())
+	{
+		writer.Key(diagnosticsKey);
+		writer.StartArray();
+		for(auto& i: *diagnostics)
+		{
+			writer.Object(i);
+		}
+		writer.EndArray();
+	}
+
+	// isPreferred?
+	if(isPreferred.has_value())
+	{
+		writer.Key(isPreferredKey);
+		writer.Bool(*isPreferred);
+	}
+
+	// edit?
+	if(edit.has_value())
+	{
+		writer.Key(editKey);
+		writer.Object(*edit);
+	}
+
+	// command?
+	if(command.has_value())
+	{
+		writer.Key(commandKey);
+		writer.Object(*command);
+	}
+}
 
 }

@@ -228,6 +228,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	CodeActionClientCapabilities(optional<Boolean> dynamicRegistration,
 		optional<CodeActionLiteralSupport> codeActionLiteralSupport,
@@ -244,6 +245,10 @@ public:
 ///
 struct CodeActionOptions: public WorkDoneProgressOptions
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String codeActionKindsKey;
 
@@ -269,9 +274,8 @@ struct CodeActionRegistrationOptions:
 	public CodeActionOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
 
@@ -360,6 +364,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	CodeActionContext(vector<Diagnostic> diagnostics,
 		optional<vector<CodeActionKind>> only);
@@ -406,6 +411,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	CodeActionParams(optional<ProgressToken> workDoneToken,
 		optional<ProgressToken> partialResultToken,
@@ -436,8 +442,12 @@ public:
 ///
 /// command?: Command
 ///
-struct CodeAction
+struct CodeAction: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String titleKey;
 	const static String kindKey;
