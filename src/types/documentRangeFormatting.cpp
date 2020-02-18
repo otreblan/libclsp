@@ -91,6 +91,13 @@ DocumentRangeFormattingRegistrationOptions::
 	~DocumentRangeFormattingRegistrationOptions()
 {};
 
+void DocumentRangeFormattingRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	DocumentRangeFormattingOptions::partialWrite(writer);
+}
+
 
 const String DocumentRangeFormattingParams::textDocumentKey = "textDocument";
 const String DocumentRangeFormattingParams::rangeKey        = "range";

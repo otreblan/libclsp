@@ -46,6 +46,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DocumentRangeFormattingClientCapabilities(optional<Boolean> dynamicRegistration);
 
@@ -61,9 +62,8 @@ struct DocumentRangeFormattingRegistrationOptions:
 	public DocumentRangeFormattingOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
 
@@ -113,6 +113,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DocumentRangeFormattingParams(optional<ProgressToken> workDoneToken,
 		TextDocumentIdentifier textDocument,
