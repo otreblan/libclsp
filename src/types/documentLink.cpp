@@ -116,6 +116,19 @@ DocumentLinkOptions::DocumentLinkOptions(optional<Boolean> workDoneProgress,
 DocumentLinkOptions::DocumentLinkOptions(){};
 DocumentLinkOptions::~DocumentLinkOptions(){};
 
+void DocumentLinkOptions::partialWrite(JsonWriter &writer)
+{
+	// Parent
+	WorkDoneProgressOptions::partialWrite(writer);
+
+	// resolveProvider?
+	if(resolveProvider.has_value())
+	{
+		writer.Key(resolveProviderKey);
+		writer.Bool(*resolveProvider);
+	}
+}
+
 
 DocumentLinkRegistrationOptions::DocumentLinkRegistrationOptions(
 	variant<DocumentSelector, Null> documentSelector,
@@ -127,6 +140,13 @@ DocumentLinkRegistrationOptions::DocumentLinkRegistrationOptions(
 
 DocumentLinkRegistrationOptions::DocumentLinkRegistrationOptions(){};
 DocumentLinkRegistrationOptions::~DocumentLinkRegistrationOptions(){};
+
+void DocumentLinkRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	DocumentLinkOptions::partialWrite(writer);
+}
 
 
 const String DocumentLinkParams::textDocumentKey = "textDocument";
@@ -210,5 +230,33 @@ DocumentLink::DocumentLink(Range range,
 
 DocumentLink::DocumentLink(){};
 DocumentLink::~DocumentLink(){};
+
+void DocumentLink::partialWrite(JsonWriter &writer)
+{
+	// range
+	writer.Key(rangeKey);
+	writer.Object(range);
+
+	// target?
+	if(target.has_value())
+	{
+		writer.Key(targetKey);
+		writer.String(*target);
+	}
+
+	// tooltip?
+	if(tooltip.has_value())
+	{
+		writer.Key(tooltipKey);
+		writer.String(*tooltip);
+	}
+
+	// data?
+	if(data.has_value())
+	{
+		writer.Key(dataKey);
+		writer.Any(*data);
+	}
+}
 
 }

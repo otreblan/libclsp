@@ -60,6 +60,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DocumentLinkClientCapabilities(optional<Boolean> dynamicRegistration,
 		optional<Boolean> tooltipSupport);
@@ -71,10 +72,14 @@ public:
 
 /// DocumentLink server capability
 ///
-/// codeLensKinds?: DocumentLinkKind[]
+/// resolveProvider?: Boolean
 ///
 struct DocumentLinkOptions: public WorkDoneProgressOptions
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String resolveProviderKey;
 
@@ -97,12 +102,10 @@ struct DocumentLinkRegistrationOptions:
 	public DocumentLinkOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
-
 	// No parsing
 
 	DocumentLinkRegistrationOptions(
@@ -140,6 +143,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DocumentLinkParams(optional<ProgressToken> workDoneToken,
 		optional<ProgressToken> partialResultToken,
@@ -161,8 +165,12 @@ public:
 ///
 /// data?: Any
 ///
-struct DocumentLink
+struct DocumentLink: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String rangeKey;;
 	const static String targetKey;
