@@ -53,6 +53,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	CodeLensClientCapabilities(optional<Boolean> dynamicRegistration);
 
@@ -67,6 +68,10 @@ public:
 ///
 struct CodeLensOptions: public WorkDoneProgressOptions
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String resolveProviderKey;
 
@@ -89,12 +94,10 @@ struct CodeLensRegistrationOptions:
 	public CodeLensOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
-
 	// No parsing
 
 	CodeLensRegistrationOptions(
@@ -132,6 +135,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	CodeLensParams(optional<ProgressToken> workDoneToken,
 		optional<ProgressToken> partialResultToken,
@@ -155,8 +159,12 @@ public:
 ///
 /// data?: Any
 ///
-struct CodeLens
+struct CodeLens: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String rangeKey;;
 	const static String commandKey;

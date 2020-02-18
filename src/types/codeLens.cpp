@@ -22,7 +22,7 @@ namespace clsp
 using namespace std;
 
 const String CodeLensClientCapabilities::
-	dynamicRegistrationKey      = "dynamicRegistration";
+	dynamicRegistrationKey = "dynamicRegistration";
 
 
 CodeLensClientCapabilities::
@@ -82,6 +82,19 @@ CodeLensOptions::CodeLensOptions(optional<Boolean> workDoneProgress,
 CodeLensOptions::CodeLensOptions(){};
 CodeLensOptions::~CodeLensOptions(){};
 
+void CodeLensOptions::partialWrite(JsonWriter &writer)
+{
+	// Parent
+	WorkDoneProgressOptions::partialWrite(writer);
+
+	// resolveProvider?
+	if(resolveProvider.has_value())
+	{
+		writer.Key(resolveProviderKey);
+		writer.Bool(*resolveProvider);
+	}
+}
+
 
 CodeLensRegistrationOptions::CodeLensRegistrationOptions(
 	variant<DocumentSelector, Null> documentSelector,
@@ -93,6 +106,13 @@ CodeLensRegistrationOptions::CodeLensRegistrationOptions(
 
 CodeLensRegistrationOptions::CodeLensRegistrationOptions(){};
 CodeLensRegistrationOptions::~CodeLensRegistrationOptions(){};
+
+void CodeLensRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	CodeLensOptions::partialWrite(writer);
+}
 
 
 const String CodeLensParams::textDocumentKey = "textDocument";
@@ -174,5 +194,25 @@ CodeLens::CodeLens(Range range,
 CodeLens::CodeLens(){};
 CodeLens::~CodeLens(){};
 
+void CodeLens::partialWrite(JsonWriter &writer)
+{
+	// range
+	writer.Key(rangeKey);
+	writer.Object(range);
+
+	// command?
+	if(command.has_value())
+	{
+		writer.Key(commandKey);
+		writer.Object(*command);
+	}
+
+	// data?
+	if(data.has_value())
+	{
+		writer.Key(dataKey);
+		writer.Any(*data);
+	}
+}
 
 }
