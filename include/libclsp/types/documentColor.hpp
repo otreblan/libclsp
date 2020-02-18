@@ -77,7 +77,7 @@ public:
 	DocumentColorRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
 		optional<String> id,
-		optional<ProgressToken> workDoneProgress);
+		optional<Boolean> workDoneProgress);
 
 	DocumentColorRegistrationOptions();
 

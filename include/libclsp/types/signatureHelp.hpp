@@ -160,6 +160,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	SignatureHelpClientCapabilities(optional<Boolean> dynamicRegistration,
 		optional<SignatureInformation> signatureInformation,
@@ -178,6 +179,10 @@ public:
 ///
 struct SignatureHelpOptions: public WorkDoneProgressOptions
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String triggerCharactersKey;
 	const static String retriggerCharactersKey;
@@ -198,7 +203,7 @@ public:
 
 	// No parsing
 
-	SignatureHelpOptions(optional<ProgressToken> workDoneProgress,
+	SignatureHelpOptions(optional<Boolean> workDoneProgress,
 		optional<vector<String>> triggerCharacters,
 		optional<vector<String>> retriggerCharacters);
 
@@ -212,9 +217,8 @@ struct SignatureHelpRegistrationOptions:
 	public SignatureHelpOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
 
@@ -222,7 +226,7 @@ public:
 
 	SignatureHelpRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress,
+		optional<Boolean> workDoneProgress,
 		optional<vector<String>> triggerCharacters,
 		optional<vector<String>> retriggerCharacters);
 
@@ -240,6 +244,10 @@ public:
 ///
 struct ParameterInformation: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String labelKey;
 	const static String documentationKey;
@@ -315,6 +323,10 @@ public:
 ///
 struct SignatureInformation: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String labelKey;
 	const static String documentationKey;
@@ -383,6 +395,10 @@ public:
 ///
 struct SignatureHelp: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String signaturesKey;
 	const static String activeSignatureKey;
@@ -519,6 +535,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	SignatureHelpContext(SignatureHelpTriggerKind triggerKind,
 		optional<String> triggerCharacter,
@@ -559,6 +576,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	SignatureHelpParams(TextDocumentIdentifier textDocument,
 		Position position,

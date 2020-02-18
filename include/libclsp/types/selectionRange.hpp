@@ -77,7 +77,7 @@ public:
 
 	// No parsing
 
-	SelectionRangeRegistrationOptions(optional<ProgressToken> workDoneProgress,
+	SelectionRangeRegistrationOptions(optional<Boolean> workDoneProgress,
 		variant<DocumentSelector, Null> documentSelector,
 		optional<String> id);
 

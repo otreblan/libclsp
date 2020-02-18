@@ -25,7 +25,7 @@ const String CompletionOptions::triggerCharactersKey   = "triggerCharacters";
 const String CompletionOptions::allCommitCharactersKey = "allCommitCharacters";
 const String CompletionOptions::resolveProviderKey     = "resolveProvider";
 
-CompletionOptions::CompletionOptions(optional<ProgressToken> workDoneProgress,
+CompletionOptions::CompletionOptions(optional<Boolean> workDoneProgress,
 	optional<vector<String>> triggerCharacters,
 	optional<vector<String>> allCommitCharacters,
 	optional<Boolean> resolveProvider):
@@ -79,7 +79,7 @@ void CompletionOptions::partialWrite(JsonWriter &writer)
 CompletionRegistrationOptions::
 	CompletionRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress,
+		optional<Boolean> workDoneProgress,
 		optional<vector<String>> triggerCharacters,
 		optional<vector<String>> allCommitCharacters,
 		optional<Boolean> resolveProvider):

@@ -105,7 +105,7 @@ void TypeDefinitionClientCapabilities::
 TypeDefinitionRegistrationOptions::
 	TypeDefinitionRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress,
+		optional<Boolean> workDoneProgress,
 		optional<String> id):
 			TextDocumentRegistrationOptions(documentSelector),
 			TypeDefinitionOptions(workDoneProgress),

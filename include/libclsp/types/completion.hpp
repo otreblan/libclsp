@@ -78,7 +78,7 @@ public:
 
 	// No parsing
 
-	CompletionOptions(optional<ProgressToken> workDoneProgress,
+	CompletionOptions(optional<Boolean> workDoneProgress,
 		optional<vector<String>> triggerCharacters,
 		optional<vector<String>> allCommitCharacters,
 		optional<Boolean> resolveProvider);
@@ -101,7 +101,7 @@ public:
 	// No parsing
 
 	CompletionRegistrationOptions(variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress,
+		optional<Boolean> workDoneProgress,
 		optional<vector<String>> triggerCharacters,
 		optional<vector<String>> allCommitCharacters,
 		optional<Boolean> resolveProvider);

@@ -263,7 +263,7 @@ public:
 	// No parsing
 
 
-	WorkDoneProgressOptions(optional<ProgressToken> workDoneProgress);
+	WorkDoneProgressOptions(optional<Boolean> workDoneProgress);
 
 	WorkDoneProgressOptions();
 

@@ -105,7 +105,7 @@ void ImplementationClientCapabilities::
 ImplementationRegistrationOptions::
 	ImplementationRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress,
+		optional<Boolean> workDoneProgress,
 		optional<String> id):
 			TextDocumentRegistrationOptions(documentSelector),
 			ImplementationOptions(workDoneProgress),

@@ -103,7 +103,7 @@ public:
 	// No parsing
 
 	HoverRegistrationOptions(variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress);
+		optional<Boolean> workDoneProgress);
 
 	HoverRegistrationOptions();
 

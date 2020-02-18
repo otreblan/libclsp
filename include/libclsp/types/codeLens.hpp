@@ -76,7 +76,7 @@ public:
 
 	// No parsing
 
-	CodeLensOptions(optional<ProgressToken> workDoneProgress,
+	CodeLensOptions(optional<Boolean> workDoneProgress,
 		optional<Boolean> resolveProvider);
 
 	CodeLensOptions();
@@ -99,7 +99,7 @@ public:
 
 	CodeLensRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress,
+		optional<Boolean> workDoneProgress,
 		optional<Boolean> resolveProvider);
 
 	CodeLensRegistrationOptions();

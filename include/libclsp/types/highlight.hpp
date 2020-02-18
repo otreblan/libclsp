@@ -76,7 +76,7 @@ public:
 
 	DocumentHighlightRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress);
+		optional<Boolean> workDoneProgress);
 
 	DocumentHighlightRegistrationOptions();
 

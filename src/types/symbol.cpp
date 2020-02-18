@@ -255,7 +255,7 @@ void DocumentSymbolClientCapabilities::SymbolKind::ValueSetMaker::
 
 DocumentSymbolRegistrationOptions::DocumentSymbolRegistrationOptions(
 	variant<DocumentSelector, Null> documentSelector,
-	optional<ProgressToken> workDoneProgress):
+	optional<Boolean> workDoneProgress):
 		TextDocumentRegistrationOptions(documentSelector),
 		DocumentSymbolOptions(workDoneProgress)
 {};

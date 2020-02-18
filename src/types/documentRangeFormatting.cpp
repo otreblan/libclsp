@@ -78,7 +78,7 @@ void DocumentRangeFormattingClientCapabilities::
 
 DocumentRangeFormattingRegistrationOptions::DocumentRangeFormattingRegistrationOptions(
 	variant<DocumentSelector, Null> documentSelector,
-	optional<ProgressToken> workDoneProgress):
+	optional<Boolean> workDoneProgress):
 		TextDocumentRegistrationOptions(documentSelector),
 		DocumentRangeFormattingOptions(workDoneProgress)
 {};

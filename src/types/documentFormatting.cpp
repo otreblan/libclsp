@@ -73,7 +73,7 @@ void DocumentFormattingClientCapabilities::
 
 DocumentFormattingRegistrationOptions::DocumentFormattingRegistrationOptions(
 	variant<DocumentSelector, Null> documentSelector,
-	optional<ProgressToken> workDoneProgress):
+	optional<Boolean> workDoneProgress):
 		TextDocumentRegistrationOptions(documentSelector),
 		DocumentFormattingOptions(workDoneProgress)
 {};

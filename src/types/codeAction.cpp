@@ -348,7 +348,7 @@ void CodeActionClientCapabilities::
 
 const String CodeActionOptions::codeActionKindsKey = "codeActionKinds";
 
-CodeActionOptions::CodeActionOptions(optional<ProgressToken> workDoneProgress,
+CodeActionOptions::CodeActionOptions(optional<Boolean> workDoneProgress,
 	optional<vector<CodeActionKind>> codeActionKinds):
 		WorkDoneProgressOptions(workDoneProgress),
 		codeActionKinds(codeActionKinds)
@@ -360,7 +360,7 @@ CodeActionOptions::~CodeActionOptions(){};
 
 CodeActionRegistrationOptions::CodeActionRegistrationOptions(
 	variant<DocumentSelector, Null> documentSelector,
-	optional<ProgressToken> workDoneProgress,
+	optional<Boolean> workDoneProgress,
 	optional<vector<CodeActionKind>> codeActionKinds):
 		TextDocumentRegistrationOptions(documentSelector),
 		CodeActionOptions(workDoneProgress, codeActionKinds)

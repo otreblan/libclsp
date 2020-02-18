@@ -179,7 +179,7 @@ public:
 
 	DocumentSymbolRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress);
+		optional<Boolean> workDoneProgress);
 
 	DocumentSymbolRegistrationOptions();
 

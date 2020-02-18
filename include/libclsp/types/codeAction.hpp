@@ -256,7 +256,7 @@ public:
 
 	// No parsing
 
-	CodeActionOptions(optional<ProgressToken> workDoneProgress,
+	CodeActionOptions(optional<Boolean> workDoneProgress,
 		optional<vector<CodeActionKind>> codeActionKinds);
 
 	CodeActionOptions();
@@ -279,7 +279,7 @@ public:
 
 	CodeActionRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress,
+		optional<Boolean> workDoneProgress,
 		optional<vector<CodeActionKind>> codeActionKinds);
 
 	CodeActionRegistrationOptions();

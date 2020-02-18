@@ -84,7 +84,7 @@ public:
 
 	// No parsing
 
-	RenameOptions(optional<ProgressToken> workDoneProgress,
+	RenameOptions(optional<Boolean> workDoneProgress,
 		optional<Boolean> prepareProvider);
 
 	RenameOptions();
@@ -107,7 +107,7 @@ public:
 
 	RenameRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress,
+		optional<Boolean> workDoneProgress,
 		optional<Boolean> prepareProvider);
 
 	RenameRegistrationOptions();

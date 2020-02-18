@@ -100,7 +100,7 @@ public:
 
 	FoldingRangeRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress,
+		optional<Boolean> workDoneProgress,
 		optional<String> id);
 
 	FoldingRangeRegistrationOptions();

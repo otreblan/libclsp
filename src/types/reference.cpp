@@ -71,7 +71,7 @@ void ReferenceClientCapabilities::fillInitializer(ObjectInitializer& initializer
 
 ReferenceRegistrationOptions::ReferenceRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress):
+		optional<Boolean> workDoneProgress):
 			TextDocumentRegistrationOptions(documentSelector),
 			ReferenceOptions(workDoneProgress)
 {};

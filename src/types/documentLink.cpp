@@ -106,7 +106,7 @@ void DocumentLinkClientCapabilities::
 
 const String DocumentLinkOptions::resolveProviderKey = "resolveProvider";
 
-DocumentLinkOptions::DocumentLinkOptions(optional<ProgressToken> workDoneProgress,
+DocumentLinkOptions::DocumentLinkOptions(optional<Boolean> workDoneProgress,
 	optional<Boolean> resolveProvider):
 		WorkDoneProgressOptions(workDoneProgress),
 		resolveProvider(resolveProvider)
@@ -119,7 +119,7 @@ DocumentLinkOptions::~DocumentLinkOptions(){};
 
 DocumentLinkRegistrationOptions::DocumentLinkRegistrationOptions(
 	variant<DocumentSelector, Null> documentSelector,
-	optional<ProgressToken> workDoneProgress,
+	optional<Boolean> workDoneProgress,
 	optional<Boolean> resolveProvider):
 		TextDocumentRegistrationOptions(documentSelector),
 		DocumentLinkOptions(workDoneProgress, resolveProvider)

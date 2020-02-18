@@ -72,7 +72,7 @@ void CodeLensClientCapabilities::fillInitializer(ObjectInitializer& initializer)
 
 const String CodeLensOptions::resolveProviderKey = "resolveProvider";
 
-CodeLensOptions::CodeLensOptions(optional<ProgressToken> workDoneProgress,
+CodeLensOptions::CodeLensOptions(optional<Boolean> workDoneProgress,
 	optional<Boolean> resolveProvider):
 		WorkDoneProgressOptions(workDoneProgress),
 		resolveProvider(resolveProvider)
@@ -85,7 +85,7 @@ CodeLensOptions::~CodeLensOptions(){};
 
 CodeLensRegistrationOptions::CodeLensRegistrationOptions(
 	variant<DocumentSelector, Null> documentSelector,
-	optional<ProgressToken> workDoneProgress,
+	optional<Boolean> workDoneProgress,
 	optional<Boolean> resolveProvider):
 		TextDocumentRegistrationOptions(documentSelector),
 		CodeLensOptions(workDoneProgress, resolveProvider)

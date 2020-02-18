@@ -75,7 +75,7 @@ public:
 
 	DocumentFormattingRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress);
+		optional<Boolean> workDoneProgress);
 
 	DocumentFormattingRegistrationOptions();
 

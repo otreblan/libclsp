@@ -84,7 +84,7 @@ public:
 
 	// No parsing
 
-	DocumentLinkOptions(optional<ProgressToken> workDoneProgress,
+	DocumentLinkOptions(optional<Boolean> workDoneProgress,
 		optional<Boolean> resolveProvider);
 
 	DocumentLinkOptions();
@@ -107,7 +107,7 @@ public:
 
 	DocumentLinkRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress,
+		optional<Boolean> workDoneProgress,
 		optional<Boolean> resolveProvider);
 
 	DocumentLinkRegistrationOptions();

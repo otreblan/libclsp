@@ -73,7 +73,7 @@ void DocumentColorClientCapabilities::
 DocumentColorRegistrationOptions::DocumentColorRegistrationOptions(
 	variant<DocumentSelector, Null> documentSelector,
 	optional<String> id,
-	optional<ProgressToken> workDoneProgress):
+	optional<Boolean> workDoneProgress):
 		TextDocumentRegistrationOptions(documentSelector),
 		StaticRegistrationOptions(id),
 		DocumentColorOptions(workDoneProgress)

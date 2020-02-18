@@ -105,7 +105,7 @@ void RenameClientCapabilities::
 
 const String RenameOptions::prepareProviderKey = "prepareProvider";
 
-RenameOptions::RenameOptions(optional<ProgressToken> workDoneProgress,
+RenameOptions::RenameOptions(optional<Boolean> workDoneProgress,
 	optional<Boolean> prepareProvider):
 		WorkDoneProgressOptions(workDoneProgress),
 		prepareProvider(prepareProvider)
@@ -117,7 +117,7 @@ RenameOptions::~RenameOptions(){};
 
 RenameRegistrationOptions::RenameRegistrationOptions(
 	variant<DocumentSelector, Null> documentSelector,
-	optional<ProgressToken> workDoneProgress,
+	optional<Boolean> workDoneProgress,
 	optional<Boolean> prepareProvider):
 		TextDocumentRegistrationOptions(documentSelector),
 		RenameOptions(workDoneProgress, prepareProvider)

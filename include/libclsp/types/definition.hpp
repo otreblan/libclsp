@@ -85,7 +85,7 @@ public:
 
 	DefinitionRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress);
+		optional<Boolean> workDoneProgress);
 
 	DefinitionRegistrationOptions();
 

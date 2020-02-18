@@ -139,7 +139,7 @@ void FoldingRangeClientCapabilities::
 FoldingRangeRegistrationOptions::
 	FoldingRangeRegistrationOptions(
 		variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress,
+		optional<Boolean> workDoneProgress,
 		optional<String> id):
 			TextDocumentRegistrationOptions(documentSelector),
 			FoldingRangeOptions(workDoneProgress),

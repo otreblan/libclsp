@@ -162,7 +162,7 @@ void HoverClientCapabilities::ContentFormatMaker::
 
 HoverRegistrationOptions::
 	HoverRegistrationOptions(variant<DocumentSelector, Null> documentSelector,
-		optional<ProgressToken> workDoneProgress):
+		optional<Boolean> workDoneProgress):
 			TextDocumentRegistrationOptions(documentSelector),
 			HoverOptions(workDoneProgress)
 {};
@@ -190,6 +190,7 @@ HoverParams::~HoverParams(){};
 
 void HoverParams::fillInitializer(ObjectInitializer& initializer)
 {
+	// Parents
 	TextDocumentPositionParams::fillInitializer(initializer);
 	WorkDoneProgressParams::fillInitializer(initializer);
 

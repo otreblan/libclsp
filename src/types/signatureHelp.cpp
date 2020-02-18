@@ -355,7 +355,7 @@ const String SignatureHelpOptions::
 	retriggerCharactersKey = "retriggerCharacters";
 
 SignatureHelpOptions::
-	SignatureHelpOptions(optional<ProgressToken> workDoneProgress,
+	SignatureHelpOptions(optional<Boolean> workDoneProgress,
 		optional<vector<String>> triggerCharacters,
 		optional<vector<String>> retriggerCharacters):
 			WorkDoneProgressOptions(workDoneProgress),
@@ -366,10 +366,40 @@ SignatureHelpOptions::
 SignatureHelpOptions::SignatureHelpOptions(){};
 SignatureHelpOptions::~SignatureHelpOptions(){};
 
+void SignatureHelpOptions::partialWrite(JsonWriter &writer)
+{
+	// Parent
+	WorkDoneProgressOptions::partialWrite(writer);
+
+	// triggerCharacters?
+	if(triggerCharacters.has_value())
+	{
+		writer.Key(triggerCharactersKey);
+		writer.StartArray();
+		for(auto& i: *triggerCharacters)
+		{
+			writer.String(i);
+		}
+		writer.EndArray();
+	}
+
+	// retriggerCharacters?
+	if(retriggerCharacters.has_value())
+	{
+		writer.Key(retriggerCharactersKey);
+		writer.StartArray();
+		for(auto& i: *retriggerCharacters)
+		{
+			writer.String(i);
+		}
+		writer.EndArray();
+	}
+}
+
 
 SignatureHelpRegistrationOptions::SignatureHelpRegistrationOptions(
 	variant<DocumentSelector, Null> documentSelector,
-	optional<ProgressToken> workDoneProgress,
+	optional<Boolean> workDoneProgress,
 	optional<vector<String>> triggerCharacters,
 	optional<vector<String>> retriggerCharacters):
 		TextDocumentRegistrationOptions(documentSelector),
@@ -380,6 +410,13 @@ SignatureHelpRegistrationOptions::SignatureHelpRegistrationOptions(
 
 SignatureHelpRegistrationOptions::SignatureHelpRegistrationOptions(){};
 SignatureHelpRegistrationOptions::~SignatureHelpRegistrationOptions(){};
+
+void SignatureHelpRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	SignatureHelpOptions::partialWrite(writer);
+}
 
 
 const String ParameterInformation::labelKey         = "label";
@@ -481,6 +518,41 @@ void ParameterInformation::fillInitializer(ObjectInitializer& initializer)
 
 	// This
 	initializer.object = this;
+}
+
+void ParameterInformation::partialWrite(JsonWriter &writer)
+{
+	// label
+	writer.Key(labelKey);
+	visit(overload(
+		[&writer](String& str)
+		{
+			writer.String(str);
+		},
+		[&writer](array<Number, 2>& arr)
+		{
+			writer.StartArray();
+				writer.Number(arr[0]);
+				writer.Number(arr[1]);
+			writer.EndArray();
+		}
+	), label);
+
+	// documentation?
+	if(documentation.has_value())
+	{
+		writer.Key(documentationKey);
+		visit(overload(
+			[&writer](String& str)
+			{
+				writer.String(str);
+			},
+			[&writer](MarkupContent& obj)
+			{
+				writer.Object(obj);
+			}
+		), *documentation);
+	}
 }
 
 ParameterInformation::LabelMaker::LabelMaker(array<Number, 2> &parentArray):
@@ -658,6 +730,41 @@ void SignatureInformation::fillInitializer(ObjectInitializer& initializer)
 	initializer.object = this;
 }
 
+void SignatureInformation::partialWrite(JsonWriter &writer)
+{
+	// label
+	writer.Key(labelKey);
+	writer.String(label);
+
+	// documentation?
+	if(documentation.has_value())
+	{
+		writer.Key(documentationKey);
+		visit(overload(
+			[&writer](String& str)
+			{
+				writer.String(str);
+			},
+			[&writer](MarkupContent& obj)
+			{
+				writer.Object(obj);
+			}
+		), *documentation);
+	}
+
+	// parameters?
+	if(parameters.has_value())
+	{
+		writer.Key(parametersKey),
+		writer.StartArray();
+		for(auto& i: *parameters)
+		{
+			writer.Object(i);
+		}
+		writer.EndArray();
+	}
+}
+
 SignatureInformation::ParametersMaker::
 	ParametersMaker(vector<ParameterInformation> &parentArray):
 		parentArray(parentArray)
@@ -828,6 +935,32 @@ void SignatureHelp::fillInitializer(ObjectInitializer& initializer)
 
 	// This
 	initializer.object = this;
+}
+
+void SignatureHelp::partialWrite(JsonWriter &writer)
+{
+	// signatures
+	writer.Key(signaturesKey);
+	writer.StartArray();
+	for(auto& i: signatures)
+	{
+		writer.Object(i);
+	}
+	writer.EndArray();
+
+	// activeSignature?
+	if(activeSignature.has_value())
+	{
+		writer.Key(activeSignatureKey);
+		writer.Number(*activeSignature);
+	}
+
+	// activeParameter?
+	if(activeParameter.has_value())
+	{
+		writer.Key(activeParameterKey);
+		writer.Number(*activeParameter);
+	}
 }
 
 

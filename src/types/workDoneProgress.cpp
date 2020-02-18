@@ -451,7 +451,7 @@ void WorkDoneProgressParams::fillInitializer(ObjectInitializer& initializer)
 const String WorkDoneProgressOptions::workDoneProgressKey = "workDoneProgress";
 
 WorkDoneProgressOptions::
-	WorkDoneProgressOptions(optional<ProgressToken> workDoneProgress):
+	WorkDoneProgressOptions(optional<Boolean> workDoneProgress):
 		workDoneProgress(workDoneProgress)
 {};
 

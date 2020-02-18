@@ -85,7 +85,7 @@ protected:
 public:
 	// No parsing
 
-	DeclarationRegistrationOptions(optional<ProgressToken> workDoneProgress,
+	DeclarationRegistrationOptions(optional<Boolean> workDoneProgress,
 		variant<DocumentSelector, Null> documentSelector,
 		optional<String> id);
 

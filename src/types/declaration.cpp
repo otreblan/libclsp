@@ -104,7 +104,7 @@ void DeclarationClientCapabilities::
 }
 
 DeclarationRegistrationOptions::
-	DeclarationRegistrationOptions(optional<ProgressToken> workDoneProgress,
+	DeclarationRegistrationOptions(optional<Boolean> workDoneProgress,
 		variant<DocumentSelector, Null> documentSelector,
 		optional<String> id):
 			DeclarationOptions(workDoneProgress),
