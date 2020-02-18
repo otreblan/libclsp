@@ -26,7 +26,7 @@ const String DocumentHighlightClientCapabilities::
 
 DocumentHighlightClientCapabilities::
 	DocumentHighlightClientCapabilities(optional<Boolean> dynamicRegistration):
-			dynamicRegistration(dynamicRegistration)
+		dynamicRegistration(dynamicRegistration)
 {};
 
 DocumentHighlightClientCapabilities::DocumentHighlightClientCapabilities(){};
@@ -71,14 +71,21 @@ void DocumentHighlightClientCapabilities::
 }
 
 DocumentHighlightRegistrationOptions::DocumentHighlightRegistrationOptions(
-		variant<DocumentSelector, Null> documentSelector,
-		optional<Boolean> workDoneProgress):
-			TextDocumentRegistrationOptions(documentSelector),
-			DocumentHighlightOptions(workDoneProgress)
+	variant<DocumentSelector, Null> documentSelector,
+	optional<Boolean> workDoneProgress):
+		TextDocumentRegistrationOptions(documentSelector),
+		DocumentHighlightOptions(workDoneProgress)
 {};
 
 DocumentHighlightRegistrationOptions::DocumentHighlightRegistrationOptions(){};
 DocumentHighlightRegistrationOptions::~DocumentHighlightRegistrationOptions(){};
+
+void DocumentHighlightRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	DocumentHighlightOptions::partialWrite(writer);
+}
 
 
 DocumentHighlightParams::DocumentHighlightParams(TextDocumentIdentifier textDocument,
@@ -113,5 +120,19 @@ DocumentHighlight::DocumentHighlight(Range range,
 
 DocumentHighlight::DocumentHighlight(){};
 DocumentHighlight::~DocumentHighlight(){};
+
+void DocumentHighlight::partialWrite(JsonWriter &writer)
+{
+	// range
+	writer.Key(rangeKey);
+	writer.Object(range);
+
+	// kind?
+	if(kind.has_value())
+	{
+		writer.Key(kindKey);
+		writer.Int((int)(*kind));
+	}
+}
 
 }

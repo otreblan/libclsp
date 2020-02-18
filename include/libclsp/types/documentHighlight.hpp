@@ -50,6 +50,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DocumentHighlightClientCapabilities(optional<Boolean> dynamicRegistration);
 
@@ -66,12 +67,10 @@ struct DocumentHighlightRegistrationOptions:
 	public DocumentHighlightOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
-
 	// No parsing
 
 	DocumentHighlightRegistrationOptions(
@@ -99,6 +98,7 @@ struct DocumentHighlightParams:
 
 	//=======================================================================//
 
+	// No writing
 
 	DocumentHighlightParams(TextDocumentIdentifier textDocument,
 		Position position,
@@ -126,8 +126,12 @@ enum class DocumentHighlightKind
 /// A document highlight is a range inside a text document which deserves
 /// special attention. Usually a document highlight is visualized by changing
 /// the background color of its range.
-struct DocumentHighlight
+struct DocumentHighlight: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String rangeKey;
 	const static String kindKey;
