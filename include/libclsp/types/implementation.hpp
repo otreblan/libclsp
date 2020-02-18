@@ -61,6 +61,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	ImplementationClientCapabilities(optional<Boolean> dynamicRegistration,
 		optional<Boolean> linkSupport);
@@ -78,12 +79,10 @@ struct ImplementationRegistrationOptions:
 	public StaticRegistrationOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
-
 	// No parsing
 
 	ImplementationRegistrationOptions(
@@ -110,6 +109,8 @@ struct ImplementationParams:
 	// Using default isValid()
 
 	//=======================================================================//
+
+	// No writing
 
 	ImplementationParams(TextDocumentIdentifier textDocument,
 		Position position,

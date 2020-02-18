@@ -115,6 +115,14 @@ ImplementationRegistrationOptions::
 ImplementationRegistrationOptions::ImplementationRegistrationOptions(){};
 ImplementationRegistrationOptions::~ImplementationRegistrationOptions(){};
 
+void ImplementationRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	ImplementationOptions::partialWrite(writer);
+	StaticRegistrationOptions::partialWrite(writer);
+}
+
 
 ImplementationParams::ImplementationParams(TextDocumentIdentifier textDocument,
 	Position position,
