@@ -112,6 +112,13 @@ DefinitionRegistrationOptions::DefinitionRegistrationOptions(
 DefinitionRegistrationOptions::DefinitionRegistrationOptions(){};
 DefinitionRegistrationOptions::~DefinitionRegistrationOptions(){};
 
+void DefinitionRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	DefinitionOptions::partialWrite(writer);
+}
+
 
 DefinitionParams::DefinitionParams(TextDocumentIdentifier textDocument,
 	Position position,

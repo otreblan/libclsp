@@ -59,6 +59,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DefinitionClientCapabilities(optional<Boolean> dynamicRegistration,
 		optional<Boolean> linkSupport);
@@ -75,12 +76,10 @@ struct DefinitionRegistrationOptions:
 	public DefinitionOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
-
 	// No parsing
 
 	DefinitionRegistrationOptions(
@@ -107,6 +106,7 @@ struct DefinitionParams:
 
 	//=======================================================================//
 
+	// No writing
 
 	DefinitionParams(TextDocumentIdentifier textDocument,
 		Position position,
