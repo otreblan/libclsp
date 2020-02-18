@@ -37,6 +37,7 @@
 #include <libclsp/types/documentColor.hpp>
 #include <libclsp/types/documentFilter.hpp>
 #include <libclsp/types/documentFormatting.hpp>
+#include <libclsp/types/documentHighlight.hpp>
 #include <libclsp/types/documentLink.hpp>
 #include <libclsp/types/documentOnTypeFormatting.hpp>
 #include <libclsp/types/documentRangeFormatting.hpp>
@@ -44,7 +45,6 @@
 #include <libclsp/types/fileResourceChanges.hpp>
 #include <libclsp/types/foldingRange.hpp>
 #include <libclsp/types/genericObject.hpp>
-#include <libclsp/types/highlight.hpp>
 #include <libclsp/types/hover.hpp>
 #include <libclsp/types/implementation.hpp>
 #include <libclsp/types/initialize.hpp>

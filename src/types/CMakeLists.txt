@@ -37,6 +37,7 @@ target_sources(${PROJECT_NAME}
 		documentColor.cpp
 		documentFilter.cpp
 		documentFormatting.cpp
+		documentHighlight.cpp
 		documentLink.cpp
 		documentOnTypeFormatting.cpp
 		documentRangeFormatting.cpp
@@ -44,7 +45,6 @@ target_sources(${PROJECT_NAME}
 		fileResourceChanges.cpp
 		foldingRange.cpp
 		genericObject.cpp
-		highlight.cpp
 		hover.cpp
 		implementation.cpp
 		initialize.cpp
