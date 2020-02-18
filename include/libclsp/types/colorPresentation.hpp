@@ -63,6 +63,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	ColorPresentationParams(optional<ProgressToken> workDoneToken,
 		optional<ProgressToken> partialResultToken,
@@ -83,8 +84,12 @@ public:
 ///
 /// additionalTextEdits?: TextEdit[]
 ///
-struct ColorPresentation
+struct ColorPresentation: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String labelKey;
 	const static String textEditKey;

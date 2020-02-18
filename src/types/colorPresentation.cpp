@@ -171,4 +171,30 @@ ColorPresentation::ColorPresentation(String label,
 ColorPresentation::ColorPresentation(){};
 ColorPresentation::~ColorPresentation(){};
 
+void ColorPresentation::partialWrite(JsonWriter &writer)
+{
+	// label
+	writer.Key(labelKey);
+	writer.String(label);
+
+	// textEdit?
+	if(textEdit.has_value())
+	{
+		writer.Key(textEditKey);
+		writer.Object(*textEdit);
+	}
+
+	// additionalTextEdits?
+	if(additionalTextEdits.has_value())
+	{
+		writer.Key(additionalTextEditsKey);
+		writer.StartArray();
+		for(auto& i: *additionalTextEdits)
+		{
+			writer.Object(i);
+		}
+		writer.EndArray();
+	}
+}
+
 }
