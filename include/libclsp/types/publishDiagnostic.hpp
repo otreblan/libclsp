@@ -117,6 +117,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	PublishDiagnosticsClientCapabilities(optional<Boolean> relatedInformation,
 		optional<TagSupport> tagSupport,
@@ -135,8 +136,12 @@ public:
 ///
 /// diagnostics: Diagnostic[]
 ///
-struct PublishDiagnosticsParams
+struct PublishDiagnosticsParams: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String uriKey;
 	const static String versionKey;

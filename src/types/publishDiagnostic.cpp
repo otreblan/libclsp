@@ -274,4 +274,27 @@ PublishDiagnosticsParams::PublishDiagnosticsParams(DocumentUri uri,
 PublishDiagnosticsParams::PublishDiagnosticsParams(){};
 PublishDiagnosticsParams::~PublishDiagnosticsParams(){};
 
+void PublishDiagnosticsParams::partialWrite(JsonWriter &writer)
+{
+	// uri
+	writer.Key(uriKey);
+	writer.String(uri);
+
+	// version?
+	if(version.has_value())
+	{
+		writer.Key(versionKey);
+		writer.Number(*version);
+	}
+
+	// diagnostics
+	writer.Key(diagnosticsKey);
+	writer.StartArray();
+	for(auto& i: diagnostics)
+	{
+		writer.Object(i);
+	}
+	writer.EndArray();
+}
+
 }
