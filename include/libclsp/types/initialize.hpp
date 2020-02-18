@@ -32,6 +32,7 @@
 #include <libclsp/types/documentLink.hpp>
 #include <libclsp/types/documentOnTypeFormatting.hpp>
 #include <libclsp/types/documentRangeFormatting.hpp>
+#include <libclsp/types/documentSymbol.hpp>
 #include <libclsp/types/executeCommand.hpp>
 #include <libclsp/types/foldingRange.hpp>
 #include <libclsp/types/hover.hpp>
@@ -40,7 +41,6 @@
 #include <libclsp/types/reference.hpp>
 #include <libclsp/types/rename.hpp>
 #include <libclsp/types/signatureHelp.hpp>
-#include <libclsp/types/symbol.hpp>
 #include <libclsp/types/textDocumentSync.hpp>
 #include <libclsp/types/typeDefinition.hpp>
 #include <libclsp/types/workspaceFolder.hpp>

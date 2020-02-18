@@ -41,6 +41,7 @@
 #include <libclsp/types/documentLink.hpp>
 #include <libclsp/types/documentOnTypeFormatting.hpp>
 #include <libclsp/types/documentRangeFormatting.hpp>
+#include <libclsp/types/documentSymbol.hpp>
 #include <libclsp/types/executeCommand.hpp>
 #include <libclsp/types/fileResourceChanges.hpp>
 #include <libclsp/types/foldingRange.hpp>
@@ -69,7 +70,6 @@
 #include <libclsp/types/showMessage.hpp>
 #include <libclsp/types/signatureHelp.hpp>
 #include <libclsp/types/staticRegistration.hpp>
-#include <libclsp/types/symbol.hpp>
 #include <libclsp/types/textDocumentIdentifier.hpp>
 #include <libclsp/types/textDocumentItem.hpp>
 #include <libclsp/types/textDocumentPosition.hpp>

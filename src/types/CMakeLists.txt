@@ -41,6 +41,7 @@ target_sources(${PROJECT_NAME}
 		documentLink.cpp
 		documentOnTypeFormatting.cpp
 		documentRangeFormatting.cpp
+		documentSymbol.cpp
 		executeCommand.cpp
 		fileResourceChanges.cpp
 		foldingRange.cpp
@@ -69,7 +70,6 @@ target_sources(${PROJECT_NAME}
 		showMessage.cpp
 		signatureHelp.cpp
 		staticRegistration.cpp
-		symbol.cpp
 		textDocumentIdentifier.cpp
 		textDocumentItem.cpp
 		textDocumentPosition.cpp

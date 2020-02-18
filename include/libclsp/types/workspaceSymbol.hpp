@@ -16,7 +16,7 @@
 
 #pragma once
 
-#include <libclsp/types/symbol.hpp>
+#include <libclsp/types/documentSymbol.hpp>
 
 namespace clsp
 {
