@@ -61,6 +61,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	TypeDefinitionClientCapabilities(optional<Boolean> dynamicRegistration,
 		optional<Boolean> linkSupport);
@@ -78,12 +79,10 @@ struct TypeDefinitionRegistrationOptions:
 	public StaticRegistrationOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
-
 	// No parsing
 
 	TypeDefinitionRegistrationOptions(
@@ -110,6 +109,8 @@ struct TypeDefinitionParams:
 	// Using default isValid()
 
 	//=======================================================================//
+
+	// No writing
 
 	TypeDefinitionParams(TextDocumentIdentifier textDocument,
 		Position position,

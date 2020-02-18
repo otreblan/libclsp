@@ -115,6 +115,14 @@ TypeDefinitionRegistrationOptions::
 TypeDefinitionRegistrationOptions::TypeDefinitionRegistrationOptions(){};
 TypeDefinitionRegistrationOptions::~TypeDefinitionRegistrationOptions(){};
 
+void TypeDefinitionRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	TypeDefinitionOptions::partialWrite(writer);
+	StaticRegistrationOptions::partialWrite(writer);
+}
+
 
 TypeDefinitionParams::TypeDefinitionParams(TextDocumentIdentifier textDocument,
 	Position position,
