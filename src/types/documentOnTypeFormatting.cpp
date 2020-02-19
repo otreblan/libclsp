@@ -92,6 +92,25 @@ DocumentOnTypeFormattingOptions::
 DocumentOnTypeFormattingOptions::DocumentOnTypeFormattingOptions(){};
 DocumentOnTypeFormattingOptions::~DocumentOnTypeFormattingOptions(){};
 
+void DocumentOnTypeFormattingOptions::partialWrite(JsonWriter &writer)
+{
+	// firstTriggerCharacter
+	writer.Key(firstTriggerCharacterKey),
+	writer.String(firstTriggerCharacter);
+
+	// moreTriggerCharacter?
+	if(moreTriggerCharacter.has_value())
+	{
+		writer.Key(moreTriggerCharacterKey);
+		writer.StartArray();
+		for(auto &i: *moreTriggerCharacter)
+		{
+			writer.String(i);
+		}
+		writer.EndArray();
+	}
+}
+
 
 DocumentOnTypeFormattingRegistrationOptions::
 	DocumentOnTypeFormattingRegistrationOptions(
@@ -110,6 +129,14 @@ DocumentOnTypeFormattingRegistrationOptions::
 DocumentOnTypeFormattingRegistrationOptions::
 	~DocumentOnTypeFormattingRegistrationOptions()
 {};
+
+void DocumentOnTypeFormattingRegistrationOptions::
+	partialWrite(JsonWriter &writer)
+{
+	// Parents
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	DocumentOnTypeFormattingOptions::partialWrite(writer);
+}
 
 
 const String DocumentOnTypeFormattingParams::chKey           = "ch";

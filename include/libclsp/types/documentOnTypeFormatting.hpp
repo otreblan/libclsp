@@ -46,6 +46,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DocumentOnTypeFormattingClientCapabilities(
 		optional<Boolean> dynamicRegistration);
@@ -61,8 +62,12 @@ public:
 ///
 /// moreTriggerCharacter?: String[]
 ///
-struct DocumentOnTypeFormattingOptions
+struct DocumentOnTypeFormattingOptions: public virtual ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String firstTriggerCharacterKey;
 	const static String moreTriggerCharacterKey;
@@ -89,12 +94,10 @@ struct DocumentOnTypeFormattingRegistrationOptions:
 	public DocumentOnTypeFormattingOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
-
 	// No parsing
 
 	DocumentOnTypeFormattingRegistrationOptions(
@@ -136,6 +139,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DocumentOnTypeFormattingParams(TextDocumentIdentifier textDocument,
 		Position position,
