@@ -72,6 +72,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	FoldingRangeClientCapabilities(optional<Boolean> dynamicRegistration,
 		optional<Number> rangeLimit,
@@ -90,12 +91,10 @@ struct FoldingRangeRegistrationOptions:
 	public StaticRegistrationOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
-
 	// No parsing
 
 	FoldingRangeRegistrationOptions(
@@ -133,6 +132,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	FoldingRangeParams(optional<ProgressToken> workDoneToken,
 		optional<ProgressToken> partialResultToken,
@@ -188,8 +188,12 @@ struct FoldingRangeKind
 ///
 /// kind?: String
 ///
-struct FoldingRange
+struct FoldingRange: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String startLineKey;
 	const static String startCharacterKey;

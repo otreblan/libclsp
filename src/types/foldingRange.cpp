@@ -149,6 +149,14 @@ FoldingRangeRegistrationOptions::
 FoldingRangeRegistrationOptions::FoldingRangeRegistrationOptions(){};
 FoldingRangeRegistrationOptions::~FoldingRangeRegistrationOptions(){};
 
+void FoldingRangeRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	FoldingRangeOptions::partialWrite(writer);
+	StaticRegistrationOptions::partialWrite(writer);
+}
+
 
 const String FoldingRangeParams::textDocumentKey = "textDocument";
 
@@ -247,5 +255,37 @@ FoldingRange::FoldingRange(Number startLine,
 
 FoldingRange::FoldingRange(){};
 FoldingRange::~FoldingRange(){};
+
+void FoldingRange::partialWrite(JsonWriter &writer)
+{
+	// startLine
+	writer.Key(startLineKey);
+	writer.Number(startLine);
+
+	// startCharacter?
+	if(startCharacter.has_value())
+	{
+		writer.Key(startCharacterKey);
+		writer.Number(*startCharacter);
+	}
+
+	// endLine
+	writer.Key(endLineKey);
+	writer.Number(endLine);
+
+	// endCharacter?
+	if(endCharacter.has_value())
+	{
+		writer.Key(endCharacterKey);
+		writer.Number(*endCharacter);
+	}
+
+	// kind?
+	if(kind.has_value())
+	{
+		writer.Key(kindKey);
+		writer.String(*kind);
+	}
+}
 
 }
