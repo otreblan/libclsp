@@ -84,6 +84,9 @@ const String TextDocumentClientCapabilities::
 const String TextDocumentClientCapabilities::
 	foldingRangeKey       = "foldingRange";
 
+const String TextDocumentClientCapabilities::
+	selectionRangeKey     = "selectionRange";
+
 TextDocumentClientCapabilities::TextDocumentClientCapabilities(
 	optional<TextDocumentSyncClientCapabilities> synchronization,
 	optional<CompletionClientCapabilities> completion,
@@ -105,7 +108,8 @@ TextDocumentClientCapabilities::TextDocumentClientCapabilities(
 	optional<DocumentOnTypeFormattingClientCapabilities> onTypeFormatting,
 	optional<RenameClientCapabilities> rename,
 	optional<PublishDiagnosticsClientCapabilities> publishDiagnostics,
-	optional<FoldingRangeClientCapabilities> foldingRange):
+	optional<FoldingRangeClientCapabilities> foldingRange,
+	optional<SelectionRangeClientCapabilities> selectionRange):
 		synchronization(synchronization),
 		completion(completion),
 		hover(hover),
@@ -126,7 +130,8 @@ TextDocumentClientCapabilities::TextDocumentClientCapabilities(
 		onTypeFormatting(onTypeFormatting),
 		rename(rename),
 		publishDiagnostics(publishDiagnostics),
-		foldingRange(foldingRange)
+		foldingRange(foldingRange),
+		selectionRange(selectionRange)
 {};
 
 TextDocumentClientCapabilities::TextDocumentClientCapabilities(){};
@@ -767,6 +772,36 @@ void TextDocumentClientCapabilities::
 
 				handler->pushInitializer();
 				foldingRange->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// selectionRange?:
+	setterMap.emplace(
+		selectionRangeKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				selectionRange.emplace();
+
+				handler->pushInitializer();
+				selectionRange->fillInitializer(handler->objectStack.top());
 			}
 		}
 	);
@@ -1773,6 +1808,9 @@ const String ServerCapabilities::
 	executeCommandProviderKey           = "executeCommandProvider";
 
 const String ServerCapabilities::
+	selectionRangeProviderKey           = "selectionRangeProvider";
+
+const String ServerCapabilities::
 	workspaceSymbolProviderKey          = "workspaceSymbolProvider";
 
 const String ServerCapabilities::
@@ -1816,6 +1854,9 @@ ServerCapabilities::ServerCapabilities(
 		FoldingRangeOptions,
 		FoldingRangeRegistrationOptions>> foldingRangeProvider,
 	optional<ExecuteCommandOptions> executeCommandProvider,
+	optional<variant<Boolean,
+		SelectionRangeOptions,
+		SelectionRangeRegistrationOptions>> selectionRangeProvider,
 	optional<Boolean> workspaceSymbolProvider,
 	optional<Workspace> workspace,
 	optional<Any> experimental):
@@ -1840,6 +1881,7 @@ ServerCapabilities::ServerCapabilities(
 		renameProvider(renameProvider),
 		foldingRangeProvider(foldingRangeProvider),
 		executeCommandProvider(executeCommandProvider),
+		selectionRangeProvider(selectionRangeProvider),
 		workspaceSymbolProvider(workspaceSymbolProvider),
 		workspace(workspace),
 		experimental(experimental)

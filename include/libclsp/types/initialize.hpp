@@ -40,6 +40,7 @@
 #include <libclsp/types/publishDiagnostic.hpp>
 #include <libclsp/types/reference.hpp>
 #include <libclsp/types/rename.hpp>
+#include <libclsp/types/selectionRange.hpp>
 #include <libclsp/types/signatureHelp.hpp>
 #include <libclsp/types/textDocumentSync.hpp>
 #include <libclsp/types/typeDefinition.hpp>
@@ -96,6 +97,8 @@ using namespace std;
 ///
 /// foldingRange?: FoldingRangeClientCapabilities
 ///
+/// selectionRange?: SelectionRangeClientCapabilities
+///
 struct TextDocumentClientCapabilities: public ObjectT
 {
 private:
@@ -120,6 +123,7 @@ private:
 	const static String renameKey;
 	const static String publishDiagnosticsKey;
 	const static String foldingRangeKey;
+	const static String selectionRangeKey;
 
 public:
 	optional<TextDocumentSyncClientCapabilities> synchronization;
@@ -195,6 +199,11 @@ public:
 	/// @since 3.10.0
 	optional<FoldingRangeClientCapabilities> foldingRange;
 
+	/// Capabilities specific to the `textDocument/selectionRange` request.
+	///
+	/// @since 3.15.0
+	optional<SelectionRangeClientCapabilities> selectionRange;
+
 
 	//====================   Parsing   ======================================//
 
@@ -227,7 +236,8 @@ public:
 		optional<DocumentOnTypeFormattingClientCapabilities> onTypeFormatting,
 		optional<RenameClientCapabilities> rename,
 		optional<PublishDiagnosticsClientCapabilities> publishDiagnostics,
-		optional<FoldingRangeClientCapabilities> foldingRange);
+		optional<FoldingRangeClientCapabilities> foldingRange,
+		optional<SelectionRangeClientCapabilities> selectionRange);
 
 	TextDocumentClientCapabilities();
 
@@ -607,6 +617,8 @@ public:
 ///
 /// executeCommandProvider?: ExecuteCommandOptions
 ///
+/// selectionRangeProvider?: Boolean | SelectionRangeOptions | SelectionRangeRegistrationOptions
+///
 /// workspaceSymbolProvider?: Boolean
 ///
 /// workspace?: {
@@ -639,6 +651,7 @@ private:
 	const static String renameProviderKey;
 	const static String foldingRangeProviderKey;
 	const static String executeCommandProviderKey;
+	const static String selectionRangeProviderKey;
 	const static String workspaceSymbolProviderKey;
 	const static String workspaceKey;
 	const static String experimentalKey;
@@ -737,6 +750,13 @@ public:
 	/// The server provides execute command support.
 	optional<ExecuteCommandOptions> executeCommandProvider;
 
+	/// The server provides selection range support.
+	///
+	/// @since 3.15.0
+	optional<variant<Boolean,
+		SelectionRangeOptions,
+		SelectionRangeRegistrationOptions>> selectionRangeProvider;
+
 	/// The server provides workspace symbol support.
 	optional<Boolean> workspaceSymbolProvider;
 
@@ -804,6 +824,9 @@ public:
 			FoldingRangeOptions,
 			FoldingRangeRegistrationOptions>> foldingRangeProvider,
 		optional<ExecuteCommandOptions> executeCommandProvider,
+		optional<variant<Boolean,
+			SelectionRangeOptions,
+			SelectionRangeRegistrationOptions>> selectionRangeProvider,
 		optional<Boolean> workspaceSymbolProvider,
 		optional<Workspace> workspace,
 		optional<Any> experimental);
