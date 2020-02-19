@@ -79,13 +79,27 @@ void DidChangeWatchedFilesClientCapabilities::
 const String FileSystemWatcher::globPatternKey = "globPattern";
 const String FileSystemWatcher::kindKey        = "kind";
 
-FileSystemWatcher::FileSystemWatcher(String globPattern, optional<WatchKind> key):
+FileSystemWatcher::FileSystemWatcher(String globPattern, optional<WatchKind> kind):
 	globPattern(globPattern),
-	key(key)
+	kind(kind)
 {};
 
 FileSystemWatcher::FileSystemWatcher(){};
 FileSystemWatcher::~FileSystemWatcher(){};
+
+void FileSystemWatcher::partialWrite(JsonWriter &writer)
+{
+	// globPattern
+	writer.Key(globPatternKey);
+	writer.String(globPattern);
+
+	// kind?
+	if(kind.has_value())
+	{
+		writer.Key(kindKey);
+		writer.Int((int)(*kind));
+	}
+}
 
 
 const String DidChangeWatchedFilesRegistrationOptions::watchersKey = "watchers";
@@ -102,6 +116,18 @@ DidChangeWatchedFilesRegistrationOptions::
 DidChangeWatchedFilesRegistrationOptions::
 	~DidChangeWatchedFilesRegistrationOptions()
 {};
+
+void DidChangeWatchedFilesRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// watchers
+	writer.Key(watchersKey);
+	writer.StartArray();
+	for(auto& i: watchers)
+	{
+		writer.Object(i);
+	}
+	writer.EndArray();
+}
 
 
 const String FileEvent::uriKey  = "uri";

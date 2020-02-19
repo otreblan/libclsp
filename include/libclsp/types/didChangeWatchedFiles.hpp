@@ -51,6 +51,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DidChangeWatchedFilesClientCapabilities(optional<Boolean> dynamicRegistration);
 
@@ -124,10 +125,14 @@ inline WatchKind& operator ^=(WatchKind& l, WatchKind& r) noexcept
 ///
 /// globPattern: String
 ///
-/// kind?: Number
+/// kind?: WatchKind
 ///
-struct FileSystemWatcher
+struct FileSystemWatcher: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String globPatternKey;
 	const static String kindKey;
@@ -147,11 +152,11 @@ public:
 	/// The kind of events of interest. If omitted it defaults
 	/// to WatchKind::Create | WatchKind::Change | WatchKind::Delete
 	/// which is 7.
-	optional<WatchKind> key;
+	optional<WatchKind> kind;
 
 	// No parsing
 
-	FileSystemWatcher(String globPattern, optional<WatchKind> key);
+	FileSystemWatcher(String globPattern, optional<WatchKind> kind);
 
 	FileSystemWatcher();
 
@@ -163,8 +168,12 @@ public:
 ///
 /// watchers: FileSystemWatcher[]
 ///
-struct DidChangeWatchedFilesRegistrationOptions
+struct DidChangeWatchedFilesRegistrationOptions: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String watchersKey;
 
@@ -223,6 +232,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	FileEvent(DocumentUri uri, FileChangeType type);
 
@@ -272,6 +282,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	DidChangeWatchedFilesParams(vector<FileEvent> changes);
 
