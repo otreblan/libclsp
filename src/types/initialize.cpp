@@ -1022,18 +1022,28 @@ const String ClientCapabilities::Workspace::
 const String ClientCapabilities::Workspace::
 	executeCommandKey         = "executeCommand";
 
+const String ClientCapabilities::Workspace::
+	workspaceFoldersKey       = "workspaceFolders";
+
+const String ClientCapabilities::Workspace::
+	configurationKey          = "configuration";
+
 ClientCapabilities::Workspace::Workspace(optional<Boolean> applyEdit,
 	optional<WorkspaceEditClientCapabilities> workspaceEdit,
 	optional<DidChangeConfigurationClientCapabilities> didChangeConfiguration,
 	optional<DidChangeWatchedFilesClientCapabilities> didChangeWatchedFiles,
 	optional<WorkspaceSymbolClientCapabilities> symbol,
-	optional<ExecuteCommandClientCapabilities> executeCommand):
+	optional<ExecuteCommandClientCapabilities> executeCommand,
+	optional<Boolean> workspaceFolders,
+	optional<Boolean> configuration):
 		applyEdit(applyEdit),
 		workspaceEdit(workspaceEdit),
 		didChangeConfiguration(didChangeConfiguration),
 		didChangeWatchedFiles(didChangeWatchedFiles),
 		symbol(symbol),
-		executeCommand(executeCommand)
+		executeCommand(executeCommand),
+		workspaceFolders(workspaceFolders),
+		configuration(configuration)
 {};
 
 ClientCapabilities::Workspace::Workspace(){};
@@ -1222,6 +1232,60 @@ void ClientCapabilities::Workspace::
 				handler->pushInitializer();
 				executeCommand->fillInitializer(handler->objectStack.top());
 			}
+		}
+	);
+
+	// workspaceFolders?:
+	setterMap.emplace(
+		workspaceFoldersKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				workspaceFolders = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// configuration?:
+	setterMap.emplace(
+		configurationKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				configuration = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
 		}
 	);
 

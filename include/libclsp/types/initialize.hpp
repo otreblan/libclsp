@@ -260,6 +260,10 @@ public:
 /// 	symbol?: WorkspaceSymbolClientCapabilities
 ///
 /// 	executeCommand?: ExecuteCommandClientCapabilities
+///
+/// 	workspaceFolders?: Boolean
+///
+/// 	configuration?: Boolean
 /// }
 ///
 /// textDocument?: TextDocumentClientCapabilities
@@ -286,6 +290,8 @@ public:
 		const static String didChangeWatchedFilesKey;
 		const static String symbolKey;
 		const static String executeCommandKey;
+		const static String workspaceFoldersKey;
+		const static String configurationKey;
 
 	public:
 		/// The client supports applying batch edits
@@ -310,6 +316,16 @@ public:
 		/// Capabilities specific to the `workspace/executeCommand` request.
 		optional<ExecuteCommandClientCapabilities> executeCommand;
 
+		/// The client has support for workspace folders.
+		///
+		/// Since 3.6.0
+		optional<Boolean> workspaceFolders;
+
+		/// The client supports `workspace/configuration` requests.
+		///
+		/// Since 3.6.0
+		optional<Boolean> configuration;
+
 
 		//====================   Parsing   ==================================//
 
@@ -326,7 +342,9 @@ public:
 			optional<DidChangeConfigurationClientCapabilities> didChangeConfiguration,
 			optional<DidChangeWatchedFilesClientCapabilities> didChangeWatchedFiles,
 			optional<WorkspaceSymbolClientCapabilities> symbol,
-			optional<ExecuteCommandClientCapabilities> executeCommand);
+			optional<ExecuteCommandClientCapabilities> executeCommand,
+			optional<Boolean> workspaceFolders,
+			optional<Boolean> configuration);
 
 		Workspace();
 
