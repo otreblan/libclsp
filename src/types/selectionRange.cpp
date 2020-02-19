@@ -82,6 +82,14 @@ SelectionRangeRegistrationOptions::
 SelectionRangeRegistrationOptions::SelectionRangeRegistrationOptions(){};
 SelectionRangeRegistrationOptions::~SelectionRangeRegistrationOptions(){};
 
+void SelectionRangeRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	SelectionRangeOptions::partialWrite(writer);
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	StaticRegistrationOptions::partialWrite(writer);
+}
+
 
 const String SelectionRangeParams::textDocumentKey = "textDocument";
 const String SelectionRangeParams::positionsKey    = "positions";
@@ -243,12 +251,31 @@ const String SelectionRange::rangeKey  = "range";
 const String SelectionRange::parentKey = "parent";
 
 SelectionRange::SelectionRange(Range range,
-	optional<reference_wrapper<SelectionRange>> parent):
+	optional<shared_ptr<SelectionRange>> parent):
 		range(range),
 		parent(parent)
 {};
 
+SelectionRange::SelectionRange(Range range, SelectionRange parent):
+	range(range),
+	parent(make_shared<SelectionRange>(parent))
+{};
+
 SelectionRange::SelectionRange(){};
 SelectionRange::~SelectionRange(){};
+
+void SelectionRange::partialWrite(JsonWriter &writer)
+{
+	// range
+	writer.Key(rangeKey);
+	writer.Object(range);
+
+	// parent?
+	if(parent.has_value())
+	{
+		writer.Key(parentKey);
+		writer.Object(**parent);
+	}
+}
 
 }

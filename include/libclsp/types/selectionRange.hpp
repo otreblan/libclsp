@@ -69,12 +69,10 @@ struct SelectionRangeRegistrationOptions:
 	public StaticRegistrationOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
-
 	// No parsing
 
 	SelectionRangeRegistrationOptions(optional<Boolean> workDoneProgress,
@@ -134,6 +132,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	SelectionRangeParams(optional<ProgressToken> workDoneToken,
 		optional<ProgressToken> partialResultToken,
@@ -151,8 +150,12 @@ public:
 ///
 /// parent?: SelectionRange
 ///
-struct SelectionRange
+struct SelectionRange: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String rangeKey;
 	const static String parentKey;
@@ -163,12 +166,14 @@ public:
 
 	/// The parent selection range containing this range.
 	/// Therefore `parent.range` must contain `this.range`.
-	optional<reference_wrapper<SelectionRange>> parent;
+	optional<shared_ptr<SelectionRange>> parent;
 
 	// No parsing
 
 	SelectionRange(Range range,
-		optional<reference_wrapper<SelectionRange>> parent);
+		optional<shared_ptr<SelectionRange>> parent);
+
+	SelectionRange(Range range, SelectionRange parent);
 
 	SelectionRange();
 
