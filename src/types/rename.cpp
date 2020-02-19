@@ -114,6 +114,19 @@ RenameOptions::RenameOptions(optional<Boolean> workDoneProgress,
 RenameOptions::RenameOptions(){};
 RenameOptions::~RenameOptions(){};
 
+void RenameOptions::partialWrite(JsonWriter &writer)
+{
+	// Parent
+	WorkDoneProgressOptions::partialWrite(writer);
+
+	// prepareProvider?
+	if(prepareProvider.has_value())
+	{
+		writer.Key(prepareProviderKey);
+		writer.Bool(*prepareProvider);
+	}
+}
+
 
 RenameRegistrationOptions::RenameRegistrationOptions(
 	variant<DocumentSelector, Null> documentSelector,
@@ -126,9 +139,15 @@ RenameRegistrationOptions::RenameRegistrationOptions(
 RenameRegistrationOptions::RenameRegistrationOptions(){};
 RenameRegistrationOptions::~RenameRegistrationOptions(){};
 
+void RenameRegistrationOptions::partialWrite(JsonWriter &writer)
+{
+	// Parents
+	TextDocumentRegistrationOptions::partialWrite(writer);
+	RenameOptions::partialWrite(writer);
+}
+
 
 const String RenameParams::newNameKey      = "newName";
-
 
 RenameParams::RenameParams( TextDocumentIdentifier textDocument,
 	Position position,

@@ -59,6 +59,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	RenameClientCapabilities(optional<Boolean> dynamicRegistration,
 		optional<Boolean> prepareSupport);
@@ -75,6 +76,10 @@ public:
 ///
 struct RenameOptions: public WorkDoneProgressOptions
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String prepareProviderKey;
 
@@ -97,12 +102,10 @@ struct RenameRegistrationOptions:
 	public RenameOptions
 {
 protected:
-	// TODO
-	// without this the compilation fails
-	virtual void partialWrite(JsonWriter&){};
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
 public:
-
 	// No parsing
 
 	RenameRegistrationOptions(
@@ -141,6 +144,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	RenameParams(TextDocumentIdentifier textDocument,
 		Position position,
