@@ -79,7 +79,7 @@ void DidChangeWatchedFilesClientCapabilities::
 const String FileSystemWatcher::globPatternKey = "globPattern";
 const String FileSystemWatcher::kindKey        = "kind";
 
-FileSystemWatcher::FileSystemWatcher(String globPattern, optional<Number> key):
+FileSystemWatcher::FileSystemWatcher(String globPattern, optional<WatchKind> key):
 	globPattern(globPattern),
 	key(key)
 {};

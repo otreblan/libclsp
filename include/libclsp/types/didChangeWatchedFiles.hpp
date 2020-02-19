@@ -59,18 +59,66 @@ public:
 	virtual ~DidChangeWatchedFilesClientCapabilities();
 };
 
-// TODO: Make this bitmask better
-namespace WatchKind
+enum class WatchKind
 {
 	/// Interested in create events.
-	[[maybe_unused]] const Number Create = 1;
+	Create = 1,
 
 	/// Interested in change events
-	[[maybe_unused]] const Number Change = 2;
+	Change = 2,
 
 	/// Interested in delete events
-	[[maybe_unused]] const Number Delete = 4;
+	Delete = 4
 };
+
+// Operators for WatchKind
+// Copied from the filesystem <bits/fs_fwd.h> header
+
+constexpr WatchKind operator&(WatchKind l, WatchKind r) noexcept
+{
+	using underType = typename underlying_type<WatchKind>::type;
+
+	return static_cast<WatchKind>(
+		static_cast<underType>(l) & static_cast<underType>(r));
+}
+
+constexpr WatchKind operator|(WatchKind l, WatchKind r) noexcept
+{
+	using underType = typename underlying_type<WatchKind>::type;
+
+	return static_cast<WatchKind>(
+		static_cast<underType>(l) | static_cast<underType>(r));
+}
+
+constexpr WatchKind operator^(WatchKind l, WatchKind r) noexcept
+{
+	using underType = typename underlying_type<WatchKind>::type;
+
+	return static_cast<WatchKind>(
+		static_cast<underType>(l) ^ static_cast<underType>(r));
+}
+
+constexpr WatchKind operator~(WatchKind l) noexcept
+{
+	using underType = typename underlying_type<WatchKind>::type;
+
+	return static_cast<WatchKind>(~static_cast<underType>(l));
+}
+
+inline WatchKind& operator &=(WatchKind& l, WatchKind& r) noexcept
+{
+	return l = l & r;
+}
+
+inline WatchKind& operator |=(WatchKind& l, WatchKind& r) noexcept
+{
+	return l = l | r;
+}
+
+inline WatchKind& operator ^=(WatchKind& l, WatchKind& r) noexcept
+{
+	return l = l ^ r;
+}
 
 /// Watcher of file changes
 ///
@@ -99,11 +147,11 @@ public:
 	/// The kind of events of interest. If omitted it defaults
 	/// to WatchKind::Create | WatchKind::Change | WatchKind::Delete
 	/// which is 7.
-	optional<Number> key;
+	optional<WatchKind> key;
 
 	// No parsing
 
-	FileSystemWatcher(String globPattern, optional<Number> key);
+	FileSystemWatcher(String globPattern, optional<WatchKind> key);
 
 	FileSystemWatcher();
 
