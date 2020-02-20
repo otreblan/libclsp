@@ -1954,6 +1954,352 @@ ServerCapabilities::ServerCapabilities(
 ServerCapabilities::ServerCapabilities(){};
 ServerCapabilities::~ServerCapabilities(){};
 
+void ServerCapabilities::partialWrite(JsonWriter &writer)
+{
+	// textDocumentSync?
+	if(textDocumentSync.has_value())
+	{
+		writer.Key(textDocumentSyncKey);
+		visit(overload(
+			[&writer](TextDocumentSyncOptions& obj)
+			{
+				writer.Object(obj);
+			},
+			[&writer](Number n)
+			{
+				writer.Number(n);
+			}
+		), *textDocumentSync);
+	}
+
+	// completionProvider?
+	if(completionProvider.has_value())
+	{
+		writer.Key(completionProviderKey);
+		writer.Object(*completionProvider);
+	}
+
+	// hoverProvider?
+	if(hoverProvider.has_value())
+	{
+		writer.Key(hoverProviderKey);
+		visit(overload(
+			[&writer](Boolean b)
+			{
+				writer.Bool(b);
+			},
+			[&writer](HoverOptions& obj)
+			{
+				writer.Object(obj);
+			}
+		), *hoverProvider);
+	}
+
+	// signatureHelpProvider?
+	if(signatureHelpProvider.has_value())
+	{
+		writer.Key(signatureHelpProviderKey);
+		writer.Object(*signatureHelpProvider);
+	}
+
+	// declarationProvider?
+	if(declarationProvider.has_value())
+	{
+		writer.Key(declarationProviderKey);
+		visit(overload(
+			[&writer](Boolean b)
+			{
+				writer.Bool(b);
+			},
+			[&writer](DeclarationOptions& obj)
+			{
+				writer.Object(obj);
+			},
+			[&writer](DeclarationRegistrationOptions& obj)
+			{
+				writer.Object(obj);
+			}
+		), *declarationProvider);
+	}
+
+	// definitionProvider?
+	if(definitionProvider.has_value())
+	{
+		writer.Key(definitionProviderKey);
+		visit(overload(
+			[&writer](Boolean b)
+			{
+				writer.Bool(b);
+			},
+			[&writer](DefinitionOptions& obj)
+			{
+				writer.Object(obj);
+			}
+		), *definitionProvider);
+	}
+
+	// typeDefinitionProvider?
+	if(typeDefinitionProvider.has_value())
+	{
+		writer.Key(typeDefinitionProviderKey);
+		visit(overload(
+			[&writer](Boolean b)
+			{
+				writer.Bool(b);
+			},
+			[&writer](TypeDefinitionOptions& obj)
+			{
+				writer.Object(obj);
+			},
+			[&writer](TypeDefinitionRegistrationOptions& obj)
+			{
+				writer.Object(obj);
+			}
+		), *typeDefinitionProvider);
+	}
+
+	// implementationProvider?
+	if(implementationProvider.has_value())
+	{
+		writer.Key(implementationProviderKey);
+		visit(overload(
+			[&writer](Boolean b)
+			{
+				writer.Bool(b);
+			},
+			[&writer](ImplementationOptions& obj)
+			{
+				writer.Object(obj);
+			},
+			[&writer](ImplementationRegistrationOptions& obj)
+			{
+				writer.Object(obj);
+			}
+		), *implementationProvider);
+	}
+
+	// referencesProvider?
+	if(referencesProvider.has_value())
+	{
+		writer.Key(referencesProviderKey);
+		visit(overload(
+			[&writer](Boolean b)
+			{
+				writer.Bool(b);
+			},
+			[&writer](ReferenceOptions& obj)
+			{
+				writer.Object(obj);
+			}
+		), *referencesProvider);
+	}
+
+	// documentHighlightProvider?
+	if(documentHighlightProvider.has_value())
+	{
+		writer.Key(documentHighlightProviderKey);
+		visit(overload(
+			[&writer](Boolean b)
+			{
+				writer.Bool(b);
+			},
+			[&writer](DocumentHighlightOptions& obj)
+			{
+				writer.Object(obj);
+			}
+		), *documentHighlightProvider);
+	}
+
+	// documentSymbolProvider?
+	if(documentSymbolProvider.has_value())
+	{
+		writer.Key(documentSymbolProviderKey);
+		visit(overload(
+			[&writer](Boolean b)
+			{
+				writer.Bool(b);
+			},
+			[&writer](DocumentSymbolOptions& obj)
+			{
+				writer.Object(obj);
+			}
+		), *documentSymbolProvider);
+	}
+
+	// codeActionProvider?
+	if(codeActionProvider.has_value())
+	{
+		writer.Key(codeActionProviderKey);
+		visit(overload(
+			[&writer](Boolean b)
+			{
+				writer.Bool(b);
+			},
+			[&writer](CodeActionOptions& obj)
+			{
+				writer.Object(obj);
+			}
+		), *codeActionProvider);
+	}
+
+	// codeLensProvider?
+	if(codeLensProvider.has_value())
+	{
+		writer.Key(codeLensProviderKey);
+		writer.Object(*codeLensProvider);
+	}
+
+	// documentLinkProvider?
+	if(documentLinkProvider.has_value())
+	{
+		writer.Key(documentLinkProviderKey);
+		writer.Object(*documentLinkProvider);
+	}
+
+	// colorProvider?
+	if(colorProvider.has_value())
+	{
+		writer.Key(colorProviderKey);
+		visit(overload(
+			[&writer](Boolean b)
+			{
+				writer.Bool(b);
+			},
+			[&writer](DocumentColorOptions& obj)
+			{
+				writer.Object(obj);
+			},
+			[&writer](DocumentColorRegistrationOptions& obj)
+			{
+				writer.Object(obj);
+			}
+		), *colorProvider);
+	}
+
+	// documentFormattingProvider?
+	if(documentFormattingProvider.has_value())
+	{
+		writer.Key(documentFormattingProviderKey);
+		visit(overload(
+			[&writer](Boolean b)
+			{
+				writer.Bool(b);
+			},
+			[&writer](DocumentFormattingOptions& obj)
+			{
+				writer.Object(obj);
+			}
+		), *documentFormattingProvider);
+	}
+
+	// documentRangeFormattingProvider?
+	if(documentRangeFormattingProvider.has_value())
+	{
+		writer.Key(documentRangeFormattingProviderKey);
+		visit(overload(
+			[&writer](Boolean b)
+			{
+				writer.Bool(b);
+			},
+			[&writer](DocumentRangeFormattingOptions& obj)
+			{
+				writer.Object(obj);
+			}
+		), *documentRangeFormattingProvider);
+	}
+
+	// documentOnTypeFormattingProvider?
+	if(documentOnTypeFormattingProvider.has_value())
+	{
+		writer.Key(documentOnTypeFormattingProviderKey);
+		writer.Object(*documentOnTypeFormattingProvider);
+	}
+
+	// renameProvider?
+	if(renameProvider.has_value())
+	{
+		writer.Key(renameProviderKey);
+		visit(overload(
+			[&writer](Boolean b)
+			{
+				writer.Bool(b);
+			},
+			[&writer](RenameOptions& obj)
+			{
+				writer.Object(obj);
+			}
+		), *renameProvider);
+	}
+
+	// foldingRangeProvider?
+	if(foldingRangeProvider.has_value())
+	{
+		writer.Key(foldingRangeProviderKey);
+		visit(overload(
+			[&writer](Boolean b)
+			{
+				writer.Bool(b);
+			},
+			[&writer](FoldingRangeOptions& obj)
+			{
+				writer.Object(obj);
+			},
+			[&writer](FoldingRangeRegistrationOptions& obj)
+			{
+				writer.Object(obj);
+			}
+		), *foldingRangeProvider);
+	}
+
+	// executeCommandProvider?
+	if(executeCommandProvider.has_value())
+	{
+		writer.Key(executeCommandProviderKey);
+		writer.Object(*executeCommandProvider);
+	}
+
+	// selectionRangeProvider?
+	if(selectionRangeProvider.has_value())
+	{
+		writer.Key(selectionRangeProviderKey);
+		visit(overload(
+			[&writer](Boolean b)
+			{
+				writer.Bool(b);
+			},
+			[&writer](SelectionRangeOptions& obj)
+			{
+				writer.Object(obj);
+			},
+			[&writer](SelectionRangeRegistrationOptions& obj)
+			{
+				writer.Object(obj);
+			}
+		), *selectionRangeProvider);
+	}
+
+	// workspaceSymbolProvider?
+	if(workspaceSymbolProvider.has_value())
+	{
+		writer.Key(workspaceSymbolProviderKey);
+		writer.Bool(*workspaceSymbolProvider);
+	}
+
+	// workspace?
+	if(workspace.has_value())
+	{
+		writer.Key(workspaceKey);
+		writer.Object(*workspace);
+	}
+
+	// experimental?
+	if(experimental.has_value())
+	{
+		writer.Key(experimentalKey);
+		writer.Any(*experimental);
+	}
+}
+
 
 const String ServerCapabilities::Workspace::
 	workspaceFoldersKey = "workspaceFolders";
@@ -1965,6 +2311,16 @@ ServerCapabilities::Workspace::
 
 ServerCapabilities::Workspace::Workspace(){};
 ServerCapabilities::Workspace::~Workspace(){};
+
+void ServerCapabilities::Workspace::partialWrite(JsonWriter &writer)
+{
+	// workspaceFolders?
+	if(workspaceFolders.has_value())
+	{
+		writer.Key(workspaceFoldersKey);
+		writer.Object(*workspaceFolders);
+	}
+}
 
 
 InitializedParams::InitializedParams(){};
@@ -1980,12 +2336,22 @@ InitializeResult::InitializeResult(ServerCapabilities capabilities,
 		serverInfo(serverInfo)
 {};
 
-InitializeResult::InitializeResult():
-	capabilities(),
-	serverInfo()
-{};
-
+InitializeResult::InitializeResult(){};
 InitializeResult::~InitializeResult(){};
+
+void InitializeResult::partialWrite(JsonWriter &writer)
+{
+	// capabilities
+	writer.Key(capabilitiesKey);
+	writer.Object(capabilities);
+
+	// serverInfo?
+	if(serverInfo.has_value())
+	{
+		writer.Key(serverInfoKey);
+		writer.Object(*serverInfo);
+	}
+}
 
 
 const String InitializeResult::ServerInfo::nameKey    = "name";
@@ -2000,6 +2366,20 @@ InitializeResult::ServerInfo::
 InitializeResult::ServerInfo::ServerInfo(){};
 InitializeResult::ServerInfo::~ServerInfo(){};
 
+void InitializeResult::ServerInfo::partialWrite(JsonWriter &writer)
+{
+	// name
+	writer.Key(nameKey);
+	writer.String(name);
+
+	// version?
+	if(version.has_value())
+	{
+		writer.Key(versionKey);
+		writer.String(*version);
+	}
+}
+
 
 const String InitializeError::retryKey = "retry";
 
@@ -2009,5 +2389,12 @@ InitializeError::InitializeError(Boolean retry):
 
 InitializeError::InitializeError(){};
 InitializeError::~InitializeError(){};
+
+void InitializeError::partialWrite(JsonWriter &writer)
+{
+	// retry
+	writer.Key(retryKey);
+	writer.Bool(retry);
+}
 
 }

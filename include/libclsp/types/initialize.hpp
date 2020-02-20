@@ -214,6 +214,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	TextDocumentClientCapabilities(
 		optional<TextDocumentSyncClientCapabilities> synchronization,
@@ -373,6 +374,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	ClientCapabilities(optional<Workspace> workspace,
 		optional<TextDocumentClientCapabilities> textDocument,
@@ -564,6 +566,7 @@ public:
 
 	//=======================================================================//
 
+	// No writing
 
 	InitializeParams(optional<ProgressToken> workDoneToken,
 		variant<Number, Null> processId,
@@ -645,8 +648,13 @@ public:
 /// }
 ///
 /// experimental?: Any
-struct ServerCapabilities
+///
+struct ServerCapabilities: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String textDocumentSyncKey;
 	const static String completionProviderKey;
@@ -779,8 +787,12 @@ public:
 	optional<Boolean> workspaceSymbolProvider;
 
 	/// Workspace specific server capabilities
-	struct Workspace
+	struct Workspace: public ObjectT
 	{
+	protected:
+		/// This is like write() but without the object bounds.
+		virtual void partialWrite(JsonWriter &writer);
+
 	private:
 		const static String workspaceFoldersKey;
 
@@ -857,7 +869,6 @@ public:
 struct InitializedParams: public ObjectT
 {
 
-
 	//====================   Parsing   ======================================//
 
 	/// This fills an ObjectInitializer
@@ -867,6 +878,8 @@ struct InitializedParams: public ObjectT
 	// Using default isValid()
 
 	//=======================================================================//
+
+	// No writing
 
 	InitializedParams();
 
@@ -884,8 +897,12 @@ struct InitializedParams: public ObjectT
 /// 	version?: String
 /// }
 ///
-struct InitializeResult
+struct InitializeResult: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String capabilitiesKey;
 	const static String serverInfoKey;
@@ -897,8 +914,12 @@ public:
 	/// Information about the server.
 	///
 	/// @since 3.15.0
-	struct ServerInfo
+	struct ServerInfo: public ObjectT
 	{
+	protected:
+		/// This is like write() but without the object bounds.
+		virtual void partialWrite(JsonWriter &writer);
+
 	private:
 		const static String nameKey;
 		const static String versionKey;
@@ -938,8 +959,12 @@ public:
 ///
 /// retry: Boolean
 ///
-struct InitializeError
+struct InitializeError: public ObjectT
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
+
 private:
 	const static String retryKey;
 
