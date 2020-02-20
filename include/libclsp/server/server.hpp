@@ -23,13 +23,15 @@ namespace clsp
 
 using namespace std;
 
-class server
+class Server
 {
 protected:
-
 	/// This starts the server and seeks for the Initialize request.
 	void startIO();
 
+public:
+	Server();
+	virtual ~Server();
 };
 
 }

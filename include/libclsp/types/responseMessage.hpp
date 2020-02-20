@@ -127,14 +127,14 @@ struct ResponseMessage: public Message
 	/// The error object in case a request fails.
 	optional<ResponseError> error;
 
-	ResponseMessage(variant<Number, String, Null> id,
+	ResponseMessage(Server& server,
+		variant<Number, String, Null> id,
 		any result,
 		optional<function<void(JsonWriter& ,any&)>> resultWriter);
 
-	ResponseMessage(variant<Number, String, Null> id,
+	ResponseMessage(Server& server,
+		variant<Number, String, Null> id,
 		ResponseError error);
-
-	ResponseMessage();
 
 	virtual ~ResponseMessage();
 

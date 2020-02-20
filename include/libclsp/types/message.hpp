@@ -20,6 +20,7 @@
 
 #include <libclsp/types/jsonTypes.hpp>
 #include <libclsp/types/objectT.hpp>
+#include <libclsp/server/server.hpp>
 
 namespace clsp
 {
@@ -28,16 +29,19 @@ using namespace std;
 
 struct Message: public ObjectT
 {
-
-	const static pair<String, String> jsonrpc;
-
-	Message();
-	virtual ~Message();
-
 protected:
 	/// This is like write() but without the object bounds.
 	virtual void partialWrite(JsonWriter &writer);
 
+	/// A reference to the lsp server
+	Server& server;
+
+public:
+	const static pair<String, String> jsonrpc;
+
+	Message(Server& server);
+
+	virtual ~Message();
 };
 
 }

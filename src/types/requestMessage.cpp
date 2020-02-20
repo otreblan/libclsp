@@ -25,21 +25,16 @@ const String RequestMessage::idKey     = "id";
 const String RequestMessage::methodKey = "method";
 const String RequestMessage::paramsKey = "params";
 
-RequestMessage::RequestMessage(variant<Number, String> id,
+RequestMessage::RequestMessage(Server& server,
+	variant<Number, String> id,
 	String method,
 	optional<any> params,
 	optional<function<void(any&, Writer<StringBuffer>&)>> paramsWriter):
+		Message(server),
 		id(id),
 		method(method),
 		params(params),
 		paramsWriter(paramsWriter)
-{};
-
-RequestMessage::RequestMessage():
-	id(),
-	method(),
-	params(),
-	paramsWriter()
 {};
 
 RequestMessage::~RequestMessage(){};

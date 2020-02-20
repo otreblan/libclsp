@@ -21,5 +21,12 @@ namespace clsp
 
 using namespace std;
 
+void Server::startIO()
+{
+	// TODO
+}
+
+Server::Server(){};
+Server::~Server(){};
 
 }

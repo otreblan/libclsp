@@ -24,15 +24,12 @@ using namespace std;
 const String NotificationMessage::methodKey = "method";
 const String NotificationMessage::paramsKey = "params";
 
-NotificationMessage::NotificationMessage(String method,
+NotificationMessage::NotificationMessage(Server& server,
+	String method,
 	optional<variant<Array, Object>> params):
+		Message(server),
 		method(method),
 		params(params)
-{};
-
-NotificationMessage::NotificationMessage():
-	method(),
-	params()
 {};
 
 NotificationMessage::~NotificationMessage(){};

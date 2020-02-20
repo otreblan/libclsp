@@ -46,10 +46,9 @@ struct NotificationMessage: public Message
 	/// The notification's params.
 	optional<variant<Array, Object>> params;
 
-	NotificationMessage(String method,
+	NotificationMessage(Server& server,
+		String method,
 		optional<variant<Array, Object>> params);
-
-	NotificationMessage();
 
 	virtual ~NotificationMessage();
 };

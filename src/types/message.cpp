@@ -23,7 +23,10 @@ using namespace std;
 
 const pair<String, String> Message::jsonrpc = {"jsonrpc", "2.0"};
 
-Message::Message(){};
+Message::Message(Server& server):
+	server(server)
+{};
+
 Message::~Message(){};
 
 void Message::partialWrite(JsonWriter &writer)

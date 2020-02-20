@@ -26,21 +26,24 @@ const String ResponseMessage::resultKey = "result";
 const String ResponseMessage::errorKey  = "error";
 
 
-ResponseMessage::ResponseMessage(variant<Number, String, Null> id,
+ResponseMessage::ResponseMessage(Server& server,
+	variant<Number, String, Null> id,
 	any result,
 	optional<function<void(JsonWriter& ,any&)>> resultWriter):
+		Message(server),
 		id(id),
 		result(result),
 		resultWriter(resultWriter)
 {};
 
-ResponseMessage::ResponseMessage(variant<Number, String, Null> id,
+ResponseMessage::ResponseMessage(Server& server,
+	variant<Number, String, Null> id,
 	ResponseError error):
+		Message(server),
 		id(id),
 		error(error)
 {};
 
-ResponseMessage::ResponseMessage(){};
 ResponseMessage::~ResponseMessage(){};
 
 

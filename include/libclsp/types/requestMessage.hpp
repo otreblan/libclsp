@@ -61,12 +61,11 @@ struct RequestMessage: public Message
 	optional<function<void(any&, Writer<StringBuffer>&)>> paramsWriter;
 
 
-	RequestMessage(variant<Number, String> id,
+	RequestMessage(Server& server,
+		variant<Number, String> id,
 		String method,
 		optional<any> params,
 		optional<function<void(any&, Writer<StringBuffer>&)>> paramsWriter);
-
-	RequestMessage();
 
 	virtual ~RequestMessage();
 };
