@@ -136,6 +136,8 @@ struct ResponseMessage: public Message
 		variant<Number, String, Null> id,
 		ResponseError error);
 
+	ResponseMessage(Server& server);
+
 	virtual ~ResponseMessage();
 
 

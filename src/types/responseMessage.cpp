@@ -44,6 +44,10 @@ ResponseMessage::ResponseMessage(Server& server,
 		error(error)
 {};
 
+ResponseMessage::ResponseMessage(Server& server):
+	Message(server)
+{};
+
 ResponseMessage::~ResponseMessage(){};
 
 

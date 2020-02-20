@@ -67,6 +67,8 @@ struct RequestMessage: public Message
 		optional<any> params,
 		optional<function<void(any&, Writer<StringBuffer>&)>> paramsWriter);
 
+	RequestMessage(Server& server);
+
 	virtual ~RequestMessage();
 };
 

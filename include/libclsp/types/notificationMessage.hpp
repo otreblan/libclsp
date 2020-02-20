@@ -50,6 +50,8 @@ struct NotificationMessage: public Message
 		String method,
 		optional<variant<Array, Object>> params);
 
+	NotificationMessage(Server& server);
+
 	virtual ~NotificationMessage();
 };
 

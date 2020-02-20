@@ -37,6 +37,10 @@ RequestMessage::RequestMessage(Server& server,
 		paramsWriter(paramsWriter)
 {};
 
+RequestMessage::RequestMessage(Server& server):
+	Message(server)
+{};
+
 RequestMessage::~RequestMessage(){};
 
 }

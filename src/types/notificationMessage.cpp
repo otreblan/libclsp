@@ -32,6 +32,10 @@ NotificationMessage::NotificationMessage(Server& server,
 		params(params)
 {};
 
+NotificationMessage::NotificationMessage(Server& server):
+	Message(server)
+{};
+
 NotificationMessage::~NotificationMessage(){};
 
 }
