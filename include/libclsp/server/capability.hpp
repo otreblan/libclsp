@@ -16,7 +16,17 @@
 
 #pragma once
 
-#include <libclsp/server/capability.hpp>
 #include <libclsp/server/jsonHandler.hpp>
-#include <libclsp/server/jsonWriter.hpp>
-#include <libclsp/server/server.hpp>
+
+namespace clsp
+{
+
+using namespace std;
+
+struct Capability
+{
+	Capability();
+	virtual ~Capability();
+};
+
+}
