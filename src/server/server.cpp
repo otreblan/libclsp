@@ -28,18 +28,18 @@ void Server::startIO()
 
 void Server::addCapability(Capability capability)
 {
-	capabilityLock.lock();
+	capabilityMutex.lock();
 
 	capabiliyMap.emplace(capability.method, capability);
 
-	capabilityLock.unlock();
+	capabilityMutex.unlock();
 }
 
 optional<Capability> Server::getCapability(String method)
 {
 	optional<Capability> resu;
 
-	capabilityLock.lock_shared();
+	capabilityMutex.lock_shared();
 
 	auto capability = capabiliyMap.find(method);
 
@@ -52,7 +52,7 @@ optional<Capability> Server::getCapability(String method)
 		resu = nullopt;
 	}
 
-	capabilityLock.unlock_shared();
+	capabilityMutex.unlock_shared();
 
 	return resu;
 

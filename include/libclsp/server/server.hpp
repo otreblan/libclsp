@@ -30,9 +30,25 @@ using namespace std;
 class Server
 {
 private:
+	/// A map with the capabilities that the server supports.
 	map<String, Capability> capabiliyMap;
 
-	mutable shared_mutex capabilityLock;
+	/// A mutex for the capability map.
+	mutable shared_mutex capabilityMutex;
+
+
+	/// A map with the requests send to the client.
+	map<variant<Number, String>, Capability> requestSentMap;
+
+	/// A mutex for the requestSent map.
+	mutable shared_mutex requestSentMutex;
+
+
+	/// A map with the requests recieved from the client.
+	map<variant<Number, String>, Capability> requestRecievedMap;
+
+	/// A mutex for the requestSent map.
+	mutable shared_mutex requestRecievedMutex;
 
 public:
 	/// This starts the server and seeks for the Initialize request.
