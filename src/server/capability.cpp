@@ -83,4 +83,45 @@ const Capability Capability::cancelRequest = {
 		};
 	}}, nullopt};
 
+const Capability Capability::progress = {
+	// Method
+	"$/progress",
+
+	{
+	// Writer
+	[](JsonWriter& writer, any& data)
+	{
+		writer.Object(any_cast<ProgressParams&>(data));
+	},
+
+	// Reader
+	[](JsonHandler& handler, optional<any>& data)
+	{
+		auto& params = data.emplace().emplace<ProgressParams>();
+
+		return ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[&handler, &params]()
+			{
+				handler.pushInitializer();
+				params.fillInitializer(handler.objectStack.top());
+			}
+		};
+	}}, nullopt};
+
 }
