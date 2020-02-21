@@ -58,6 +58,68 @@ optional<Capability> Server::getCapability(String method)
 
 }
 
+void Server::addRequest(variant<Number, String> id,
+	String method,
+	RequestKind kind)
+{
+	switch(kind)
+	{
+		case RequestKind::toClient:
+			requestSentMutex.lock();
+
+			requestSentMap.emplace(id, method);
+
+			requestSentMutex.unlock();
+			break;
+
+		case RequestKind::fromClient:
+			requestRecievedMutex.lock();
+
+			requestRecievedMap.emplace(id, method);
+
+			requestRecievedMutex.unlock();
+			break;
+	}
+}
+
+String Server::completeRequest(variant<Number, String> id, RequestKind kind)
+{
+	String resu;
+
+	map<variant<Number, String>, String>::iterator mapIterator;
+
+	switch(kind)
+	{
+		case RequestKind::toClient:
+			requestSentMutex.lock();
+
+			mapIterator = requestSentMap.find(id);
+			if(mapIterator != requestSentMap.end())
+			{
+				resu = mapIterator->second;
+				requestSentMap.erase(mapIterator);
+			}
+
+			requestSentMutex.unlock();
+			break;
+
+		case RequestKind::fromClient:
+			requestRecievedMutex.lock();
+
+			mapIterator = requestRecievedMap.find(id);
+			if(mapIterator != requestRecievedMap.end())
+			{
+				resu = mapIterator->second;
+				requestRecievedMap.erase(mapIterator);
+			}
+
+			requestRecievedMutex.unlock();
+			break;
+	}
+
+	return resu;
+}
+
 Server::Server(){};
 Server::~Server(){};
 

@@ -27,6 +27,15 @@ namespace clsp
 
 using namespace std;
 
+enum class RequestKind
+{
+	/// The request waits a response from the client.
+	toClient,
+
+	/// The request waits a response from the server.
+	fromClient
+};
+
 class Server
 {
 private:
@@ -38,14 +47,16 @@ private:
 
 
 	/// A map with the requests send to the client.
-	map<variant<Number, String>, Capability> requestSentMap;
+	/// The key is the id and the value is the method.
+	map<variant<Number, String>, String> requestSentMap;
 
 	/// A mutex for the requestSent map.
 	mutable shared_mutex requestSentMutex;
 
 
 	/// A map with the requests recieved from the client.
-	map<variant<Number, String>, Capability> requestRecievedMap;
+	/// The key is the id and the value is the method.
+	map<variant<Number, String>, String> requestRecievedMap;
 
 	/// A mutex for the requestSent map.
 	mutable shared_mutex requestRecievedMutex;
@@ -61,6 +72,13 @@ public:
 	/// Returns the capability of the method given. If no capability is found
 	/// the optional<> is set to nullopt.
 	optional<Capability> getCapability(String method);
+
+
+	/// Adds a request to one of the two request maps.
+	void addRequest(variant<Number, String> id, String method, RequestKind kind);
+
+	/// Completes a request and returns the method name.
+	String completeRequest(variant<Number, String> id, RequestKind kind);
 
 	Server();
 	virtual ~Server();
