@@ -38,6 +38,11 @@ struct Capability
 
 		/// A function to parse the params or result.
 		optional<function<ValueSetter(JsonHandler&, optional<any>&)>> reader;
+
+		JsonIO(optional<function<void(JsonWriter&, any&)>> writer,
+			optional<function<ValueSetter(JsonHandler&, optional<any>&)>> reader);
+
+		virtual ~JsonIO();
 	};
 
 	/// Functions to read/write the params of a RequestMessage or a
@@ -48,8 +53,12 @@ struct Capability
 	/// Ommited for notifications.
 	optional<JsonIO> result;
 
-	Capability();
+	Capability(JsonIO params, optional<JsonIO> result);
+
 	virtual ~Capability();
+
+	// Default capabilities
+	const static Capability cancelRequest;
 };
 
 }

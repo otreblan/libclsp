@@ -16,12 +16,66 @@
 
 #include <libclsp/server/capability.hpp>
 
+#include <libclsp/types.hpp>
+
 namespace clsp
 {
 
 using namespace std;
 
-Capability::Capability(){};
+Capability::Capability(JsonIO params, optional<JsonIO> result):
+	params(params),
+	result(result)
+{};
+
 Capability::~Capability(){};
+
+
+Capability::JsonIO::JsonIO(optional<function<void(JsonWriter&, any&)>> writer,
+	optional<function<ValueSetter(JsonHandler&, optional<any>&)>> reader):
+		writer(writer),
+		reader(reader)
+{};
+
+Capability::JsonIO::~JsonIO(){};
+
+
+// $/cancelRequest
+const Capability Capability::cancelRequest = {{
+	// Writer
+	[](JsonWriter& writer, any& data)
+	{
+		writer.Object(any_cast<CancelParams&>(data));
+	},
+
+	// Reader
+	[](JsonHandler& handler, optional<any>& data)
+	{
+		auto& params = data.emplace().emplace<CancelParams>();
+
+		return ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[&handler, &params]()
+			{
+				handler.pushInitializer();
+				params.fillInitializer(handler.objectStack.top());
+			}
+		};
+	}}, nullopt};
 
 }
