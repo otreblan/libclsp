@@ -16,7 +16,10 @@
 
 #pragma once
 
+#include <any>
+
 #include <libclsp/server/jsonHandler.hpp>
+#include <libclsp/server/jsonWriter.hpp>
 
 namespace clsp
 {
@@ -25,6 +28,26 @@ using namespace std;
 
 struct Capability
 {
+	/// The name of the method
+	String method;
+
+	struct JsonIO
+	{
+		/// A function to write the params or result.
+		optional<function<void(JsonWriter&, any&)>> writer;
+
+		/// A function to parse the params or result.
+		optional<function<ValueSetter(JsonHandler&, optional<any>&)>> reader;
+	};
+
+	/// Functions to read/write the params of a RequestMessage or a
+	/// NotificationMessage.
+	JsonIO params;
+
+	/// Functions to read/write the result of a ResponseMessage.
+	/// Ommited for notifications.
+	optional<JsonIO> result;
+
 	Capability();
 	virtual ~Capability();
 };

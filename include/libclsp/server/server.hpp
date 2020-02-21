@@ -17,6 +17,7 @@
 #pragma once
 
 #include <libclsp/server/jsonHandler.hpp>
+#include <libclsp/server/capability.hpp>
 
 namespace clsp
 {
@@ -25,11 +26,11 @@ using namespace std;
 
 class Server
 {
-protected:
+public:
 	/// This starts the server and seeks for the Initialize request.
 	void startIO();
 
-public:
+
 	Server();
 	virtual ~Server();
 };
