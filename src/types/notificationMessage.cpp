@@ -26,7 +26,7 @@ const String NotificationMessage::paramsKey = "params";
 
 NotificationMessage::NotificationMessage(Server& server,
 	String method,
-	optional<variant<Array, Object>> params):
+	optional<any> params):
 		Message(server),
 		method(method),
 		params(params)
@@ -37,5 +37,26 @@ NotificationMessage::NotificationMessage(Server& server):
 {};
 
 NotificationMessage::~NotificationMessage(){};
+
+void NotificationMessage::partialWrite(JsonWriter &writer)
+{
+	// Parent
+	Message::partialWrite(writer);
+
+	// method
+	writer.Key(methodKey);
+	writer.String(method);
+
+	// params?
+	if(params.has_value())
+	{
+		optional<Capability> capability = server.getCapability(method);
+		if(capability.has_value())
+		{
+			writer.Key(paramsKey);
+			capability->params.writer.value()(writer, *params);
+		}
+	}
+}
 
 }

@@ -31,24 +31,28 @@ using namespace std;
 ///
 /// method: String
 ///
-/// params?: Array | Object
+/// params?: any
 ///
 struct NotificationMessage: public Message
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
+private:
 	const static String methodKey;
+	const static String paramsKey;
 
+public:
 	/// The method to be invoked.
 	String method;
 
-	const static String paramsKey;
-
 	/// The notification's params.
-	optional<variant<Array, Object>> params;
+	optional<any> params;
 
 	NotificationMessage(Server& server,
 		String method,
-		optional<variant<Array, Object>> params);
+		optional<any> params);
 
 	NotificationMessage(Server& server);
 

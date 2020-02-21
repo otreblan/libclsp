@@ -61,6 +61,9 @@ private:
 	/// A mutex for the requestSent map.
 	mutable shared_mutex requestRecievedMutex;
 
+
+	/// The last id used for a request sent to the client
+	int lastId = 0;
 public:
 	/// This starts the server and seeks for the Initialize request.
 	void startIO();
