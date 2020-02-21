@@ -53,7 +53,7 @@ struct Capability
 	/// Ommited for notifications.
 	optional<JsonIO> result;
 
-	Capability(JsonIO params, optional<JsonIO> result);
+	Capability(String method, JsonIO params, optional<JsonIO> result);
 
 	virtual ~Capability();
 

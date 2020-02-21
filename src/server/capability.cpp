@@ -23,7 +23,8 @@ namespace clsp
 
 using namespace std;
 
-Capability::Capability(JsonIO params, optional<JsonIO> result):
+Capability::Capability(String method, JsonIO params, optional<JsonIO> result):
+	method(method),
 	params(params),
 	result(result)
 {};
@@ -40,8 +41,12 @@ Capability::JsonIO::JsonIO(optional<function<void(JsonWriter&, any&)>> writer,
 Capability::JsonIO::~JsonIO(){};
 
 
-// $/cancelRequest
-const Capability Capability::cancelRequest = {{
+// Cancellation Support
+const Capability Capability::cancelRequest = {
+	// Method
+	"$/cancelRequest",
+
+	{
 	// Writer
 	[](JsonWriter& writer, any& data)
 	{
