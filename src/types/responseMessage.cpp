@@ -74,26 +74,20 @@ void ResponseMessage::partialWrite(JsonWriter &writer)
 		}
 	), id);
 
-	// result? or error?
-	writeResultOrError(writer);
-}
-
-void ResponseMessage::writeResultOrError(JsonWriter &writer)
-{
+	// result?
 	if(result.has_value())
 	{
-		// result
 		writer.Key(resultKey);
-		resultWriter.value()(writer, result.value());
+		resultWriter.value()(writer, *result);
 	}
-	else
+
+	// error?
+	if(error.has_value())
 	{
-		// error
 		writer.Key(errorKey);
-		error->write(writer);
+		writer.Object(*error);
 	}
 }
-
 
 const String ResponseError::codeKey    = "code";
 const String ResponseError::messageKey = "message";

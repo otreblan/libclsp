@@ -103,26 +103,24 @@ private:
 ///
 struct ResponseMessage: public Message
 {
+protected:
+	/// This is like write() but without the object bounds.
+	virtual void partialWrite(JsonWriter &writer);
 
-	// Key, value, pair types.
-	// In json-rpc all keys are strings.
-
+private:
 	const static String idKey;
+	const static String resultKey;
+	const static String errorKey;
 
+public:
 	/// The request id.
 	variant<Number, String, Null> id;
-
-
-	const static String resultKey;
 
 	/// The result of a request. This member is REQUIRED on success.
 	/// This member MUST NOT exist if there was an error invoking the method.
 	optional<any> result;
 
 	optional<function<void(JsonWriter& ,any&)>> resultWriter;
-
-
-	const static String errorKey;
 
 	/// The error object in case a request fails.
 	optional<ResponseError> error;
@@ -140,12 +138,6 @@ struct ResponseMessage: public Message
 
 	virtual ~ResponseMessage();
 
-
-private:
-	/// This is like write() but without the object bounds.
-	virtual void partialWrite(JsonWriter &writer);
-
-	void writeResultOrError(JsonWriter &writer);
 };
 
 }
