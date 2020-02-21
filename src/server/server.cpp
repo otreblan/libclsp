@@ -26,6 +26,38 @@ void Server::startIO()
 	// TODO
 }
 
+void Server::addCapability(Capability capability)
+{
+	capabilityLock.lock();
+
+	capabiliyMap.emplace(capability.method, capability);
+
+	capabilityLock.unlock();
+}
+
+optional<Capability> Server::getCapability(String method)
+{
+	optional<Capability> resu;
+
+	capabilityLock.lock_shared();
+
+	auto capability = capabiliyMap.find(method);
+
+	if(capability != capabiliyMap.end())
+	{
+		resu = capability->second;
+	}
+	else
+	{
+		resu = nullopt;
+	}
+
+	capabilityLock.unlock_shared();
+
+	return resu;
+
+}
+
 Server::Server(){};
 Server::~Server(){};
 

@@ -16,6 +16,9 @@
 
 #pragma once
 
+#include <map>
+#include <shared_mutex>
+
 #include <libclsp/server/jsonHandler.hpp>
 #include <libclsp/server/capability.hpp>
 
@@ -26,10 +29,22 @@ using namespace std;
 
 class Server
 {
+private:
+	map<String, Capability> capabiliyMap;
+
+	mutable shared_mutex capabilityLock;
+
 public:
 	/// This starts the server and seeks for the Initialize request.
 	void startIO();
 
+	/// This function adds a new capability to the server, but doesn't
+	/// send the client/registerCapability request.
+	void addCapability(Capability capability);
+
+	/// Returns the capability of the method given. If no capability is found
+	/// the optional<> is set to nullopt.
+	optional<Capability> getCapability(String method);
 
 	Server();
 	virtual ~Server();
