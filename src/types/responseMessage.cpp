@@ -28,12 +28,10 @@ const String ResponseMessage::errorKey  = "error";
 
 ResponseMessage::ResponseMessage(Server& server,
 	variant<Number, String, Null> id,
-	any result,
-	optional<function<void(JsonWriter& ,any&)>> resultWriter):
+	any result):
 		Message(server),
 		id(id),
-		result(result),
-		resultWriter(resultWriter)
+		result(result)
 {};
 
 ResponseMessage::ResponseMessage(Server& server,
@@ -56,17 +54,23 @@ void ResponseMessage::partialWrite(JsonWriter &writer)
 	// Parent
 	Message::partialWrite(writer);
 
+	// For some reason the id value has a Null option that needs to be removed
+	// to use the id on the maps.
+	variant<Number, String> methodId;
+
 	// id
 	writer.Key(idKey);
 	visit(overload
 	(
-		[&writer](Number n)
+		[&writer, &methodId](Number n)
 		{
 			writer.Number(n);
+			methodId = n;
 		},
-		[&writer](String &str)
+		[&writer, &methodId](String &str)
 		{
 			writer.String(str);
+			methodId = str;
 		},
 		[&writer](Null)
 		{
@@ -75,10 +79,17 @@ void ResponseMessage::partialWrite(JsonWriter &writer)
 	), id);
 
 	// result?
-	if(result.has_value())
+	if(result.has_value() && !holds_alternative<Null>(id))
 	{
-		writer.Key(resultKey);
-		resultWriter.value()(writer, *result);
+		// Completes the request send from the client.
+		String method = server.completeRequest(methodId, RequestKind::fromClient);
+
+		optional<Capability> capability = server.getCapability(method);
+		if(capability.has_value())
+		{
+			writer.Key(resultKey);
+			capability->result->writer.value()(writer, *result);
+		}
 	}
 
 	// error?

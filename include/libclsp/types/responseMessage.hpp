@@ -120,15 +120,12 @@ public:
 	/// This member MUST NOT exist if there was an error invoking the method.
 	optional<any> result;
 
-	optional<function<void(JsonWriter& ,any&)>> resultWriter;
-
 	/// The error object in case a request fails.
 	optional<ResponseError> error;
 
 	ResponseMessage(Server& server,
 		variant<Number, String, Null> id,
-		any result,
-		optional<function<void(JsonWriter& ,any&)>> resultWriter);
+		any result);
 
 	ResponseMessage(Server& server,
 		variant<Number, String, Null> id,
