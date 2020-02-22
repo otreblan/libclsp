@@ -46,82 +46,147 @@ const Capability Capability::cancelRequest = {
 	// Method
 	"$/cancelRequest",
 
+	// Request
 	{
-	// Writer
-	[](JsonWriter& writer, any& data)
-	{
-		writer.Object(any_cast<CancelParams&>(data));
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			writer.Object(any_cast<CancelParams&>(data));
+		},
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<CancelParams>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
 	},
 
-	// Reader
-	[](JsonHandler& handler, optional<any>& data)
-	{
-		auto& params = data.emplace().emplace<CancelParams>();
-
-		return ValueSetter{
-			// String
-			nullopt,
-
-			// Number
-			nullopt,
-
-			// Boolean
-			nullopt,
-
-			// Null
-			nullopt,
-
-			// Array
-			nullopt,
-
-			// Object
-			[&handler, &params]()
-			{
-				handler.pushInitializer();
-				params.fillInitializer(handler.objectStack.top());
-			}
-		};
-	}}, nullopt};
+	// Response
+	nullopt
+};
 
 const Capability Capability::progress = {
 	// Method
 	"$/progress",
 
+	// Request
 	{
-	// Writer
-	[](JsonWriter& writer, any& data)
-	{
-		writer.Object(any_cast<ProgressParams&>(data));
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			writer.Object(any_cast<ProgressParams&>(data));
+		},
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<ProgressParams>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
 	},
 
-	// Reader
-	[](JsonHandler& handler, optional<any>& data)
+	// Response
+	nullopt
+};
+
+const Capability Capability::initialize = {
+	// Method
+	"initialize",
+
+	// Request
 	{
-		auto& params = data.emplace().emplace<ProgressParams>();
+		// Writer
+		nullopt,
 
-		return ValueSetter{
-			// String
-			nullopt,
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<InitializeParams>();
 
-			// Number
-			nullopt,
+			return ValueSetter{
+				// String
+				nullopt,
 
-			// Boolean
-			nullopt,
+				// Number
+				nullopt,
 
-			// Null
-			nullopt,
+				// Boolean
+				nullopt,
 
-			// Array
-			nullopt,
+				// Null
+				nullopt,
 
-			// Object
-			[&handler, &params]()
-			{
-				handler.pushInitializer();
-				params.fillInitializer(handler.objectStack.top());
-			}
-		};
-	}}, nullopt};
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	{{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			writer.Object(any_cast<InitializeResult&>(data));
+		},
+
+		// Reader
+		nullopt
+	}}
+};
 
 }

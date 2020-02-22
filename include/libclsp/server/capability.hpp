@@ -60,6 +60,7 @@ struct Capability
 	// Default capabilities
 	const static Capability cancelRequest;
 	const static Capability progress;
+	const static Capability initialize;
 };
 
 }
