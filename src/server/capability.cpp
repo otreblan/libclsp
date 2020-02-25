@@ -264,4 +264,26 @@ const Capability Capability::shutdown = {
 	}}
 };
 
+const Capability Capability::exit = {
+	// Method
+	"exit",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler&, optional<any>& data)
+		{
+			data = nullopt;
+
+			return ValueSetter();
+		}
+	},
+
+	// Response
+	nullopt
+};
+
 }

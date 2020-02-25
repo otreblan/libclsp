@@ -63,6 +63,7 @@ struct Capability
 	const static Capability initialize;
 	const static Capability initialized;
 	const static Capability shutdown;
+	const static Capability exit;
 };
 
 }
