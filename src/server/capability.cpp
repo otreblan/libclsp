@@ -230,6 +230,38 @@ const Capability Capability::initialized = {
 	},
 
 	// Response
-	nullopt};
+	nullopt
+};
+
+const Capability Capability::shutdown = {
+	// Method
+	"shutdown",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler&, optional<any>& data)
+		{
+			data = nullopt;
+
+			return ValueSetter();
+		}
+	},
+
+	// Response
+	{{
+		// Reader
+		[](JsonWriter& writer, any&)
+		{
+			writer.Null();
+		},
+
+		// Writer
+		nullopt
+	}}
+};
 
 }
