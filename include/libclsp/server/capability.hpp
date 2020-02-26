@@ -64,6 +64,7 @@ struct Capability
 	const static Capability initialized;
 	const static Capability shutdown;
 	const static Capability exit;
+	const static Capability windowShowMessage;
 };
 
 }

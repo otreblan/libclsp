@@ -286,4 +286,24 @@ const Capability Capability::exit = {
 	nullopt
 };
 
+const Capability Capability::windowShowMessage = {
+	// Method
+	"window/showMessage",
+
+	// Request
+	{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			writer.Object(any_cast<ShowMessageParams&>(data));
+		},
+
+		// Reader
+		nullopt
+	},
+
+	// Response
+	nullopt
+};
+
 }
