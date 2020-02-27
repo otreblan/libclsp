@@ -306,4 +306,62 @@ const Capability Capability::windowShowMessage = {
 	nullopt
 };
 
+const Capability Capability::windowShowMessageRequest = {
+	// Method
+	"window/showMessageRequest",
+
+	// Request
+	{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			writer.Object(any_cast<ShowMessageRequestParams&>(data));
+		},
+
+		// Reader
+		nullopt
+	},
+
+	// Response
+	{{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<variant<MessageActionItem, Null>>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				[&params]()
+				{
+					params = Null();
+				},
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					auto& obj = params.emplace<MessageActionItem>();
+
+					handler.pushInitializer();
+					obj.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	}}
+};
+
 }
