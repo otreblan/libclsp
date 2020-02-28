@@ -66,6 +66,7 @@ struct Capability
 	const static Capability exit;
 	const static Capability windowShowMessage;
 	const static Capability windowShowMessageRequest;
+	const static Capability windowLogMessage;
 };
 
 }

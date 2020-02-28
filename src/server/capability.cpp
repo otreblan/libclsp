@@ -364,4 +364,24 @@ const Capability Capability::windowShowMessageRequest = {
 	}}
 };
 
+const Capability Capability::windowLogMessage = {
+	// Method
+	"window/logMessage",
+
+	// Request
+	{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			writer.Object(any_cast<LogMessageParams&>(data));
+		},
+
+		// Reader
+		nullopt
+	},
+
+	// Response
+	nullopt
+};
+
 }
