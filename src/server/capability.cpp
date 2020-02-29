@@ -384,4 +384,35 @@ const Capability Capability::windowLogMessage = {
 	nullopt
 };
 
+const Capability Capability::windowWorkDoneProgressCreate = {
+	// Method
+	"window/workDoneProgress/create",
+
+	// Request
+	{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			writer.Object(any_cast<WorkDoneProgressCreateParams&>(data));
+		},
+
+		// Reader
+		nullopt
+	},
+
+	// Response
+	{{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler&, optional<any>& data)
+		{
+			data = nullopt;
+
+			return ValueSetter();
+		}
+	}}
+};
+
 }
