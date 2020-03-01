@@ -68,6 +68,7 @@ struct Capability
 	const static Capability windowShowMessageRequest;
 	const static Capability windowLogMessage;
 	const static Capability windowWorkDoneProgressCreate;
+	const static Capability windowWorkDoneProgressCancel;
 };
 
 }

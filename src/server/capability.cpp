@@ -415,4 +415,48 @@ const Capability Capability::windowWorkDoneProgressCreate = {
 	}}
 };
 
+const Capability Capability::windowWorkDoneProgressCancel = {
+	// Method
+	"window/workDoneProgress/cancel",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<WorkDoneProgressCancelParams>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	nullopt
+};
+
 }
