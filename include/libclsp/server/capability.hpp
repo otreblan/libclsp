@@ -69,6 +69,7 @@ struct Capability
 	const static Capability windowLogMessage;
 	const static Capability windowWorkDoneProgressCreate;
 	const static Capability windowWorkDoneProgressCancel;
+	const static Capability telemetryEvent;
 };
 
 }

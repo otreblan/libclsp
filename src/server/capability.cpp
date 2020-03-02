@@ -459,4 +459,24 @@ const Capability Capability::windowWorkDoneProgressCancel = {
 	nullopt
 };
 
+const Capability Capability::telemetryEvent = {
+	// Method
+	"telemetry/event",
+
+	// Request
+	{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			writer.Any(any_cast<Any&>(data));
+		},
+
+		// Reader
+		nullopt
+	},
+
+	// Response
+	nullopt
+};
+
 }
