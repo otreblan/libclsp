@@ -479,4 +479,35 @@ const Capability Capability::telemetryEvent = {
 	nullopt
 };
 
+const Capability Capability::clientRegisterCapability = {
+	// Method
+	"client/registerCapability",
+
+	// Request
+	{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			writer.Object(any_cast<RegistrationParams&>(data));
+		},
+
+		// Reader
+		nullopt
+	},
+
+	// Response
+	{{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler&, optional<any>& data)
+		{
+			data = nullopt;
+
+			return ValueSetter();
+		}
+	}}
+};
+
 }
