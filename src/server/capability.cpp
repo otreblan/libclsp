@@ -510,4 +510,35 @@ const Capability Capability::clientRegisterCapability = {
 	}}
 };
 
+const Capability Capability::clientUnregisterCapability = {
+	// Method
+	"client/unregisterCapability",
+
+	// Request
+	{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			writer.Object(any_cast<UnregistrationParams&>(data));
+		},
+
+		// Reader
+		nullopt
+	},
+
+	// Response
+	{{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler&, optional<any>& data)
+		{
+			data = nullopt;
+
+			return ValueSetter();
+		}
+	}}
+};
+
 }

@@ -71,6 +71,7 @@ struct Capability
 	const static Capability windowWorkDoneProgressCancel;
 	const static Capability telemetryEvent;
 	const static Capability clientRegisterCapability;
+	const static Capability clientUnregisterCapability;
 };
 
 }

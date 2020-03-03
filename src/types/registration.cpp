@@ -75,18 +75,18 @@ void RegistrationParams::partialWrite(JsonWriter &writer)
 }
 
 
-const String UnRegistration::idKey              = "id";
-const String UnRegistration::methodKey          = "method";
+const String Unregistration::idKey              = "id";
+const String Unregistration::methodKey          = "method";
 
-UnRegistration::UnRegistration(String id, String method):
+Unregistration::Unregistration(String id, String method):
 	id(id),
 	method(method)
 {};
 
-UnRegistration::UnRegistration(){};
-UnRegistration::~UnRegistration(){};
+Unregistration::Unregistration(){};
+Unregistration::~Unregistration(){};
 
-void UnRegistration::partialWrite(JsonWriter &writer)
+void Unregistration::partialWrite(JsonWriter &writer)
 {
 	// id
 	writer.Key(idKey);
@@ -98,16 +98,16 @@ void UnRegistration::partialWrite(JsonWriter &writer)
 }
 
 
-const String UnRegistrationParams::unregisterationsKey = "unregisterations";
+const String UnregistrationParams::unregisterationsKey = "unregisterations";
 
-UnRegistrationParams::UnRegistrationParams(vector<UnRegistration> unregisterations):
+UnregistrationParams::UnregistrationParams(vector<Unregistration> unregisterations):
 	unregisterations(unregisterations)
 {};
 
-UnRegistrationParams::UnRegistrationParams(){};
-UnRegistrationParams::~UnRegistrationParams(){};
+UnregistrationParams::UnregistrationParams(){};
+UnregistrationParams::~UnregistrationParams(){};
 
-void UnRegistrationParams::partialWrite(JsonWriter &writer)
+void UnregistrationParams::partialWrite(JsonWriter &writer)
 {
 	// registrations
 	writer.Key(unregisterationsKey);

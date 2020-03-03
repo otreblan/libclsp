@@ -102,7 +102,7 @@ public:
 ///
 /// method: String
 ///
-struct UnRegistration: public ObjectT
+struct Unregistration: public ObjectT
 {
 protected:
 	/// This is like write() but without the object bounds.
@@ -122,11 +122,11 @@ public:
 
 	// No parsing
 
-	UnRegistration(String id, String method);
+	Unregistration(String id, String method);
 
-	UnRegistration();
+	Unregistration();
 
-	virtual ~UnRegistration();
+	virtual ~Unregistration();
 };
 
 /// The client/unregisterCapability request is sent from the server
@@ -134,7 +134,7 @@ public:
 ///
 /// unregisterations: UnRegistration[]
 ///
-struct UnRegistrationParams: public ObjectT
+struct UnregistrationParams: public ObjectT
 {
 protected:
 	/// This is like write() but without the object bounds.
@@ -147,14 +147,14 @@ public:
 	/// This should correctly be named `unregistrations`. However changing this
 	/// is a breaking change and needs to wait until we deliver a 4.x version
 	/// of the specification.
-	vector<UnRegistration> unregisterations;
+	vector<Unregistration> unregisterations;
 
 	// No parsing
 
-	UnRegistrationParams(vector<UnRegistration> unregisterations);
+	UnregistrationParams(vector<Unregistration> unregisterations);
 
-	UnRegistrationParams();
+	UnregistrationParams();
 
-	virtual ~UnRegistrationParams();
+	virtual ~UnregistrationParams();
 };
 }
