@@ -541,4 +541,61 @@ const Capability Capability::clientUnregisterCapability = {
 	}}
 };
 
+
+const Capability Capability::workspaceWorkspaceFolders = {
+	// Method
+	"workspace/workspaceFolders",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		nullopt
+	},
+
+	// Response
+	{{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<variant<vector<WorkspaceFolder>, Null>>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				[&params]()
+				{
+					params = Null();
+				},
+
+				// Array
+				[&handler, &params]()
+				{
+					auto* maker = new ObjectArrayMaker<WorkspaceFolder>
+						(params.emplace<vector<WorkspaceFolder>>());
+
+					handler.pushInitializer();
+					maker->fillInitializer(handler.objectStack.top());
+				},
+
+				// Object
+				nullopt
+			};
+		}
+	}}
+};
+
 }

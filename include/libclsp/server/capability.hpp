@@ -20,6 +20,7 @@
 
 #include <libclsp/server/jsonHandler.hpp>
 #include <libclsp/server/jsonWriter.hpp>
+#include <libclsp/types/objectT.hpp>
 
 namespace clsp
 {
@@ -72,6 +73,71 @@ struct Capability
 	const static Capability telemetryEvent;
 	const static Capability clientRegisterCapability;
 	const static Capability clientUnregisterCapability;
+	const static Capability workspaceWorkspaceFolders;
+};
+
+template <typename Object>
+struct ObjectArrayMaker: public ObjectT
+{
+	vector<Object> &parentArray;
+
+
+	//====================   Parsing   ==============================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer)
+	{
+		// ObjectMaker
+		initializer.objectMaker = unique_ptr<ObjectT>(this);
+
+		auto* handler = initializer.handler;
+
+		auto& extraSetter = initializer.extraSetter;
+
+		// Value setters
+
+		// Object[]
+		extraSetter =
+		{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				auto& obj = parentArray.emplace_back();
+
+				handler->pushInitializer();
+				obj.fillInitializer(handler->objectStack.top());
+			}
+		};
+
+		// This
+		initializer.object = this;
+	}
+
+	// Using default isValid()
+
+	//===============================================================//
+
+
+	ObjectArrayMaker<Object>(vector<Object> &parentArray):
+		parentArray(parentArray)
+	{};
+
+	virtual ~ObjectArrayMaker<Object>(){};
 };
 
 }
