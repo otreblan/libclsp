@@ -74,6 +74,7 @@ struct Capability
 	const static Capability clientRegisterCapability;
 	const static Capability clientUnregisterCapability;
 	const static Capability workspaceWorkspaceFolders;
+	const static Capability workspaceDidChangeWorkspaceFolders;
 };
 
 template <typename Object>
