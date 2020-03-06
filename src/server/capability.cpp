@@ -686,4 +686,59 @@ const Capability Capability::workspaceDidChangeConfiguration = {
 	nullopt
 };
 
+const Capability Capability::workspaceConfiguration = {
+	// Method
+	"workspace/configuration",
+
+	// Request
+	{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			writer.Object(any_cast<ConfigurationParams&>(data));
+		},
+
+		// Reader
+		nullopt
+	},
+
+	// Response
+	{{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<Array>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				[&handler, &params]()
+				{
+					auto* maker = new ArrayMaker(params);
+
+					handler.pushInitializer();
+					maker->fillInitializer(handler.objectStack.top());
+				},
+
+				// Object
+				nullopt
+			};
+		}
+	}}
+};
+
 }

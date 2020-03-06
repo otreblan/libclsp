@@ -44,6 +44,71 @@ struct ArrayMaker: public ObjectT
 	virtual ~ArrayMaker();
 };
 
+/// Parses an array of objects
+template <typename Object>
+struct ObjectArrayMaker: public ObjectT
+{
+	vector<Object> &parentArray;
+
+
+	//====================   Parsing   ==============================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer)
+	{
+		// ObjectMaker
+		initializer.objectMaker = unique_ptr<ObjectT>(this);
+
+		auto* handler = initializer.handler;
+
+		auto& extraSetter = initializer.extraSetter;
+
+		// Value setters
+
+		// Object[]
+		extraSetter =
+		{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				auto& obj = parentArray.emplace_back();
+
+				handler->pushInitializer();
+				obj.fillInitializer(handler->objectStack.top());
+			}
+		};
+
+		// This
+		initializer.object = this;
+	}
+
+	// Using default isValid()
+
+	//===============================================================//
+
+
+	ObjectArrayMaker<Object>(vector<Object> &parentArray):
+		parentArray(parentArray)
+	{};
+
+	virtual ~ObjectArrayMaker<Object>(){};
+};
+
 /// An object with no predefined key-value pairs.
 struct GenericObject: public ObjectT
 {
