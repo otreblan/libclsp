@@ -642,4 +642,48 @@ const Capability Capability::workspaceDidChangeWorkspaceFolders = {
 	nullopt
 };
 
+const Capability Capability::workspaceDidChangeConfiguration = {
+	// Method
+	"workspace/didChangeConfiguration’",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<DidChangeConfigurationParams>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	nullopt
+};
+
 }
