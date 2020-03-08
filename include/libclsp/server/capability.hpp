@@ -77,6 +77,7 @@ struct Capability
 	const static Capability workspaceDidChangeWorkspaceFolders;
 	const static Capability workspaceDidChangeConfiguration;
 	const static Capability workspaceConfiguration;
+	const static Capability workspaceDidChangeWatchedFiles;
 };
 
 }
