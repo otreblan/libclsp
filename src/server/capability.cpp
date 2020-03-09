@@ -785,4 +785,71 @@ const Capability Capability::workspaceDidChangeWatchedFiles = {
 	nullopt
 };
 
+const Capability Capability::workspaceSymbol = {
+	// Method
+	"workspace/symbol",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<WorkspaceSymbolParams>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	{{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			visit(overload(
+				[&writer](vector<SymbolInformation>& vec)
+				{
+					writer.StartArray();
+					for(auto& i:vec)
+					{
+						writer.Object(i);
+					}
+					writer.EndArray();
+				},
+				[&writer](Null)
+				{
+					writer.Null();
+				}
+			),any_cast<variant<vector<SymbolInformation>, Null>&>(data));
+		},
+
+		// Reader
+		nullopt
+	}}
+};
+
 }
