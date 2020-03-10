@@ -80,6 +80,7 @@ struct Capability
 	const static Capability workspaceDidChangeWatchedFiles;
 	const static Capability workspaceSymbol;
 	const static Capability workspaceExecuteCommand;
+	const static Capability workspaceApplyEdit;
 };
 
 }
