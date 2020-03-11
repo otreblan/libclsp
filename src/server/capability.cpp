@@ -968,4 +968,48 @@ const Capability Capability::workspaceApplyEdit = {
 	}}
 };
 
+const Capability Capability::textDocumentDidOpen= {
+	// Method
+	"textDocument/didOpen",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<DidOpenTextDocumentParams>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	nullopt
+};
+
 }
