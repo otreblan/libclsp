@@ -968,7 +968,7 @@ const Capability Capability::workspaceApplyEdit = {
 	}}
 };
 
-const Capability Capability::textDocumentDidOpen= {
+const Capability Capability::textDocumentDidOpen = {
 	// Method
 	"textDocument/didOpen",
 
@@ -981,6 +981,50 @@ const Capability Capability::textDocumentDidOpen= {
 		[](JsonHandler& handler, optional<any>& data)
 		{
 			auto& params = data.emplace().emplace<DidOpenTextDocumentParams>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	nullopt
+};
+
+const Capability Capability::textDocumentDidChange = {
+	// Method
+	"textDocument/didChange",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<DidChangeTextDocumentParams>();
 
 			return ValueSetter{
 				// String

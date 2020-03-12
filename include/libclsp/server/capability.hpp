@@ -82,6 +82,7 @@ struct Capability
 	const static Capability workspaceExecuteCommand;
 	const static Capability workspaceApplyEdit;
 	const static Capability textDocumentDidOpen;
+	const static Capability textDocumentDidChange;
 };
 
 }
