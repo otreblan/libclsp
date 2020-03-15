@@ -85,6 +85,7 @@ struct Capability
 	const static Capability textDocumentDidChange;
 	const static Capability textDocumentWillSave;
 	const static Capability textDocumentWillSaveWaitUntil;
+	const static Capability textDocumentDidSave;
 };
 
 }

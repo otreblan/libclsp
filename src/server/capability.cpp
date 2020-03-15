@@ -1167,4 +1167,48 @@ const Capability Capability::textDocumentWillSaveWaitUntil = {
 	}}
 };
 
+const Capability Capability::textDocumentDidSave = {
+	// Method
+	"textDocument/didSave",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<DidSaveTextDocumentParams>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	nullopt
+};
+
 }
