@@ -1211,4 +1211,48 @@ const Capability Capability::textDocumentDidSave = {
 	nullopt
 };
 
+const Capability Capability::textDocumentDidClose = {
+	// Method
+	"textDocument/didClose",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<DidCloseTextDocumentParams>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	nullopt
+};
+
 }
