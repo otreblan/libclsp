@@ -1255,4 +1255,24 @@ const Capability Capability::textDocumentDidClose = {
 	nullopt
 };
 
+const Capability Capability::textDocumentPublishDiagnostics = {
+	// Method
+	"textDocument/publishDiagnostics",
+
+	// Request
+	{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			writer.Object(any_cast<PublishDiagnosticsParams&>(data));
+		},
+
+		// Reader
+		nullopt
+	},
+
+	// Response
+	nullopt
+};
+
 }
