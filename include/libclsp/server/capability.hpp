@@ -88,6 +88,7 @@ struct Capability
 	const static Capability textDocumentDidSave;
 	const static Capability textDocumentDidClose;
 	const static Capability textDocumentPublishDiagnostics;
+	const static Capability textDocumentCompletion;
 };
 
 }
