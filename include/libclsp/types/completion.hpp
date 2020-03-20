@@ -329,6 +329,44 @@ private:
 	const static String commandKey;
 	const static String dataKey;
 
+	struct TagsMaker: public ObjectT
+	{
+		/// The array to make
+		vector<CompletionItemTag> &parentArray;
+
+		//====================   Parsing   ==============================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===============================================================//
+
+		TagsMaker(vector<CompletionItemTag> &parentArray);
+
+		virtual ~TagsMaker();
+	};
+
+	struct CommitCharactersMaker: public ObjectT
+	{
+		/// The array to make
+		vector<String> &parentArray;
+
+		//====================   Parsing   ==============================//
+
+		/// This fills an ObjectInitializer
+		virtual void fillInitializer(ObjectInitializer& initializer);
+
+		// Using default isValid()
+
+		//===============================================================//
+
+		CommitCharactersMaker(vector<String> &parentArray);
+
+		virtual ~CommitCharactersMaker();
+	};
+
 public:
 	/// The label of this completion item. By default
 	/// also the text that is inserted when selecting
@@ -419,7 +457,14 @@ public:
 	/// a completion and a completion resolve request.
 	optional<Any> data;
 
-	// No parsing
+	//====================   Parsing   ======================================//
+
+	/// This fills an ObjectInitializer
+	virtual void fillInitializer(ObjectInitializer& initializer);
+
+	// Using default isValid()
+
+	//=======================================================================//
 
 	CompletionItem(String label,
 		optional<CompletionItemKind> kind,

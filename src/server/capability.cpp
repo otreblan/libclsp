@@ -1346,4 +1346,57 @@ const Capability Capability::textDocumentCompletion = {
 	}}
 };
 
+const Capability Capability::completionItemResolve = {
+	// Method
+	"completionItem/resolve",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<CompletionItem>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	{{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			writer.Object(any_cast<CompletionItem&>(data));
+		},
+
+		// Reader
+		nullopt
+	}}
+};
+
 }

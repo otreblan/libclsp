@@ -15,6 +15,7 @@
 // along with libclsp.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <libclsp/types/completion.hpp>
+#include <libclsp/types/genericObject.hpp>
 
 namespace clsp
 {
@@ -312,6 +313,524 @@ CompletionItem::CompletionItem(String label,
 CompletionItem::CompletionItem(){};
 CompletionItem::~CompletionItem(){};
 
+void CompletionItem::fillInitializer(ObjectInitializer& initializer)
+{
+	auto& setterMap = initializer.setterMap;
+	auto& neededMap = initializer.neededMap;
+
+	auto* handler = initializer.handler;
+
+	// Value setters
+
+	// label:
+	setterMap.emplace(
+		labelKey,
+		ValueSetter{
+			// String
+			[this, &neededMap](String str)
+			{
+				label = str;
+				neededMap[labelKey] = true;
+			},
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// kind?:
+	setterMap.emplace(
+		kindKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			[this](Number n)
+			{
+				if(holds_alternative<int>(n))
+				{
+					int i = get<int>(n);
+					kind = (CompletionItemKind)i;
+				}
+				else
+				{
+					// An exception or something.
+				}
+			},
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// tags?:
+	setterMap.emplace(
+		tagsKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			[this, handler]()
+			{
+				tags.emplace();
+
+				handler->pushInitializer();
+
+				auto* maker = new TagsMaker(tags.value());
+
+				maker->fillInitializer(handler->objectStack.top());
+			},
+
+			// Object
+			nullopt
+		}
+	);
+
+	// detail?:
+	setterMap.emplace(
+		detailKey,
+		ValueSetter{
+			// String
+			[this](String str)
+			{
+				detail = str;
+			},
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// documentation?:
+	setterMap.emplace(
+		documentationKey,
+		ValueSetter{
+			// String
+			[this](String str)
+			{
+				documentation = str;
+			},
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				auto& obj = documentation.emplace().emplace<MarkupContent>();
+
+				handler->pushInitializer();
+				obj.fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// deprecated?:
+	setterMap.emplace(
+		deprecatedKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				deprecated = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// preselect?:
+	setterMap.emplace(
+		preselectKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			[this](Boolean b)
+			{
+				preselect = b;
+			},
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// sortText?:
+	setterMap.emplace(
+		sortTextKey,
+		ValueSetter{
+			// String
+			[this](String str)
+			{
+				sortText = str;
+			},
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// filterText?:
+	setterMap.emplace(
+		filterTextKey,
+		ValueSetter{
+			// String
+			[this](String str)
+			{
+				filterText = str;
+			},
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// insertText?:
+	setterMap.emplace(
+		insertTextKey,
+		ValueSetter{
+			// String
+			[this](String str)
+			{
+				insertText = str;
+			},
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// insertTextFormat?:
+	setterMap.emplace(
+		insertTextFormatKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			[this](Number n)
+			{
+				if(holds_alternative<int>(n))
+				{
+					int i = get<int>(n);
+					insertTextFormat = (InsertTextFormat)i;
+				}
+				else
+				{
+					// An exception or something.
+				}
+			},
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			nullopt
+		}
+	);
+
+	// textEdit?:
+	setterMap.emplace(
+		textEditKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				textEdit.emplace();
+
+				handler->pushInitializer();
+				textEdit->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// additionalTextEdits?:
+	setterMap.emplace(
+		additionalTextEditsKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			[this, handler]()
+			{
+				additionalTextEdits.emplace();
+
+				handler->pushInitializer();
+
+				auto* maker = new ObjectArrayMaker(additionalTextEdits.value());
+
+				maker->fillInitializer(handler->objectStack.top());
+			},
+
+			// Object
+			nullopt
+		}
+	);
+
+	// commitCharacters?:
+	setterMap.emplace(
+		commitCharactersKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			[this, handler]()
+			{
+				commitCharacters.emplace();
+
+				handler->pushInitializer();
+
+				auto* maker = new CommitCharactersMaker(commitCharacters.value());
+
+				maker->fillInitializer(handler->objectStack.top());
+			},
+
+			// Object
+			nullopt
+		}
+	);
+
+	// command?:
+	setterMap.emplace(
+		commandKey,
+		ValueSetter{
+			// String
+			nullopt,
+
+			// Number
+			nullopt,
+
+			// Boolean
+			nullopt,
+
+			// Null
+			nullopt,
+
+			// Array
+			nullopt,
+
+			// Object
+			[this, handler]()
+			{
+				command.emplace();
+
+				handler->pushInitializer();
+				command->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// data?:
+	setterMap.emplace(
+		dataKey,
+		ValueSetter{
+			// String
+			[this](String str)
+			{
+				data = str;
+			},
+
+			// Number
+			[this](Number n)
+			{
+				data = n;
+			},
+
+			// Boolean
+			[this](Boolean b)
+			{
+				data = b;
+			},
+
+			// Null
+			[this]()
+			{
+				data = Null();
+			},
+
+			// Array
+			[this, handler]()
+			{
+				auto& arr = data.emplace().emplace<Array>();
+
+				auto* maker = new ArrayMaker(arr);
+
+				handler->pushInitializer();
+				maker->fillInitializer(handler->objectStack.top());
+			},
+
+			// Object
+			[this, handler]()
+			{
+				auto& obj = data.emplace().emplace<Object>();
+
+				handler->pushInitializer();
+				obj->fillInitializer(handler->objectStack.top());
+			}
+		}
+	);
+
+	// Needed members
+	neededMap.emplace(labelKey, 0);
+
+	// This
+	initializer.object = this;
+}
+
 void CompletionItem::partialWrite(JsonWriter &writer)
 {
 	// label
@@ -449,6 +968,103 @@ void CompletionItem::partialWrite(JsonWriter &writer)
 }
 
 #pragma GCC diagnostic pop
+
+CompletionItem::TagsMaker::TagsMaker(vector<CompletionItemTag> &parentArray):
+	parentArray(parentArray)
+{};
+
+CompletionItem::TagsMaker::~TagsMaker(){};
+
+void CompletionItem::TagsMaker::fillInitializer(ObjectInitializer& initializer)
+{
+	// ObjectMaker
+	initializer.objectMaker = unique_ptr<ObjectT>(this);
+
+	auto& extraSetter = initializer.extraSetter;
+
+	// Value setters
+
+	// CompletionItemTag[]
+	extraSetter =
+	{
+		// String
+		nullopt,
+
+		// Number
+		[this](Number n)
+		{
+			if(holds_alternative<int>(n))
+			{
+				int i = get<int>(n);
+
+				parentArray.emplace_back((CompletionItemTag)i);
+			}
+			else
+			{
+				// Something
+			}
+		},
+
+		// Boolean
+		nullopt,
+
+		// Null
+		nullopt,
+
+		// Array
+		nullopt,
+
+		// Object
+		nullopt
+	};
+
+	// This
+	initializer.object = this;
+}
+
+CompletionItem::CommitCharactersMaker::CommitCharactersMaker(vector<String> &parentArray):
+	parentArray(parentArray)
+{};
+
+CompletionItem::CommitCharactersMaker::~CommitCharactersMaker(){};
+
+void CompletionItem::CommitCharactersMaker::fillInitializer(ObjectInitializer& initializer)
+{
+	// ObjectMaker
+	initializer.objectMaker = unique_ptr<ObjectT>(this);
+
+	auto& extraSetter = initializer.extraSetter;
+
+	// Value setters
+
+	// String[]
+	extraSetter =
+	{
+		// String
+		[this](String str)
+		{
+			parentArray.emplace_back(str);
+		},
+
+		// Number
+		nullopt,
+
+		// Boolean
+		nullopt,
+
+		// Null
+		nullopt,
+
+		// Array
+		nullopt,
+
+		// Object
+		nullopt
+	};
+
+	// This
+	initializer.object = this;
+}
 
 
 const String CompletionList::isIncompleteKey = "isIncomplete";
@@ -957,6 +1573,8 @@ void CompletionClientCapabilities::CompletionItem::TagSupport::
 		}
 	);
 
+	// Needed members
+	neededMap.emplace(valueSetKey, 0);
 
 	// This
 	initializer.object = this;
