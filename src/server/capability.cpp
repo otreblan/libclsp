@@ -1399,4 +1399,66 @@ const Capability Capability::completionItemResolve = {
 	}}
 };
 
+const Capability Capability::textDocumentHover = {
+	// Method
+	"textDocument/hover",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<HoverParams>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	{{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			visit(overload(
+				[&writer](Hover& obj)
+				{
+					writer.Object(obj);
+				},
+				[&writer](Null)
+				{
+					writer.Null();
+				}
+			), any_cast<variant<Hover, Null>&>(data));
+		},
+
+		// Reader
+		nullopt
+	}}
+};
+
 }
