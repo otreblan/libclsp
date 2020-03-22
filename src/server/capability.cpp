@@ -1461,4 +1461,66 @@ const Capability Capability::textDocumentHover = {
 	}}
 };
 
+const Capability Capability::textDocumentSignatureHelp = {
+	// Method
+	"textDocument/signatureHelp",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<SignatureHelpParams>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	{{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			visit(overload(
+				[&writer](SignatureHelp& obj)
+				{
+					writer.Object(obj);
+				},
+				[&writer](Null)
+				{
+					writer.Null();
+				}
+			), any_cast<variant<SignatureHelp, Null>&>(data));
+		},
+
+		// Reader
+		nullopt
+	}}
+};
+
 }
