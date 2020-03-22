@@ -92,6 +92,7 @@ struct Capability
 	const static Capability completionItemResolve;
 	const static Capability textDocumentHover;
 	const static Capability textDocumentSignatureHelp;
+	const static Capability textDocumentDeclaration;
 };
 
 }
