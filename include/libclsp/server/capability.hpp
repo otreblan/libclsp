@@ -93,6 +93,7 @@ struct Capability
 	const static Capability textDocumentHover;
 	const static Capability textDocumentSignatureHelp;
 	const static Capability textDocumentDeclaration;
+	const static Capability textDocumentDefinition;
 };
 
 }
