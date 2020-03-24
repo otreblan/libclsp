@@ -94,6 +94,7 @@ struct Capability
 	const static Capability textDocumentSignatureHelp;
 	const static Capability textDocumentDeclaration;
 	const static Capability textDocumentDefinition;
+	const static Capability textDocumentTypeDefinition;
 };
 
 }
