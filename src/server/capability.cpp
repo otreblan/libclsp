@@ -1843,4 +1843,71 @@ const Capability Capability::textDocumentImplementation = {
 	}}
 };
 
+const Capability Capability::textDocumentReferences = {
+	// Method
+	"textDocument/references",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<ReferenceParams>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	{{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			visit(overload(
+				[&writer](vector<Location>& arr)
+				{
+					writer.StartArray();
+					for(auto& i: arr)
+					{
+						writer.Object(i);
+					}
+					writer.EndArray();
+				},
+				[&writer](Null)
+				{
+					writer.Null();
+				}
+			), any_cast<variant<vector<Location>, Null>&>(data));
+		},
+
+		// Reader
+		nullopt
+	}}
+};
+
 }
