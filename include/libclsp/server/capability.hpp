@@ -97,6 +97,7 @@ struct Capability
 	const static Capability textDocumentTypeDefinition;
 	const static Capability textDocumentImplementation;
 	const static Capability textDocumentReferences;
+	const static Capability textDocumentDocumentHighlight;
 };
 
 }

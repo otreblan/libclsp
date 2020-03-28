@@ -1910,4 +1910,71 @@ const Capability Capability::textDocumentReferences = {
 	}}
 };
 
+const Capability Capability::textDocumentDocumentHighlight = {
+	// Method
+	"textDocument/documentHighlight",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<DocumentHighlightParams>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	{{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			visit(overload(
+				[&writer](vector<DocumentHighlight>& arr)
+				{
+					writer.StartArray();
+					for(auto& i: arr)
+					{
+						writer.Object(i);
+					}
+					writer.EndArray();
+				},
+				[&writer](Null)
+				{
+					writer.Null();
+				}
+			), any_cast<variant<vector<DocumentHighlight>, Null>&>(data));
+		},
+
+		// Reader
+		nullopt
+	}}
+};
+
 }
