@@ -1977,4 +1977,80 @@ const Capability Capability::textDocumentDocumentHighlight = {
 	}}
 };
 
+const Capability Capability::textDocumentDocumentSymbol = {
+	// Method
+	"textDocument/documentSymbol",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<DocumentSymbolParams>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	{{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			visit(overload(
+				[&writer](vector<DocumentSymbol>& arr)
+				{
+					writer.StartArray();
+					for(auto& i: arr)
+					{
+						writer.Object(i);
+					}
+					writer.EndArray();
+				},
+				[&writer](vector<SymbolInformation>& arr)
+				{
+					writer.StartArray();
+					for(auto& i: arr)
+					{
+						writer.Object(i);
+					}
+					writer.EndArray();
+				},
+				[&writer](Null)
+				{
+					writer.Null();
+				}
+			), any_cast<variant<vector<DocumentSymbol>, vector<SymbolInformation>, Null>&>(data));
+		},
+
+		// Reader
+		nullopt
+	}}
+};
+
 }
