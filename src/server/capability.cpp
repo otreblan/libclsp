@@ -2053,4 +2053,80 @@ const Capability Capability::textDocumentDocumentSymbol = {
 	}}
 };
 
+const Capability Capability::textDocumentCodeAction = {
+	// Method
+	"textDocument/codeAction",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<CodeActionParams>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	{{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			visit(overload(
+				[&writer](vector<variant<Command, CodeAction>>& arr)
+				{
+					writer.StartArray();
+					for(auto& i: arr)
+					{
+						visit(overload(
+							[&writer](Command& obj)
+							{
+								writer.Object(obj);
+							},
+							[&writer](CodeAction& obj)
+							{
+								writer.Object(obj);
+							}
+						), i);
+					}
+					writer.EndArray();
+				},
+				[&writer](Null)
+				{
+					writer.Null();
+				}
+			), any_cast<variant<vector<variant<Command, CodeAction>>, Null>&>(data));
+		},
+
+		// Reader
+		nullopt
+	}}
+};
+
 }

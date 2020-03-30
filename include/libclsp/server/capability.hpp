@@ -99,6 +99,7 @@ struct Capability
 	const static Capability textDocumentReferences;
 	const static Capability textDocumentDocumentHighlight;
 	const static Capability textDocumentDocumentSymbol;
+	const static Capability textDocumentCodeAction;
 };
 
 }
