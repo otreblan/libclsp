@@ -2129,4 +2129,71 @@ const Capability Capability::textDocumentCodeAction = {
 	}}
 };
 
+const Capability Capability::textDocumentCodeLens = {
+	// Method
+	"textDocument/codeLens",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<CodeLensParams>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	{{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			visit(overload(
+				[&writer](vector<CodeLens>& arr)
+				{
+					writer.StartArray();
+					for(auto& i: arr)
+					{
+						writer.Object(i);
+					}
+					writer.EndArray();
+				},
+				[&writer](Null)
+				{
+					writer.Null();
+				}
+			), any_cast<variant<vector<CodeLens>, Null>&>(data));
+		},
+
+		// Reader
+		nullopt
+	}}
+};
+
 }
