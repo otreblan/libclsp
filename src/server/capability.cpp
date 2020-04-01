@@ -2196,4 +2196,57 @@ const Capability Capability::textDocumentCodeLens = {
 	}}
 };
 
+const Capability Capability::codeLensResolve = {
+	// Method
+	"codeLens/resolve",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<CodeLens>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	{{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			writer.Object(any_cast<CodeLens&>(data));
+		},
+
+		// Reader
+		nullopt
+	}}
+};
+
 }
