@@ -102,6 +102,7 @@ struct Capability
 	const static Capability textDocumentCodeAction;
 	const static Capability textDocumentCodeLens;
 	const static Capability codeLensResolve;
+	const static Capability textDocumentDocumentLink;
 };
 
 }
