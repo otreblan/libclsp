@@ -2369,4 +2369,64 @@ const Capability Capability::documentLinkResolve = {
 	}}
 };
 
+const Capability Capability::textDocumentDocumentColor = {
+	// Method
+	"textDocument/documentColor",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<DocumentColorParams>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	{{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			auto& arr = any_cast<vector<ColorInformation>&>(data);
+
+			writer.StartArray();
+			for(auto& i: arr)
+			{
+				writer.Object(i);
+			}
+			writer.EndArray();
+		},
+
+		// Reader
+		nullopt
+	}}
+};
+
 }

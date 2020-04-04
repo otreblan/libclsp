@@ -104,6 +104,7 @@ struct Capability
 	const static Capability codeLensResolve;
 	const static Capability textDocumentDocumentLink;
 	const static Capability documentLinkResolve;
+	const static Capability textDocumentDocumentColor;
 };
 
 }
