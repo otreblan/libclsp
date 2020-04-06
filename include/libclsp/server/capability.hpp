@@ -106,6 +106,7 @@ struct Capability
 	const static Capability documentLinkResolve;
 	const static Capability textDocumentDocumentColor;
 	const static Capability textDocumentColorPresentation;
+	const static Capability textDocumentFormatting;
 };
 
 }
