@@ -2534,14 +2534,88 @@ const Capability Capability::textDocumentFormatting = {
 		// Writer
 		[](JsonWriter& writer, any& data)
 		{
-			auto& arr = any_cast<vector<TextEdit>&>(data);
+			visit(overload(
+				[&writer](vector<TextEdit>& arr)
+				{
+					writer.StartArray();
+					for(auto& i: arr)
+					{
+						writer.Object(i);
+					}
+					writer.EndArray();
+				},
+				[&writer](Null)
+				{
+					writer.Null();
+				}
+			), any_cast<variant<vector<TextEdit>, Null>&>(data));
+		},
 
-			writer.StartArray();
-			for(auto& i: arr)
-			{
-				writer.Object(i);
-			}
-			writer.EndArray();
+		// Reader
+		nullopt
+	}}
+};
+
+const Capability Capability::textDocumentRangeFormatting = {
+	// Method
+	"textDocument/rangeFormatting",
+
+	// Request
+	{
+		// Writer
+		nullopt,
+
+		// Reader
+		[](JsonHandler& handler, optional<any>& data)
+		{
+			auto& params = data.emplace().emplace<DocumentRangeFormattingParams>();
+
+			return ValueSetter{
+				// String
+				nullopt,
+
+				// Number
+				nullopt,
+
+				// Boolean
+				nullopt,
+
+				// Null
+				nullopt,
+
+				// Array
+				nullopt,
+
+				// Object
+				[&handler, &params]()
+				{
+					handler.pushInitializer();
+					params.fillInitializer(handler.objectStack.top());
+				}
+			};
+		}
+	},
+
+	// Response
+	{{
+		// Writer
+		[](JsonWriter& writer, any& data)
+		{
+			visit(overload(
+				[&writer](vector<TextEdit>& arr)
+				{
+					writer.StartArray();
+					for(auto& i: arr)
+					{
+						writer.Object(i);
+					}
+					writer.EndArray();
+				},
+				[&writer](Null)
+				{
+					writer.Null();
+				}
+			), any_cast<variant<vector<TextEdit>, Null>&>(data));
 		},
 
 		// Reader
