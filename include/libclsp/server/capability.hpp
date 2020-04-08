@@ -108,6 +108,7 @@ struct Capability
 	const static Capability textDocumentColorPresentation;
 	const static Capability textDocumentFormatting;
 	const static Capability textDocumentRangeFormatting;
+	const static Capability textDocumentOnTypeFormatting;
 };
 
 }
