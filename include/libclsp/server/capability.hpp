@@ -109,6 +109,7 @@ struct Capability
 	const static Capability textDocumentFormatting;
 	const static Capability textDocumentRangeFormatting;
 	const static Capability textDocumentOnTypeFormatting;
+	const static Capability textDocumentRename;
 };
 
 }
