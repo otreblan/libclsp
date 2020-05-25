@@ -63,27 +63,21 @@ install(FILES
 )
 
 # Libraries
-pkg_check_modules(RAPIDJSON REQUIRED RapidJSON)
+pkg_check_modules(rapidjson REQUIRED IMPORTED_TARGET RapidJSON)
 include(FindBoost)
-
-# Header path
-target_include_directories(${PROJECT_NAME}
-	PUBLIC
-		${RAPIDJSON_INCLUDE_DIRS}
-		${Boost_INCLUDE_DIRS}
-)
 
 # Linking
 target_link_libraries(${PROJECT_NAME}
 	PUBLIC
-		${RAPIDJSON_LIBRARIES}
-		${Boost_LIBRARIES}
+		Boost::headers
+
+	INTERFACE
+		PkgConfig::rapidjson
 )
 
 # Other flags
 target_compile_options(${PROJECT_NAME}
 	PUBLIC
-		${RAPIDJSON_CFLAGS_OTHER}
 		-DRAPIDJSON_HAS_STDSTRING=1
 )
 
